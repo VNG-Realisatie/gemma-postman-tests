@@ -1,0 +1,31 @@
+[
+    {
+        "model": "datamodel.enkelvoudiginformatieobject",
+        "pk": 1,
+        "fields": {
+            "uuid": "ea9b0396-35ae-465f-b5f8-abc254ddc245",
+            "identificatie": "a115406f-a777-40c9-b235-83404e00ecf9",
+            "bronorganisatie": "000000000",
+            "creatiedatum": "2019-03-26",
+            "titel": "a",
+            "vertrouwelijkheidaanduiding": "openbaar",
+            "auteur": "a",
+            "status": "gearchiveerd",
+            "beschrijving": "a",
+            "ontvangstdatum": "2019-03-26",
+            "verzenddatum": "2019-03-26",
+            "indicatie_gebruiksrecht": true,
+            "ondertekening_soort": "analoog",
+            "ondertekening_datum": "2019-03-26",
+            "informatieobjecttype": "http://localhost:8001/api/v1/enkelvoudiginformatieobjecten",
+            "formaat": "q",
+            "taal": "eng",
+            "bestandsnaam": "a",
+            "inhoud": "uploads/2019/03/config.log",
+            "link": "http://localhost:8001/api/v1/enkelvoudiginformatieobjecten",
+            "integriteit_algoritme": "CRC-16",
+            "integriteit_waarde": "1",
+            "integriteit_datum": "2019-03-26"
+        }
+    }
+]
