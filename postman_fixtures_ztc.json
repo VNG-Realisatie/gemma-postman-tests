@@ -12,6 +12,23 @@
         }
     },
     {
+        "model": "datamodel.informatieobjecttype",
+        "pk": 1,
+        "fields": {
+            "datum_begin_geldigheid": "2019-04-23",
+            "datum_einde_geldigheid": null,
+            "uuid": "df7c59f8-bb6f-438e-a8c9-d2189e57a688",
+            "omschrijving": "informatieobject",
+            "omschrijving_generiek": null,
+            "informatieobjectcategorie": "test",
+            "trefwoord": "[]",
+            "vertrouwelijkheidaanduiding": "openbaar",
+            "model": "[]",
+            "toelichting": null,
+            "catalogus": 2
+        }
+    },
+    {
         "model": "datamodel.resultaattype",
         "pk": 1,
         "fields": {
@@ -19,13 +36,39 @@
             "datum_einde_geldigheid": null,
             "uuid": "eead9dcd-9544-4862-8a03-b55643f95228",
             "zaaktype": 4,
-            "omschrijving": "klaar",
+            "omschrijving": "Klaar",
             "resultaattypeomschrijving": "https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7",
             "omschrijving_generiek": "Afgewezen",
             "selectielijstklasse": "https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaten/d8bd516e-95b5-47ee-988d-d6624e94db1f",
             "archiefnominatie": "vernietigen",
             "archiefactietermijn": "P5Y",
             "brondatum_archiefprocedure_afleidingswijze": "afgehandeld",
+            "brondatum_archiefprocedure_datumkenmerk": "",
+            "brondatum_archiefprocedure_einddatum_bekend": false,
+            "brondatum_archiefprocedure_objecttype": "",
+            "brondatum_archiefprocedure_registratie": "",
+            "brondatum_archiefprocedure_procestermijn": null,
+            "toelichting": "",
+            "heeft_voor_brondatum_archiefprocedure_relevante": null,
+            "heeft_verplichte_zot": [],
+            "heeft_verplichte_ziot": []
+        }
+    },
+    {
+        "model": "datamodel.resultaattype",
+        "pk": 2,
+        "fields": {
+            "datum_begin_geldigheid": "2019-04-19",
+            "datum_einde_geldigheid": null,
+            "uuid": "0124101e-0ced-4efc-8d8f-f388f87fcd74",
+            "zaaktype": 4,
+            "omschrijving": "Klaar2",
+            "resultaattypeomschrijving": "https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7",
+            "omschrijving_generiek": "Afgewezen",
+            "selectielijstklasse": "https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaten/d8bd516e-95b5-47ee-988d-d6624e94db1f",
+            "archiefnominatie": "vernietigen",
+            "archiefactietermijn": "P5Y",
+            "brondatum_archiefprocedure_afleidingswijze": "hoofdzaak",
             "brondatum_archiefprocedure_datumkenmerk": "",
             "brondatum_archiefprocedure_einddatum_bekend": false,
             "brondatum_archiefprocedure_objecttype": "",

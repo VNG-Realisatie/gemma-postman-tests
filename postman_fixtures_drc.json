@@ -14,10 +14,10 @@
             "beschrijving": "a",
             "ontvangstdatum": "2019-03-26",
             "verzenddatum": "2019-03-26",
-            "indicatie_gebruiksrecht": true,
+            "indicatie_gebruiksrecht": null,
             "ondertekening_soort": "analoog",
             "ondertekening_datum": "2019-03-26",
-            "informatieobjecttype": "http://localhost:8001/api/v1/enkelvoudiginformatieobjecten",
+            "informatieobjecttype": "http://localhost:8002/api/v1/catalogussen/85a3f4f6-76d4-47a9-a3af-8ffa3e44d98d/informatieobjecttypen/df7c59f8-bb6f-438e-a8c9-d2189e57a688",
             "formaat": "q",
             "taal": "eng",
             "bestandsnaam": "a",
@@ -26,6 +26,35 @@
             "integriteit_algoritme": "CRC-16",
             "integriteit_waarde": "1",
             "integriteit_datum": "2019-03-26"
+        }
+    },
+    {
+        "model": "datamodel.enkelvoudiginformatieobject",
+        "pk": 2,
+        "fields": {
+            "uuid": "485d06d5-e02e-4a48-ac22-42d0031bf4a3",
+            "identificatie": "3808679a-0429-44a2-8d49-9c5770d99757",
+            "bronorganisatie": "000000000",
+            "creatiedatum": "2019-04-23",
+            "titel": "object",
+            "vertrouwelijkheidaanduiding": "openbaar",
+            "auteur": "test",
+            "status": "",
+            "beschrijving": "",
+            "ontvangstdatum": null,
+            "verzenddatum": null,
+            "indicatie_gebruiksrecht": true,
+            "ondertekening_soort": "",
+            "ondertekening_datum": null,
+            "informatieobjecttype": "http://localhost:8002/api/v1/catalogussen/85a3f4f6-76d4-47a9-a3af-8ffa3e44d98d/informatieobjecttypen/df7c59f8-bb6f-438e-a8c9-d2189e57a688",
+            "formaat": "",
+            "taal": "ara",
+            "bestandsnaam": "",
+            "inhoud": "uploads/2019/04/test_0nXvCLc.txt",
+            "link": "",
+            "integriteit_algoritme": "",
+            "integriteit_waarde": "",
+            "integriteit_datum": null
         }
     }
 ]
