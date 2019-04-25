@@ -15,14 +15,15 @@
 							"name": "setUp",
 							"item": [
 								{
-									"name": "Retrieve Zaaktype",
+									"name": "Retrieve Zaaktype and Besluittype",
 									"event": [
 										{
 											"listen": "test",
 											"script": {
 												"id": "017d57e0-038d-4621-be41-11e103f859ac",
 												"exec": [
-													"pm.variables.set(\"zaaktype_url\", pm.response.json()[0].zaaktypen[0]);"
+													"pm.variables.set(\"zaaktype_url\", pm.response.json()[0].zaaktypen[0]);",
+													"pm.variables.set(\"besluittype_url\", pm.response.json()[0].besluittypen[0]);"
 												],
 												"type": "text/javascript"
 											}
@@ -144,7 +145,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"zaaktype\": \"{{zaaktype_url}}\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatumGepland\": \"2019-04-20\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"betalingsindicatie\": \"geheel\",\n\t\"laatsteBetaalDatum\": \"2019-01-01\",\n\t\"zaakgeometrie\": \n\t{\n\t    \"type\": \"Point\",\n\t    \"coordinates\": [53, 5]\n\t},\n\t\"opschorting\": \n\t{\n\t    \"indicatie\": true,\n\t    \"reden\": \"string\"\n\t},\n\t\"selectielijstklasse\": \"http://example.com\",\n\t\"relevanteAndereZaken\": \n\t[\n\n    \"http://example.com\"\n\n],\n    \"archiefnominatie\": \"blijvend_bewaren\",\n    \"archiefstatus\": \"nog_te_archiveren\"\n}"
+											"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"zaaktype\": \"{{zaaktype_url}}\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatumGepland\": \"2019-04-20\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"betalingsindicatie\": \"geheel\",\n\t\"laatsteBetaalDatum\": \"2019-01-01\",\n\t\"zaakgeometrie\": \n\t{\n\t    \"type\": \"Point\",\n\t    \"coordinates\": [53, 5]\n\t},\n\t\"opschorting\": \n\t{\n\t    \"indicatie\": true,\n\t    \"reden\": \"string\"\n\t},\n\t\"selectielijstklasse\": \"http://example.com\",\n\t\"relevanteAndereZaken\": \n\t[\n\n    \"http://example.com\"\n\n],\n    \"archiefstatus\": \"nog_te_archiveren\"\n}"
 										},
 										"url": {
 											"raw": "{{zrc_url}}/zaken",
@@ -171,7 +172,9 @@
 													"pm.variables.set(\"informatieobject_url\", informatieobjecten[0].url);",
 													"pm.variables.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);",
 													"",
-													"postman.setNextRequest(\"(zrc-011a) (WIP) (NI) Valideer op geen betalingswaarde en wel laatste betaaldatum\")"
+													"// postman.setNextRequest(\"Create Hoofdzaak\")",
+													"// postman.setNextRequest(\"Create Zaak to be archived\")",
+													"// postman.setNextRequest(\"Create Zaak to close\")"
 												],
 												"type": "text/javascript"
 											}
@@ -2013,7 +2016,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-005c) Afgesloten zaak bijwerken is niet toegestaan",
+									"name": "(zrc-005c) (WIP) Afgesloten zaak bijwerken is niet toegestaan",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -2044,6 +2047,9 @@
 										}
 									],
 									"request": {
+										"auth": {
+											"type": "noauth"
+										},
 										"method": "PUT",
 										"header": [
 											{
@@ -2054,12 +2060,17 @@
 											},
 											{
 												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
+												"type": "text",
+												"value": "EPSG:4326"
 											},
 											{
 												"key": "Content-Crs",
-												"value": "EPSG:4326",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{jwt_token_no_geforceerd_bijwerken}}",
 												"type": "text"
 											}
 										],
@@ -2077,7 +2088,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-005d) Afgesloten zaak deels bijwerken is niet toegestaan",
+									"name": "(zrc-005d) (WIP) Afgesloten zaak deels bijwerken is niet toegestaan",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -2106,6 +2117,9 @@
 										}
 									],
 									"request": {
+										"auth": {
+											"type": "noauth"
+										},
 										"method": "PATCH",
 										"header": [
 											{
@@ -2123,6 +2137,11 @@
 												"key": "Content-Crs",
 												"type": "text",
 												"value": "EPSG:4326"
+											},
+											{
+												"key": "Authorization",
+												"value": "{{jwt_token_no_geforceerd_bijwerken}}",
+												"type": "text"
 											}
 										],
 										"body": {
@@ -2353,7 +2372,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"zaak\": \"{{zaak_url}}\",\n\t\"statusType\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-20T13:37:00\"\n}"
+											"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-20T13:37:00\"\n}"
 										},
 										"url": {
 											"raw": "{{zrc_url}}/statussen",
@@ -2416,9 +2435,9 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "{{zaak_url}}",
+											"raw": "{{created_zaak_url}}",
 											"host": [
-												"{{zaak_url}}"
+												"{{created_zaak_url}}"
 											]
 										}
 									},
@@ -6232,7 +6251,7 @@
 											"script": {
 												"id": "7f3ed8a2-7bc9-4c77-85b1-561482065971",
 												"exec": [
-													"pm.variables.set(\"current_resultaattype\", pm.variables.get(\"zaaktype_resultaattypen\")[0]);"
+													"pm.variables.set(\"resultaattype\", pm.variables.get(\"zaaktype_resultaattypen\")[0]);"
 												],
 												"type": "text/javascript"
 											}
@@ -6260,7 +6279,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"zaak\": \"{{hoofdzaak_url}}\",\n\t\"resultaatType\": \"{{current_resultaattype}}\"\n}"
+											"raw": "{\n\t\"zaak\": \"{{hoofdzaak_url}}\",\n\t\"resultaatType\": \"{{resultaattype}}\"\n}"
 										},
 										"url": {
 											"raw": "{{zrc_url}}/resultaten",
@@ -6443,6 +6462,47 @@
 									"response": []
 								},
 								{
+									"name": "(NI) Add Besluit to Zaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "23bc2897-511c-416d-b48d-c8aa46adba28",
+												"exec": [
+													"pm.variables.set(\"besluit_url\", pm.response.json().url);",
+													"pm.variables.set(\"besluit_ingangsdatum\", pm.response.json().ingangsdatum);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"verantwoordelijkeOrganisatie\": \"{{zaak_bronorganisatie}}\",\n\t\"besluittype\": \"{{besluittype_url}}\",\n\t\"zaak\": \"{{zaak_zonder_archiefnominatie_url}}\",\n\t\"datum\": \"2019-04-25\",\n\t\"ingangsdatum\": \"2019-04-26\",\n\t\"vervaldatum\": \"2019-04-28\"\n}"
+										},
+										"url": {
+											"raw": "{{brc_url}}/besluiten",
+											"host": [
+												"{{brc_url}}"
+											],
+											"path": [
+												"besluiten"
+											]
+										}
+									},
+									"response": []
+								},
+								{
 									"name": "Add Resultaat to Zaak",
 									"event": [
 										{
@@ -6575,6 +6635,7 @@
 													"        postman.setNextRequest(\"(zrc-013b) Afleidingswijze hoofdzaak\");",
 													"        break;",
 													"    case \"eigenschap\":",
+													"        postman.setNextRequest(\"(zrc-013c) Afleidingswijze eigenschap\");",
 													"        break;",
 													"    case \"ander_datumkenmerk\":",
 													"        break;",
@@ -6585,6 +6646,7 @@
 													"    case \"gerelateerde_zaak\":",
 													"        break;",
 													"    case \"ingangsdatum_besluit\":",
+													"        postman.setNextRequest(\"(zrc-013d) (WIP) (NI) Afleidingswijze ingangsdatum_besluit\");",
 													"        break;",
 													"    case \"vervaldatum_besluit\":",
 													"        break;",
@@ -6702,7 +6764,7 @@
 											"script": {
 												"id": "869bc7bd-9394-4b5c-8476-217a4314851f",
 												"exec": [
-													"// TODO hoofdzaak opzoeken"
+													""
 												],
 												"type": "text/javascript"
 											}
@@ -6715,6 +6777,136 @@
 												"key": "Accept-Crs",
 												"value": "EPSG:4326",
 												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{zaak_zonder_archiefnominatie_url}}",
+											"host": [
+												"{{zaak_zonder_archiefnominatie_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-013c) Afleidingswijze eigenschap",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "211fc0ce-b5c8-486d-90cc-faf4029d3353",
+												"exec": [
+													"var moment = require('moment');",
+													"",
+													"pm.test(\"Resultaat toevoegen aan Zaak zonder archiefnominatie betekent dat archiefnominatie afgeleid wordt uit Resultaattype\", function() {",
+													"    pm.response.to.have.status(200);",
+													"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.variables.get(\"resultaattype_archiefnominatie\"));",
+													"});",
+													"",
+													"pm.test(\"Resultaat met afleidingswijze eigenschap toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    ",
+													"    if (pm.variables.get(\"resultaattype_archiefactietermijn\")) {",
+													"        const brondatum = moment.utc(pm.variables.get(\"hoofdzaak_einddatum\"));",
+													"        const archiefactietermijn = moment.duration(pm.variables.get(\"resultaattype_archiefactietermijn\"), 'years');",
+													"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
+													"        ",
+													"        pm.expect(jsonData.archiefactiedatum).to.be.equal(calculated_archiefactiedatum.format(\"YYYY-MM-DD\"));   ",
+													"    }",
+													"});",
+													"",
+													"postman.setNextRequest(\"Delete Resultaat from Zaak\");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "869bc7bd-9394-4b5c-8476-217a4314851f",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{zaak_zonder_archiefnominatie_url}}",
+											"host": [
+												"{{zaak_zonder_archiefnominatie_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-013d) (WIP) (NI) Afleidingswijze ingangsdatum_besluit",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "211fc0ce-b5c8-486d-90cc-faf4029d3353",
+												"exec": [
+													"var moment = require('moment');",
+													"",
+													"pm.test(\"Resultaat toevoegen aan Zaak zonder archiefnominatie betekent dat archiefnominatie afgeleid wordt uit Resultaattype\", function() {",
+													"    pm.response.to.have.status(200);",
+													"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.variables.get(\"resultaattype_archiefnominatie\"));",
+													"});",
+													"",
+													"pm.test(\"Resultaat met afleidingswijze ingangsdatum_besluit toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    ",
+													"    if (pm.variables.get(\"resultaattype_archiefactietermijn\")) {",
+													"        const brondatum = moment.utc(pm.variables.get(\"hoofdzaak_einddatum\"));",
+													"        const archiefactietermijn = moment.duration(pm.variables.get(\"resultaattype_archiefactietermijn\"), 'years');",
+													"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
+													"        ",
+													"        pm.expect(jsonData.archiefactiedatum).to.be.equal(calculated_archiefactiedatum.format(\"YYYY-MM-DD\"));   ",
+													"    }",
+													"});",
+													"",
+													"postman.setNextRequest(\"Delete Resultaat from Zaak\");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "869bc7bd-9394-4b5c-8476-217a4314851f",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
 											}
 										],
 										"body": {
@@ -6828,6 +7020,43 @@
 										}
 									},
 									"response": []
+								},
+								{
+									"name": "Change Informatieobject status to not gearchiveerd",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6e820332-c9e5-4d25-bcee-66ceb45fb195",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"status\": \"\"\n}"
+										},
+										"url": {
+											"raw": "{{informatieobject_url}}",
+											"host": [
+												"{{informatieobject_url}}"
+											]
+										}
+									},
+									"response": []
 								}
 							],
 							"description": "**TODO:**\nde zaak die hier gemaakt wordt moet voor afleidingswijze: \n- hoofdzaak: een hoofdzaak met eindstatus hebben\n- zaakobject: minstens 1 zaakinformatieobject van Resultaattype.brondatumArchiefprocedure.objecttype,\n- gerelateerde_zaak: ???\n- ingangsdatum\\_besluit & vervaldatum\\_besluit: minstens 1 gerelateerd besluit\n\nzou moeten werken voor afgehandeld",
@@ -6846,6 +7075,710 @@
 									"listen": "test",
 									"script": {
 										"id": "8f5b02f0-b508-461c-af34-be787256d787",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "zrc-014",
+							"item": [
+								{
+									"name": "Create Zaak to be archived",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "7f3ed8a2-7bc9-4c77-85b1-561482065971",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "46ada267-ffcf-477a-a3d6-02addbf603a2",
+												"exec": [
+													"pm.variables.set(\"created_zaak_url\", pm.response.json().url);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept-Crs",
+												"value": "EPSG:4326",
+												"type": "text"
+											},
+											{
+												"key": "Content-Crs",
+												"value": "EPSG:4326",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{zaak_body}}"
+										},
+										"url": {
+											"raw": "{{zrc_url}}/zaken",
+											"host": [
+												"{{zrc_url}}"
+											],
+											"path": [
+												"zaken"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create relation between Zaak and Informatieobject",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fa9f354c-0464-494e-b9fa-9635b21b2d43",
+												"exec": [
+													"pm.variables.set(\"objectinformatieobject_url\", pm.response.json().url)"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "5be8e943-844c-4786-9173-08a7e1dfb2c8",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"object\": \"{{created_zaak_url}}\",\n    \"objectType\": \"zaak\"\n}"
+										},
+										"url": {
+											"raw": "{{drc_url}}/objectinformatieobjecten",
+											"host": [
+												"{{drc_url}}"
+											],
+											"path": [
+												"objectinformatieobjecten"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-014a) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fbbe81ee-3688-4065-a2a5-793e9a2fff42",
+												"exec": [
+													"pm.test(\"Zaak bijwerken archiefstatus zetten op niet nog_te_archiveren terwijl gerelateerde objecten geen archiefstatus gearchiveerd hebben geeft 400\", function() {",
+													"    pm.response.to.have.status(400);",
+													"    ",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+													"    pm.expect(error.code).to.be.equal(\"documents-not-archived\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "81b03d36-f405-4e6a-9948-de361d6e1b28",
+												"exec": [
+													"// Retrieve the Zaak body template and modify as needed",
+													"pm.variables.set(\"archiefstatussen\", [\"gearchiveerd\", \"gearchiveerd_procestermijn_onbekend\", \"overgedragen\"]);",
+													"",
+													"if (!pm.variables.get(\"archiefstatus_index\")) {",
+													"    pm.variables.set(\"archiefstatus_index\", 0);",
+													"} ",
+													"",
+													"pm.variables.set(\"current_archiefstatus\", pm.variables.get(\"archiefstatussen\")[pm.variables.get(\"archiefstatus_index\")])",
+													"",
+													"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
+													"body.archiefstatus = pm.variables.get(\"current_archiefstatus\");",
+													"",
+													"// Store the modified Zaak body, allowing it to be used in the main request",
+													"pm.variables.set(\"request_body\", JSON.stringify(body));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Content-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}"
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-014b) Zaak deels bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fbbe81ee-3688-4065-a2a5-793e9a2fff42",
+												"exec": [
+													"pm.test(\"Zaak deels bijwerken archiefstatus zetten op niet nog_te_archiveren terwijl gerelateerde objecten geen archiefstatus gearchiveerd hebben geeft 400\", function() {",
+													"    pm.response.to.have.status(400);",
+													"    ",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+													"    pm.expect(error.code).to.be.equal(\"documents-not-archived\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Content-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"archiefstatus\": \"{{current_archiefstatus}}\"\n}"
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Change Informatieobject status to gearchiveerd",
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"status\": \"gearchiveerd\"\n}"
+										},
+										"url": {
+											"raw": "{{informatieobject_url}}",
+											"host": [
+												"{{informatieobject_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-014c) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefnominatie niet gezet",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fbbe81ee-3688-4065-a2a5-793e9a2fff42",
+												"exec": [
+													"pm.test(\"Zaak bijwerken archiefstatus zetten op niet nog_te_archiveren zonder waarde voor archiefnominatie geeft 400\", function() {",
+													"    pm.response.to.have.status(400);",
+													"    ",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"archiefnominatie\");",
+													"    pm.expect(error.code).to.be.equal(\"archiefnominatie-not-set\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "81b03d36-f405-4e6a-9948-de361d6e1b28",
+												"exec": [
+													"// Retrieve the Zaak body template and modify as needed",
+													"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
+													"body.archiefstatus = pm.variables.get(\"current_archiefstatus\");",
+													"",
+													"// Store the modified Zaak body, allowing it to be used in the main request",
+													"pm.variables.set(\"request_body\", JSON.stringify(body));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Content-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}"
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-014d) Zaak deels bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefnominatie niet gezet",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fbbe81ee-3688-4065-a2a5-793e9a2fff42",
+												"exec": [
+													"pm.test(\"Zaak bijwerken archiefstatus zetten op niet nog_te_archiveren zonder waarde voor archiefnominatie geeft 400\", function() {",
+													"    pm.response.to.have.status(400);",
+													"    ",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"archiefnominatie\");",
+													"    pm.expect(error.code).to.be.equal(\"archiefnominatie-not-set\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "81b03d36-f405-4e6a-9948-de361d6e1b28",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Content-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"archiefstatus\": \"{{current_archiefstatus}}\"\n}"
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-014e) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefactiedatum niet gezet",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fbbe81ee-3688-4065-a2a5-793e9a2fff42",
+												"exec": [
+													"pm.test(\"Zaak bijwerken archiefstatus zetten op niet nog_te_archiveren zonder waarde voor archiefactiedatum geeft 400\", function() {",
+													"    pm.response.to.have.status(400);",
+													"    ",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"archiefactiedatum\");",
+													"    pm.expect(error.code).to.be.equal(\"archiefactiedatum-not-set\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "81b03d36-f405-4e6a-9948-de361d6e1b28",
+												"exec": [
+													"// Retrieve the Zaak body template and modify as needed",
+													"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
+													"body.archiefstatus = pm.variables.get(\"current_archiefstatus\");",
+													"body.archiefnominatie = \"blijvend_bewaren\";",
+													"",
+													"// Store the modified Zaak body, allowing it to be used in the main request",
+													"pm.variables.set(\"request_body\", JSON.stringify(body));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Content-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}"
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-014f) Zaak deels bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefactiedatum niet gezet",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fbbe81ee-3688-4065-a2a5-793e9a2fff42",
+												"exec": [
+													"pm.test(\"Zaak deels bijwerken archiefstatus zetten op niet nog_te_archiveren zonder waarde voor archiefactiedatum geeft 400\", function() {",
+													"    pm.response.to.have.status(400);",
+													"    ",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"archiefactiedatum\");",
+													"    pm.expect(error.code).to.be.equal(\"archiefactiedatum-not-set\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "81b03d36-f405-4e6a-9948-de361d6e1b28",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Content-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"archiefstatus\": \"{{current_archiefstatus}}\",\n\t\"archiefnominatie\": \"blijvend_bewaren\"\n}"
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-014g) Zaak bijwerken archiefstatus niet nog_te_archiveren is mogelijk",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "febaa10d-27c5-454c-a124-7606cca90a7f",
+												"exec": [
+													"// Retrieve the Zaak body template and modify as needed",
+													"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
+													"body.archiefstatus = pm.variables.get(\"current_archiefstatus\");",
+													"body.archiefnominatie = \"blijvend_bewaren\";",
+													"body.archiefactiedatum = \"2020-01-01\";",
+													"",
+													"// Store the modified Zaak body, allowing it to be used in the main request",
+													"pm.variables.set(\"request_body\", JSON.stringify(body));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "75e90a59-ec6c-4fd2-8577-d8e2e3525742",
+												"exec": [
+													"pm.test(\"Zaak bijwerken archiefstatus zetten op niet nog_te_archiveren met archiefactiedatum en archiefnominatie gezet geef 200\", function() {",
+													"    pm.response.to.have.status(200);",
+													"    ",
+													"    pm.expect(pm.response.json().archiefstatus).to.be.equal(pm.variables.get(\"current_archiefstatus\"));",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Crs",
+												"value": "EPSG:4326",
+												"type": "text"
+											},
+											{
+												"key": "Content-Crs",
+												"value": "EPSG:4326",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}"
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Created Zaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"value": "EPSG:4326",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Change Informatieobject status to not gearchiveerd",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6e820332-c9e5-4d25-bcee-66ceb45fb195",
+												"exec": [
+													"var index = pm.variables.get(\"archiefstatus_index\");",
+													"",
+													"if (index == pm.variables.get(\"archiefstatussen\").length - 1) {",
+													"    postman.setNextRequest(\"Delete Zaak\");",
+													"} else {",
+													"    // Loop",
+													"    pm.variables.set(\"archiefstatus_index\", index + 1);",
+													"    postman.setNextRequest(\"Create Zaak to be archived\");",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"status\": \"\"\n}"
+										},
+										"url": {
+											"raw": "{{informatieobject_url}}",
+											"host": [
+												"{{informatieobject_url}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "93ce8524-5561-4ec9-8543-d05f233cbfc2",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "c0ff52a8-3e35-45c6-846e-e456faa1837d",
 										"type": "text/javascript",
 										"exec": [
 											""
@@ -6931,8 +7864,7 @@
 											"script": {
 												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
 												"exec": [
-													"// postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));",
-													"postman.setNextRequest(\"Delete Zaak\");"
+													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));"
 												],
 												"type": "text/javascript"
 											}
@@ -7005,7 +7937,7 @@
 					"_postman_isSubFolder": true
 				}
 			],
-			"description": "Deze folder bevat de Postman test suite voor de ZGW API's, elke folder bevat tests voor de business logic zoals die gespecificeerd is in https://github.com/VNG-Realisatie/gemma-zaken/blob/master/docs/_content/standaard/standaard.md.\n\nDe variabelen voor de urls naar de individuele componenten zijn standaard gezet op http://ref.tst.vng.cloud/, maar kunnen lokaal veranderd worden naar bijv. localhost voor test doeleinden.\n\nDe namen van de folders (bijv. **zrc/zrc-001**) verwijzen naar de specificaties in de link hierboven, zo zijn de tests te koppelen aan de specificaties.\n\nAlle requests met een prefix zoals **(zrc-xxx)** (of een ander ZGW api) bevatten tests, alle andere requests zijn ter ondersteuning van die requests en bevatten dus geen tests.\n\nOm te zorgen dat de tests correct werken, moeten alle tests van een specifiek component (bijv. zrc) door de Postman Collection Runner uitgevoerd worden, tests individueel uitvoeren is dus niet mogelijk.\n\n- (WIP) houdt in dat de test nog niet correct geimplementeerd is.\n- (NI) houdt in dat de test faalt omdat de business logic nog niet geimplementeerd is in de desbetreffende API's.",
+			"description": "Deze folder bevat de Postman test suite voor de ZGW API's, elke folder bevat tests voor de business logic zoals die gespecificeerd is in https://github.com/VNG-Realisatie/gemma-zaken/blob/master/docs/_content/standaard/standaard.md.\n\nDe variabelen voor de urls naar de individuele componenten zijn standaard gezet op http://ref.tst.vng.cloud/, maar kunnen lokaal veranderd worden naar bijv. localhost voor test doeleinden.\n\nDe namen van de folders (bijv. **zrc/zrc-001**) verwijzen naar de specificaties in de link hierboven, zo zijn de tests te koppelen aan de specificaties.\n\nAlle requests met een prefix zoals **(zrc-xxx)** (of een ander ZGW api) bevatten tests, alle andere requests zijn ter ondersteuning van die requests en bevatten dus geen tests.\n\nOm te zorgen dat de tests correct werken, moeten alle tests van een specifiek component (bijv. zrc) door de Postman Collection Runner uitgevoerd worden, tests individueel uitvoeren is dus niet mogelijk.\n\nOpmerkingen:\n- (WIP) houdt in dat de test nog niet correct geimplementeerd is.\n- (NI) houdt in dat de test faalt omdat de business logic nog niet geimplementeerd is in de desbetreffende API's.",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -7843,48 +8775,7 @@
 				"id": "157b223d-1b88-4113-bed1-2412eef72a61",
 				"type": "text/javascript",
 				"exec": [
-					"// Construct the post request to retrieve the JWT token if needed",
-					"// TODO set zaaktype claim and scopes",
-					"// should only be executed once in runner",
-					"// const tokenRequest = {",
-					"//   url: 'https://ref.tst.vng.cloud/tokens/generate-jwt/',",
-					"//   method: 'POST',",
-					"//   header: {",
-					"//       \"Content-Type\": \"multipart/form-data\",",
-					"//       \"Referer\": \"https://ref.tst.vng.cloud/tokens/generate-jwt/\",",
-					"//       \"X-CSRFToken\": pm.variables.get(\"csrftoken\"),",
-					"//   },",
-					"//   body: {",
-					"//     mode: 'formdata',",
-					"//     formdata: [",
-					"//         {key: \"client_id\", value: \"demo-VLUoUFAO2M1z\", disabled: false, description: {content:\"\", type:\"text/plain\"}},",
-					"//         {key: \"secret\", value: \"WLICM7iw8IPJKuGVGYEBFobEe2BGBldi\", disabled: false, description: {content:\"\", type:\"text/plain\"}},",
-					"//         // FIXME",
-					"//         // {key: \"scopes\", value: \"[0,1,2,3,4,5,6,7,8]\", disabled: false},",
-					"//         // {key: \"zaaktypes\", value: \"[0,1,2,3,4,5,6,7,8]\", disabled: false}",
-					"//     ]",
-					"//   }",
-					"// };",
-					"",
-					"// If the token does not exist in the environment variables, send the request to retrieve it",
-					"// if (!pm.environment.get('token')) {",
-					"//     console.log('Fetching token')",
-					"//     pm.sendRequest(tokenRequest, function (err, res) {",
-					"//         if (err === null) {",
-					"//             const $ = cheerio.load(res.text());",
-					"//             var token = $(\"span[class='jwt-formatter']\").text();",
-					"//             pm.environment.set('token', token);",
-					"//         }",
-					"//     });",
-					"// }",
-					"",
-					"// TOKEN VOOR ref tst",
-					"// pm.variables.set(\"token\", \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImNsaWVudF9pZGVudGlmaWVyIjoiZGVtby1mQURrZlRlcWI4WFIifQ.eyJpc3MiOiJkZW1vLWZBRGtmVGVxYjhYUiIsImlhdCI6MTU1NDk5NDY1NCwiemRzIjp7InNjb3BlcyI6WyJub3RpZmljYXRpZXMuc2NvcGVzLmNvbnN1bWVyZW4iLCJub3RpZmljYXRpZXMuc2NvcGVzLnB1YmxpY2VyZW4iLCJzY29wZXMuZG9jdW1lbnRlbi52ZXJ3aWpkZXJlbiIsInpkcy5zY29wZXMuc3RhdHVzc2VuLnRvZXZvZWdlbiIsInpkcy5zY29wZXMuemFha3R5cGVzLmxlemVuIiwiemRzLnNjb3Blcy56YWtlbi5hYW5tYWtlbiIsInpkcy5zY29wZXMuemFrZW4uYmlqd2Vya2VuIiwiemRzLnNjb3Blcy56YWtlbi5sZXplbiIsInpkcy5zY29wZXMuemFrZW4udmVyd2lqZGVyZW4iXSwiemFha3R5cGVzIjpbImh0dHBzOi8vcmVmLnRzdC52bmcuY2xvdWQvenRjL2FwaS92MS9jYXRhbG9ndXNzZW4vOGZmYjExZjAtYzdjYy00ZTM1LThhNjQtYTA2MzlhZWI4ZjE4L3phYWt0eXBlbi9jMmY5NTJjYS0yOThlLTQ4OGMtYjFiZS1hODdmMTFiZDVmYTIiLCJodHRwczovL3JlZi50c3Qudm5nLmNsb3VkL3p0Yy9hcGkvdjEvY2F0YWxvZ3Vzc2VuLzhmZmIxMWYwLWM3Y2MtNGUzNS04YTY0LWEwNjM5YWViOGYxOC96YWFrdHlwZW4vMGMwMWQ3M2YtZGU2NS00MTU4LWJjMGUtM2YxNzhmNmYxY2JlIiwiaHR0cHM6Ly9yZWYudHN0LnZuZy5jbG91ZC96dGMvYXBpL3YxL2NhdGFsb2d1c3Nlbi9hZGRkMWYxMS1mMjBlLTQyM2MtYmE2MC1lNjdkNWU5NzQ4MjMvemFha3R5cGVuLzc2ZmVmZGZiLTM1MmMtNDU4NC04M2Y4LWFhODA2YTgwNTdiZSIsImh0dHBzOi8vcmVmLnRzdC52bmcuY2xvdWQvenRjL2FwaS92MS9jYXRhbG9ndXNzZW4vNjlhNzRlMDgtNzkxMS00ZGYxLTk0ZDAtZWU5YTNjZDA1NGFhL3phYWt0eXBlbi8wNTI2MTFhMy04MzIyLTRiZjktYWYzMi1mYjY5YWI4MzQwZWYiLCJodHRwczovL3JlZi50c3Qudm5nLmNsb3VkL3p0Yy9hcGkvdjEvY2F0YWxvZ3Vzc2VuLzY5YTc0ZTA4LTc5MTEtNGRmMS05NGQwLWVlOWEzY2QwNTRhYS96YWFrdHlwZW4vY2NiNmY1ODktMzU4NC00OTJhLWEzNjEtMTI4NDlhMjRiN2MxIiwiaHR0cHM6Ly9yZWYudHN0LnZuZy5jbG91ZC96dGMvYXBpL3YxL2NhdGFsb2d1c3Nlbi82OWE3NGUwOC03OTExLTRkZjEtOTRkMC1lZTlhM2NkMDU0YWEvemFha3R5cGVuLzQwMjg4YzI5LTNiMDItNDdlOC1iMmFiLTVlN2EwY2FhNDJiMCIsImh0dHBzOi8vcmVmLnRzdC52bmcuY2xvdWQvenRjL2FwaS92MS9jYXRhbG9ndXNzZW4vZjdhZmQxNTYtYzhmNS00NjY2LWI4YjUtMjhhNGE5YjVkZmM3L3phYWt0eXBlbi8wMTE5ZGQ0ZS03YmU5LTQ3N2UtYmNjZi03NTAyM2IxNDUzYzEiLCJodHRwczovL3JlZi50c3Qudm5nLmNsb3VkL3p0Yy9hcGkvdjEvY2F0YWxvZ3Vzc2VuLzI4NDg3ZDNmLTZhMWItNDg5Yy1iMDNkLWM3NWFjNjY5M2U3Mi96YWFrdHlwZW4vZWRlMmZkMjgtMzJkMi00NmM5LThjZGUtYjQ0YmIwNTVkM2JjIiwiaHR0cHM6Ly9yZWYudHN0LnZuZy5jbG91ZC96dGMvYXBpL3YxL2NhdGFsb2d1c3Nlbi8yODQ4N2QzZi02YTFiLTQ4OWMtYjAzZC1jNzVhYzY2OTNlNzIvemFha3R5cGVuLzNiNzRmYmViLTFmNDctNDdjMC05ZDM3LWUxNGIyNTc5MGM1ZSJdfX0.Q1xKeN03GPgUUc_44eCZpquUz51XOUWqnYXvaxpzFaY\")",
-					"",
-					"// token voor localhost",
-					"// pm.environment.set(\"token\", \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImNsaWVudF9pZGVudGlmaWVyIjoiZGVtbyJ9.eyJpc3MiOiJkZW1vIiwiaWF0IjoxNTUzNzcxMDI1LCJ6ZHMiOnsic2NvcGVzIjpbIm5vdGlmaWNhdGllcy5zY29wZXMuY29uc3VtZXJlbiIsIm5vdGlmaWNhdGllcy5zY29wZXMucHVibGljZXJlbiIsInNjb3Blcy5kb2N1bWVudGVuLnZlcndpamRlcmVuIiwiemRzLnNjb3Blcy5zdGF0dXNzZW4udG9ldm9lZ2VuIiwiemRzLnNjb3Blcy56YWFrdHlwZXMubGV6ZW4iLCJ6ZHMuc2NvcGVzLnpha2VuLmFhbm1ha2VuIiwiemRzLnNjb3Blcy56YWtlbi5iaWp3ZXJrZW4iLCJ6ZHMuc2NvcGVzLnpha2VuLmxlemVuIiwiemRzLnNjb3Blcy56YWtlbi52ZXJ3aWpkZXJlbiJdLCJ6YWFrdHlwZXMiOlsiKiJdfX0.C3J7svfhFjIj_vzMjEu_CF5WDJD6CD30BVhRUZTPIjE\")",
-					"",
-					"// pm.environment.set(\"token_without_claims\", \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImNsaWVudF9pZGVudGlmaWVyIjoiZGVtby03SDhJbUdBYlA1aTYifQ.eyJpc3MiOiJkZW1vLTdIOEltR0FiUDVpNiIsImlhdCI6MTU1NTU4MDkwOCwiemRzIjp7InNjb3BlcyI6WyJub3RpZmljYXRpZXMuc2NvcGVzLmNvbnN1bWVyZW4iLCJub3RpZmljYXRpZXMuc2NvcGVzLnB1YmxpY2VyZW4iLCJzY29wZXMuZG9jdW1lbnRlbi52ZXJ3aWpkZXJlbiIsInpkcy5zY29wZXMuc3RhdHVzc2VuLnRvZXZvZWdlbiIsInpkcy5zY29wZXMuemFha3R5cGVzLmxlemVuIiwiemRzLnNjb3Blcy56YWtlbi5hYW5tYWtlbiIsInpkcy5zY29wZXMuemFrZW4uYmlqd2Vya2VuIiwiemRzLnNjb3Blcy56YWtlbi5nZWZvcmNlZXJkLWJpandlcmtlbiIsInpkcy5zY29wZXMuemFrZW4ubGV6ZW4iLCJ6ZHMuc2NvcGVzLnpha2VuLnZlcndpamRlcmVuIl0sInphYWt0eXBlcyI6W119fQ.ijhUdaWNsH_hvsvBPaLD_kg5w5grqSewFe802K_IuLA\")"
+					""
 				]
 			}
 		},

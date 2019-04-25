@@ -1,5 +1,28 @@
 [
     {
+        "model": "datamodel.besluittype",
+        "pk": 1,
+        "fields": {
+            "datum_begin_geldigheid": "2019-04-25",
+            "datum_einde_geldigheid": null,
+            "uuid": "ce0da338-2a62-46b0-973c-c4eff8c7f500",
+            "omschrijving": "Besluittype",
+            "omschrijving_generiek": "",
+            "besluitcategorie": "",
+            "reactietermijn": null,
+            "publicatie_indicatie": false,
+            "publicatietekst": "",
+            "publicatietermijn": null,
+            "toelichting": "",
+            "catalogus": 2,
+            "informatieobjecttypes": [],
+            "resultaattypes": [],
+            "zaaktypes": [
+                4
+            ]
+        }
+    },
+    {
         "model": "datamodel.catalogus",
         "pk": 2,
         "fields": {
@@ -69,6 +92,32 @@
             "archiefnominatie": "vernietigen",
             "archiefactietermijn": "P5Y",
             "brondatum_archiefprocedure_afleidingswijze": "hoofdzaak",
+            "brondatum_archiefprocedure_datumkenmerk": "",
+            "brondatum_archiefprocedure_einddatum_bekend": false,
+            "brondatum_archiefprocedure_objecttype": "",
+            "brondatum_archiefprocedure_registratie": "",
+            "brondatum_archiefprocedure_procestermijn": null,
+            "toelichting": "",
+            "heeft_voor_brondatum_archiefprocedure_relevante": null,
+            "heeft_verplichte_zot": [],
+            "heeft_verplichte_ziot": []
+        }
+    },
+    {
+        "model": "datamodel.resultaattype",
+        "pk": 4,
+        "fields": {
+            "datum_begin_geldigheid": "2019-04-19",
+            "datum_einde_geldigheid": null,
+            "uuid": "c7e67cfd-2cdc-4e7c-af34-724eddc81e09",
+            "zaaktype": 4,
+            "omschrijving": "Klaar3",
+            "resultaattypeomschrijving": "https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7",
+            "omschrijving_generiek": "Afgewezen",
+            "selectielijstklasse": "https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaten/d8bd516e-95b5-47ee-988d-d6624e94db1f",
+            "archiefnominatie": "vernietigen",
+            "archiefactietermijn": "P5Y",
+            "brondatum_archiefprocedure_afleidingswijze": "ingangsdatum_besluit",
             "brondatum_archiefprocedure_datumkenmerk": "",
             "brondatum_archiefprocedure_einddatum_bekend": false,
             "brondatum_archiefprocedure_objecttype": "",
