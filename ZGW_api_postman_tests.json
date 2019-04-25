@@ -71,6 +71,7 @@
 													"pm.variables.set(\"zaaktype_vertrouwelijkheid\", pm.response.json().vertrouwelijkheidaanduiding);",
 													"pm.variables.set(\"zaaktype_productenOfDiensten\", res.productenOfDiensten);",
 													"pm.variables.set(\"zaaktype_resultaattypen\", res.resultaattypen);",
+													"pm.variables.set(\"zaaktype_eigenschap\", res.eigenschappen[0]);",
 													"",
 													"var statustypen = res.statustypen;",
 													"pm.variables.set(\"eindstatustype\", statustypen[statustypen.length-1]);",
@@ -170,11 +171,7 @@
 												"exec": [
 													"var informatieobjecten = pm.response.json();",
 													"pm.variables.set(\"informatieobject_url\", informatieobjecten[0].url);",
-													"pm.variables.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);",
-													"",
-													"// postman.setNextRequest(\"Create Hoofdzaak\")",
-													"// postman.setNextRequest(\"Create Zaak to be archived\")",
-													"// postman.setNextRequest(\"Create Zaak to close\")"
+													"pm.variables.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);"
 												],
 												"type": "text/javascript"
 											}
@@ -1864,11 +1861,6 @@
 										"method": "POST",
 										"header": [
 											{
-												"key": "Accept-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											},
-											{
 												"key": "Content-Type",
 												"name": "Content-Type",
 												"type": "text",
@@ -2358,11 +2350,6 @@
 									"request": {
 										"method": "POST",
 										"header": [
-											{
-												"key": "Accept-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											},
 											{
 												"key": "Content-Type",
 												"name": "Content-Type",
@@ -6321,11 +6308,6 @@
 										"method": "POST",
 										"header": [
 											{
-												"key": "Accept-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											},
-											{
 												"key": "Content-Type",
 												"name": "Content-Type",
 												"type": "text",
@@ -6583,11 +6565,6 @@
 									"request": {
 										"method": "POST",
 										"header": [
-											{
-												"key": "Accept-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											},
 											{
 												"key": "Content-Type",
 												"name": "Content-Type",
@@ -7729,7 +7706,7 @@
 													"var index = pm.variables.get(\"archiefstatus_index\");",
 													"",
 													"if (index == pm.variables.get(\"archiefstatussen\").length - 1) {",
-													"    postman.setNextRequest(\"Delete Zaak\");",
+													"    postman.setNextRequest(\"Create Zaak to delete\");",
 													"} else {",
 													"    // Loop",
 													"    pm.variables.set(\"archiefstatus_index\", index + 1);",
@@ -7779,6 +7756,837 @@
 									"listen": "test",
 									"script": {
 										"id": "c0ff52a8-3e35-45c6-846e-e456faa1837d",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "zrc-015 (WIP)",
+							"item": [
+								{
+									"name": "Create Zaak to delete",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a64c1a05-ff2c-4a48-9f85-2251ef5548cd",
+												"exec": [
+													"pm.variables.set(\"created_zaak_url\", pm.response.json().url);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Accept-Crs",
+												"value": "EPSG:4326",
+												"type": "text"
+											},
+											{
+												"key": "Content-Crs",
+												"value": "EPSG:4326",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{zaak_body}}"
+										},
+										"url": {
+											"raw": "{{zrc_url}}/zaken",
+											"host": [
+												"{{zrc_url}}"
+											],
+											"path": [
+												"zaken"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add Resultaat to Zaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+												"exec": [
+													"pm.variables.set(\"resultaat_url\", pm.response.json().url);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+												"exec": [
+													"pm.variables.set(\"resultaattype\", pm.variables.get(\"zaaktype_resultaattypen\")[0]);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"resultaatType\": \"{{resultaattype}}\"\n}"
+										},
+										"url": {
+											"raw": "{{zrc_url}}/resultaten",
+											"host": [
+												"{{zrc_url}}"
+											],
+											"path": [
+												"resultaten"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add Status to Zaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+												"exec": [
+													"pm.variables.set(\"status_url\", pm.response.json().url);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-20T13:37:00\"\n}"
+										},
+										"url": {
+											"raw": "{{zrc_url}}/statussen",
+											"host": [
+												"{{zrc_url}}"
+											],
+											"path": [
+												"statussen"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add Rol to Zaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+												"exec": [
+													"pm.variables.set(\"rol_url\", pm.response.json().url);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"betrokkene\": \"http://example.com\",\n\t\"betrokkeneType\": \"Natuurlijk persoon\",\n\t\"rolomschrijving\": \"Behandelaar\",\n\t\"roltoelichting\": \"testrol\"\n}"
+										},
+										"url": {
+											"raw": "{{zrc_url}}/rollen",
+											"host": [
+												"{{zrc_url}}"
+											],
+											"path": [
+												"rollen"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Zaakobject",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "426a1b11-f44f-40ef-a9fa-6e05e461c2dc",
+												"exec": [
+													"pm.variables.set(\"zaakobject_url\", pm.response.json().url);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"object\": \"{{informatieobject_url}}\",\n\t\"type\": \"VerblijfsObject\"\n}"
+										},
+										"url": {
+											"raw": "{{zrc_url}}/zaakobjecten",
+											"host": [
+												"{{zrc_url}}"
+											],
+											"path": [
+												"zaakobjecten"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add Zaakeigenschap to Zaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+												"exec": [
+													"pm.variables.set(\"zaakeigenschap_url\", pm.response.json().url);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"eigenschap\": \"{{zaaktype_eigenschap}}\",\n\t\"waarde\": \"test\"\n}"
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}/zaakeigenschappen",
+											"host": [
+												"{{created_zaak_url}}"
+											],
+											"path": [
+												"zaakeigenschappen"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create relation between Zaak and Informatieobject",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fa9f354c-0464-494e-b9fa-9635b21b2d43",
+												"exec": [
+													"pm.variables.set(\"objectinformatieobject_url\", pm.response.json().url)"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "5be8e943-844c-4786-9173-08a7e1dfb2c8",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"object\": \"{{created_zaak_url}}\",\n    \"objectType\": \"zaak\"\n}"
+										},
+										"url": {
+											"raw": "{{drc_url}}/objectinformatieobjecten",
+											"host": [
+												"{{drc_url}}"
+											],
+											"path": [
+												"objectinformatieobjecten"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Retrieve Zaakinformatieobject url",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6195d7e2-4e74-425d-8135-f92287a13d76",
+												"exec": [
+													"pm.variables.set(\"zaakinformatieobject_url\", pm.response.json()[0].url);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"value": "EPSG:4326",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}/informatieobjecten",
+											"host": [
+												"{{created_zaak_url}}"
+											],
+											"path": [
+												"informatieobjecten"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add Klantcontact to Zaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+												"exec": [
+													"pm.variables.set(\"klantcontact_url\", pm.response.json().url);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"datumtijd\": \"2019-02-20T00:00:00\"\n}"
+										},
+										"url": {
+											"raw": "{{zrc_url}}/klantcontacten",
+											"host": [
+												"{{zrc_url}}"
+											],
+											"path": [
+												"klantcontacten"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-015a) Zaak verwijderen is mogelijk",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
+												"exec": [
+													"pm.test(\"Zaak verwijderen geeft 204\", function() {",
+													"   pm.response.to.have.status(204); ",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-015b) Zaak verdwijnt uit zrc na verwijdering",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "1c927c06-054f-4cb2-8bd9-1d7577fcff37",
+												"exec": [
+													"pm.test(\"Zaak ophalen uit zrc na verwijdering geeft 404\", function() {",
+													"    pm.response.to.have.status(404); ",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"value": "EPSG:4326",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-015c) Resultaat verdwijnt uit zrc na Zaak verwijdering",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "1c927c06-054f-4cb2-8bd9-1d7577fcff37",
+												"exec": [
+													"pm.test(\"Resultaat ophalen uit zrc na Zaak verwijdering geeft 404\", function() {",
+													"    pm.response.to.have.status(404); ",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{resultaat_url}}",
+											"host": [
+												"{{resultaat_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-015d) Status verdwijnt uit zrc na Zaak verwijdering",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "1c927c06-054f-4cb2-8bd9-1d7577fcff37",
+												"exec": [
+													"pm.test(\"Status ophalen uit zrc na Zaak verwijdering geeft 404\", function() {",
+													"    pm.response.to.have.status(404); ",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{status_url}}",
+											"host": [
+												"{{status_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-015e) Rol verdwijnt uit zrc na Zaak verwijdering",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "1c927c06-054f-4cb2-8bd9-1d7577fcff37",
+												"exec": [
+													"pm.test(\"Rol ophalen uit zrc na Zaak verwijdering geeft 404\", function() {",
+													"    pm.response.to.have.status(404); ",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{rol_url}}",
+											"host": [
+												"{{rol_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-015f) Zaakobject verdwijnt uit zrc na Zaak verwijdering",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "1c927c06-054f-4cb2-8bd9-1d7577fcff37",
+												"exec": [
+													"pm.test(\"Zaakobject ophalen uit zrc na Zaak verwijdering geeft 404\", function() {",
+													"    pm.response.to.have.status(404); ",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{zaakobject_url}}",
+											"host": [
+												"{{zaakobject_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-015g) Zaakeigenschap verdwijnt uit zrc na Zaak verwijdering",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "1c927c06-054f-4cb2-8bd9-1d7577fcff37",
+												"exec": [
+													"pm.test(\"Zaakeigenschap ophalen uit zrc na Zaak verwijdering geeft 404\", function() {",
+													"    pm.response.to.have.status(404); ",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{zaakeigenschap_url}}",
+											"host": [
+												"{{zaakeigenschap_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-015h) (NI) ObjectInformatieObject verdwijnt uit drc na Zaak verwijdering",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "1c927c06-054f-4cb2-8bd9-1d7577fcff37",
+												"exec": [
+													"pm.test(\"ObjectInformatieObject ophalen uit drc na Zaak verwijdering geeft 404\", function() {",
+													"    pm.response.to.have.status(404); ",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{objectinformatieobject_url}}",
+											"host": [
+												"{{objectinformatieobject_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-015i) Zaakinformatieobject verdwijnt uit zrc na Zaak verwijdering",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "1c927c06-054f-4cb2-8bd9-1d7577fcff37",
+												"exec": [
+													"pm.test(\"Zaakinformatieobject ophalen uit zrc na Zaak verwijdering geeft 404\", function() {",
+													"    pm.response.to.have.status(404); ",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{zaakinformatieobject_url}}",
+											"host": [
+												"{{zaakinformatieobject_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-015j) Klantcontact verdwijnt uit zrc na Zaak verwijdering",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "1c927c06-054f-4cb2-8bd9-1d7577fcff37",
+												"exec": [
+													"pm.test(\"Klantcontact ophalen uit zrc na Zaak verwijdering geeft 404\", function() {",
+													"    pm.response.to.have.status(404); ",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{klantcontact_url}}",
+											"host": [
+												"{{klantcontact_url}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "76b6d9dc-a267-4a10-88b8-43038e699bd4",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "5693684a-48cc-47ac-b187-2124ab33f7fc",
 										"type": "text/javascript",
 										"exec": [
 											""

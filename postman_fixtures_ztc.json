@@ -35,6 +35,33 @@
         }
     },
     {
+        "model": "datamodel.eigenschapspecificatie",
+        "pk": 1,
+        "fields": {
+            "groep": "testgroep",
+            "formaat": "tekst",
+            "lengte": "200",
+            "kardinaliteit": "1",
+            "waardenverzameling": "[\"test\"]"
+        }
+    },
+    {
+        "model": "datamodel.eigenschap",
+        "pk": 1,
+        "fields": {
+            "datum_begin_geldigheid": "2019-04-19",
+            "datum_einde_geldigheid": null,
+            "uuid": "d417bd46-a2a8-46d7-bb8c-4c8dc214301b",
+            "eigenschapnaam": "Testeigenschap",
+            "definitie": "Test",
+            "specificatie_van_eigenschap": 1,
+            "referentie_naar_eigenschap": null,
+            "toelichting": "",
+            "status_type": null,
+            "is_van": 4
+        }
+    },
+    {
         "model": "datamodel.informatieobjecttype",
         "pk": 1,
         "fields": {
