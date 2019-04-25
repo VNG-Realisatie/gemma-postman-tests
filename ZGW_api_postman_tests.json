@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a654042a-9452-46e3-8857-ee961ed282df",
+		"_postman_id": "3cba58ba-9114-4fca-bc29-7c89a8ae0387",
 		"name": "ZGW api tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -169,7 +169,9 @@
 												"exec": [
 													"var informatieobjecten = pm.response.json();",
 													"pm.variables.set(\"informatieobject_url\", informatieobjecten[0].url);",
-													"pm.variables.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);"
+													"pm.variables.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);",
+													"",
+													"postman.setNextRequest(\"(zrc-011a) (WIP) (NI) Valideer op geen betalingswaarde en wel laatste betaaldatum\")"
 												],
 												"type": "text/javascript"
 											}
@@ -619,14 +621,26 @@
 									"response": []
 								},
 								{
-									"name": "Delete created Zaak",
+									"name": "Delete Created Zaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
 									"request": {
 										"method": "DELETE",
 										"header": [
 											{
 												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
+												"type": "text",
+												"value": "EPSG:4326"
 											}
 										],
 										"body": {
@@ -5455,9 +5469,14 @@
 												"exec": [
 													"pm.test(\"Zaak aanmaken met betalingsindicatie nvt en laatsteBetaalDatum niet null geeft 400\", function(){",
 													"    pm.response.to.have.status(400);",
-													"    ",
-													"    // TODO valideren op juiste error codes",
-													"});"
+													"});",
+													"",
+													"// If the test failed and the Zaak was created, delete it",
+													"if(pm.response.code == 201) {",
+													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-011b) Zaak bijwerken betalingsindicatie naar nvt moet laatsteBetaalDatum op null zetten\");",
+													"    postman.setNextRequest(\"(COMMON) Delete Zaak\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -6841,6 +6860,19 @@
 							"item": [
 								{
 									"name": "Delete Zaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "d119b2b8-8897-4495-8802-ab28c4f43d05",
+												"exec": [
+													"// End the collection run",
+													"postman.setNextRequest(null);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
 									"request": {
 										"method": "DELETE",
 										"header": [
@@ -6884,6 +6916,49 @@
 											""
 										]
 									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "common requests",
+							"item": [
+								{
+									"name": "(COMMON) Delete Zaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
+												"exec": [
+													"// postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));",
+													"postman.setNextRequest(\"Delete Zaak\");"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
 								}
 							],
 							"_postman_isSubFolder": true
@@ -7099,7 +7174,7 @@
 								}
 							],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -7290,8 +7365,8 @@
 							},
 							"status": "Accepted",
 							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
 							"body": "{\n    \"url\": \"http://example.com\",\n    \"naam\": \"string\",\n    \"omschrijving\": \"string\"\n}"
 						}
