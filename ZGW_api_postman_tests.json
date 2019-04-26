@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3cba58ba-9114-4fca-bc29-7c89a8ae0387",
+		"_postman_id": "0ebfbce3-5633-4436-8755-df19e0e1807e",
 		"name": "ZGW api tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 							"name": "setUp",
 							"item": [
 								{
-									"name": "Retrieve Zaaktype and Besluittype",
+									"name": "Retrieve Zaaktype and Besluittype from catalogus",
 									"event": [
 										{
 											"listen": "test",
@@ -102,6 +102,41 @@
 											]
 										},
 										"description": "Haalt enkele gegevens op van het Zaaktype, die relevant zijn voor de tests."
+									},
+									"response": []
+								},
+								{
+									"name": "Retrieve Zaaktypes for archiving",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a992f5be-2cb6-4177-bc66-19da1b6214f0",
+												"exec": [
+													"var zaaktypen = pm.response.json()[0].zaaktypen;",
+													"pm.variables.set(\"zaaktype_afleidingswijze_afgehandeld_url\", zaaktypen[0]);",
+													"pm.variables.set(\"zaaktype_afleidingswijze_termijn_url\", zaaktypen[1]);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{ztc_url}}/catalogussen",
+											"host": [
+												"{{ztc_url}}"
+											],
+											"path": [
+												"catalogussen"
+											]
+										}
 									},
 									"response": []
 								},
@@ -571,7 +606,10 @@
 													"pm.test(\"Zaak aanmaken met valide gegevens geeft 201\", function() {",
 													"    pm.response.to.have.status(200);",
 													"    pm.expect(pm.response.json().toelichting).to.be.equal(pm.variables.get(\"toelichting\"));",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-002a) Uniciteit bronorganisatie en identificatie op de Zaak-resource (POST)\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -610,42 +648,6 @@
 										"body": {
 											"mode": "raw",
 											"raw": "{\n\t\"toelichting\": \"{{toelichting}}\"\n}"
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
 										},
 										"url": {
 											"raw": "{{created_zaak_url}}",
@@ -905,7 +907,10 @@
 													"    pm.expect(jsonData).to.have.property(\"invalid-params\");",
 													"    ",
 													"    pm.expect(jsonData[\"invalid-params\"][0].code).to.be.equal(\"identificatie-niet-uniek\");",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"Retrieve Zaken for bronorganisatie\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -934,42 +939,6 @@
 										"body": {
 											"mode": "raw",
 											"raw": "{\n\t\"identificatie\": \"{{zaak_id}}\",\n\t\"bronorganisatie\": \"{{zaak_bronorganisatie}}\"\n}"
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
 										},
 										"url": {
 											"raw": "{{created_zaak_url}}",
@@ -1046,7 +1015,10 @@
 													"    ",
 													"    // Verify that the identificatie for the created Zaak isn't the same as any other",
 													"    pm.expect(zaken_with_same_id.length).to.be.equal(0);",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-003a) Valideren informatieobject op de ZaakInformatieObject-resource\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -1093,42 +1065,6 @@
 											],
 											"path": [
 												"zaken"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
 											]
 										}
 									},
@@ -1681,7 +1617,7 @@
 							"_postman_isSubFolder": true
 						},
 						{
-							"name": "zrc-005 (NI)",
+							"name": "zrc-005",
 							"item": [
 								{
 									"name": "Create Zaak to close",
@@ -2008,7 +1944,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-005c) (WIP) Afgesloten zaak bijwerken is niet toegestaan",
+									"name": "(zrc-005c) Afgesloten zaak bijwerken is niet toegestaan",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -2080,7 +2016,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-005d) (WIP) Afgesloten zaak deels bijwerken is niet toegestaan",
+									"name": "(zrc-005d) Afgesloten zaak deels bijwerken is niet toegestaan",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -2101,8 +2037,8 @@
 													"    pm.response.to.have.status(403);",
 													"});",
 													"",
-													"// TODO Tijdelijk totdat ObjectInformatieObject deletion gefixt is",
-													"postman.setNextRequest(\"Create relation between Zaak and Informatieobject with gebruiksrecht not null\")"
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create relation between Zaak and Informatieobject with gebruiksrecht not null\");",
+													"postman.setNextRequest(\"(COMMON) Delete relation between Zaak and Informatieobject\");"
 												],
 												"type": "text/javascript"
 											}
@@ -2144,36 +2080,6 @@
 											"raw": "{{created_zaak_url}}",
 											"host": [
 												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete relation between Zaak and Informatieobject",
-									"event": [
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "f6f87cec-0d1a-4acf-b2df-2e05417272c7",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{objectinformatieobject_url}}",
-											"host": [
-												"{{objectinformatieobject_url}}"
 											]
 										}
 									},
@@ -2245,8 +2151,8 @@
 													"    pm.expect(error.code).to.be.equal(\"indicatiegebruiksrecht-unset\");",
 													"});",
 													"",
-													"// TODO Tijdelijk totdat ObjectInformatieObject deletion gefixt is",
-													"postman.setNextRequest(\"Add non-Eindstatus to Zaak\")"
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"Add non-Eindstatus to Zaak\");",
+													"postman.setNextRequest(\"(COMMON) Delete relation between Zaak and Informatieobject\");"
 												],
 												"type": "text/javascript"
 											}
@@ -2288,36 +2194,6 @@
 											],
 											"path": [
 												"statussen"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete relation between Zaak and Informatieobject",
-									"event": [
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "f6f87cec-0d1a-4acf-b2df-2e05417272c7",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{objectinformatieobject_url}}",
-											"host": [
-												"{{objectinformatieobject_url}}"
 											]
 										}
 									},
@@ -2386,7 +2262,10 @@
 													"    ",
 													"    var einddatum = pm.response.json().einddatum;",
 													"    pm.expect(einddatum).to.be.equal(null);",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-006a) Valideer expliciet gedefinieerde vertrouwelijkheidaanduiding\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -2415,42 +2294,6 @@
 												"name": "Content-Type",
 												"type": "text",
 												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
 											}
 										],
 										"body": {
@@ -2640,7 +2483,10 @@
 												"exec": [
 													"pm.test(\"Expliciete vertrouwelijkheidaanduiding bij deels bijwerken Zaak moet toegekend worden aan Zaak\", function() {",
 													"    pm.expect(pm.response.json().vertrouwelijkheidaanduiding).to.be.equal(pm.variables.get(\"expliciete_vertrouwelijkheid\"));",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-006d) Valideer vertrouwelijkheidaanduiding afgeleid uit Zaaktype\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -2690,42 +2536,6 @@
 									"response": []
 								},
 								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
 									"name": "(zrc-006d) Valideer vertrouwelijkheidaanduiding afgeleid uit Zaaktype",
 									"event": [
 										{
@@ -2750,7 +2560,10 @@
 													"pm.test(\"Vertrouwelijkheidaanduiding bij aanmaken Zaak afgeleid uit Zaaktype indien niet meegegeven\", function() {",
 													"    pm.expect(pm.response.json().vertrouwelijkheidaanduiding).to.be.equal(pm.variables.get(\"zaaktype_vertrouwelijkheid\"));",
 													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-007a) (NI) Valideren communicatiekanaal url bij aanmaken Zaak\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -2787,42 +2600,6 @@
 											],
 											"path": [
 												"zaken"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
 											]
 										}
 									},
@@ -3418,7 +3195,10 @@
 												"exec": [
 													"pm.test(\"Zaak deels bijwerken met valide communicatiekanaal geeft 200\", function() {",
 													"    pm.response.to.have.status(200);",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-008a) Valideer urls relevanteAndereZaken\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -3456,42 +3236,6 @@
 										}
 									},
 									"response": []
-								},
-								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
 								}
 							],
 							"event": [
@@ -3519,7 +3263,7 @@
 							"_postman_isSubFolder": true
 						},
 						{
-							"name": "zrc-008",
+							"name": "zrc-008 (NI)",
 							"item": [
 								{
 									"name": "(zrc-008a) Valideer urls relevanteAndereZaken",
@@ -3868,7 +3612,10 @@
 												"exec": [
 													"pm.test(\"Zaak deels bijwerken met geldige relevanteAndereZaken geeft 200\", function() {",
 													"    pm.response.to.have.status(200);",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-009a) Valideren opschorting indien gedefinieerd\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -3906,42 +3653,28 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "135cfef4-79cc-4e2e-abd1-811439e893f6",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								},
 								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
+									"listen": "test",
+									"script": {
+										"id": "e31d0882-f1c5-4fe6-8360-ac7e1ea69a94",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							],
 							"_postman_isSubFolder": true
@@ -4529,7 +4262,10 @@
 												"exec": [
 													"pm.test(\"Zaak deels bijwerken met opschorting null geeft 200\", function() {",
 													"    pm.response.to.have.status(200);",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-009j) Zaak aanmaken met verlenging null is mogelijk\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -4569,43 +4305,7 @@
 									"response": []
 								},
 								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "(zrc-009g) Zaak aanmaken met verlenging null is mogelijk",
+									"name": "(zrc-009j) Zaak aanmaken met verlenging null is mogelijk",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -4673,7 +4373,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-009h) Zaak bijwerken met verlenging null is mogelijk",
+									"name": "(zrc-009k) Zaak bijwerken met verlenging null is mogelijk",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -4737,7 +4437,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-009i) Zaak deels bijwerken met verlenging null is mogelijk",
+									"name": "(zrc-009l) Zaak deels bijwerken met verlenging null is mogelijk",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -4756,7 +4456,10 @@
 												"exec": [
 													"pm.test(\"Zaak deels bijwerken met verlenging null geeft 200\", function() {",
 													"    pm.response.to.have.status(200);",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-010a) Valideren hoofdzaak op de Zaak-resource\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -4785,42 +4488,6 @@
 										"body": {
 											"mode": "raw",
 											"raw": "{\n\t\"verlenging\": null\n}"
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
 										},
 										"url": {
 											"raw": "{{created_zaak_url}}",
@@ -4954,7 +4621,7 @@
 											"script": {
 												"id": "d0a2b3b2-27dd-42c0-989f-e84cfe6fa757",
 												"exec": [
-													"pm.variables.set(\"deelzaak_url\", pm.response.json().url);"
+													"pm.variables.set(\"created_zaak_url\", pm.response.json().url);"
 												],
 												"type": "text/javascript"
 											}
@@ -5011,7 +4678,10 @@
 													"    var errors = pm.response.json()[\"invalid-params\"][0];",
 													"    pm.expect(errors.name).to.be.equal(\"hoofdzaak\");",
 													"    pm.expect(errors.code).to.be.equal(\"deelzaak-als-hoofdzaak\");",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-010c) Valideren deelzaak mag geen deelzaak van zichzelf zijn (PATCH)\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -5023,7 +4693,7 @@
 												"exec": [
 													"// Retrieve the Zaak body template and modify as needed",
 													"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
-													"body.hoofdzaak = pm.variables.get(\"deelzaak_url\");",
+													"body.hoofdzaak = pm.variables.get(\"created_zaak_url\");",
 													"",
 													"// Store the modified Zaak body, allowing it to be used in the main request",
 													"pm.variables.set(\"request_body\", JSON.stringify(body));"
@@ -5063,30 +4733,6 @@
 											],
 											"path": [
 												"zaken"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Deelzaak",
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{deelzaak_url}}",
-											"host": [
-												"{{deelzaak_url}}"
 											]
 										}
 									},
@@ -5369,7 +5015,10 @@
 													"pm.test(\"Zaak deels bijwerken met valide hoofdzaak geeft 200\", function() {",
 													"    pm.response.to.have.status(200);",
 													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-011a) (WIP) (NI) Valideer op geen betalingswaarde en wel laatste betaaldatum\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -5413,42 +5062,6 @@
 										"body": {
 											"mode": "raw",
 											"raw": "{{request_body}}"
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
 										},
 										"url": {
 											"raw": "{{created_zaak_url}}",
@@ -6076,8 +5689,10 @@
 												"exec": [
 													"pm.test(\"Zaak deels bijwerken met valide productenOfDiensten geeft 200\", function() {",
 													"    pm.response.to.have.status(200);",
-													"    ",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create Hoofdzaak\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -6106,42 +5721,6 @@
 										"body": {
 											"mode": "raw",
 											"raw": "{{request_body}}"
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
 										},
 										"url": {
 											"raw": "{{created_zaak_url}}",
@@ -6384,6 +5963,7 @@
 													"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
 													"delete body.archiefnominatie;",
 													"body.hoofdzaak = pm.variables.get(\"hoofdzaak_url\");",
+													"// body.zaaktype = ",
 													"",
 													"// Store the modified Zaak body, allowing it to be used in the main request",
 													"pm.variables.set(\"request_body\", JSON.stringify(body));",
@@ -6623,9 +6203,11 @@
 													"    case \"gerelateerde_zaak\":",
 													"        break;",
 													"    case \"ingangsdatum_besluit\":",
-													"        postman.setNextRequest(\"(zrc-013d) (WIP) (NI) Afleidingswijze ingangsdatum_besluit\");",
+													"        postman.setNextRequest(\"Retrieve max Besluit.ingangsdatum\");",
+													"        // postman.setNextRequest(\"(zrc-013d) (WIP) (NI) Afleidingswijze ingangsdatum_besluit\");",
 													"        break;",
 													"    case \"vervaldatum_besluit\":",
+													"        postman.setNextRequest(\"Retrieve max Besluit.vervaldatum\");",
 													"        break;",
 													"}"
 												],
@@ -6644,6 +6226,102 @@
 											"raw": "{{current_resultaattype}}",
 											"host": [
 												"{{current_resultaattype}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Retrieve max Besluit.ingangsdatum",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "efc69da9-c4b5-4461-a3ca-9757bb2dbd84",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"var ingangsdata = [];",
+													"for(i = 0; i < jsonData.length; i++) {",
+													"    ingangsdata.add(jsonData[i].ingangsdatum);",
+													"}",
+													"",
+													"pm.variables.set(\"max_ingangsdatum\", ingangsdata.reduce(function(a, b) { return a > b ? a : b; }));",
+													"",
+													"postman.setNextRequest(\"(zrc-013d) (WIP) (NI) Afleidingswijze ingangsdatum_besluit\");"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{brc_url}}/besluiten?zaak={{zaak_zonder_archiefnominatie_url}}",
+											"host": [
+												"{{brc_url}}"
+											],
+											"path": [
+												"besluiten"
+											],
+											"query": [
+												{
+													"key": "zaak",
+													"value": "{{zaak_zonder_archiefnominatie_url}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Retrieve max Besluit.vervaldatum",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "efc69da9-c4b5-4461-a3ca-9757bb2dbd84",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"var vervaldata = [];",
+													"for(i = 0; i < jsonData.length; i++) {",
+													"    vervaldata.add(jsonData[i].vervaldatum);",
+													"}",
+													"",
+													"pm.variables.set(\"max_vervaldatum\", vervaldata.reduce(function(a, b) { return a > b ? a : b; }));",
+													"",
+													"postman.setNextRequest(\"(zrc-013e) (WIP) (NI) Afleidingswijze vervaldatum_besluit\");"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{brc_url}}/besluiten?zaak={{zaak_zonder_archiefnominatie_url}}",
+											"host": [
+												"{{brc_url}}"
+											],
+											"path": [
+												"besluiten"
+											],
+											"query": [
+												{
+													"key": "zaak",
+													"value": "{{zaak_zonder_archiefnominatie_url}}"
+												}
 											]
 										}
 									},
@@ -6853,7 +6531,73 @@
 													"    var jsonData = pm.response.json();",
 													"    ",
 													"    if (pm.variables.get(\"resultaattype_archiefactietermijn\")) {",
-													"        const brondatum = moment.utc(pm.variables.get(\"hoofdzaak_einddatum\"));",
+													"        const brondatum = moment.utc(pm.variables.get(\"max_ingangsdatum\"));",
+													"        console.log(brondatum);",
+													"        const archiefactietermijn = moment.duration(pm.variables.get(\"resultaattype_archiefactietermijn\"), 'years');",
+													"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
+													"        ",
+													"        pm.expect(jsonData.archiefactiedatum).to.be.equal(calculated_archiefactiedatum.format(\"YYYY-MM-DD\"));   ",
+													"    }",
+													"});",
+													"",
+													"postman.setNextRequest(\"Delete Resultaat from Zaak\");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "869bc7bd-9394-4b5c-8476-217a4314851f",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{zaak_zonder_archiefnominatie_url}}",
+											"host": [
+												"{{zaak_zonder_archiefnominatie_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-013e) (WIP) (NI) Afleidingswijze vervaldatum_besluit",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "211fc0ce-b5c8-486d-90cc-faf4029d3353",
+												"exec": [
+													"var moment = require('moment');",
+													"",
+													"pm.test(\"Resultaat toevoegen aan Zaak zonder archiefnominatie betekent dat archiefnominatie afgeleid wordt uit Resultaattype\", function() {",
+													"    pm.response.to.have.status(200);",
+													"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.variables.get(\"resultaattype_archiefnominatie\"));",
+													"});",
+													"",
+													"pm.test(\"Resultaat met afleidingswijze ingangsdatum_besluit toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    ",
+													"    if (pm.variables.get(\"resultaattype_archiefactietermijn\")) {",
+													"        const brondatum = moment.utc(pm.variables.get(\"max_vervaldatum\"));",
 													"        const archiefactietermijn = moment.duration(pm.variables.get(\"resultaattype_archiefactietermijn\"), 'years');",
 													"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
 													"        ",
@@ -6930,6 +6674,24 @@
 									"response": []
 								},
 								{
+									"name": "Delete Besluit",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{besluit_url}}",
+											"host": [
+												"{{besluit_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
 									"name": "Delete Zaak without archiefnominatie",
 									"event": [
 										{
@@ -6945,7 +6707,6 @@
 													"    // Loop",
 													"    pm.variables.set(\"resultaattype_index\", index + 1);",
 													"    postman.setNextRequest(\"(WIP) Create Zaak without archiefnominatie\");",
-													"    // postman.setNextRequest(\"tst\")",
 													"}"
 												],
 												"type": "text/javascript"
@@ -7082,7 +6843,10 @@
 											"script": {
 												"id": "46ada267-ffcf-477a-a3d6-02addbf603a2",
 												"exec": [
-													"pm.variables.set(\"created_zaak_url\", pm.response.json().url);"
+													"pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-014a) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd\");",
+													"postman.setNextRequest(\"(COMMON) Create relation between Zaak and Informatieobject\");"
 												],
 												"type": "text/javascript"
 											}
@@ -7618,9 +7382,11 @@
 												"exec": [
 													"pm.test(\"Zaak bijwerken archiefstatus zetten op niet nog_te_archiveren met archiefactiedatum en archiefnominatie gezet geef 200\", function() {",
 													"    pm.response.to.have.status(200);",
-													"    ",
 													"    pm.expect(pm.response.json().archiefstatus).to.be.equal(pm.variables.get(\"current_archiefstatus\"));",
-													"});"
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"Change Informatieobject status to not gearchiveerd\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -7649,42 +7415,6 @@
 										"body": {
 											"mode": "raw",
 											"raw": "{{request_body}}"
-										},
-										"url": {
-											"raw": "{{created_zaak_url}}",
-											"host": [
-												"{{created_zaak_url}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Created Zaak",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
 										},
 										"url": {
 											"raw": "{{created_zaak_url}}",
@@ -7766,7 +7496,7 @@
 							"_postman_isSubFolder": true
 						},
 						{
-							"name": "zrc-015 (WIP)",
+							"name": "zrc-015 (NI)",
 							"item": [
 								{
 									"name": "Create Zaak to delete",
@@ -8695,6 +8425,99 @@
 											"raw": "{{created_zaak_url}}",
 											"host": [
 												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(COMMON) Create relation between Zaak and Informatieobject",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fa9f354c-0464-494e-b9fa-9635b21b2d43",
+												"exec": [
+													"pm.variables.set(\"objectinformatieobject_url\", pm.response.json().url)"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "5be8e943-844c-4786-9173-08a7e1dfb2c8",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"object\": \"{{created_zaak_url}}\",\n    \"objectType\": \"zaak\"\n}"
+										},
+										"url": {
+											"raw": "{{drc_url}}/objectinformatieobjecten",
+											"host": [
+												"{{drc_url}}"
+											],
+											"path": [
+												"objectinformatieobjecten"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(COMMON) Delete relation between Zaak and Informatieobject",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "f6f87cec-0d1a-4acf-b2df-2e05417272c7",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "e92fad8c-68f7-4837-bf55-1d6f2ab479ec",
+												"exec": [
+													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{objectinformatieobject_url}}",
+											"host": [
+												"{{objectinformatieobject_url}}"
 											]
 										}
 									},
