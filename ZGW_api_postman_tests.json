@@ -106,16 +106,18 @@
 									"response": []
 								},
 								{
-									"name": "Retrieve Zaaktypes for archiving",
+									"name": "Retrieve Zaaktypen for archiving",
 									"event": [
 										{
 											"listen": "test",
 											"script": {
 												"id": "a992f5be-2cb6-4177-bc66-19da1b6214f0",
 												"exec": [
-													"var zaaktypen = pm.response.json()[0].zaaktypen;",
-													"pm.variables.set(\"zaaktype_afleidingswijze_afgehandeld_url\", zaaktypen[0]);",
-													"pm.variables.set(\"zaaktype_afleidingswijze_termijn_url\", zaaktypen[1]);"
+													"// var zaaktypen = pm.response.json()[0].zaaktypen;",
+													"// pm.variables.set(\"zaaktype_afleidingswijze_afgehandeld_url\", zaaktypen[0]);",
+													"// pm.variables.set(\"zaaktype_afleidingswijze_termijn_url\", zaaktypen[1]);",
+													"",
+													"pm.variables.set(\"archiving_zaaktypen\", pm.response.json()[0].zaaktypen);"
 												],
 												"type": "text/javascript"
 											}
@@ -5959,11 +5961,17 @@
 											"script": {
 												"id": "7f3ed8a2-7bc9-4c77-85b1-561482065971",
 												"exec": [
+													"if (!pm.variables.get(\"zaaktype_index\")) {",
+													"    pm.variables.set(\"zaaktype_index\", 0);",
+													"}",
+													"",
+													"pm.variables.set(\"current_zaaktype\", pm.variables.get(\"archiving_zaaktypen\")[pm.variables.get(\"zaaktype_index\")]);",
+													"",
 													"// Retrieve the Zaak body template and modify as needed",
 													"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
 													"delete body.archiefnominatie;",
 													"body.hoofdzaak = pm.variables.get(\"hoofdzaak_url\");",
-													"// body.zaaktype = ",
+													"body.zaaktype = pm.variables.get(\"current_zaaktype\");",
 													"",
 													"// Store the modified Zaak body, allowing it to be used in the main request",
 													"pm.variables.set(\"request_body\", JSON.stringify(body));",
@@ -5981,7 +5989,12 @@
 											"script": {
 												"id": "46ada267-ffcf-477a-a3d6-02addbf603a2",
 												"exec": [
-													"pm.variables.set(\"zaak_zonder_archiefnominatie_url\", pm.response.json().url);"
+													"pm.variables.set(\"zaak_zonder_archiefnominatie_url\", pm.response.json().url);",
+													"",
+													"// TODO tijdelijk totdat ztc brondatum_archiefprocedure_procestermijn gefixt is",
+													"if([1, 2].includes(pm.variables.get(\"zaaktype_index\"))) {",
+													"    postman.setNextRequest(\"Delete Zaak without archiefnominatie\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -6065,6 +6078,37 @@
 									"response": []
 								},
 								{
+									"name": "Retrieve Resultaattype for current Zaaktype",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "efc7477c-72f1-4f81-9c97-8be750824a6c",
+												"exec": [
+													"pm.variables.set(\"current_resultaattype\", pm.response.json().resultaattypen[0])",
+													"console.log(pm.response.json().resultaattypen[0])"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{current_zaaktype}}",
+											"host": [
+												"{{current_zaaktype}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
 									"name": "Add Resultaat to Zaak",
 									"event": [
 										{
@@ -6072,11 +6116,11 @@
 											"script": {
 												"id": "7f3ed8a2-7bc9-4c77-85b1-561482065971",
 												"exec": [
-													"if (!pm.variables.get(\"resultaattype_index\")) {",
-													"    pm.variables.set(\"resultaattype_index\", 0);",
-													"}",
+													"// if (!pm.variables.get(\"resultaattype_index\")) {",
+													"//     pm.variables.set(\"resultaattype_index\", 0);",
+													"// }",
 													"",
-													"pm.variables.set(\"current_resultaattype\", pm.variables.get(\"zaaktype_resultaattypen\")[pm.variables.get(\"resultaattype_index\")])"
+													"// pm.variables.set(\"current_resultaattype\", pm.variables.get(\"zaaktype_resultaattypen\")[pm.variables.get(\"resultaattype_index\")])"
 												],
 												"type": "text/javascript"
 											}
@@ -6195,10 +6239,12 @@
 													"        postman.setNextRequest(\"(zrc-013c) Afleidingswijze eigenschap\");",
 													"        break;",
 													"    case \"ander_datumkenmerk\":",
+													"        postman.setNextRequest(\"(zrc-013g) Afleidingswijze ander_datumkenmerk\");",
 													"        break;",
 													"    case \"zaakobject\":",
 													"        break;",
 													"    case \"termijn\":",
+													"        postman.setNextRequest(\"(zrc-013f) Afleidingswijze termijn\");",
 													"        break;",
 													"    case \"gerelateerde_zaak\":",
 													"        break;",
@@ -6593,7 +6639,7 @@
 													"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.variables.get(\"resultaattype_archiefnominatie\"));",
 													"});",
 													"",
-													"pm.test(\"Resultaat met afleidingswijze ingangsdatum_besluit toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
+													"pm.test(\"Resultaat met afleidingswijze vervaldatum_besluit toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
 													"    var jsonData = pm.response.json();",
 													"    ",
 													"    if (pm.variables.get(\"resultaattype_archiefactietermijn\")) {",
@@ -6616,6 +6662,230 @@
 												"id": "869bc7bd-9394-4b5c-8476-217a4314851f",
 												"exec": [
 													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{zaak_zonder_archiefnominatie_url}}",
+											"host": [
+												"{{zaak_zonder_archiefnominatie_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-013f) Afleidingswijze termijn",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "211fc0ce-b5c8-486d-90cc-faf4029d3353",
+												"exec": [
+													"var moment = require('moment');",
+													"",
+													"pm.test(\"Resultaat toevoegen aan Zaak zonder archiefnominatie betekent dat archiefnominatie afgeleid wordt uit Resultaattype\", function() {",
+													"    pm.response.to.have.status(200);",
+													"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.variables.get(\"resultaattype_archiefnominatie\"));",
+													"});",
+													"",
+													"pm.test(\"Resultaat met afleidingswijze termijn toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    ",
+													"    if (pm.variables.get(\"resultaattype_archiefactietermijn\")) {",
+													"        var procestermijn = moment.duration(pm.variables.get(\"resultaattype_brondatumArchiefprocedure\").procestermijn);",
+													"        const brondatum = moment.utc(jsonData.einddatum).add(procestermijn);",
+													"        ",
+													"        const archiefactietermijn = moment.duration(pm.variables.get(\"resultaattype_archiefactietermijn\"), 'years');",
+													"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
+													"        ",
+													"        pm.expect(jsonData.archiefactiedatum).to.be.equal(calculated_archiefactiedatum.format(\"YYYY-MM-DD\"));   ",
+													"    }",
+													"});",
+													"",
+													"postman.setNextRequest(\"Delete Resultaat from Zaak\");"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{zaak_zonder_archiefnominatie_url}}",
+											"host": [
+												"{{zaak_zonder_archiefnominatie_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-013g) Afleidingswijze ander_datumkenmerk",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "211fc0ce-b5c8-486d-90cc-faf4029d3353",
+												"exec": [
+													"var moment = require('moment');",
+													"",
+													"pm.test(\"Resultaat toevoegen aan Zaak zonder archiefnominatie betekent dat archiefnominatie afgeleid wordt uit Resultaattype\", function() {",
+													"    pm.response.to.have.status(200);",
+													"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.variables.get(\"resultaattype_archiefnominatie\"));",
+													"});",
+													"",
+													"pm.test(\"Resultaat met afleidingswijze ander_datumkenmerk toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    ",
+													"    if (pm.variables.get(\"resultaattype_archiefactietermijn\")) {",
+													"        var procestermijn = moment.utc(pm.variables.get(\"resultaattype_brondatumArchiefprocedure\").procestermijn);",
+													"        const brondatum = moment.utc(jsonData.einddatum).add(procestermijn);",
+													"        ",
+													"        const archiefactietermijn = moment.duration(pm.variables.get(\"resultaattype_archiefactietermijn\"), 'years');",
+													"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
+													"        ",
+													"        pm.expect(jsonData.archiefactiedatum).to.be.equal(calculated_archiefactiedatum.format(\"YYYY-MM-DD\"));   ",
+													"    }",
+													"});",
+													"",
+													"postman.setNextRequest(\"Delete Resultaat from Zaak\");"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{zaak_zonder_archiefnominatie_url}}",
+											"host": [
+												"{{zaak_zonder_archiefnominatie_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-013h) Afleidingswijze zaakobject",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "211fc0ce-b5c8-486d-90cc-faf4029d3353",
+												"exec": [
+													"var moment = require('moment');",
+													"",
+													"pm.test(\"Resultaat toevoegen aan Zaak zonder archiefnominatie betekent dat archiefnominatie afgeleid wordt uit Resultaattype\", function() {",
+													"    pm.response.to.have.status(200);",
+													"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.variables.get(\"resultaattype_archiefnominatie\"));",
+													"});",
+													"",
+													"pm.test(\"Resultaat met afleidingswijze zaakobject toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    ",
+													"    if (pm.variables.get(\"resultaattype_archiefactietermijn\")) {",
+													"        const brondatum = moment.utc(jsonData.einddatum);",
+													"        const archiefactietermijn = moment.duration(pm.variables.get(\"resultaattype_archiefactietermijn\"), 'years');",
+													"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
+													"        ",
+													"        pm.expect(jsonData.archiefactiedatum).to.be.equal(calculated_archiefactiedatum.format(\"YYYY-MM-DD\"));   ",
+													"    }",
+													"});",
+													"",
+													"postman.setNextRequest(\"Delete Resultaat from Zaak\");"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{zaak_zonder_archiefnominatie_url}}",
+											"host": [
+												"{{zaak_zonder_archiefnominatie_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-013i) Afleidingswijze gerelateerde_zaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "211fc0ce-b5c8-486d-90cc-faf4029d3353",
+												"exec": [
+													"var moment = require('moment');",
+													"",
+													"pm.test(\"Resultaat toevoegen aan Zaak zonder archiefnominatie betekent dat archiefnominatie afgeleid wordt uit Resultaattype\", function() {",
+													"    pm.response.to.have.status(200);",
+													"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.variables.get(\"resultaattype_archiefnominatie\"));",
+													"});",
+													"",
+													"pm.test(\"Resultaat met afleidingswijze gerelateerde_zaak toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    ",
+													"    if (pm.variables.get(\"resultaattype_archiefactietermijn\")) {",
+													"        const brondatum = moment.utc(jsonData.einddatum);",
+													"        const archiefactietermijn = moment.duration(pm.variables.get(\"resultaattype_archiefactietermijn\"), 'years');",
+													"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
+													"        ",
+													"        pm.expect(jsonData.archiefactiedatum).to.be.equal(calculated_archiefactiedatum.format(\"YYYY-MM-DD\"));   ",
+													"    }",
+													"});",
+													"",
+													"postman.setNextRequest(\"Delete Resultaat from Zaak\");"
 												],
 												"type": "text/javascript"
 											}
@@ -6699,13 +6969,13 @@
 											"script": {
 												"id": "9c66db28-3c20-4603-9de7-b70c45fe8572",
 												"exec": [
-													"var index = pm.variables.get(\"resultaattype_index\");",
+													"var index = pm.variables.get(\"zaaktype_index\");",
 													"",
-													"if (index == pm.variables.get(\"zaaktype_resultaattypen\").length - 1) {",
+													"if (index == pm.variables.get(\"archiving_zaaktypen\").length - 1) {",
 													"    postman.setNextRequest(\"Delete Hoofdzaak\");",
 													"} else {",
 													"    // Loop",
-													"    pm.variables.set(\"resultaattype_index\", index + 1);",
+													"    pm.variables.set(\"zaaktype_index\", index + 1);",
 													"    postman.setNextRequest(\"(WIP) Create Zaak without archiefnominatie\");",
 													"}"
 												],
