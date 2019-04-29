@@ -6236,10 +6236,10 @@
 													"        postman.setNextRequest(\"(zrc-013b) Afleidingswijze hoofdzaak\");",
 													"        break;",
 													"    case \"eigenschap\":",
-													"        postman.setNextRequest(\"(zrc-013c) Afleidingswijze eigenschap\");",
+													"        postman.setNextRequest(\"(zrc-013c) (WIP) Afleidingswijze eigenschap\");",
 													"        break;",
 													"    case \"ander_datumkenmerk\":",
-													"        postman.setNextRequest(\"(zrc-013g) Afleidingswijze ander_datumkenmerk\");",
+													"        postman.setNextRequest(\"(zrc-013g) (WIP) Afleidingswijze ander_datumkenmerk\");",
 													"        break;",
 													"    case \"zaakobject\":",
 													"        break;",
@@ -6247,10 +6247,10 @@
 													"        postman.setNextRequest(\"(zrc-013f) Afleidingswijze termijn\");",
 													"        break;",
 													"    case \"gerelateerde_zaak\":",
+													"        postman.setNextRequest(\"(zrc-013i) (WIP) Afleidingswijze gerelateerde_zaak\");",
 													"        break;",
 													"    case \"ingangsdatum_besluit\":",
 													"        postman.setNextRequest(\"Retrieve max Besluit.ingangsdatum\");",
-													"        // postman.setNextRequest(\"(zrc-013d) (WIP) (NI) Afleidingswijze ingangsdatum_besluit\");",
 													"        break;",
 													"    case \"vervaldatum_besluit\":",
 													"        postman.setNextRequest(\"Retrieve max Besluit.vervaldatum\");",
@@ -6494,7 +6494,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-013c) Afleidingswijze eigenschap",
+									"name": "(zrc-013c) (WIP) Afleidingswijze eigenschap",
 									"event": [
 										{
 											"listen": "test",
@@ -6747,7 +6747,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-013g) Afleidingswijze ander_datumkenmerk",
+									"name": "(zrc-013g) (WIP) Afleidingswijze ander_datumkenmerk",
 									"event": [
 										{
 											"listen": "test",
@@ -6804,7 +6804,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-013h) Afleidingswijze zaakobject",
+									"name": "(zrc-013h) (WIP) Afleidingswijze zaakobject",
 									"event": [
 										{
 											"listen": "test",
@@ -6859,7 +6859,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-013i) Afleidingswijze gerelateerde_zaak",
+									"name": "(zrc-013i) (WIP) Afleidingswijze gerelateerde_zaak",
 									"event": [
 										{
 											"listen": "test",
@@ -9234,7 +9234,7 @@
 			"name": "Regression tests",
 			"item": [
 				{
-					"name": "setup",
+					"name": "setUp",
 					"item": [
 						{
 							"name": "Retrieve Zaaktype",
@@ -9306,6 +9306,28 @@
 							"response": []
 						}
 					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f38bc0f5-411b-4380-89c7-25085499112b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5aebf182-d7ba-4857-a85e-f0ba41513dd0",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
 					"_postman_isSubFolder": true
 				},
 				{
@@ -9369,77 +9391,6 @@
 									"script": {
 										"id": "195f10c8-826a-4979-9009-e8723e14f6ac",
 										"exec": [
-											"// maak zaak",
-											"// var data = {",
-											"//     \"bronorganisatie\": \"000000000\",",
-											"//     \"omschrijving\": \"string2\",",
-											"//     \"toelichting\": \"string\",",
-											"//     \"zaaktype\": pm.variables.get(\"existing_zaaktype\"),",
-											"//     \"registratiedatum\": \"2019-04-09\",",
-											"//     \"verantwoordelijkeOrganisatie\": \"000000000\",",
-											"//     \"startdatum\": \"2019-04-09\",",
-											"//     \"einddatumGepland\": \"2019-04-09\",",
-											"//     \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",",
-											"//     \"publicatiedatum\": \"2019-04-09\",",
-											"// \t\"vertrouwelijkheidaanduiding\": \"openbaar\",",
-											"// \t\"betalingsindicatie\": \"nvt\",",
-											"// \t\"zaakgeometrie\": ",
-											"// \t{",
-											"// \t    \"type\": \"Point\",",
-											"// \t    \"coordinates\": [53, 5]",
-											"// \t},",
-											"// \t\"opschorting\": ",
-											"// \t{",
-											"// \t    \"indicatie\": true,",
-											"// \t    \"reden\": \"string\"",
-											"// \t},",
-											"// \t\"selectielijstklasse\": \"http://example.com\",",
-											"// \t\"relevanteAndereZaken\": ",
-											"// \t[",
-											"",
-											"//     \"http://example.com\"",
-											"",
-											"// ],",
-											"//     \"archiefnominatie\": \"blijvend_bewaren\",",
-											"//     \"archiefstatus\": \"nog_te_archiveren\",",
-											"//     \"archiefactiedatum\": \"2019-04-09\",",
-											"",
-											"// };",
-											"",
-											"// // Create a Zaak",
-											"// pm.sendRequest({",
-											"//         url: pm.variables.get(\"zrc_url\") + \"/zaken\",",
-											"//         header: {",
-											"//             \"Authorization\": pm.variables.get(\"token\"),",
-											"//             \"Accept-Crs\": \"EPSG:4326\",",
-											"//             \"Content-Crs\": \"EPSG:4326\",",
-											"//             \"content-type\": \"application/json\"",
-											"//         },",
-											"//         body: {",
-											"//             mode: \"raw\",",
-											"//             raw: JSON.stringify(data)",
-											"//         },",
-											"//         method: \"POST\"",
-											"//     }, function(err, res) {",
-											"//     if(!err) {",
-											"//         // Store its url, to reference it as a deelzaak again later and to delete it afterwards",
-											"//         pm.variables.set(\"zaak_url\", res.json().url);",
-											"//     }",
-											"// });",
-											"",
-											"// Retrieve existing informatieobject",
-											"// pm.sendRequest({",
-											"//         url: pm.variables.get(\"drc_url\") + \"/enkelvoudiginformatieobjecten\",",
-											"//         header: {",
-											"//             \"Authorization\": pm.variables.get(\"token\")",
-											"//         },",
-											"//         method: \"GET\"",
-											"//     }, function(err, res) {",
-											"//     if(!err) {",
-											"//         // Store the zaaktype as a variable",
-											"//         pm.variables.set(\"informatieobject_url\", res.json()[0].url);",
-											"//     }",
-											"// });",
 											""
 										],
 										"type": "text/javascript"
@@ -9494,19 +9445,8 @@
 										"id": "ee71f907-ca42-4258-ac9d-5e443246d7c3",
 										"exec": [
 											"pm.test(\"ObjectInformatieObject deletion results in 204\", function() {",
-											"   pm.response.to.have.status(204); ",
-											"    // TODO check of relatie uit zrc weg is",
-											"});",
-											"",
-											"// Delete the created deelzaak which was used as hoofdzaak in the main request",
-											"// pm.sendRequest({",
-											"//     url: pm.variables.get(\"zaak_url\"),",
-											"//     header: {",
-											"//         \"Authorization\": pm.variables.get(\"token\"),",
-											"//         \"Accept-Crs\": \"EPSG:4326\"",
-											"//     },",
-											"//     method: \"DELETE\"",
-											"// });"
+											"   pm.response.to.have.status(204);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -9538,7 +9478,6 @@
 										"exec": [
 											"pm.test(\"ObjectInformatieObject verwijdering cascade door naar ZRC\", function() {",
 											"    pm.response.to.have.status(200);",
-											"    console.log(pm.response.json())",
 											"    pm.expect(pm.response.json().length).to.be.equal(0);",
 											"});"
 										],
@@ -9604,19 +9543,7 @@
 								"id": "1bca3884-93ca-45dc-9ff9-06fcb8193ae0",
 								"type": "text/javascript",
 								"exec": [
-									"// Retrieve existing zaaktype",
-									"pm.sendRequest({",
-									"        url: pm.variables.get(\"ztc_url\") + \"/catalogussen\",",
-									"        header: {",
-									"            \"Authorization\": pm.variables.get(\"token\")",
-									"        },",
-									"        method: \"GET\"",
-									"    }, function(err, res) {",
-									"    if(!err) {",
-									"        // Store the zaaktype as a variable",
-									"        pm.variables.set(\"existing_zaaktype\", res.json()[0].zaaktypen[0]);",
-									"    }",
-									"});"
+									""
 								]
 							}
 						},
