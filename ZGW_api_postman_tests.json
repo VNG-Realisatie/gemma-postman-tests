@@ -208,7 +208,10 @@
 												"exec": [
 													"var informatieobjecten = pm.response.json();",
 													"pm.variables.set(\"informatieobject_url\", informatieobjecten[0].url);",
-													"pm.variables.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);"
+													"pm.variables.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);",
+													"",
+													"// postman.setNextRequest(\"Create Hoofdzaak\")",
+													"// postman.setNextRequest(\"Create Zaak to close\")"
 												],
 												"type": "text/javascript"
 											}
@@ -261,10 +264,206 @@
 							"_postman_isSubFolder": true
 						},
 						{
-							"name": "zrc-001",
+							"name": "zrc-001 (NI)",
 							"item": [
 								{
-									"name": "(zrc-001a) Valideren Zaaktype op Zaak-resource (POST)",
+									"name": "(zrc-001a) Zaak aanmaken is mogelijk",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "4db223ef-0730-4da5-81f4-2df1b0975f10",
+												"exec": [
+													"pm.test(\"Zaak aanmaken met valide gegevens geeft 201\", function() {",
+													"    pm.response.to.have.status(201);",
+													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
+													"});",
+													"",
+													"if(!pm.variables.get(\"created_zaak_url\")) {",
+													"    postman.setNextRequest(\"(zrc-001d) Zaak aanmaken met ongeldige zaaktype url is onmogelijk\");",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "f8050155-7fe9-4dbe-bf6e-85474686a973",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{zaak_body}}"
+										},
+										"url": {
+											"raw": "{{zrc_url}}/zaken",
+											"host": [
+												"{{zrc_url}}"
+											],
+											"path": [
+												"zaken"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-001b) Zaak bijwerken is mogelijk",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "4db223ef-0730-4da5-81f4-2df1b0975f10",
+												"exec": [
+													"pm.test(\"Zaak bijwerken met valide gegevens geeft 201\", function() {",
+													"    pm.response.to.have.status(200);",
+													"    pm.expect(pm.response.json().omschrijving).to.be.equal(pm.variables.get(\"omschrijving\"));",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "f8050155-7fe9-4dbe-bf6e-85474686a973",
+												"exec": [
+													"// Retrieve the Zaak body template and modify as needed",
+													"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
+													"pm.variables.set(\"omschrijving\", \"aangepaste omschrijving\");",
+													"body.omschrijving = pm.variables.get(\"omschrijving\");",
+													"",
+													"// Store the modified Zaak body, allowing it to be used in the main request",
+													"pm.variables.set(\"request_body\", JSON.stringify(body));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}"
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-001c) Zaak deels bijwerken is mogelijk",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "4db223ef-0730-4da5-81f4-2df1b0975f10",
+												"exec": [
+													"pm.test(\"Zaak deels bijwerken met valide zaaktype url geeft 201\", function() {",
+													"    pm.response.to.have.status(200);",
+													"    pm.expect(pm.response.json().toelichting).to.be.equal(pm.variables.get(\"toelichting\"));",
+													"});",
+													"",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-001d) Zaak aanmaken met ongeldige zaaktype url is onmogelijk\");",
+													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "f8050155-7fe9-4dbe-bf6e-85474686a973",
+												"exec": [
+													"pm.variables.set(\"toelichting\", \"aangepaste toelichting\")"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Accept-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"toelichting\": \"{{toelichting}}\"\n}"
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}",
+											"host": [
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(zrc-001d) Zaak aanmaken met ongeldige zaaktype url is onmogelijk",
 									"event": [
 										{
 											"listen": "test",
@@ -283,7 +482,7 @@
 													"// If the test failed and the Zaak was created, delete it",
 													"if(pm.response.code == 201) {",
 													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
-													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-001b) Valideren Zaaktype op Zaak-resource (PUT)\");",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-001e) Zaak bijwerken met ongeldige zaaktype url is onmogelijk\");",
 													"    postman.setNextRequest(\"(COMMON) Delete Zaak\");",
 													"}"
 												],
@@ -343,7 +542,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-001b) Valideren Zaaktype op Zaak-resource (PUT)",
+									"name": "(zrc-001e) Zaak bijwerken met ongeldige zaaktype url is onmogelijk",
 									"event": [
 										{
 											"listen": "test",
@@ -412,7 +611,7 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-001c) Valideren Zaaktype op Zaak-resource (PATCH)",
+									"name": "(zrc-001f) Zaak deels bijwerken met ongeldige zaaktype url is onmogelijk",
 									"event": [
 										{
 											"listen": "test",
@@ -476,17 +675,28 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-001d) Zaak aanmaken is mogelijk",
+									"name": "(zrc-001g) Zaak aanmaken met zaaktype url die niet wijst naar Zaaktype is onmogelijk",
 									"event": [
 										{
 											"listen": "test",
 											"script": {
-												"id": "4db223ef-0730-4da5-81f4-2df1b0975f10",
+												"id": "759de81f-fe06-48a8-9586-d495f3c77444",
 												"exec": [
-													"pm.test(\"Zaak aanmaken met valide gegevens geeft 201\", function() {",
-													"    pm.response.to.have.status(201);",
+													"pm.test(\"Zaak aanmaken met zaaktype url die niet wijst naar Zaaktype-resource geeft 400\", function() {",
+													"    pm.response.to.have.status(400);",
+													"    ",
+													"    // Verify that the 400 is returned for the correct reason",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"zaaktype\");",
+													"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
+													"});",
+													"",
+													"// If the test failed and the Zaak was created, delete it",
+													"if(pm.response.code == 201) {",
 													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
-													"});"
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-001h) Zaak bijwerken met zaaktype url die niet wijst naar Zaaktype is onmogelijk\");",
+													"    postman.setNextRequest(\"(COMMON) Delete Zaak\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -494,9 +704,15 @@
 										{
 											"listen": "prerequest",
 											"script": {
-												"id": "f8050155-7fe9-4dbe-bf6e-85474686a973",
+												"id": "b79c193c-ee7a-46e6-979e-398d5edfa06c",
 												"exec": [
-													""
+													"// Retrieve the Zaak body template and modify as needed",
+													"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
+													"body.zaaktype = pm.environment.get(\"mock_url\") + \"/200\";",
+													"body.zaaktype = pm.variables.get(\"zaak_url\");",
+													"",
+													"// Store the modified Zaak body, allowing it to be used in the main request",
+													"pm.variables.set(\"request_body\", JSON.stringify(body));"
 												],
 												"type": "text/javascript"
 											}
@@ -506,25 +722,25 @@
 										"method": "POST",
 										"header": [
 											{
-												"key": "Content-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
 											},
 											{
 												"key": "Accept-Crs",
-												"value": "EPSG:4326",
-												"type": "text"
+												"type": "text",
+												"value": "EPSG:4326"
 											},
 											{
-												"key": "Content-Type",
-												"name": "Content-Type",
-												"value": "application/json",
-												"type": "text"
+												"key": "Content-Crs",
+												"type": "text",
+												"value": "EPSG:4326"
 											}
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{{zaak_body}}"
+											"raw": "{{request_body}}"
 										},
 										"url": {
 											"raw": "{{zrc_url}}/zaken",
@@ -539,16 +755,20 @@
 									"response": []
 								},
 								{
-									"name": "(zrc-001e) Zaak bijwerken is mogelijk",
+									"name": "(zrc-001h) Zaak bijwerken met zaaktype url die niet wijst naar Zaaktype is onmogelijk",
 									"event": [
 										{
 											"listen": "test",
 											"script": {
-												"id": "4db223ef-0730-4da5-81f4-2df1b0975f10",
+												"id": "759de81f-fe06-48a8-9586-d495f3c77444",
 												"exec": [
-													"pm.test(\"Zaak bijwerken met valide gegevens geeft 201\", function() {",
-													"    pm.response.to.have.status(200);",
-													"    pm.expect(pm.response.json().omschrijving).to.be.equal(pm.variables.get(\"omschrijving\"));",
+													"pm.test(\"Zaak bijwerken met zaaktype url die niet wijst naar Zaaktype-resource geeft 400\", function() {",
+													"    pm.response.to.have.status(400);",
+													"    ",
+													"    // Verify that the 400 is returned for the correct reason",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"zaaktype\");",
+													"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
 													"});"
 												],
 												"type": "text/javascript"
@@ -557,12 +777,11 @@
 										{
 											"listen": "prerequest",
 											"script": {
-												"id": "f8050155-7fe9-4dbe-bf6e-85474686a973",
+												"id": "b79c193c-ee7a-46e6-979e-398d5edfa06c",
 												"exec": [
 													"// Retrieve the Zaak body template and modify as needed",
 													"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
-													"pm.variables.set(\"omschrijving\", \"aangepaste omschrijving\");",
-													"body.omschrijving = pm.variables.get(\"omschrijving\");",
+													"body.zaaktype = pm.environment.get(\"mock_url\") + \"/404\";",
 													"",
 													"// Store the modified Zaak body, allowing it to be used in the main request",
 													"pm.variables.set(\"request_body\", JSON.stringify(body));"
@@ -575,9 +794,10 @@
 										"method": "PUT",
 										"header": [
 											{
-												"key": "Content-Crs",
+												"key": "Content-Type",
+												"name": "Content-Type",
 												"type": "text",
-												"value": "EPSG:4326"
+												"value": "application/json"
 											},
 											{
 												"key": "Accept-Crs",
@@ -585,10 +805,9 @@
 												"value": "EPSG:4326"
 											},
 											{
-												"key": "Content-Type",
-												"name": "Content-Type",
+												"key": "Content-Crs",
 												"type": "text",
-												"value": "application/json"
+												"value": "EPSG:4326"
 											}
 										],
 										"body": {
@@ -596,29 +815,30 @@
 											"raw": "{{request_body}}"
 										},
 										"url": {
-											"raw": "{{created_zaak_url}}",
+											"raw": "{{zaak_url}}",
 											"host": [
-												"{{created_zaak_url}}"
+												"{{zaak_url}}"
 											]
 										}
 									},
 									"response": []
 								},
 								{
-									"name": "(zrc-001f) Zaak deels bijwerken is mogelijk",
+									"name": "(zrc-001i) Zaak deels bijwerken met zaaktype url die niet wijst naar Zaaktype is onmogelijk",
 									"event": [
 										{
 											"listen": "test",
 											"script": {
-												"id": "4db223ef-0730-4da5-81f4-2df1b0975f10",
+												"id": "759de81f-fe06-48a8-9586-d495f3c77444",
 												"exec": [
-													"pm.test(\"Zaak deels bijwerken met valide zaaktype url geeft 201\", function() {",
-													"    pm.response.to.have.status(200);",
-													"    pm.expect(pm.response.json().toelichting).to.be.equal(pm.variables.get(\"toelichting\"));",
-													"});",
-													"",
-													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-002a) Uniciteit bronorganisatie en identificatie op de Zaak-resource (POST)\");",
-													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
+													"pm.test(\"Zaak deels bijwerken met zaaktype url die niet wijst naar Zaaktype-resource geeft 400\", function() {",
+													"    pm.response.to.have.status(400);",
+													"    ",
+													"    // Verify that the 400 is returned for the correct reason",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"zaaktype\");",
+													"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -626,9 +846,9 @@
 										{
 											"listen": "prerequest",
 											"script": {
-												"id": "f8050155-7fe9-4dbe-bf6e-85474686a973",
+												"id": "b79c193c-ee7a-46e6-979e-398d5edfa06c",
 												"exec": [
-													"pm.variables.set(\"toelichting\", \"aangepaste toelichting\")"
+													""
 												],
 												"type": "text/javascript"
 											}
@@ -638,9 +858,10 @@
 										"method": "PATCH",
 										"header": [
 											{
-												"key": "Content-Crs",
+												"key": "Content-Type",
+												"name": "Content-Type",
 												"type": "text",
-												"value": "EPSG:4326"
+												"value": "application/json"
 											},
 											{
 												"key": "Accept-Crs",
@@ -648,20 +869,19 @@
 												"value": "EPSG:4326"
 											},
 											{
-												"key": "Content-Type",
-												"name": "Content-Type",
+												"key": "Content-Crs",
 												"type": "text",
-												"value": "application/json"
+												"value": "EPSG:4326"
 											}
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n\t\"toelichting\": \"{{toelichting}}\"\n}"
+											"raw": "{\n\t\"zaaktype\": \"{{mock_url}}/200\"\n}"
 										},
 										"url": {
-											"raw": "{{created_zaak_url}}",
+											"raw": "{{zaak_url}}",
 											"host": [
-												"{{created_zaak_url}}"
+												"{{zaak_url}}"
 											]
 										}
 									},
@@ -719,11 +939,11 @@
 												"id": "b34be4ba-bf87-4ded-8794-c3a0084faa5d",
 												"exec": [
 													"pm.test(\"Zaak aanmaken met bestaande combinatie bronorganisatie en identificatie geeft 400\", function() {",
-													"    var jsonData = pm.response.json();",
 													"    pm.response.to.have.status(400);",
-													"    pm.expect(jsonData).to.have.property(\"invalid-params\");",
 													"    ",
-													"    pm.expect(jsonData[\"invalid-params\"][0].code).to.be.equal(\"identificatie-niet-uniek\");",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"identificatie\");",
+													"    pm.expect(error.code).to.be.equal(\"identificatie-niet-uniek\");",
 													"});",
 													"",
 													"// If the test failed and the Zaak was created, delete it",
@@ -781,8 +1001,7 @@
 											"script": {
 												"id": "01e98b0e-0bea-40a1-8485-67695fb020b3",
 												"exec": [
-													"var zaak = pm.response.json();",
-													"pm.variables.set(\"created_zaak_url\", zaak.url);"
+													"pm.variables.set(\"created_zaak_url\", pm.response.json().url);"
 												],
 												"type": "text/javascript"
 											}
@@ -850,11 +1069,11 @@
 												"id": "b34be4ba-bf87-4ded-8794-c3a0084faa5d",
 												"exec": [
 													"pm.test(\"Zaak aanmaken met bestaande combinatie bronorganisatie en identificatie geeft 400\", function() {",
-													"    var jsonData = pm.response.json();",
-													"    pm.response.to.have.status(400)",
-													"    pm.expect(jsonData).to.have.property(\"invalid-params\");",
+													"    pm.response.to.have.status(400);",
 													"    ",
-													"    pm.expect(jsonData[\"invalid-params\"][0].code).to.be.equal(\"identificatie-niet-uniek\");",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"identificatie\");",
+													"    pm.expect(error.code).to.be.equal(\"identificatie-niet-uniek\");",
 													"});"
 												],
 												"type": "text/javascript"
@@ -918,11 +1137,11 @@
 												"id": "b34be4ba-bf87-4ded-8794-c3a0084faa5d",
 												"exec": [
 													"pm.test(\"Zaak aanmaken met bestaande combinatie bronorganisatie en identificatie geeft 400\", function() {",
-													"    var jsonData = pm.response.json();",
-													"    pm.response.to.have.status(400)",
-													"    pm.expect(jsonData).to.have.property(\"invalid-params\");",
+													"    pm.response.to.have.status(400);",
 													"    ",
-													"    pm.expect(jsonData[\"invalid-params\"][0].code).to.be.equal(\"identificatie-niet-uniek\");",
+													"    var error = pm.response.json()[\"invalid-params\"][0];",
+													"    pm.expect(error.name).to.be.equal(\"identificatie\");",
+													"    pm.expect(error.code).to.be.equal(\"identificatie-niet-uniek\");",
 													"});",
 													"",
 													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"Retrieve Zaken for bronorganisatie\");",
@@ -1112,7 +1331,7 @@
 							"_postman_isSubFolder": true
 						},
 						{
-							"name": "zrc-003 (NI)",
+							"name": "zrc-003 (NI) (WIP)",
 							"item": [
 								{
 									"name": "(zrc-003a) Valideren informatieobject op de ZaakInformatieObject-resource",
@@ -1129,7 +1348,14 @@
 													"    var errors = pm.response.json()[\"invalid-params\"];",
 													"    pm.expect(errors[0].name).to.be.equal(\"informatieobject\");",
 													"    pm.expect(errors[0].code).to.be.equal(\"bad-url\");",
-													"});"
+													"});",
+													"",
+													"// TODO",
+													"// if(pm.response.code == 201) {",
+													"//     pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
+													"//     pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-001e) Zaak bijwerken met ongeldige zaaktype url is onmogelijk\");",
+													"//     postman.setNextRequest(\"(COMMON) Delete Zaak\");",
+													"// }"
 												],
 												"type": "text/javascript"
 											}
@@ -1246,11 +1472,7 @@
 													"    var error = pm.response.json()[\"invalid-params\"][0];",
 													"    pm.expect(error.name).to.be.equal(\"informatieobject\");",
 													"    pm.expect(error.code).to.be.equal(\"unique\");",
-													"});",
-													"",
-													"",
-													"// TODO Tijdelijk totdat ObjectInformatieObject deletion gefixt is",
-													"postman.setNextRequest(\"(zrc-003c) (NI) Valideren bestaan relatie informatieobject en zaak\")"
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -1283,7 +1505,7 @@
 									"response": []
 								},
 								{
-									"name": "Delete relation between Zaak and Informatieobject",
+									"name": "(WIP) Delete relation between Zaak and Informatieobject",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -1296,8 +1518,11 @@
 											}
 										}
 									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
 									"request": {
-										"method": "DELETE",
+										"method": "GET",
 										"header": [],
 										"body": {
 											"mode": "raw",
@@ -1846,8 +2071,9 @@
 													"pm.test(\"Toevoegen eindstatus aan Zaak laat Zaak.einddatum afleiden uit status.datumStatusGezet\", function(){",
 													"    pm.response.to.have.status(200);",
 													"    ",
+													"    // TODO error handling voor split",
 													"    var einddatum = pm.response.json().einddatum;",
-													"    pm.expect(pm.variables.get(\"eindstatus_datumStatusGezet\")).to.be.equal(einddatum);",
+													"    pm.expect(pm.variables.get(\"eindstatus_datumStatusGezet\").split(\"T\")[0]).to.be.equal(einddatum);",
 													"});"
 												],
 												"type": "text/javascript"
@@ -1887,9 +2113,55 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "{{zaak_url}}",
+											"raw": "{{created_zaak_url}}",
 											"host": [
-												"{{zaak_url}}"
+												"{{created_zaak_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Retrieve related Informatieobjecten",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "d96bd2c6-5ee1-420c-b88d-022a0a69671c",
+												"exec": [
+													"var jsonData = pm.response.json();",
+													"",
+													"var related_informatieobjecten_urls = [];",
+													"for(i=0; i<jsonData.length; i++) {",
+													"    related_informatieobjecten_urls.add(jsonData[i].informatieobject);",
+													"}",
+													"",
+													"pm.variables.set(\"related_informatieobjecten_urls\", related_informatieobjecten_urls);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept-Crs",
+												"value": "EPSG:4326",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{created_zaak_url}}/informatieobjecten",
+											"host": [
+												"{{created_zaak_url}}"
+											],
+											"path": [
+												"informatieobjecten"
 											]
 										}
 									},
@@ -1904,21 +2176,19 @@
 												"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
 												"exec": [
 													"pm.test(\"Afsluiten Zaak betekent Informatieobject.indicatieGebruiksrecht gezet voor alle gerelateerde objecten\", function(){",
-													"    var jsonData = pm.response.json();",
-													"    ",
 													"    pm.response.to.have.status(200);",
-													"    ",
-													"    for (i = 0; i < jsonData.length; i++) {",
-													"        pm.sendRequest({",
-													"            url: jsonData[i].informatieobject,",
-													"            method: \"GET\"",
-													"        }, function (err, res) {",
-													"                if (!err) {",
-													"                    pm.expect(res.json().indicatieGebruiksrecht).to.not.be.equal(null);",
-													"                }",
-													"        });",
-													"    }",
-													"});"
+													"    pm.expect(pm.response.json().indicatieGebruiksrecht).to.not.be.equal(null);",
+													"});",
+													"",
+													"var index = pm.variables.get(\"current_related_informatieobject_index\");",
+													"",
+													"if (index == pm.variables.get(\"related_informatieobjecten_urls\").length - 1) {",
+													"    postman.setNextRequest(\"(zrc-005c) Afgesloten zaak bijwerken is niet toegestaan\");",
+													"} else {",
+													"    // Loop",
+													"    pm.variables.set(\"current_related_informatieobject_index\", index + 1);",
+													"    postman.setNextRequest(\"(zrc-005b) Informatieobject.indicatieGebruikersrecht niet null bij afsluiten zaak\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -1928,7 +2198,11 @@
 											"script": {
 												"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
 												"exec": [
-													""
+													"if(!pm.variables.get(\"current_related_informatieobject_index\")) {",
+													"    pm.variables.set(\"current_related_informatieobject_index\", 0);",
+													"}",
+													"",
+													"pm.variables.set(\"current_related_informatieobject_url\", pm.variables.get(\"related_informatieobjecten_urls\")[pm.variables.get(\"current_related_informatieobject_index\")]);"
 												],
 												"type": "text/javascript"
 											}
@@ -1948,12 +2222,9 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "{{zaak_url}}/informatieobjecten",
+											"raw": "{{current_related_informatieobject_url}}",
 											"host": [
-												"{{zaak_url}}"
-											],
-											"path": [
-												"informatieobjecten"
+												"{{current_related_informatieobject_url}}"
 											]
 										}
 									},
@@ -2281,6 +2552,7 @@
 													"});",
 													"",
 													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-006a) Valideer expliciet gedefinieerde vertrouwelijkheidaanduiding\");",
+													"// pm.variables.set(\"NEXT_REQUEST_NAME\", \"Delete Zaak\");",
 													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 												],
 												"type": "text/javascript"
@@ -2362,8 +2634,10 @@
 												"id": "4d176dd2-b596-4624-bfe8-5ce952a103f5",
 												"exec": [
 													"pm.test(\"Expliciete vertrouwelijkheidaanduiding bij aanmaken Zaak moet toegekend worden aan Zaak\", function() {",
-													"    pm.expect(pm.response.json().vertrouwelijkheidaanduiding).to.be.equal(pm.variables.get(\"expliciete_vertrouwelijkheid\"));",
-													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
+													"    var jsonData = pm.response.json();",
+													"    pm.expect(jsonData.vertrouwelijkheidaanduiding).to.be.equal(pm.variables.get(\"expliciete_vertrouwelijkheid\"));",
+													"    ",
+													"    pm.variables.set(\"created_zaak_url\", jsonData.url);",
 													"});"
 												],
 												"type": "text/javascript"
@@ -2501,8 +2775,11 @@
 													"    pm.expect(pm.response.json().vertrouwelijkheidaanduiding).to.be.equal(pm.variables.get(\"expliciete_vertrouwelijkheid\"));",
 													"});",
 													"",
-													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-006d) Valideer vertrouwelijkheidaanduiding afgeleid uit Zaaktype\");",
-													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
+													"",
+													"if(pm.variables.get(\"created_zaak_url\")) {",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-006d) Valideer vertrouwelijkheidaanduiding afgeleid uit Zaaktype\");",
+													"    postman.setNextRequest(\"(COMMON) Delete Zaak\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -2578,8 +2855,10 @@
 													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
 													"});",
 													"",
-													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-007a) (NI) Valideren communicatiekanaal url bij aanmaken Zaak\");",
-													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
+													"if(pm.variables.get(\"created_zaak_url\")) {",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-007a) (NI) Valideren communicatiekanaal url bij aanmaken Zaak\");",
+													"    postman.setNextRequest(\"(COMMON) Delete Zaak\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -2664,7 +2943,14 @@
 													"    var error = pm.response.json()[\"invalid-params\"][0];",
 													"    pm.expect(error.name).to.be.equal(\"communicatiekanaal\");",
 													"    pm.expect(error.code).to.be.equal(\"bad-url\");",
-													"});"
+													"});",
+													"",
+													"// If the test failed and the Zaak was created, delete it",
+													"if(pm.response.code == 201) {",
+													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-007b) (NI) Valideren communicatiekanaal url bij bijwerken Zaak\");",
+													"    postman.setNextRequest(\"(COMMON) Delete Zaak\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -2884,7 +3170,14 @@
 													"    var error = pm.response.json()[\"invalid-params\"][0];",
 													"    pm.expect(error.name).to.be.equal(\"communicatiekanaal\");",
 													"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
-													"});"
+													"});",
+													"",
+													"// If the test failed and the Zaak was created, delete it",
+													"if(pm.response.code == 201) {",
+													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-007e) (NI) Valideren communicatiekanaal url bij bijwerken Zaak\");",
+													"    postman.setNextRequest(\"(COMMON) Delete Zaak\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -3085,7 +3378,12 @@
 													"pm.test(\"Zaak aanmaken met valide communicatiekanaal geeft 201\", function() {",
 													"    pm.response.to.have.status(201);",
 													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
-													"});"
+													"});",
+													"",
+													"// If the test failed and the Zaak was created, delete it",
+													"if(!pm.variables.get(\"created_zaak_url\")) {",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-008a) Valideer urls relevanteAndereZaken\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -3213,8 +3511,10 @@
 													"    pm.response.to.have.status(200);",
 													"});",
 													"",
-													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-008a) Valideer urls relevanteAndereZaken\");",
-													"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
+													"if(pm.variables.get(\"created_zaak_url\")) {",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-008a) Valideer urls relevanteAndereZaken\");",
+													"    postman.setNextRequest(\"(COMMON) Delete Zaak\");   ",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -5111,18 +5411,7 @@
 													"    pm.variables.set(\"created_zaak_url\", pm.response.json().url);",
 													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(zrc-011b) Zaak bijwerken betalingsindicatie naar nvt moet laatsteBetaalDatum op null zetten\");",
 													"    postman.setNextRequest(\"(COMMON) Delete Zaak\");",
-													"}",
-													"",
-													"",
-													"// TODO idk about this",
-													"// eval(pm.globals.get(\"delete_function\"));",
-													"// if(pm.response.code == 201) {",
-													"//     deleteCreatedResource(",
-													"//         pm.response.json().url, ",
-													"//         \"(zrc-011b) Zaak bijwerken betalingsindicatie naar nvt moet laatsteBetaalDatum op null zetten\",",
-													"//         \"(COMMON) Delete Zaak\"",
-													"//     );",
-													"// }"
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -5268,9 +5557,7 @@
 													"    var jsonBody = pm.response.json();",
 													"    pm.expect(jsonBody.betalingsindicatie).to.be.equal(\"nvt\");",
 													"    pm.expect(jsonBody.laatsteBetaaldatum).to.be.equal(null);",
-													"});",
-													"",
-													"// postman.setNextRequest(\"Delete Zaak\")"
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -6018,7 +6305,6 @@
 												"exec": [
 													"pm.variables.set(\"zaak_zonder_archiefnominatie_url\", pm.response.json().url);",
 													"",
-													"// TODO tijdelijk totdat ztc brondatum_archiefprocedure_procestermijn gefixt is",
 													"// if([1, 2].includes(pm.variables.get(\"zaaktype_index\"))) {",
 													"//     postman.setNextRequest(\"Delete Zaak without archiefnominatie\");",
 													"// }"
@@ -6252,8 +6538,6 @@
 													"pm.variables.set(\"resultaattype_archiefnominatie\", jsonData.archiefnominatie);",
 													"pm.variables.set(\"resultaattype_archiefactietermijn\", jsonData.archiefactietermijn);",
 													"pm.variables.set(\"resultaattype_brondatumArchiefprocedure\", jsonData.brondatumArchiefprocedure);",
-													"",
-													"// TODO afmaken",
 													"",
 													"switch(pm.variables.get(\"resultaattype_brondatumArchiefprocedure\").afleidingswijze) {",
 													"    case \"afgehandeld\":",
@@ -7034,6 +7318,18 @@
 								},
 								{
 									"name": "Delete Hoofdzaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "b696684c-6ace-4c34-9e6a-e323a185ef82",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
 									"request": {
 										"method": "DELETE",
 										"header": [
@@ -7051,43 +7347,6 @@
 											"raw": "{{hoofdzaak_url}}",
 											"host": [
 												"{{hoofdzaak_url}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Change Informatieobject status to not gearchiveerd",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "6e820332-c9e5-4d25-bcee-66ceb45fb195",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"name": "Content-Type",
-												"type": "text",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n\t\"status\": \"\"\n}"
-										},
-										"url": {
-											"raw": "{{informatieobject_url}}",
-											"host": [
-												"{{informatieobject_url}}"
 											]
 										}
 									},
@@ -8710,6 +8969,7 @@
 												"exec": [
 													"pm.variables.unset(\"created_zaak_url\");",
 													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));",
+													"pm.variables.unset(\"NEXT_REQUEST_NAME\");",
 													""
 												],
 												"type": "text/javascript"
@@ -8796,7 +9056,7 @@
 											"script": {
 												"id": "f6f87cec-0d1a-4acf-b2df-2e05417272c7",
 												"exec": [
-													"console.log(pm.variables.get(\"objectinformatieobject_url\"))"
+													""
 												],
 												"type": "text/javascript"
 											}
@@ -8806,7 +9066,9 @@
 											"script": {
 												"id": "e92fad8c-68f7-4837-bf55-1d6f2ab479ec",
 												"exec": [
-													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));"
+													"pm.variables.unset(\"objectinformatieobject_url\");",
+													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));",
+													"pm.variables.unset(\"NEXT_REQUEST_NAME\");"
 												],
 												"type": "text/javascript"
 											}
@@ -8843,8 +9105,8 @@
 								"id": "7218a25f-3c6c-49e9-8f7c-3ba886c19111",
 								"type": "text/javascript",
 								"exec": [
-									"// pm.globals.set(\"delete_function\", `function deleteCreatedResource(created_zaak_url, NEXT_REQUEST_NAME, request_to_execute) {",
-									"//         pm.variables.set(\"created_zaak_url\", created_zaak_url);",
+									"// pm.globals.set(\"delete_function\", `function deleteCreatedResource(url_to_delete_variable_name, url_to_delete, request_to_execute, NEXT_REQUEST_NAME) {",
+									"//         pm.variables.set(url_to_delete_variable_name, url_to_delete);",
 									"//         pm.variables.set(\"NEXT_REQUEST_NAME\", NEXT_REQUEST_NAME);",
 									"//         postman.setNextRequest(request_to_execute);",
 									"// }`);"
@@ -8857,7 +9119,9 @@
 								"id": "d79a0641-84d7-4dd6-8a34-549dcc774d17",
 								"type": "text/javascript",
 								"exec": [
-									""
+									"if(pm.response.code == 500) {",
+									"    console.log(\"aaa\")",
+									"}"
 								]
 							}
 						}
@@ -9013,7 +9277,7 @@
 													"pm.variables.set(\"besluit_url\", pm.response.json().url);",
 													"",
 													"// postman.setNextRequest(\"(drc-003a) ObjectInformatieObject aanmaken met objectType zaak zet juiste aardRelatie\")",
-													"postman.setNextRequest(\"(drc-006a) Valideren default indicatie gebruiksrecht bij aanmaken EnkelvoudigInformatieObject\")"
+													"// postman.setNextRequest(\"(drc-006a) Valideren default indicatie gebruiksrecht bij aanmaken EnkelvoudigInformatieObject\")"
 												],
 												"type": "text/javascript"
 											}
@@ -9069,7 +9333,7 @@
 													"",
 													"if (pm.response.code == 201) {",
 													"    pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);",
-													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-001b) EnkelvoudigInformatieObject aanmaken is mogelijk\");",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-001b) Valideren informatieobjecttype url wijst naar correcte resource op de EnkelvoudigInformatieObject-resource\");",
 													"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
 													"}"
 												],
@@ -9134,7 +9398,7 @@
 													"",
 													"if (pm.response.code == 201) {",
 													"    pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);",
-													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-001b) EnkelvoudigInformatieObject aanmaken is mogelijk\");",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-001c) EnkelvoudigInformatieObject aanmaken is mogelijk\");",
 													"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
 													"}"
 												],
@@ -9195,7 +9459,7 @@
 													"",
 													"if (pm.response.code == 201) {",
 													"    pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);",
-													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-002a) Valideren zaak op de ObjectInformatieObject-resource\");",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-002a) Valideren object url op de ObjectInformatieObject-resource\");",
 													"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
 													"}"
 												],
@@ -9266,8 +9530,8 @@
 													"",
 													"if (pm.response.code == 201) {",
 													"    pm.variables.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
-													"    // pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-002b) ObjectInformatieObject aanmaken is mogelijk\");",
-													"    // postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-002b) Valideren object wijst naar Zaak op de ObjectInformatieObject-resource\");",
+													"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
 													"}"
 												],
 												"type": "text/javascript"
@@ -9318,8 +9582,8 @@
 													"",
 													"if (pm.response.code == 201) {",
 													"    pm.variables.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
-													"    // pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-002b) ObjectInformatieObject aanmaken is mogelijk\");",
-													"    // postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-002c) Valideren object wijst naar Besluit op de ObjectInformatieObject-resource\");",
+													"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
 													"}"
 												],
 												"type": "text/javascript"
@@ -9370,8 +9634,8 @@
 													"",
 													"if (pm.response.code == 201) {",
 													"    pm.variables.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
-													"    // pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-002b) ObjectInformatieObject aanmaken is mogelijk\");",
-													"    // postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-002d) ObjectInformatieObject aanmaken met objecttype Zaak is mogelijk\");",
+													"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
 													"}"
 												],
 												"type": "text/javascript"
@@ -9418,8 +9682,8 @@
 													"",
 													"if (pm.response.code == 201) {",
 													"    pm.variables.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
-													"    // pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-003a) ObjectInformatieObject aanmaken met objectType zaak zet juiste aardRelatie\");",
-													"    // postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-002e) ObjectInformatieObject aanmaken met objecttype Besluit is mogelijk\");",
+													"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
 													"}"
 												],
 												"type": "text/javascript"
@@ -9466,8 +9730,8 @@
 													"",
 													"if (pm.response.code == 201) {",
 													"    pm.variables.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
-													"    // pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-003a) ObjectInformatieObject aanmaken met objectType zaak zet juiste aardRelatie\");",
-													"    // postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-003a) ObjectInformatieObject aanmaken met objectType zaak zet juiste aardRelatie\");",
+													"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
 													"}"
 												],
 												"type": "text/javascript"
@@ -9531,11 +9795,11 @@
 													"    pm.expect(jsonData.registratiedatum.split(\"T\")[0]).to.be.equal(date_today);",
 													"});",
 													"",
-													"",
-													"pm.variables.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
-													"// TODO tijdelijk totdat delete gefixed is in drc",
-													"// pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-003b) ObjectInformatieObject aanmaken met objectType besluit zet juiste aardRelatie\");",
-													"// postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+													"if(pm.response.code == 201) {",
+													"    pm.variables.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-003b) ObjectInformatieObject aanmaken met objectType besluit zet juiste aardRelatie\");",
+													"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");   ",
+													"}",
 													""
 												],
 												"type": "text/javascript"
@@ -9600,7 +9864,11 @@
 													"});",
 													"",
 													"pm.variables.set(\"besluitinformatieobject_body\", pm.request.body.raw);",
-													"pm.variables.set(\"created_objectinformatieobject_url\", pm.response.json().url);"
+													"pm.variables.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
+													"",
+													"if(pm.response.code != 201) {",
+													"    postman.setNextRequest(\"Create ZaakInformatieObject\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -9706,8 +9974,10 @@
 													"    pm.response.to.have.status(400);",
 													"});",
 													"",
-													"// pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create ZaakInformatieObject\");",
-													"// postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");"
+													"if(pm.variables.get(\"created_objectinformatieobject_url\")) {",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create ZaakInformatieObject\");",
+													"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -9839,8 +10109,10 @@
 													"    pm.expect(jsonData[0].informatieobject).to.be.equal(pm.variables.get(\"informatieobject_url\"));",
 													"});",
 													"",
-													"// pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create BesluitInformatieObject\");",
-													"// postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");"
+													"if(pm.variables.get(\"created_objectinformatieobject_url\")) {",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create BesluitInformatieObject\");",
+													"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -9929,8 +10201,11 @@
 													"    pm.expect(jsonData[0].informatieobject).to.be.equal(pm.variables.get(\"informatieobject_url\"));",
 													"});",
 													"",
-													"// pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create EnkelvoudigInformatieObject with status in bewerking\");",
-													"// postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");"
+													"if(pm.variables.get(\"created_objectinformatieobject_url\")) {",
+													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create EnkelvoudigInformatieObject with status in bewerking\");",
+													"    // pm.variables.set(\"NEXT_REQUEST_NAME\", \"Delete EnkelvoudigInformatieObject\");",
+													"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -9982,7 +10257,12 @@
 											"script": {
 												"id": "728ef173-68ae-4bd0-a484-852e477b5999",
 												"exec": [
-													"pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);"
+													"pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);",
+													"",
+													"// TODO is dit handig?",
+													"if(pm.response.code != 201) {",
+													"    postman.setNextRequest(\"Create EnkelvoudigInformatieObject with status ter vaststelling\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -10093,8 +10373,10 @@
 													"    pm.response.to.have.status(400); ",
 													"});",
 													"",
-													"// pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create EnkelvoudigInformatieObject with status ter vaststelling\");",
-													"// postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");"
+													"if(pm.variables.get(\"created_informatieobject_url\")) {",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create EnkelvoudigInformatieObject with status ter vaststelling\");",
+													"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -10144,7 +10426,12 @@
 											"script": {
 												"id": "728ef173-68ae-4bd0-a484-852e477b5999",
 												"exec": [
-													"pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);"
+													"pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);",
+													"",
+													"// TODO is dit handig?",
+													"if(pm.response.code != 201) {",
+													"    postman.setNextRequest(\"(drc-006a) Valideren default indicatie gebruiksrecht bij aanmaken EnkelvoudigInformatieObject\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -10255,8 +10542,10 @@
 													"    pm.response.to.have.status(400); ",
 													"});",
 													"",
-													"// pm.variables.set(\"NEXT_REQUEST_NAME\", \"\");",
-													"// postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");"
+													"if(pm.variables.get(\"created_informatieobject_url\")) {",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-006a) Valideren default indicatie gebruiksrecht bij aanmaken EnkelvoudigInformatieObject\");",
+													"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+													"}"
 												],
 												"type": "text/javascript"
 											}
@@ -10379,7 +10668,7 @@
 													"",
 													"if (pm.response.code == 201) {",
 													"    pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);",
-													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-006b)\");",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create Gebruiksrechten\");",
 													"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
 													"}"
 												],
@@ -10467,7 +10756,7 @@
 									"response": []
 								},
 								{
-									"name": "(drc-006c) EnkelvoudigInformatieObject aanmaken met indicatie gebruiksrecht true en Gebruiksrechten mogelijk",
+									"name": "(drc-006c) EnkelvoudigInformatieObject bijwerken met indicatie gebruiksrecht true en Gebruiksrechten mogelijk",
 									"event": [
 										{
 											"listen": "test",
@@ -10500,7 +10789,7 @@
 										}
 									],
 									"request": {
-										"method": "PATCH",
+										"method": "PUT",
 										"header": [
 											{
 												"key": "Content-Type",
@@ -10512,6 +10801,59 @@
 										"body": {
 											"mode": "raw",
 											"raw": "{{request_body}}"
+										},
+										"url": {
+											"raw": "{{informatieobject_url}}",
+											"host": [
+												"{{informatieobject_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(drc-006d) EnkelvoudigInformatieObject deels bijwerken met indicatie gebruiksrecht true en Gebruiksrechten mogelijk",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "df7215fd-6f12-404c-b47d-6628ae6b0b69",
+												"exec": [
+													"pm.test(\"EnkelvoudigInformatieObject deels bijwerken met indicatie gebruiksrecht true en Gebruiksrechten in drc geeft 200\", function() {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"    ",
+													"pm.test(\"EnkelvoudigInformatieObject deels bijwerken met indicatie gebruiksrecht true en Gebruiksrechten in drc past indicatie gebruiksrecht correct aan\", function() {",
+													"    pm.expect(pm.response.json().indicatieGebruiksrecht).to.be.equal(true);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "bf34ae64-12e7-403e-91e3-c36f821e7135",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"indicatieGebruiksrecht\": true\n}"
 										},
 										"url": {
 											"raw": "{{informatieobject_url}}",
@@ -10710,6 +11052,7 @@
 											"script": {
 												"id": "154f33db-9702-45d5-9ef6-73b7fe44fdb7",
 												"exec": [
+													"pm.variables.unset(\"created_informatieobject_url\")",
 													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));"
 												],
 												"type": "text/javascript"
@@ -10740,6 +11083,7 @@
 											"script": {
 												"id": "499ce43f-d132-4fdd-949e-f1572c58a9bb",
 												"exec": [
+													"pm.variables.unset(\"created_objectinformatieobject_url\");",
 													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));"
 												],
 												"type": "text/javascript"
