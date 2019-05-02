@@ -208,10 +208,7 @@
 												"exec": [
 													"var informatieobjecten = pm.response.json();",
 													"pm.variables.set(\"informatieobject_url\", informatieobjecten[0].url);",
-													"pm.variables.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);",
-													"",
-													"// postman.setNextRequest(\"Create Hoofdzaak\")",
-													"// postman.setNextRequest(\"Create Zaak to close\")"
+													"pm.variables.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);"
 												],
 												"type": "text/javascript"
 											}
@@ -6143,7 +6140,7 @@
 											"script": {
 												"id": "1c33254a-fe4a-4192-9108-4b6925265a80",
 												"exec": [
-													""
+													"pm.variables.set(\"hoofdzaak_resultaat_url\", pm.response.json().url);"
 												],
 												"type": "text/javascript"
 											}
@@ -6303,11 +6300,7 @@
 											"script": {
 												"id": "46ada267-ffcf-477a-a3d6-02addbf603a2",
 												"exec": [
-													"pm.variables.set(\"zaak_zonder_archiefnominatie_url\", pm.response.json().url);",
-													"",
-													"// if([1, 2].includes(pm.variables.get(\"zaaktype_index\"))) {",
-													"//     postman.setNextRequest(\"Delete Zaak without archiefnominatie\");",
-													"// }"
+													"pm.variables.set(\"zaak_zonder_archiefnominatie_url\", pm.response.json().url);"
 												],
 												"type": "text/javascript"
 											}
@@ -6398,8 +6391,7 @@
 											"script": {
 												"id": "efc7477c-72f1-4f81-9c97-8be750824a6c",
 												"exec": [
-													"pm.variables.set(\"current_resultaattype\", pm.response.json().resultaattypen[0])",
-													"console.log(pm.response.json().resultaattypen[0])"
+													"pm.variables.set(\"current_resultaattype\", pm.response.json().resultaattypen[0]);"
 												],
 												"type": "text/javascript"
 											}
@@ -7282,6 +7274,7 @@
 												"exec": [
 													"var index = pm.variables.get(\"zaaktype_index\");",
 													"",
+													"pm.variables.unset(\"zaak_zonder_archiefnominatie_url\");",
 													"if (index == pm.variables.get(\"archiving_zaaktypen\").length - 1) {",
 													"    postman.setNextRequest(\"Delete Hoofdzaak\");",
 													"} else {",
@@ -7317,6 +7310,36 @@
 									"response": []
 								},
 								{
+									"name": "Delete Resultaat from Hoofdzaak",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "7197b242-cd4a-44d6-b322-136d37599b2f",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{hoofdzaak_resultaat_url}}",
+											"host": [
+												"{{hoofdzaak_resultaat_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
 									"name": "Delete Hoofdzaak",
 									"event": [
 										{
@@ -7324,7 +7347,7 @@
 											"script": {
 												"id": "b696684c-6ace-4c34-9e6a-e323a185ef82",
 												"exec": [
-													""
+													"pm.variables.unset(\"hoofdzaak_url\");"
 												],
 												"type": "text/javascript"
 											}
@@ -8903,7 +8926,7 @@
 												"id": "d119b2b8-8897-4495-8802-ab28c4f43d05",
 												"exec": [
 													"// Continue to the drc tests",
-													"postman.setNextRequest(\"Retrieve Informatieobjecttype and Zaaktype\");"
+													"postman.setNextRequest(\"Retrieve Informatieobjecttype, Zaaktype and Besluittype\");"
 												],
 												"type": "text/javascript"
 											}
@@ -9103,11 +9126,7 @@
 								"id": "7218a25f-3c6c-49e9-8f7c-3ba886c19111",
 								"type": "text/javascript",
 								"exec": [
-									"// pm.globals.set(\"delete_function\", `function deleteCreatedResource(url_to_delete_variable_name, url_to_delete, request_to_execute, NEXT_REQUEST_NAME) {",
-									"//         pm.variables.set(url_to_delete_variable_name, url_to_delete);",
-									"//         pm.variables.set(\"NEXT_REQUEST_NAME\", NEXT_REQUEST_NAME);",
-									"//         postman.setNextRequest(request_to_execute);",
-									"// }`);"
+									""
 								]
 							}
 						},
@@ -9117,9 +9136,7 @@
 								"id": "d79a0641-84d7-4dd6-8a34-549dcc774d17",
 								"type": "text/javascript",
 								"exec": [
-									"if(pm.response.code == 500) {",
-									"    console.log(\"aaa\")",
-									"}"
+									""
 								]
 							}
 						}
