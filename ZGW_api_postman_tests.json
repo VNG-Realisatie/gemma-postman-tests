@@ -8969,8 +8969,7 @@
 												"exec": [
 													"pm.variables.unset(\"created_zaak_url\");",
 													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));",
-													"pm.variables.unset(\"NEXT_REQUEST_NAME\");",
-													""
+													"pm.variables.unset(\"NEXT_REQUEST_NAME\");"
 												],
 												"type": "text/javascript"
 											}
@@ -9006,7 +9005,9 @@
 											"script": {
 												"id": "fa9f354c-0464-494e-b9fa-9635b21b2d43",
 												"exec": [
-													"pm.variables.set(\"objectinformatieobject_url\", pm.response.json().url)"
+													"pm.variables.set(\"objectinformatieobject_url\", pm.response.json().url);",
+													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));",
+													"pm.variables.unset(\"NEXT_REQUEST_NAME\");"
 												],
 												"type": "text/javascript"
 											}
@@ -9074,11 +9075,8 @@
 											}
 										}
 									],
-									"protocolProfileBehavior": {
-										"disableBodyPruning": true
-									},
 									"request": {
-										"method": "GET",
+										"method": "DELETE",
 										"header": [],
 										"body": {
 											"mode": "raw",
@@ -9274,10 +9272,7 @@
 											"script": {
 												"id": "23bc2897-511c-416d-b48d-c8aa46adba28",
 												"exec": [
-													"pm.variables.set(\"besluit_url\", pm.response.json().url);",
-													"",
-													"// postman.setNextRequest(\"(drc-003a) ObjectInformatieObject aanmaken met objectType zaak zet juiste aardRelatie\")",
-													"// postman.setNextRequest(\"(drc-006a) Valideren default indicatie gebruiksrecht bij aanmaken EnkelvoudigInformatieObject\")"
+													"pm.variables.set(\"besluit_url\", pm.response.json().url);"
 												],
 												"type": "text/javascript"
 											}
@@ -10202,8 +10197,7 @@
 													"});",
 													"",
 													"if(pm.variables.get(\"created_objectinformatieobject_url\")) {",
-													"pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create EnkelvoudigInformatieObject with status in bewerking\");",
-													"    // pm.variables.set(\"NEXT_REQUEST_NAME\", \"Delete EnkelvoudigInformatieObject\");",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"Create EnkelvoudigInformatieObject with status in bewerking\");",
 													"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
 													"}"
 												],
@@ -10234,7 +10228,7 @@
 							"_postman_isSubFolder": true
 						},
 						{
-							"name": "drc-005 (WIP)",
+							"name": "drc-005 (WIP) (NI)",
 							"item": [
 								{
 									"name": "Create EnkelvoudigInformatieObject with status in bewerking",
@@ -10600,7 +10594,7 @@
 							"_postman_isSubFolder": true
 						},
 						{
-							"name": "drc-006 (WIP)",
+							"name": "drc-006",
 							"item": [
 								{
 									"name": "(drc-006a) Valideren default indicatie gebruiksrecht bij aanmaken EnkelvoudigInformatieObject",
@@ -10940,6 +10934,278 @@
 							"_postman_isSubFolder": true
 						},
 						{
+							"name": "drc-007",
+							"item": [
+								{
+									"name": "(drc-007a) EnkelvoudigInformatieObject aanmaken met expliciet gedefinieerde vertrouwelijkheidaanduiding",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d8dbc102-90f7-46c7-a6c2-10e412c9d831",
+												"exec": [
+													"pm.variables.set(\"expliciete_vertrouwelijkheidaanduiding\", \"vertrouwelijk\");",
+													"",
+													"var body = JSON.parse(pm.variables.get(\"informatieobject_body\"));",
+													"body.vertrouwelijkheidaanduiding = pm.variables.get(\"expliciete_vertrouwelijkheidaanduiding\");",
+													"",
+													"pm.variables.set(\"request_body\", JSON.stringify(body));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "c8fb97ab-69f9-451b-85f2-9a1efbf412cb",
+												"exec": [
+													"pm.test(\"EnkelvoudigInformatieObject aanmaken met expliciet gedefinieerde vertrouwelijkheidaanduiding krijgt die waarde toegekend\", function() {",
+													"    pm.expect(pm.response.json().vertrouwelijkheidaanduiding).to.be.equal(pm.variables.get(\"expliciete_vertrouwelijkheidaanduiding\"));",
+													"});",
+													"",
+													"if(pm.response.code == 201) {",
+													"    pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"(drc-007b) EnkelvoudigInformatieObject bijwerken met expliciet gedefinieerde vertrouwelijkheidaanduiding\");",
+													"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}"
+										},
+										"url": {
+											"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
+											"host": [
+												"{{drc_url}}"
+											],
+											"path": [
+												"enkelvoudiginformatieobjecten"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(drc-007b) EnkelvoudigInformatieObject bijwerken met expliciet gedefinieerde vertrouwelijkheidaanduiding",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d8dbc102-90f7-46c7-a6c2-10e412c9d831",
+												"exec": [
+													"pm.variables.set(\"expliciete_vertrouwelijkheidaanduiding\", \"vertrouwelijk\");",
+													"",
+													"var body = JSON.parse(pm.variables.get(\"informatieobject_body\"));",
+													"body.vertrouwelijkheidaanduiding = pm.variables.get(\"expliciete_vertrouwelijkheidaanduiding\");",
+													"",
+													"pm.variables.set(\"request_body\", JSON.stringify(body));"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "c8fb97ab-69f9-451b-85f2-9a1efbf412cb",
+												"exec": [
+													"pm.test(\"EnkelvoudigInformatieObject aanmaken met expliciet gedefinieerde vertrouwelijkheidaanduiding krijgt die waarde toegekend\", function() {",
+													"    pm.expect(pm.response.json().vertrouwelijkheidaanduiding).to.be.equal(pm.variables.get(\"expliciete_vertrouwelijkheidaanduiding\"));",
+													"});",
+													"",
+													"if(pm.response.code == 201) {",
+													"    pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"Retrieve Informatieobjecttype vertrouwelijkheidaanduiding\");",
+													"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{request_body}}"
+										},
+										"url": {
+											"raw": "{{informatieobject_url}}",
+											"host": [
+												"{{informatieobject_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(drc-007c) EnkelvoudigInformatieObject deels bijwerken met expliciet gedefinieerde vertrouwelijkheidaanduiding",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d8dbc102-90f7-46c7-a6c2-10e412c9d831",
+												"exec": [
+													"pm.variables.set(\"expliciete_vertrouwelijkheidaanduiding\", \"zeer geheim\");"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "c8fb97ab-69f9-451b-85f2-9a1efbf412cb",
+												"exec": [
+													"pm.test(\"EnkelvoudigInformatieObject aanmaken met expliciet gedefinieerde vertrouwelijkheidaanduiding krijgt die waarde toegekend\", function() {",
+													"    pm.expect(pm.response.json().vertrouwelijkheidaanduiding).to.be.equal(pm.variables.get(\"expliciete_vertrouwelijkheidaanduiding\"));",
+													"});",
+													"",
+													"if(pm.response.code == 201) {",
+													"    pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"Retrieve Informatieobjecttype vertrouwelijkheidaanduiding\");",
+													"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"vertrouwelijkheidaanduiding\": \"{{expliciete_vertrouwelijkheidaanduiding}}\"\n}"
+										},
+										"url": {
+											"raw": "{{informatieobject_url}}",
+											"host": [
+												"{{informatieobject_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Retrieve Informatieobjecttype vertrouwelijkheidaanduiding",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6cf5e882-b0d7-481a-a9ed-e8b95c4fcb22",
+												"exec": [
+													"pm.variables.set(\"informatieobjecttype_vertrouwelijkheidaanduiding\", pm.response.json().vertrouwelijkheidaanduiding);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{informatieobjecttype_url}}",
+											"host": [
+												"{{informatieobjecttype_url}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "(drc-007b) EnkelvoudigInformatieObject aanmaken leidt vertrouwelijkheidaanduiding af uit Informatieobjecttype",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "d8dbc102-90f7-46c7-a6c2-10e412c9d831",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "c8fb97ab-69f9-451b-85f2-9a1efbf412cb",
+												"exec": [
+													"pm.test(\"EnkelvoudigInformatieObject aanmaken zonder expliciet gedefinieerde vertrouwelijkheidaanduiding leidt vertrouwelijkheidaanduiding af uit Informatieobjecttype\", function() {",
+													"    pm.expect(pm.response.json().vertrouwelijkheidaanduiding).to.be.equal(pm.variables.get(\"informatieobjecttype_vertrouwelijkheidaanduiding\"));",
+													"});",
+													"",
+													"if(pm.response.code == 201) {",
+													"    pm.variables.set(\"created_informatieobject_url\", pm.response.json().url);",
+													"    pm.variables.set(\"NEXT_REQUEST_NAME\", \"Delete EnkelvoudigInformatieObject\");",
+													"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{{informatieobject_body}}"
+										},
+										"url": {
+											"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
+											"host": [
+												"{{drc_url}}"
+											],
+											"path": [
+												"enkelvoudiginformatieobjecten"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
 							"name": "tearDown",
 							"item": [
 								{
@@ -11052,8 +11318,9 @@
 											"script": {
 												"id": "154f33db-9702-45d5-9ef6-73b7fe44fdb7",
 												"exec": [
-													"pm.variables.unset(\"created_informatieobject_url\")",
-													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));"
+													"pm.variables.unset(\"created_informatieobject_url\");",
+													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));",
+													"pm.variables.unset(\"NEXT_REQUEST_NAME\");"
 												],
 												"type": "text/javascript"
 											}
@@ -11084,7 +11351,8 @@
 												"id": "499ce43f-d132-4fdd-949e-f1572c58a9bb",
 												"exec": [
 													"pm.variables.unset(\"created_objectinformatieobject_url\");",
-													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));"
+													"postman.setNextRequest(pm.variables.get(\"NEXT_REQUEST_NAME\"));",
+													"pm.variables.unset(\"NEXT_REQUEST_NAME\");"
 												],
 												"type": "text/javascript"
 											}
