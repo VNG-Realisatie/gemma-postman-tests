@@ -4,6 +4,9 @@ ZRC:
 - **zrc-001g** until **zrc-001i**: resource validation on `zaaktype`-url for `Zaak` not yet implemented
 - **zrc-003b**: Adding duplicate informatieobject under `<zaak_url>/informatieobjecten` on localhost (one will use localhost in url and the other 127.0.0.1)
 - **zrc-003c**: `ObjectInformatieObject` deletion does not cascade from DRC to ZRC, causing the `ObjectInformatieObject` to not be deleted from DRC ([Issue #909](https://github.com/VNG-Realisatie/gemma-zaken/issues/909))
+- **zrc-004a**: `zaak_list` returns `Zaak`en with `zaaktype`s that are not part of the zaaktypes_claim in the JWT token  
+- **zrc-004b**: `zaak__zoek` returns `Zaak`en with `zaaktype`s that are not part of the zaaktypes_claim in the JWT token  
+- **zrc-004c**: `zaak_detail` returns `Zaak`en with `zaaktype`s that are not part of the zaaktypes_claim in the JWT token  
 - **zrc-007a** until **zrc-007f**: creating/updating/partially updating `Zaak` with `communicatiekanaal`-url that results in 429 throws a 500 instead of 400
 - **zrc-008d** until **zrc-008f**: creating/updating/partially updating `Zaak` with a valid url that points to another `Zaak` throws 412 instead of 201/200
 - **zrc-009c**: partially updating a `Zaak` with `opschorting` with invalid structure results in 200 instead of 400, changing the value of `opschorting` to `{indicatie: false, reden: ""}`

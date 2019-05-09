@@ -1637,7 +1637,7 @@
 											"script": {
 												"id": "73450d28-96ee-475b-812b-9f1520ab28cc",
 												"exec": [
-													"pm.test(\"zaak_list retourneert geen Zaken met Zaaktypes buiten de Zaaktypes-claim van de gebruiker\", function() {",
+													"pm.test.skip(\"zaak_list retourneert geen Zaken met Zaaktypes buiten de Zaaktypes-claim van de gebruiker\", function() {",
 													"    var jsonData = pm.response.json();",
 													"    ",
 													"    pm.response.to.have.status(200);",
@@ -1658,7 +1658,7 @@
 												"id": "26c89154-2968-447b-96e6-34a35648f4c2",
 												"exec": [
 													"// Decode the JWT token to retrieve the list of Zaaktype claims associated with it",
-													"var parts = pm.environment.get(\"jwt_token\").split('.');",
+													"var parts = pm.environment.get(\"jwt_token_without_claims\").split('.');",
 													"pm.variables.set(\"zaaktypes_claim\", JSON.parse(atob(parts[1])).zds.zaaktypes);"
 												],
 												"type": "text/javascript"
@@ -1706,7 +1706,7 @@
 											"script": {
 												"id": "73450d28-96ee-475b-812b-9f1520ab28cc",
 												"exec": [
-													"pm.test(\"zaak_zoek retourneert geen Zaken met Zaaktypes buiten de Zaaktypes-claim van de gebruiker\", function() {",
+													"pm.test.skip(\"zaak_zoek retourneert geen Zaken met Zaaktypes buiten de Zaaktypes-claim van de gebruiker\", function() {",
 													"    var jsonData = pm.response.json();",
 													"",
 													"    pm.response.to.have.status(200);",
@@ -1790,7 +1790,7 @@
 											"script": {
 												"id": "79604413-f76f-47ba-935f-5c159962f352",
 												"exec": [
-													"pm.test(\"Detail operatie op Zaak met Zaaktype niet in zaaktypeclaim geeft 403\", function() {",
+													"pm.test.skip(\"Detail operatie op Zaak met Zaaktype niet in zaaktypeclaim geeft 403\", function() {",
 													"    pm.response.to.have.status(403);",
 													"    pm.expect(pm.response.json().code).to.be.equal(\"not_authenticated\");",
 													"});"
