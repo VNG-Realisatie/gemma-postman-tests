@@ -2957,7 +2957,7 @@
 													"script": {
 														"id": "0bc39030-ab3a-4dd0-9996-792966daf183",
 														"exec": [
-															"pm.test.skip(\"Zaak aanmaken met ongeldige communicatiekanaal url geeft 400\", function() {",
+															"pm.test(\"Zaak aanmaken met ongeldige communicatiekanaal url geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -3036,7 +3036,7 @@
 													"script": {
 														"id": "0bc39030-ab3a-4dd0-9996-792966daf183",
 														"exec": [
-															"pm.test.skip(\"Zaak bijwerken met ongeldige communicatiekanaal url geeft 400\", function() {",
+															"pm.test(\"Zaak bijwerken met ongeldige communicatiekanaal url geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -3105,7 +3105,7 @@
 													"script": {
 														"id": "0bc39030-ab3a-4dd0-9996-792966daf183",
 														"exec": [
-															"pm.test.skip(\"Zaak deels bijwerken met ongeldige communicatiekanaal url geeft 400\", function() {",
+															"pm.test(\"Zaak deels bijwerken met ongeldige communicatiekanaal url geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -3171,7 +3171,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
-															"body.communicatiekanaal = pm.variables.get(\"zaak_url\");",
+															"body.communicatiekanaal = pm.variables.get(\"mock_url\") + \"/200\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.variables.set(\"request_body\", JSON.stringify(body));"
@@ -3184,7 +3184,7 @@
 													"script": {
 														"id": "b364538b-6bb5-4a95-af4b-bc86e9969068",
 														"exec": [
-															"pm.test.skip(\"Zaak aanmaken met communicatiekanaal url die niet wijst naar Communicatiekanaal-resource geeft 400\", function() {",
+															"pm.test(\"Zaak aanmaken met communicatiekanaal url die niet wijst naar Communicatiekanaal-resource geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -3241,20 +3241,20 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-007e) Valideren communicatiekanaal url bij bijwerken Zaak",
+											"name": "(zrc-007e) Valideren communicatiekanaal-resource bij bijwerken Zaak",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "0bc39030-ab3a-4dd0-9996-792966daf183",
 														"exec": [
-															"pm.test.skip(\"Zaak bijwerken met communicatiekanaal url die niet wijst naar Communicatiekanaal-resource geeft 400\", function() {",
+															"pm.test(\"Zaak bijwerken met communicatiekanaal url die niet wijst naar Communicatiekanaal-resource geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"communicatiekanaal\");",
-															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -3267,7 +3267,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.variables.get(\"zaak_body\"));",
-															"body.communicatiekanaal = pm.variables.get(\"zaak_url\");",
+															"body.communicatiekanaal = pm.variables.get(\"mock_url\") + \"/200\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.variables.set(\"request_body\", JSON.stringify(body));"
@@ -3310,20 +3310,20 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-007f) Valideren communicatiekanaal url bij deels bijwerken Zaak",
+											"name": "(zrc-007f) Valideren communicatiekanaal-resource bij deels bijwerken Zaak",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "0bc39030-ab3a-4dd0-9996-792966daf183",
 														"exec": [
-															"pm.test.skip(\"Zaak deels bijwerken met communicatiekanaal url die niet wijst naar Communicatiekanaal-resource geeft 400\", function() {",
+															"pm.test(\"Zaak deels bijwerken met communicatiekanaal url die niet wijst naar Communicatiekanaal-resource geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"communicatiekanaal\");",
-															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -3362,7 +3362,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"communicatiekanaal\": \"{{zaak_url}}\"\n}"
+													"raw": "{\n\t\"communicatiekanaal\": \"{{mock_url}}/200\"\n}"
 												},
 												"url": {
 													"raw": "{{zaak_url}}",
@@ -14642,7 +14642,7 @@
 							"header": [
 								{
 									"key": "Date",
-									"value": "Thu, 11 Apr 2019 07:51:21 GMT"
+									"value": "Tue, 14 May 2019 12:09:48 GMT"
 								},
 								{
 									"key": "Server",
@@ -14650,7 +14650,7 @@
 								},
 								{
 									"key": "set-cookie",
-									"value": "sails.sid=s%3AHmD2XL9sgcf56iogzMqaHk_ubbsnVkoY.VuLs6wpZNk5L4bEZOG1fyhY4GCW75Yo8OvkQhT%2BgPM0; Path=/; HttpOnly"
+									"value": "sails.sid=s%3ARZq51GnxbZHHLGkCmjrmEsY9xM81_h7I.59k%2BLSOZd5824GJnb1qKI0h%2BuE3JBbvNLFJ9Avyrc5A; Path=/; HttpOnly"
 								},
 								{
 									"key": "Content-Length",
@@ -14662,7 +14662,7 @@
 								}
 							],
 							"cookie": [],
-							"body": ""
+							"body": null
 						}
 					]
 				},
