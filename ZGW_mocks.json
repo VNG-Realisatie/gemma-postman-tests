@@ -1,0 +1,312 @@
+{
+	"info": {
+		"_postman_id": "bd644e0a-7c1c-4503-ad59-add033845a61",
+		"name": "ZGW mocks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "mock 200",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{mock_url}}/200",
+					"host": [
+						"{{mock_url}}"
+					],
+					"path": [
+						"200"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "mock 200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{mock_url}}/200",
+							"host": [
+								"{{mock_url}}"
+							],
+							"path": [
+								"200"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": ""
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": ""
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": ""
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Expose-Headers",
+							"value": ""
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 May 2019 12:44:26 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"0-1B2M2Y8AsgTpgAmY7PhCfg\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=9179b93bc9029364"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=d3d2e5c62f134323"
+						},
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "mock 404",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{mock_url}}/404",
+					"host": [
+						"{{mock_url}}"
+					],
+					"path": [
+						"404"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/404",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"404"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "mock Zaaktype",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/zaaktype",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"zaaktype"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "mock Zaaktype",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/zaaktype",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"zaaktype"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"url\": \"https://ref.tst.vng.cloud/ztc/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/zaaktypen/ede2fd28-32d2-46c9-8cde-b44bb055d3bc\",\n    \"identificatie\": 40,\n    \"omschrijving\": \"Aanvraag huwelijk behandelen\",\n    \"omschrijvingGeneriek\": \"\",\n    \"vertrouwelijkheidaanduiding\": \"intern\",\n    \"doel\": \"-\",\n    \"aanleiding\": \"-\",\n    \"toelichting\": \"\",\n    \"indicatieInternOfExtern\": \"Intern\",\n    \"handelingInitiator\": \"Indienen\",\n    \"onderwerp\": \"Huwelijk\",\n    \"handelingBehandelaar\": \"Behandelen\",\n    \"doorlooptijd\": \"P5D\",\n    \"servicenorm\": null,\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"verlengingstermijn\": null,\n    \"trefwoorden\": [],\n    \"publicatieIndicatie\": false,\n    \"publicatietekst\": \"\",\n    \"verantwoordingsrelatie\": [],\n    \"productenOfDiensten\": [\n        \"https://pki.utrecht.nl/Loket/product/298304036ec988f0633d839dde5b588f\"\n    ],\n    \"selectielijstProcestype\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/procestypen/39a1711c-f94b-4282-8ac3-7c545d8ecb04\",\n    \"referentieproces\": {\n        \"naam\": \"Huwelijk\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"https://ref.tst.vng.cloud/ztc/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72\",\n    \"statustypen\": [\n        \"https://ref.tst.vng.cloud/ztc/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/zaaktypen/ede2fd28-32d2-46c9-8cde-b44bb055d3bc/statustypen/c48bc388-1701-44fc-bfd8-7d56279da4de\",\n        \"https://ref.tst.vng.cloud/ztc/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/zaaktypen/ede2fd28-32d2-46c9-8cde-b44bb055d3bc/statustypen/6f4b2dc8-24d6-4c69-8a42-37edec543188\",\n        \"https://ref.tst.vng.cloud/ztc/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/zaaktypen/ede2fd28-32d2-46c9-8cde-b44bb055d3bc/statustypen/75577f8c-cecb-44af-b78c-93f1d88dcbf1\"\n    ],\n    \"resultaattypen\": [\n        \"https://ref.tst.vng.cloud/ztc/api/v1/resultaattypen/9bd507ec-a151-488b-8a8a-702a0518e734\"\n    ],\n    \"eigenschappen\": [\n        \"https://ref.tst.vng.cloud/ztc/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/zaaktypen/ede2fd28-32d2-46c9-8cde-b44bb055d3bc/eigenschappen/55fbccb9-040c-4c0c-a0f0-e4045d9f2cb5\",\n        \"https://ref.tst.vng.cloud/ztc/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/zaaktypen/ede2fd28-32d2-46c9-8cde-b44bb055d3bc/eigenschappen/5354fdcf-4d73-496a-9d19-53bc22c63342\",\n        \"https://ref.tst.vng.cloud/ztc/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/zaaktypen/ede2fd28-32d2-46c9-8cde-b44bb055d3bc/eigenschappen/9d477e92-5c80-49f1-b0b8-fce6ae30f5ac\"\n    ],\n    \"informatieobjecttypen\": [\n        \"https://ref.tst.vng.cloud/ztc/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/informatieobjecttypen/1f86f196-4004-4371-868d-252f5676a092\"\n    ],\n    \"roltypen\": [\n        \"https://ref.tst.vng.cloud/ztc/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/zaaktypen/ede2fd28-32d2-46c9-8cde-b44bb055d3bc/roltypen/a550f938-1f23-4e88-a372-1d9e7ec238d0\"\n    ],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "mock Zaak",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/zaak",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"zaak"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "mock Zaak",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/zaak",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"zaak"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"url\": \"https://ref.tst.vng.cloud/zrc/api/v1/zaken/8bb42fd7-b8bb-4aea-b29b-e600e22fb93f\",\n    \"identificatie\": \"test identificatie 1\",\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"zaaktype\": \"https://ref.tst.vng.cloud/ztc/api/v1/catalogussen/28487d3f-6a1b-489c-b03d-c75ac6693e72/zaaktypen/ede2fd28-32d2-46c9-8cde-b44bb055d3bc\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatum\": null,\n    \"einddatumGepland\": \"2019-04-09\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n    \"communicatiekanaal\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/communicatiekanalen/2b757868-45c2-42ca-b637-b63ddc87beb4\",\n    \"productenOfDiensten\": [],\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"betalingsindicatie\": \"nvt\",\n    \"betalingsindicatieWeergave\": \"Er is geen sprake van te betalen, met de zaak gemoeide, kosten.\",\n    \"laatsteBetaaldatum\": null,\n    \"zaakgeometrie\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            53,\n            5\n        ]\n    },\n    \"verlenging\": {\n        \"reden\": \"\",\n        \"duur\": null\n    },\n    \"opschorting\": {\n        \"indicatie\": true,\n        \"reden\": \"string\"\n    },\n    \"selectielijstklasse\": \"http://example.com\",\n    \"hoofdzaak\": null,\n    \"deelzaken\": [],\n    \"relevanteAndereZaken\": [\n        \"http://example.com\"\n    ],\n    \"status\": null,\n    \"kenmerken\": [],\n    \"archiefnominatie\": \"blijvend_bewaren\",\n    \"archiefstatus\": \"nog_te_archiveren\",\n    \"archiefactiedatum\": \"2019-04-09\",\n    \"resultaat\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "mock Communicatiekanaal",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/communicatiekanaal",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"communicatiekanaal"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "mock Communicatiekanaal",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/communicatiekanaal",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"communicatiekanaal"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"url\": \"http://example.com\",\n    \"naam\": \"string\",\n    \"omschrijving\": \"string\"\n}"
+				}
+			]
+		}
+	]
+}
