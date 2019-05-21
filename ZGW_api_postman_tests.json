@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "859918f4-854b-452c-8e16-c32fcdd52cac",
+		"_postman_id": "8979a565-050e-4988-ab9c-7ddf86bdd666",
 		"name": "ZGW api tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -2538,7 +2538,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-20T13:37:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-20T13:39:00\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
