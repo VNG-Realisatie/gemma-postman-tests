@@ -7,7 +7,7 @@ ZRC:
 - **zrc-004a**: `zaak_list` returns `Zaak`en with `zaaktype`s that are not part of the zaaktypes_claim in the JWT token  
 - **zrc-004b**: `zaak__zoek` returns `Zaak`en with `zaaktype`s that are not part of the zaaktypes_claim in the JWT token  
 - **zrc-004c**: `zaak_detail` returns `Zaak`en with `zaaktype`s that are not part of the zaaktypes_claim in the JWT token
-- **zrc-008d** until **zrc-008f**: creating/updating/partially updating `Zaak` with a valid url that points to another `Zaak` throws 412 instead of 201/200
+- **zrc-008d** until **zrc-008f**: creating/updating/partially updating `Zaak` with a valid url that points to another `Zaak` throws 412 instead of 201/200 ([Issue #1010](https://github.com/VNG-Realisatie/gemma-zaken/issues/1010))
 - **zrc-009c**: partially updating a `Zaak` with `opschorting` with invalid structure results in 200 instead of 400, changing the value of `opschorting` to `{indicatie: false, reden: ""}`
 - **zrc-009f**: partially updating a `Zaak` with `verlenging` with invalid structure results in 200 instead of 400, changing the value of `opschorting` to `{reden: "", duur: null}`
 - **zrc-013g**: missing appropriate `selectielijstklasse` in https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaten for `afleidingswijze_brondatum` `ander_datumkenmerk` 
