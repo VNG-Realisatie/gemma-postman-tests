@@ -5465,8 +5465,12 @@
 													"script": {
 														"id": "f945f6a5-77ac-48dd-b9ba-a9b0a673471f",
 														"exec": [
-															"pm.test.skip(\"Zaak aanmaken met betalingsindicatie nvt en laatsteBetaalDatum niet null geeft 400\", function(){",
+															"pm.test(\"Zaak aanmaken met betalingsindicatie nvt en laatsteBetaaldatum niet null geeft 400\", function(){",
 															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"laatsteBetaaldatum\");",
+															"    pm.expect(error.code).to.be.equal(\"betaling-nvt\");",
 															"});",
 															"",
 															"// If the test failed and the Zaak was created, delete it",
@@ -5487,7 +5491,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
 															"body.betalingsindicatie = \"nvt\";",
-															"body.laatsteBetaalDatum = \"2019-3-29\";",
+															"body.laatsteBetaaldatum = \"2019-03-29T12:00:00\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
