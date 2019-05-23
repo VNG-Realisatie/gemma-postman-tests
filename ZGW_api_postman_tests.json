@@ -1626,7 +1626,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-004",
+									"name": "zrc-004 (WIP)",
 									"item": [
 										{
 											"name": "(zrc-004a) Valideer zaaktypeclaims zaak_list",
@@ -1864,7 +1864,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-005 (NI)",
+									"name": "zrc-005 (WIP)",
 									"item": [
 										{
 											"name": "Create Zaak to close",
@@ -2946,7 +2946,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-007 (NI)",
+									"name": "zrc-007",
 									"item": [
 										{
 											"name": "(zrc-007a) Valideren communicatiekanaal url bij aanmaken Zaak",
@@ -3961,7 +3961,7 @@
 															"});",
 															"",
 															"if(pm.globals.get(\"created_zaak_url\")) {",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(zrc-009a) Valideren opschorting indien gedefinieerd\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(zrc-009a) Zaak aanmaken met opschorting zonder indicatie en reden is onmogelijk\");",
 															"    postman.setNextRequest(\"(COMMON) Delete Zaak\");   ",
 															"}"
 														],
@@ -4028,7 +4028,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-009 (WIP)",
+									"name": "zrc-009 (NI)",
 									"item": [
 										{
 											"name": "(zrc-009a) Zaak aanmaken met opschorting zonder indicatie en reden is onmogelijk",
@@ -5455,7 +5455,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-011 (WIP) (NI)",
+									"name": "zrc-011",
 									"item": [
 										{
 											"name": "(zrc-011a) Valideer op geen betalingswaarde en wel laatste betaaldatum",
@@ -10673,7 +10673,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"titel\": \"test\",\n\t\"beschrijving\": \"test\",\n\t\"registratiedatum\": \"2019-01-01T00:00:00\"\n}"
+													"raw": "{\n\t\"titel\": \"test\",\n\t\"beschrijving\": \"test\"\n}"
 												},
 												"url": {
 													"raw": "{{created_objectinformatieobject_url}}",
