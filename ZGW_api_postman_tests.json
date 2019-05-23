@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8979a565-050e-4988-ab9c-7ddf86bdd666",
+		"_postman_id": "4f0cc02a-a16b-48dd-8b81-73cf5d88ce63",
 		"name": "ZGW api tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1626,7 +1626,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-004",
+									"name": "zrc-004 (WIP)",
 									"item": [
 										{
 											"name": "(zrc-004a) Valideer zaaktypeclaims zaak_list",
@@ -1864,7 +1864,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-005 (NI)",
+									"name": "zrc-005 (WIP)",
 									"item": [
 										{
 											"name": "Create Zaak to close",
@@ -2946,7 +2946,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-007 (NI)",
+									"name": "zrc-007",
 									"item": [
 										{
 											"name": "(zrc-007a) Valideren communicatiekanaal url bij aanmaken Zaak",
@@ -3599,7 +3599,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-008 (NI)",
+									"name": "zrc-008",
 									"item": [
 										{
 											"name": "(zrc-008a) Zaak aanmaken met ongeldige url in relevanteAndereZaken is onmogelijk",
@@ -3611,7 +3611,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.relevanteAndereZaken = [pm.globals.get(\"mock_url\") + \"/404\"];",
+															"body.relevanteAndereZaken = [pm.environment.get(\"mock_url\") + \"/404\"];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -3689,7 +3689,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.relevanteAndereZaken = [pm.globals.get(\"mock_url\") + \"/404\"];",
+															"body.relevanteAndereZaken = [pm.environment.get(\"mock_url\") + \"/404\"];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -3835,7 +3835,7 @@
 													"script": {
 														"id": "3b98d08c-0556-42d2-a815-fbd008eafbac",
 														"exec": [
-															"pm.test.skip(\"Zaak aanmaken met geldige relevanteAndereZaken geeft 201\", function() {",
+															"pm.test(\"Zaak aanmaken met geldige relevanteAndereZaken geeft 201\", function() {",
 															"    pm.response.to.have.status(201);",
 															"    pm.globals.set(\"created_zaak_url\", pm.response.json().url);",
 															"});",
@@ -3907,7 +3907,7 @@
 													"script": {
 														"id": "34ddadfb-4583-4c13-8b4d-eee18348ea69",
 														"exec": [
-															"pm.test.skip(\"Zaak bijwerken met geldige relevanteAndereZaken geeft 200\", function() {",
+															"pm.test(\"Zaak bijwerken met geldige relevanteAndereZaken geeft 200\", function() {",
 															"    pm.response.to.have.status(200);",
 															"});"
 														],
@@ -3956,12 +3956,12 @@
 													"script": {
 														"id": "a231e003-4106-4749-a717-62969c5fac96",
 														"exec": [
-															"pm.test.skip(\"Zaak deels bijwerken met geldige relevanteAndereZaken geeft 200\", function() {",
+															"pm.test(\"Zaak deels bijwerken met geldige relevanteAndereZaken geeft 200\", function() {",
 															"    pm.response.to.have.status(200);",
 															"});",
 															"",
 															"if(pm.globals.get(\"created_zaak_url\")) {",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(zrc-009a) Valideren opschorting indien gedefinieerd\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(zrc-009a) Zaak aanmaken met opschorting zonder indicatie en reden is onmogelijk\");",
 															"    postman.setNextRequest(\"(COMMON) Delete Zaak\");   ",
 															"}"
 														],
@@ -4028,7 +4028,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-009 (WIP)",
+									"name": "zrc-009 (NI)",
 									"item": [
 										{
 											"name": "(zrc-009a) Zaak aanmaken met opschorting zonder indicatie en reden is onmogelijk",
@@ -5455,7 +5455,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-011 (WIP) (NI)",
+									"name": "zrc-011",
 									"item": [
 										{
 											"name": "(zrc-011a) Valideer op geen betalingswaarde en wel laatste betaaldatum",
@@ -9686,7 +9686,7 @@
 														"id": "fd1337e3-0ddd-49ef-b62c-d098dbec6c32",
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.informatieobjecttype = pm.globals.get(\"mock_url\") + \"/404\";",
+															"body.informatieobjecttype = pm.environment.get(\"mock_url\") + \"/404\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -9745,7 +9745,7 @@
 														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.informatieobjecttype = pm.globals.get(\"mock_url\") + \"/404\";",
+															"body.informatieobjecttype = pm.environment.get(\"mock_url\") + \"/404\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -9860,7 +9860,7 @@
 														"id": "7efcc0f7-8bcc-435b-afa0-581b4b34f42d",
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.informatieobjecttype = pm.globals.get(\"mock_url\") + \"/200\";",
+															"body.informatieobjecttype = pm.environment.get(\"mock_url\") + \"/200\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -9919,7 +9919,7 @@
 														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.informatieobjecttype = pm.globals.get(\"mock_url\") + \"/200\";",
+															"body.informatieobjecttype = pm.environment.get(\"mock_url\") + \"/200\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -10673,7 +10673,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"titel\": \"test\",\n\t\"beschrijving\": \"test\",\n\t\"registratiedatum\": \"2019-01-01T00:00:00\"\n}"
+													"raw": "{\n\t\"titel\": \"test\",\n\t\"beschrijving\": \"test\"\n}"
 												},
 												"url": {
 													"raw": "{{created_objectinformatieobject_url}}",
@@ -13008,7 +13008,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"besluit_body\"));",
-															"body.besluittype = pm.globals.get(\"mock_url\") + \"/404\";",
+															"body.besluittype = pm.environment.get(\"mock_url\") + \"/404\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -13190,7 +13190,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"besluit_body\"));",
-															"body.besluittype = pm.globals.get(\"mock_url\") + \"/404\";",
+															"body.besluittype = pm.environment.get(\"mock_url\") + \"/404\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
