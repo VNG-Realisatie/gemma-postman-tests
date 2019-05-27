@@ -22,10 +22,6 @@ DRC:
 - **drc-003f**: partially updating `ObjectInformatieObject` with a different value for `aardRelatieWeergave` should not be possible, but the API does not use the given value for `aardRelatieWeergave`, causing the result to be 200 without any values actually changing
 - **drc-004a**: same issue as **drc-003b**
 - **drc-004b**: similar to **zrc-003b**, `informatieobject`-url is saved using 127.0.0.1 instead of localhost under `<besluit_url>/informatieobjecten`
-- **drc-005a**: updating `EnkelvoudigInformatieObject` with `status` set to `in_bewerking` and `verzenddatum` set to not `null` results in 200 instead of 400 ([Issue #1022](https://github.com/VNG-Realisatie/gemma-zaken/issues/1022))
-- **drc-005b**: partially updating `EnkelvoudigInformatieObject` with `verzenddatum` set to not `null` while `status` was already set to `in_bewerking` results in 200 instead of 400 ([Issue #1022](https://github.com/VNG-Realisatie/gemma-zaken/issues/1022))
-- **drc-005c**: updating `EnkelvoudigInformatieObject` with `status` set to `ter_vaststelling` and `verzenddatum` set to not `null` results in 200 instead of 400 ([Issue #1022](https://github.com/VNG-Realisatie/gemma-zaken/issues/1022))
-- **drc-005d**: partially updating `EnkelvoudigInformatieObject` with `verzenddatum` set to not `null` while `status` was already set to `ter_vaststelling` results in 200 instead of 400 ([Issue #1022](https://github.com/VNG-Realisatie/gemma-zaken/issues/1022))
 
 BRC:
 - **brc-001g** until **brc-001i**: resource validation on `besluittype`-url for `Besluit` not yet implemented
