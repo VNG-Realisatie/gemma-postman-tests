@@ -11549,7 +11549,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-005a) EnkelvoudigInformatieObject bijwerken verzenddatum zetten als status in bewerking is niet toegestaan",
+											"name": "(drc-005a) EnkelvoudigInformatieObject bijwerken ontvangstdatum zetten als status in bewerking is niet toegestaan",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -11558,7 +11558,7 @@
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
 															"body.status = \"in bewerking\";",
-															"body.verzenddatum = \"2019-01-01\";",
+															"body.ontvangstdatum = \"2019-01-01\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -11570,7 +11570,7 @@
 													"script": {
 														"id": "210802e1-bb4f-4d17-8aeb-8351fc60997b",
 														"exec": [
-															"pm.test.skip(\"EnkelvoudigInformatieObject verzenddatum zetten als status in bewerking geeft 400\", function() {",
+															"pm.test(\"EnkelvoudigInformatieObject ontvangstdatum zetten als status in bewerking geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
 															"});"
 														],
@@ -11602,7 +11602,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-005b) EnkelvoudigInformatieObject deels bijwerken verzenddatum zetten als status in bewerking is niet toegestaan",
+											"name": "(drc-005b) EnkelvoudigInformatieObject deels bijwerken ontvangstdatum zetten als status in bewerking is niet toegestaan",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -11611,7 +11611,7 @@
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
 															"body.status = \"in bewerking\";",
-															"body.verzenddatum = \"2019-01-01\";",
+															"body.ontvangstdatum = \"2019-01-01\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -11623,7 +11623,7 @@
 													"script": {
 														"id": "210802e1-bb4f-4d17-8aeb-8351fc60997b",
 														"exec": [
-															"pm.test.skip(\"EnkelvoudigInformatieObject verzenddatum zetten als status in bewerking geeft 400\", function() {",
+															"pm.test(\"EnkelvoudigInformatieObject ontvangstdatum zetten als status in bewerking geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
 															"});",
 															"",
@@ -11718,7 +11718,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-005c) EnkelvoudigInformatieObject bijwerken verzenddatum zetten als status ter vaststelling is niet toegestaan",
+											"name": "(drc-005c) EnkelvoudigInformatieObject bijwerken ontvangstdatum zetten als status ter vaststelling is niet toegestaan",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -11727,7 +11727,7 @@
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
 															"body.status = \"ter vaststelling\";",
-															"body.verzenddatum = \"2019-01-01\";",
+															"body.ontvangstdatum = \"2019-01-01\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -11739,7 +11739,7 @@
 													"script": {
 														"id": "98c02693-1303-4ef4-8569-7a8af71ace58",
 														"exec": [
-															"pm.test.skip(\"EnkelvoudigInformatieObject verzenddatum zetten als status ter vaststelling geeft 400\", function() {",
+															"pm.test(\"EnkelvoudigInformatieObject ontvangstdatum zetten als status ter vaststelling geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
 															"});"
 														],
@@ -11771,7 +11771,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-005d) EnkelvoudigInformatieObject deels bijwerken verzenddatum zetten als status ter vaststelling is niet toegestaan",
+											"name": "(drc-005d) EnkelvoudigInformatieObject deels bijwerken ontvangstdatum zetten als status ter vaststelling is niet toegestaan",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -11780,7 +11780,7 @@
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
 															"body.status = \"ter vaststelling\";",
-															"body.verzenddatum = \"2019-01-01\";",
+															"body.ontvangstdatum = \"2019-01-01\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -11792,7 +11792,7 @@
 													"script": {
 														"id": "98c02693-1303-4ef4-8569-7a8af71ace58",
 														"exec": [
-															"pm.test.skip(\"EnkelvoudigInformatieObject verzenddatum zetten als status ter vaststelling geeft 400\", function() {",
+															"pm.test(\"EnkelvoudigInformatieObject ontvangstdatum zetten als status ter vaststelling geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
 															"});",
 															"",
