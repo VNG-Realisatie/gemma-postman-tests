@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4f0cc02a-a16b-48dd-8b81-73cf5d88ce63",
+		"_postman_id": "f354463a-b4b8-4377-a86c-0a71c00e2ed1",
 		"name": "ZGW api tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -13738,37 +13738,123 @@
 									"name": "brc-003",
 									"item": [
 										{
-											"name": "(brc-003a) Valideren informatieobject op de BesluitInformatieObject-resource",
+											"name": "(brc-003a) BesluitInformatieObject aanmaken is mogelijk",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "738040bb-7752-4ebf-908a-c4b33ace22aa",
+														"id": "fd3123b7-f570-4324-bba1-1314a7ab10a8",
 														"exec": [
-															"pm.test(\"Ongeldige informatieobject-url toevoegen aan Besluit resulteert in 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    // Verify that the 400 is returned for the correct reason",
-															"    var errors = pm.response.json()[\"invalidParams\"];",
-															"    pm.expect(errors[0].name).to.be.equal(\"informatieobject\");",
-															"    pm.expect(errors[0].code).to.be.equal(\"bad-url\");",
+															"pm.test(\"BesluitInformatieObject aanmaken met valide gegevens geeft 201\", function() {",
+															"    pm.response.to.have.status(201);",
 															"});",
 															"",
-															"// TODO",
 															"if(pm.response.code == 201) {",
-															"    pm.globals.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"Create relation between Besluit and Informatieobject\");",
-															"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
+															"    pm.globals.set(\"created_besluitinformatieobject_url\", pm.response.json().url);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(brc-003b) BesluitInformatieObject aanmaken met ongeldige informatieobject url is niet toegestaan\");",
+															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
 															"}"
 														],
 														"type": "text/javascript"
 													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"besluit\": \"{{besluit_url}}\",\n    \"informatieobject\": \"{{informatieobject_url}}\"\n}"
 												},
+												"url": {
+													"raw": "{{brc_url}}/besluitinformatieobjecten",
+													"host": [
+														"{{brc_url}}"
+													],
+													"path": [
+														"besluitinformatieobjecten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(brc-003b) BesluitInformatieObject aanmaken met ongeldige informatieobject url is niet toegestaan",
+											"event": [
 												{
-													"listen": "prerequest",
+													"listen": "test",
 													"script": {
-														"id": "771a52bd-37ba-4707-8624-aee0e2d71d5d",
+														"id": "cdc41a58-61a8-4faa-89d0-721351f3942c",
 														"exec": [
+															"pm.test.skip(\"BesluitInformatieObject aanmaken met informatieobject url die niet resulteert in 200 geeft 404\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // Verify that error was thrown for correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"informatieobject\");",
+															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"besluit\": \"{{besluit_url}}\",\n    \"informatieobject\": \"{{mock_url}}/404\"\n}"
+												},
+												"url": {
+													"raw": "{{brc_url}}/besluitinformatieobjecten",
+													"host": [
+														"{{brc_url}}"
+													],
+													"path": [
+														"besluitinformatieobjecten"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "brc-004",
+									"item": [
+										{
+											"name": "(brc-004a) BesluitInformatieObject aanmaken zet aard_relatie op legt_vast",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "1cc9ef47-2191-4b69-9b2c-34c7517b8b3e",
+														"exec": [
+															"pm.test(\"BesluitInformatieObject aanmaken zet aardRelatie op legt_vast\", function() {",
+															"    pm.expect(pm.response.json().aardRelatieWeergave).to.include(\"Legt vast\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_besluitinformatieobject_url\", pm.response.json().url);",
+															"} else {",
+															"    postman.setNextRequest(\"...\");",
+															"}",
 															""
 														],
 														"type": "text/javascript"
@@ -13781,26 +13867,306 @@
 													{
 														"key": "Content-Type",
 														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"besluit\": \"{{besluit_url}}\"\n}"
+												},
+												"url": {
+													"raw": "{{brc_url}}/besluitinformatieobjecten",
+													"host": [
+														"{{brc_url}}"
+													],
+													"path": [
+														"besluitinformatieobjecten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(brc-004b) BesluitInformatieObject relatie bijwerken is niet toegestaan",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "242cf78b-35ac-4bec-83f8-cf47d03e461e",
+														"exec": [
+															"pm.test(\"BeslutInformatieObject bijwerken relatie aanpassen is niet mogelijk\", function() {",
+															"    pm.expect(pm.response.json().aardRelatieWeergave).to.include(\"Legt vast\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "c8ca8ad9-e1d5-4a70-ad7f-3d30d5d067a2",
+														"exec": [
+															"var body = JSON.parse(pm.globals.get(\"besluitinformatieobject_body\"));",
+															"body.aardRelatieWeergave = \"aangepast\";",
+															"",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{created_besluitinformatieobject_url}}",
+													"host": [
+														"{{created_besluitinformatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(brc-004c) BesluitInformatieObject relatie deels bijwerken is niet toegestaan",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "242cf78b-35ac-4bec-83f8-cf47d03e461e",
+														"exec": [
+															"pm.test(\"BeslutInformatieObject deels bijwerken relatie is niet mogelijk\", function() {",
+															"    pm.expect(pm.response.json().aardRelatieWeergave).to.include(\"Legt vast\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "c8ca8ad9-e1d5-4a70-ad7f-3d30d5d067a2",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"aardRelatieWeergave\": \"aangepast\"\n}"
+												},
+												"url": {
+													"raw": "{{created_besluitinformatieobject_url}}",
+													"host": [
+														"{{created_besluitinformatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create different Besluit",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": ""
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(brc-004d) BesluitInformatieObject besluit bijwerken is niet toegestaan",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "242cf78b-35ac-4bec-83f8-cf47d03e461e",
+														"exec": [
+															"pm.test(\"BeslutInformatieObject bijwerken relatie aanpassen is niet mogelijk\", function() {",
+															"    pm.response.to.have.status(400)",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "c8ca8ad9-e1d5-4a70-ad7f-3d30d5d067a2",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
 														"type": "text",
 														"value": "application/json"
 													}
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"informatieobject\": \"{{mock_url}}/404\"\n}"
+													"raw": "{\n\t\"besluit\": \"{{besluit_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\"\n}"
 												},
 												"url": {
-													"raw": "{{besluit_url}}/informatieobjecten",
+													"raw": "{{created_besluitinformatieobject_url}}",
+													"host": [
+														"{{created_besluitinformatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "tearDown",
+									"item": [
+										{
+											"name": "Delete Besluit",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "a80cc599-41c6-4c9f-9019-4429fb4f3835",
+														"exec": [
+															"postman.setNextRequest(null);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{besluit_url}}",
 													"host": [
 														"{{besluit_url}}"
-													],
-													"path": [
-														"informatieobjecten"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "common requests",
+									"item": [
+										{
+											"name": "(COMMON) Delete Besluit",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3c3704b5-9c4e-4a05-ae37-0038780ed1f5",
+														"exec": [
+															"pm.globals.unset(\"created_besluit_url\");",
+															"postman.setNextRequest(pm.globals.get(\"NEXT_REQUEST_NAME\"));",
+															"pm.globals.unset(\"NEXT_REQUEST_NAME\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_besluit_url}}",
+													"host": [
+														"{{created_besluit_url}}"
 													]
 												}
 											},
 											"response": []
 										},
+										{
+											"name": "(COMMON) Delete BesluitInformatieObject",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "0ad036b5-8626-4c1c-bfb9-9ed58f4ed59a",
+														"exec": [
+															"pm.globals.unset(\"created_besluitinformatieobject_url\");",
+															"postman.setNextRequest(pm.globals.get(\"NEXT_REQUEST_NAME\"));",
+															"pm.globals.unset(\"NEXT_REQUEST_NAME\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{brc_url}}/besluitinformatieobjecten",
+													"host": [
+														"{{brc_url}}"
+													],
+													"path": [
+														"besluitinformatieobjecten"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "temp",
+									"item": [
 										{
 											"name": "Create relation between Besluit and Informatieobject",
 											"event": [
@@ -13998,112 +14364,6 @@
 													],
 													"path": [
 														"informatieobjecten"
-													]
-												}
-											},
-											"response": []
-										}
-									],
-									"_postman_isSubFolder": true
-								},
-								{
-									"name": "tearDown",
-									"item": [
-										{
-											"name": "Delete Besluit",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "a80cc599-41c6-4c9f-9019-4429fb4f3835",
-														"exec": [
-															"postman.setNextRequest(null);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "DELETE",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{besluit_url}}",
-													"host": [
-														"{{besluit_url}}"
-													]
-												}
-											},
-											"response": []
-										}
-									],
-									"_postman_isSubFolder": true
-								},
-								{
-									"name": "common requests",
-									"item": [
-										{
-											"name": "(COMMON) Delete Besluit",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "3c3704b5-9c4e-4a05-ae37-0038780ed1f5",
-														"exec": [
-															"pm.globals.unset(\"created_besluit_url\");",
-															"postman.setNextRequest(pm.globals.get(\"NEXT_REQUEST_NAME\"));",
-															"pm.globals.unset(\"NEXT_REQUEST_NAME\");"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "DELETE",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{created_besluit_url}}",
-													"host": [
-														"{{created_besluit_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(COMMON) Delete ObjectInformatieObject",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "499ce43f-d132-4fdd-949e-f1572c58a9bb",
-														"exec": [
-															"pm.globals.unset(\"created_objectinformatieobject_url\");",
-															"postman.setNextRequest(pm.globals.get(\"NEXT_REQUEST_NAME\"));",
-															"pm.globals.unset(\"NEXT_REQUEST_NAME\");"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "DELETE",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{created_objectinformatieobject_url}}",
-													"host": [
-														"{{created_objectinformatieobject_url}}"
 													]
 												}
 											},
