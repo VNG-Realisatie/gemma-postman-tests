@@ -2799,7 +2799,7 @@
 													"script": {
 														"id": "fa9f354c-0464-494e-b9fa-9635b21b2d43",
 														"exec": [
-															"pm.globals.set(\"objectinformatieobject_url\", pm.response.json().url);",
+															"pm.globals.set(\"created_zaakinformatieobject_url\", pm.response.json().url);",
 															"",
 															"if(pm.response.code != 201) {",
 															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(zrc-008a) Valideer expliciet gedefinieerde vertrouwelijkheidaanduiding\");",
@@ -2832,15 +2832,15 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"object\": \"{{created_zaak_url}}\",\n    \"objectType\": \"zaak\"\n}"
+													"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"zaak\": \"{{created_zaak_url}}\"\n}"
 												},
 												"url": {
-													"raw": "{{drc_url}}/objectinformatieobjecten",
+													"raw": "{{zrc_url}}/zaakinformatieobjecten",
 													"host": [
-														"{{drc_url}}"
+														"{{zrc_url}}"
 													],
 													"path": [
-														"objectinformatieobjecten"
+														"zaakinformatieobjecten"
 													]
 												}
 											},
@@ -3042,12 +3042,22 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "{{created_zaak_url}}/informatieobjecten",
+													"raw": "{{zrc_url}}/zaakinformatieobjecten?zaak={{created_zaak_url}}&informatieobject={{informatieobject_url}}",
 													"host": [
-														"{{created_zaak_url}}"
+														"{{zrc_url}}"
 													],
 													"path": [
-														"informatieobjecten"
+														"zaakinformatieobjecten"
+													],
+													"query": [
+														{
+															"key": "zaak",
+															"value": "{{created_zaak_url}}"
+														},
+														{
+															"key": "informatieobject",
+															"value": "{{informatieobject_url}}"
+														}
 													]
 												}
 											},
@@ -3088,7 +3098,6 @@
 															"    pm.globals.set(\"current_related_informatieobject_index\", 0);",
 															"}",
 															"",
-															"console.log(pm.globals.get(\"related_informatieobjecten_urls\"), pm.globals.get(\"current_related_informatieobject_index\"))",
 															"pm.globals.set(\"current_related_informatieobject_url\", pm.globals.get(\"related_informatieobjecten_urls\")[pm.globals.get(\"current_related_informatieobject_index\")]);"
 														],
 														"type": "text/javascript"
@@ -3212,7 +3221,7 @@
 															"});",
 															"",
 															"pm.globals.set(\"NEXT_REQUEST_NAME\", \"Create relation between Zaak and Informatieobject with gebruiksrecht null\");",
-															"postman.setNextRequest(\"(COMMON) Delete relation between Zaak and Informatieobject\");"
+															"postman.setNextRequest(\"(COMMON) Delete ZaakInformatieObject\");"
 														],
 														"type": "text/javascript"
 													}
@@ -3267,7 +3276,7 @@
 													"script": {
 														"id": "fa9f354c-0464-494e-b9fa-9635b21b2d43",
 														"exec": [
-															"pm.globals.set(\"objectinformatieobject_url\", pm.response.json().url)"
+															"pm.globals.set(\"created_zaakinformatieobject_url\", pm.response.json().url)"
 														],
 														"type": "text/javascript"
 													}
@@ -3295,15 +3304,15 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"informatieobject\": \"{{informatieobject_gebruiksrecht_null_url}}\",\n    \"object\": \"{{created_zaak_url}}\",\n    \"objectType\": \"zaak\"\n}"
+													"raw": "{\n    \"informatieobject\": \"{{informatieobject_gebruiksrecht_null_url}}\",\n    \"zaak\": \"{{created_zaak_url}}\"\n}"
 												},
 												"url": {
-													"raw": "{{drc_url}}/objectinformatieobjecten",
+													"raw": "{{zrc_url}}/zaakinformatieobjecten",
 													"host": [
-														"{{drc_url}}"
+														"{{zrc_url}}"
 													],
 													"path": [
-														"objectinformatieobjecten"
+														"zaakinformatieobjecten"
 													]
 												}
 											},
@@ -3326,7 +3335,7 @@
 															"});",
 															"",
 															"pm.globals.set(\"NEXT_REQUEST_NAME\", \"Add non-Eindstatus to Zaak\");",
-															"postman.setNextRequest(\"(COMMON) Delete relation between Zaak and Informatieobject\");"
+															"postman.setNextRequest(\"(COMMON) Delete ZaakInformatieObject\");"
 														],
 														"type": "text/javascript"
 													}
@@ -3359,7 +3368,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-20T13:37:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-22T13:37:00\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
@@ -3409,7 +3418,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-20T13:39:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-22T13:39:00\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
@@ -3439,7 +3448,6 @@
 															"});",
 															"",
 															"pm.globals.set(\"NEXT_REQUEST_NAME\", \"(zrc-008a) Valideer expliciet gedefinieerde vertrouwelijkheidaanduiding\");",
-															"// pm.globals.set(\"NEXT_REQUEST_NAME\", \"Delete Zaak\");",
 															"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 														],
 														"type": "text/javascript"
@@ -8479,7 +8487,7 @@
 															"",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(zrc-016b) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd\");",
-															"    postman.setNextRequest(\"(COMMON) Create relation between Zaak and Informatieobject\");   ",
+															"    postman.setNextRequest(\"(COMMON) Create ZaakInformatieObject\");   ",
 															"} else {",
 															"    postman.setNextRequest(\"Create Zaak to delete\");",
 															"}"
@@ -9028,7 +9036,7 @@
 															"    pm.globals.set(\"archiefstatus_index\", index + 1);",
 															"    if (pm.globals.get(\"created_objectinformatieobject_url\")) {",
 															"        pm.globals.set(\"NEXT_REQUEST_NAME\", \"Create Zaak to be archived\");",
-															"        postman.setNextRequest(\"(COMMON) Delete relation between Zaak and Informatieobject\");",
+															"        postman.setNextRequest(\"(COMMON) Delete ZaakInformatieObject\");",
 															"    } else {",
 															"        postman.setNextRequest(\"Create Zaak to be archived\");",
 															"    }",
@@ -9395,7 +9403,7 @@
 													"script": {
 														"id": "fa9f354c-0464-494e-b9fa-9635b21b2d43",
 														"exec": [
-															"pm.globals.set(\"objectinformatieobject_url\", pm.response.json().url);",
+															"pm.globals.set(\"created_zaakinformatieobject_url\", pm.response.json().url);",
 															"",
 															"if(pm.response.code != 201) {",
 															"    postman.setNextRequest(\"Add Klantcontact to Zaak\");",
@@ -9427,29 +9435,29 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"object\": \"{{created_zaak_url}}\",\n    \"objectType\": \"zaak\"\n}"
+													"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"zaak\": \"{{created_zaak_url}}\",\n\t\"titel\": \"\",\n\t\"beschrijving\": \"\"\n}"
 												},
 												"url": {
-													"raw": "{{drc_url}}/objectinformatieobjecten",
+													"raw": "{{zrc_url}}/zaakinformatieobjecten",
 													"host": [
-														"{{drc_url}}"
+														"{{zrc_url}}"
 													],
 													"path": [
-														"objectinformatieobjecten"
+														"zaakinformatieobjecten"
 													]
 												}
 											},
 											"response": []
 										},
 										{
-											"name": "Retrieve Zaakinformatieobject url",
+											"name": "Retrieve ObjectInformatieObject url",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "6195d7e2-4e74-425d-8135-f92287a13d76",
+														"id": "effacf1b-2f79-40a9-84ec-d02488a27980",
 														"exec": [
-															"pm.globals.set(\"zaakinformatieobject_url\", pm.response.json()[0].url);"
+															"pm.globals.set(\"objectinformatieobject_url\", pm.response.json()[0].url);"
 														],
 														"type": "text/javascript"
 													}
@@ -9457,24 +9465,28 @@
 											],
 											"request": {
 												"method": "GET",
-												"header": [
-													{
-														"key": "Accept-Crs",
-														"value": "EPSG:4326",
-														"type": "text"
-													}
-												],
+												"header": [],
 												"body": {
 													"mode": "raw",
 													"raw": ""
 												},
 												"url": {
-													"raw": "{{created_zaak_url}}/informatieobjecten",
+													"raw": "{{drc_url}}/objectinformatieobjecten?object={{created_zaak_url}}&informatieobject={{informatieobject_url}}",
 													"host": [
-														"{{created_zaak_url}}"
+														"{{drc_url}}"
 													],
 													"path": [
-														"informatieobjecten"
+														"objectinformatieobjecten"
+													],
+													"query": [
+														{
+															"key": "object",
+															"value": "{{created_zaak_url}}"
+														},
+														{
+															"key": "informatieobject",
+															"value": "{{informatieobject_url}}"
+														}
 													]
 												}
 											},
@@ -9768,11 +9780,7 @@
 														"exec": [
 															"pm.test(\"Zaakeigenschap ophalen uit zrc na Zaak verwijdering geeft 404\", function() {",
 															"    pm.response.to.have.status(404); ",
-															"});",
-															"",
-															"if(!pm.globals.get(\"objectinformatieobject_url\")) {",
-															"    postman.setNextRequest(\"(zrc-017j) Klantcontact verdwijnt uit zrc na Zaak verwijdering\");",
-															"}"
+															"});"
 														],
 														"type": "text/javascript"
 													}
@@ -9808,7 +9816,7 @@
 													"script": {
 														"id": "1c927c06-054f-4cb2-8bd9-1d7577fcff37",
 														"exec": [
-															"pm.test.skip(\"ObjectInformatieObject ophalen uit drc na Zaak verwijdering geeft 404\", function() {",
+															"pm.test(\"ObjectInformatieObject ophalen uit drc na Zaak verwijdering geeft 404\", function() {",
 															"    pm.response.to.have.status(404); ",
 															"});"
 														],
@@ -9839,14 +9847,14 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-017i) Zaakinformatieobject verdwijnt uit zrc na Zaak verwijdering",
+											"name": "(zrc-017i) ZaakInformatieObject verdwijnt uit zrc na Zaak verwijdering",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "1c927c06-054f-4cb2-8bd9-1d7577fcff37",
 														"exec": [
-															"pm.test(\"Zaakinformatieobject ophalen uit zrc na Zaak verwijdering geeft 404\", function() {",
+															"pm.test(\"ZaakInformatieObject ophalen uit zrc na Zaak verwijdering geeft 404\", function() {",
 															"    pm.response.to.have.status(404); ",
 															"});"
 														],
@@ -9868,9 +9876,9 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "{{zaakinformatieobject_url}}",
+													"raw": "{{created_zaakinformatieobject_url}}",
 													"host": [
-														"{{zaakinformatieobject_url}}"
+														"{{created_zaakinformatieobject_url}}"
 													]
 												}
 											},
@@ -10040,14 +10048,14 @@
 											"response": []
 										},
 										{
-											"name": "(COMMON) Create relation between Zaak and Informatieobject",
+											"name": "(COMMON) Create ZaakInformatieObject",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "fa9f354c-0464-494e-b9fa-9635b21b2d43",
 														"exec": [
-															"pm.globals.set(\"objectinformatieobject_url\", pm.response.json().url);",
+															"pm.globals.set(\"created_zaakinformatieobject_url\", pm.response.json().url);",
 															"postman.setNextRequest(pm.globals.get(\"NEXT_REQUEST_NAME\"));",
 															"pm.globals.unset(\"NEXT_REQUEST_NAME\");"
 														],
@@ -10077,57 +10085,15 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"object\": \"{{created_zaak_url}}\",\n    \"objectType\": \"zaak\"\n}"
+													"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"zaak\": \"{{created_zaak_url}}\",\n    \"titel\": \"\",\n    \"beschrijving\": \"\"\n}"
 												},
 												"url": {
-													"raw": "{{drc_url}}/objectinformatieobjecten",
+													"raw": "{{zrc_url}}/zaakinformatieobjecten",
 													"host": [
-														"{{drc_url}}"
+														"{{zrc_url}}"
 													],
 													"path": [
-														"objectinformatieobjecten"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(COMMON) Delete relation between Zaak and Informatieobject",
-											"event": [
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "f6f87cec-0d1a-4acf-b2df-2e05417272c7",
-														"exec": [
-															""
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "test",
-													"script": {
-														"id": "e92fad8c-68f7-4837-bf55-1d6f2ab479ec",
-														"exec": [
-															"pm.globals.unset(\"objectinformatieobject_url\");",
-															"postman.setNextRequest(pm.globals.get(\"NEXT_REQUEST_NAME\"));",
-															"pm.globals.unset(\"NEXT_REQUEST_NAME\");"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "DELETE",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{objectinformatieobject_url}}",
-													"host": [
-														"{{objectinformatieobject_url}}"
+														"zaakinformatieobjecten"
 													]
 												}
 											},
