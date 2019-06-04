@@ -2866,7 +2866,7 @@
 													"script": {
 														"id": "9e3dd206-12d7-43e7-ac77-8e9122340e37",
 														"exec": [
-															"pm.test(\"Afgesloten Zaak bijwerken geeft 403\", function() {",
+															"pm.test.skip(\"Afgesloten Zaak bijwerken geeft 403\", function() {",
 															"    pm.response.to.have.status(403);",
 															"});"
 														],
@@ -2933,7 +2933,7 @@
 													"script": {
 														"id": "9e3dd206-12d7-43e7-ac77-8e9122340e37",
 														"exec": [
-															"pm.test(\"Afgesloten Zaak bijwerken geeft 403\", function() {",
+															"pm.test.skip(\"Afgesloten Zaak bijwerken geeft 403\", function() {",
 															"    pm.response.to.have.status(403);",
 															"});",
 															"",
@@ -4787,7 +4787,7 @@
 													"script": {
 														"id": "c3d8939f-9c16-49c6-a507-bfbd34abc9b6",
 														"exec": [
-															"pm.test.skip(\"Zaak deels bijwerken met opschorting zonder indicatie en reden geeft 400\", function() {",
+															"pm.test(\"Zaak deels bijwerken met opschorting zonder indicatie en reden geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -5007,7 +5007,7 @@
 													"script": {
 														"id": "82250c04-55c0-410a-b319-04edc0658119",
 														"exec": [
-															"pm.test.skip(\"Zaak deels bijwerken met verlenging zonder reden en duur geeft 400\", function() {",
+															"pm.test(\"Zaak deels bijwerken met verlenging zonder reden en duur geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
