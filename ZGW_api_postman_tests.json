@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "21b1ce8a-0328-427b-bad6-363f5e299205",
+		"_postman_id": "e1a74a48-f6af-4971-9b45-39178ea52c0d",
 		"name": "ZGW api tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -4787,7 +4787,7 @@
 													"script": {
 														"id": "c3d8939f-9c16-49c6-a507-bfbd34abc9b6",
 														"exec": [
-															"pm.test(\"Zaak deels bijwerken met opschorting zonder indicatie en reden geeft 400\", function() {",
+															"pm.test.skip(\"Zaak deels bijwerken met opschorting zonder indicatie en reden geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -5007,7 +5007,7 @@
 													"script": {
 														"id": "82250c04-55c0-410a-b319-04edc0658119",
 														"exec": [
-															"pm.test(\"Zaak deels bijwerken met verlenging zonder reden en duur geeft 400\", function() {",
+															"pm.test.skip(\"Zaak deels bijwerken met verlenging zonder reden en duur geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",

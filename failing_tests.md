@@ -6,6 +6,7 @@ ZRC:
 - **zrc-006b**: `zaak__zoek` returns `Zaak`en with `zaaktype`s that are not part of the zaaktypes_claim in the JWT token  
 - **zrc-006c**: `zaak_detail` returns `Zaak`en with `zaaktype`s that are not part of the zaaktypes_claim in the JWT token
 - **zrc-007c-d**: (partially) updating a closed `Zaak` without the required scopes should give 403 but gives 200, probably due to changes to authorizations
+- **zrc-011c&f**: partially updating a `Zaak` with a `GegevensGroep` (`opschorting`/`verlenging`) with invalid structure should list all the fields that are missing ([Issue #1026](https://github.com/VNG-Realisatie/gemma-zaken/issues/1026))
 - **zrc-015g**: missing appropriate `selectielijstklasse` in https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaten for `afleidingswijze_brondatum` `ander_datumkenmerk`
 
 DRC:
