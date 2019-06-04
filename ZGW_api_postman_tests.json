@@ -10820,8 +10820,7 @@
 															"pm.globals.set(\"created_zaakinformatieobject_url\", pm.response.json().url);",
 															"",
 															"if(pm.response.code != 201) {",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"...\");",
-															"    postman.setNextRequest(\"...\");   ",
+															"    postman.setNextRequest(\"Create relation between Besluit and Informatieobject\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -10870,9 +10869,10 @@
 															"    pm.expect(error.code).to.be.equal(\"unique\");",
 															"});",
 															"",
+															"pm.globals.set(\"NEXT_REQUEST_NAME\", \"Create relation between Besluit and Informatieobject\");",
 															"if (pm.response.code == 201) {",
 															"    pm.globals.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"Create relation between Besluit and Informatieobject\");",
+															"} else {",
 															"    postman.setNextRequest(\"(COMMON) Delete ZaakInformatieObject\");",
 															"}"
 														],
@@ -10917,8 +10917,7 @@
 															"pm.globals.set(\"created_besluitinformatieobject_url\", pm.response.json().url);",
 															"",
 															"if(pm.response.code != 201) {",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"...\");",
-															"    postman.setNextRequest(\"...\");   ",
+															"    postman.setNextRequest(\"(drc-004a) ObjectInformatieObject aanmaken met zaak en informatieobject niet gekoppeld in zrc is onmogelijk\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -10952,7 +10951,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-003a) ObjectInformatieObject aanmaken met bestaande combinatie object en informatieobject en objectType besluit is onmogelijk",
+											"name": "(drc-003b) ObjectInformatieObject aanmaken met bestaande combinatie object en informatieobject en objectType besluit is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -10967,9 +10966,10 @@
 															"    pm.expect(error.code).to.be.equal(\"unique\");",
 															"});",
 															"",
+															"pm.globals.set(\"NEXT_REQUEST_NAME\", \"(drc-004a) ObjectInformatieObject aanmaken met zaak en informatieobject niet gekoppeld in zrc is onmogelijk\");",
 															"if (pm.response.code == 201) {",
 															"    pm.globals.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"...\");",
+															"} else {",
 															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
 															"}"
 														],
@@ -10989,7 +10989,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"object\": \"{{zaak_url}}\",\n\t\"objectType\": \"zaak\"\n}"
+													"raw": "{\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"object\": \"{{besluit_url}}\",\n\t\"objectType\": \"besluit\"\n}"
 												},
 												"url": {
 													"raw": "{{drc_url}}/objectinformatieobjecten",
