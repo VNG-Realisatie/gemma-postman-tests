@@ -11021,10 +11021,10 @@
 															"var request_names = [\"(drc-004a) ObjectInformatieObject aanmaken met zaak en informatieobject niet gekoppeld in zrc is onmogelijk\"];",
 															"if (pm.response.code == 201) {",
 															"    pm.globals.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
-															"    request_names.unshift(\"(COMMON) Delete ZaakInformatieObject\");",
+															"    request_names.unshift(\"(COMMON) Delete BesluitInformatieObject\");",
 															"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
 															"} else {",
-															"    postman.setNextRequest(\"(COMMON) Delete ZaakInformatieObject\");",
+															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
 															"}",
 															"",
 															"pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);"
@@ -12856,6 +12856,7 @@
 														"id": "265f65b0-37e3-418b-bc59-d7cef6c08e1d",
 														"exec": [
 															"var informatieobjecten = pm.response.json();",
+															"console.log(informatieobjecten[0])",
 															"pm.globals.set(\"informatieobject_url\", informatieobjecten[0].url);",
 															"pm.globals.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);"
 														],
@@ -14389,7 +14390,7 @@
 														"id": "494bb544-c634-4e6e-8b9e-726f35458b6c",
 														"exec": [
 															"pm.globals.unset(\"created_besluit_url\");",
-															"pm.globals.set(\"NEXT_REQUEST_NAME\", \"Create BesluitInformatieObject\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create BesluitInformatieObject\"]);",
 															"postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");"
 														],
 														"type": "text/javascript"
