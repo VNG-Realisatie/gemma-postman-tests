@@ -2164,6 +2164,117 @@
 									"name": "zrc-006 (WIP)",
 									"item": [
 										{
+											"name": "Retrieve Autorisatie details",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "2c2953c6-1e41-40ad-81d7-0088b82b6413",
+														"exec": [
+															"var autorisaties = pm.response.json().results[0].autorisaties;",
+															"",
+															"pm.globals.set(\"autorisaties_zaaktype\", autorisaties[0].zaaktype);",
+															"pm.globals.set(\"autorisaties_maxVertrouwelijkheidaanduiding\", autorisaties[0].maxVertrouwelijkheidaanduiding);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties?clientIds=demo_limited",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													],
+													"query": [
+														{
+															"key": "clientIds",
+															"value": "demo_limited"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create authorized Zaak",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "8dd4c05a-21f8-4cfb-81d6-ded16e48f584",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
+															"body.zaaktype = pm.globals.get(\"autorisaties_zaaktype\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "4e39117c-68b9-4afa-b81c-418b3add848d",
+														"exec": [
+															"pm.globals.set(\"authorized_zaak_url\", pm.response.json().url);",
+															"",
+															"if(pm.response.code != 201) {",
+															"    postman.setNextRequest(\"Create Zaak with different Zaaktype\");",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Crs",
+														"value": "EPSG:4326",
+														"type": "text"
+													},
+													{
+														"key": "Content-Crs",
+														"value": "EPSG:4326",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/zaken",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"zaken"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "Create Zaak with different Zaaktype",
 											"event": [
 												{
@@ -2312,48 +2423,6 @@
 											"response": []
 										},
 										{
-											"name": "Retrieve Autorisatie details",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "2c2953c6-1e41-40ad-81d7-0088b82b6413",
-														"exec": [
-															"var autorisaties = pm.response.json().results[0].autorisaties;",
-															"",
-															"pm.globals.set(\"autorisaties_zaaktype\", autorisaties[0].zaaktype);",
-															"pm.globals.set(\"autorisaties_maxVertrouwelijkheidaanduiding\", autorisaties[0].maxVertrouwelijkheidaanduiding);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ac_url}}/applicaties?clientIds=demo_limited",
-													"host": [
-														"{{ac_url}}"
-													],
-													"path": [
-														"applicaties"
-													],
-													"query": [
-														{
-															"key": "clientIds",
-															"value": "demo_limited"
-														}
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "(zrc-006a) Zaken lijst ontsluit zaken op basis van autorisaties van consumer",
 											"event": [
 												{
@@ -2364,10 +2433,11 @@
 															"var response = pm.response.json();",
 															"",
 															"pm.test(\"Zaken lijst laat geen zaken zien met zaaktypes buiten autorisatie van consumer\", function() {",
-															"    pm.expect(response.count).to.be.equal(1);",
-															"    ",
 															"    var zaken_with_zaaktypes_outside_autorisatie = response.results.some(item => item.zaaktype !== pm.globals.get(\"autorisaties_zaaktype\"));",
 															"    pm.expect(zaken_with_zaaktypes_outside_autorisatie).to.be.equal(false);",
+															"    ",
+															"    var zaken_with_zaaktypes_inside_autorisatie = response.results.some(item => item.zaaktype === pm.globals.get(\"autorisaties_zaaktype\"));",
+															"    pm.expect(zaken_with_zaaktypes_inside_autorisatie).to.be.equal(true);",
 															"});",
 															"",
 															"pm.test(\"Zaken lijst laat geen zaken zien met vertrouwelijkheidaanduiding hoger dan maxVertrouwelijkheidaanduiding in autorisatie van consumer\", function() {",
@@ -2489,6 +2559,30 @@
 											"response": []
 										},
 										{
+											"name": "Delete authorized Zaak",
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept-Crs",
+														"value": "EPSG:4326",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{authorized_zaak_url}}",
+													"host": [
+														"{{authorized_zaak_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "Delete Zaak with different Zaaktype",
 											"request": {
 												"method": "DELETE",
@@ -2514,6 +2608,18 @@
 										},
 										{
 											"name": "Delete Zaak with higher vertrouwelijkheidaanduiding",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "f2905d57-193c-4f72-95bf-561325378ba2",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
 											"request": {
 												"method": "DELETE",
 												"header": [
@@ -8448,7 +8554,10 @@
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
 															"    pm.expect(error.code).to.be.equal(\"documents-not-archived\");",
-															"});"
+															"});",
+															"",
+															"postman.setNextRequest(\"(COMMON) Lock EnkelvoudigInformatieObject\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Change Informatieobject status to gearchiveerd\"]);"
 														],
 														"type": "text/javascript"
 													}
@@ -8856,7 +8965,8 @@
 															"var index = pm.globals.get(\"archiefstatus_index\");",
 															"",
 															"if (index == pm.globals.get(\"archiefstatussen\").length - 1) {",
-															"    postman.setNextRequest(\"Create Zaak to delete\");",
+															"    postman.setNextRequest(\"(COMMON) Unlock EnkelvoudigInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Zaak to delete\"]);",
 															"} else {",
 															"    // Loop",
 															"    pm.globals.set(\"archiefstatus_index\", index + 1);",
@@ -9946,6 +10056,68 @@
 													"raw": "{{created_zaakinformatieobject_url}}",
 													"host": [
 														"{{created_zaakinformatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(COMMON) Lock EnkelvoudigInformatieObject",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "0bf15990-9838-4e20-a001-d2634b68f1f1",
+														"exec": [
+															"pm.globals.set(\"informatieobject_lock_id\", pm.response.json().lock);",
+															"console.log(pm.globals.get(\"informatieobject_lock_id\"))"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}/lock",
+													"host": [
+														"{{informatieobject_url}}"
+													],
+													"path": [
+														"lock"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(COMMON) Unlock EnkelvoudigInformatieObject",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}/unlock",
+													"host": [
+														"{{informatieobject_url}}"
+													],
+													"path": [
+														"unlock"
 													]
 												}
 											},
