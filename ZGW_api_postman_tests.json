@@ -12848,50 +12848,6 @@
 											"response": []
 										},
 										{
-											"name": "Create Besluit",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "164562bf-083c-4e83-873c-6c3065aefd11",
-														"exec": [
-															"var besluit = pm.response.json();",
-															"pm.globals.set(\"besluit_url\", besluit.url);",
-															"pm.globals.set(\"besluit_id\", besluit.identificatie);",
-															"pm.globals.set(\"besluit_verantwoordelijke_organisatie\", besluit.verantwoordelijkeOrganisatie);",
-															"pm.globals.set(\"besluit_body\", pm.request.body.raw);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"value": "application/json",
-														"type": "text"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"verantwoordelijkeOrganisatie\": \"000000000\",\n\t\"besluittype\": \"{{besluittype_url}}\",\n\t\"datum\": \"2019-01-01\",\n\t\"ingangsdatum\": \"2018-01-01\"\n}"
-												},
-												"url": {
-													"raw": "{{brc_url}}/besluiten",
-													"host": [
-														"{{brc_url}}"
-													],
-													"path": [
-														"besluiten"
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "Retrieve EnkelvoudigInformatieObjecten",
 											"event": [
 												{
@@ -12943,10 +12899,15 @@
 														"exec": [
 															"pm.test(\"Zaak aanmaken met valide gegevens geeft 201\", function() {",
 															"    pm.response.to.have.status(201);",
-															"    pm.globals.set(\"created_besluit_url\", pm.response.json().url);",
 															"});",
 															"",
-															"if(!pm.globals.get(\"created_besluit_url\")) {",
+															"if(pm.response.code == 201) {",
+															"    var besluit = pm.response.json();",
+															"    pm.globals.set(\"besluit_url\", besluit.url);",
+															"    pm.globals.set(\"besluit_id\", besluit.identificatie);",
+															"    pm.globals.set(\"besluit_verantwoordelijke_organisatie\", besluit.verantwoordelijkeOrganisatie);",
+															"    pm.globals.set(\"besluit_body\", pm.request.body.raw);",
+															"} else {",
 															"    postman.setNextRequest(\"(brc-001d) Besluit aanmaken met ongeldige besluittype-url is onmogelijk\");",
 															"}"
 														],
@@ -13031,9 +12992,9 @@
 													"raw": "{{request_body}}"
 												},
 												"url": {
-													"raw": "{{created_besluit_url}}",
+													"raw": "{{besluit_url}}",
 													"host": [
-														"{{created_besluit_url}}"
+														"{{besluit_url}}"
 													]
 												}
 											},
@@ -13066,7 +13027,7 @@
 															"});",
 															"",
 															"if(pm.globals.get(\"created_besluit_url\")) {",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(brc-001d) Besluit aanmaken met ongeldige besluittype url is onmogelijk\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-001d) Besluit aanmaken met ongeldige besluittype url is onmogelijk\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete Besluit\");",
 															"}"
 														],
@@ -13089,9 +13050,9 @@
 													"raw": "{\n\t\"bestuursorgaan\": \"{{bestuursorgaan}}\"\n}"
 												},
 												"url": {
-													"raw": "{{created_besluit_url}}",
+													"raw": "{{besluit_url}}",
 													"host": [
-														"{{created_besluit_url}}"
+														"{{besluit_url}}"
 													]
 												}
 											},
@@ -13132,7 +13093,7 @@
 															"// If the test failed and the Besluit was created, delete it",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_besluit_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(brc-001e) Besluit bijwerken met ongeldige besluittype url is onmogelijk\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-001e) Besluit bijwerken met ongeldige besluittype url is onmogelijk\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete Besluit\");",
 															"}"
 														],
@@ -13314,7 +13275,7 @@
 															"// If the test failed and the Besluit was created, delete it",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_besluit_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(brc-001h) Besluit bijwerken met besluittype url die niet wijst naar Besluittype is onmogelijk\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-001h) Besluit bijwerken met besluittype url die niet wijst naar Besluittype is onmogelijk\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete Besluit\");",
 															"}"
 														],
@@ -13408,7 +13369,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-001i) Besluit deels bijwerken met besluittype url die niet wijst naar Besluittype is onmogelijk Copy",
+											"name": "(brc-001i) Besluit deels bijwerken met besluittype url die niet wijst naar Besluittype is onmogelijk",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -13523,7 +13484,7 @@
 															"// If the test failed and the Besluit was created, delete it",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_besluit_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"Create Besluit with unique identificatie and verantwoordelijke_organisatie\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Besluit with unique identificatie and verantwoordelijke_organisatie\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete Besluit\");",
 															"}"
 														],
@@ -13716,7 +13677,7 @@
 															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
 															"});",
 															"",
-															"pm.globals.set(\"NEXT_REQUEST_NAME\", \"Retrieve Besluiten for verantwoordelijke_organisatie\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Retrieve Besluiten for verantwoordelijke_organisatie\"]);",
 															"postman.setNextRequest(\"(COMMON) Delete Besluit\");"
 														],
 														"type": "text/javascript"
@@ -13824,7 +13785,7 @@
 															"    pm.expect(besluiten_with_same_id.length).to.be.equal(0);",
 															"});",
 															"",
-															"pm.globals.set(\"NEXT_REQUEST_NAME\", \"(brc-003a) BesluitInformatieObject aanmaken is mogelijk\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-003a) BesluitInformatieObject aanmaken is mogelijk\"]);",
 															"postman.setNextRequest(\"(COMMON) Delete Besluit\");"
 														],
 														"type": "text/javascript"
@@ -13919,7 +13880,7 @@
 															"",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_besluitinformatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(brc-003b) BesluitInformatieObject aanmaken met ongeldige informatieobject url is niet toegestaan\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-003b) BesluitInformatieObject aanmaken met ongeldige informatieobject url is niet toegestaan\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
 															"}"
 														],
@@ -13972,7 +13933,7 @@
 															"",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_besluitinformatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAME\", \"(brc-004a) BesluitInformatieObject aanmaken zet aard_relatie op legt_vast\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-004a) BesluitInformatieObject aanmaken zet aard_relatie op legt_vast\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
 															"}"
 														],
@@ -14673,9 +14634,7 @@
 													"script": {
 														"id": "3c3704b5-9c4e-4a05-ae37-0038780ed1f5",
 														"exec": [
-															"pm.globals.unset(\"created_besluit_url\");",
-															"postman.setNextRequest(pm.globals.get(\"NEXT_REQUEST_NAME\"));",
-															"pm.globals.unset(\"NEXT_REQUEST_NAME\");"
+															"pm.globals.unset(\"created_besluit_url\");"
 														],
 														"type": "text/javascript"
 													}
@@ -14705,9 +14664,7 @@
 													"script": {
 														"id": "0ad036b5-8626-4c1c-bfb9-9ed58f4ed59a",
 														"exec": [
-															"pm.globals.unset(\"created_besluitinformatieobject_url\");",
-															"postman.setNextRequest(pm.globals.get(\"NEXT_REQUEST_NAME\"));",
-															"pm.globals.unset(\"NEXT_REQUEST_NAME\");"
+															"pm.globals.unset(\"created_besluitinformatieobject_url\");"
 														],
 														"type": "text/javascript"
 													}
@@ -14728,6 +14685,32 @@
 												}
 											},
 											"response": []
+										}
+									],
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "b683f898-cce2-49ef-a5e4-a5da7b5a3e7a",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "30bea59f-cd06-4ad6-8a75-c6ca15056ec0",
+												"type": "text/javascript",
+												"exec": [
+													"var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
+													"if(request_names) {",
+													"    postman.setNextRequest(request_names.shift());",
+													"    pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
+													"}"
+												]
+											}
 										}
 									],
 									"_postman_isSubFolder": true
