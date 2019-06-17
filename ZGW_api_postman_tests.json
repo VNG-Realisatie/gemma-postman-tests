@@ -2506,7 +2506,6 @@
 															"    pm.response.to.have.status(403);",
 															"});",
 															"",
-															"// TODO if status==201",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_zaak_url\", pm.response.json().url);",
 															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete Zaak with different Zaaktype\"]);",
@@ -10334,7 +10333,7 @@
 															"});",
 															"",
 															"if(pm.response.code != 201) {",
-															"    postman.setNextRequest(\"(drc-001d) EnkelvoudigInformatieObject aanmaken met ongeldige informatieobjecttype url is onmogelijk\");",
+															"    postman.setNextRequest(\"(drc-001b) EnkelvoudigInformatieObject aanmaken met ongeldige informatieobjecttype url is onmogelijk\");",
 															"} else {",
 															"    pm.globals.set(\"informatieobject_url\", pm.response.json().url);",
 															"    pm.globals.set(\"informatieobject_body\", pm.request.body.raw);",
@@ -10381,117 +10380,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-001b) EnkelvoudigInformatieObject bijwerken is mogelijk",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
-														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject bijwerken met valide gegevens geeft 200\", function() {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"",
-															"pm.test(\"EnkelvoudigInformatieObject bijwerken past gegevens correct aan\", function() {",
-															"    pm.expect(pm.response.json().titel).to.be.equal(pm.globals.get(\"aangepaste_titel\"));",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
-														"exec": [
-															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"pm.globals.set(\"aangepaste_titel\", \"aangepast\");",
-															"body.titel = pm.globals.get(\"aangepaste_titel\");",
-															"",
-															"pm.globals.set(\"request_body\", JSON.stringify(body));"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"value": "application/json",
-														"type": "text"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{{request_body}}"
-												},
-												"url": {
-													"raw": "{{informatieobject_url}}",
-													"host": [
-														"{{informatieobject_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(drc-001c) EnkelvoudigInformatieObject deels bijwerken is mogelijk",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
-														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken met valide gegevens geeft 200\", function() {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"",
-															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken past gegevens correct aan\", function() {",
-															"    pm.expect(pm.response.json().auteur).to.be.equal(pm.globals.get(\"aangepaste_auteur\"));",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
-														"exec": [
-															"pm.globals.set(\"aangepaste_auteur\", \"aangepaste auteur\");"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PATCH",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"auteur\": \"{{aangepaste_auteur}}\"\n}"
-												},
-												"url": {
-													"raw": "{{informatieobject_url}}",
-													"host": [
-														"{{informatieobject_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(drc-001d) EnkelvoudigInformatieObject aanmaken met ongeldige informatieobjecttype url is onmogelijk",
+											"name": "(drc-001b) EnkelvoudigInformatieObject aanmaken met ongeldige informatieobjecttype url is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -10508,7 +10397,7 @@
 															"",
 															"if (pm.response.code == 201) {",
 															"    pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-001e) EnkelvoudigInformatieObject bijwerken met ongeldige informatieobjecttype url is onmogelijk\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-001c) EnkelvoudigInformatieObject bijwerken met ongeldige informatieobjecttype url is onmogelijk\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
 															"}"
 														],
@@ -10556,7 +10445,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-001e) EnkelvoudigInformatieObject bijwerken met ongeldige informatieobjecttype url is onmogelijk",
+											"name": "(drc-001c) EnkelvoudigInformatieObject bijwerken met ongeldige informatieobjecttype url is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -10612,7 +10501,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-001f) EnkelvoudigInformatieObject deels bijwerken met ongeldige informatieobjecttype url is onmogelijk",
+											"name": "(drc-001d) EnkelvoudigInformatieObject deels bijwerken met ongeldige informatieobjecttype url is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -10665,7 +10554,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-001g) EnkelvoudigInformatieObject aanmaken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk",
+											"name": "(drc-001e) EnkelvoudigInformatieObject aanmaken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -10682,7 +10571,7 @@
 															"",
 															"if (pm.response.code == 201) {",
 															"    pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-001h) EnkelvoudigInformatieObject bijwerken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-001f) EnkelvoudigInformatieObject bijwerken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
 															"}"
 														],
@@ -10730,7 +10619,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-001h) EnkelvoudigInformatieObject bijwerken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk",
+											"name": "(drc-001f) EnkelvoudigInformatieObject bijwerken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -10786,7 +10675,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-001i) EnkelvoudigInformatieObject deels bijwerken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk",
+											"name": "(drc-001g) EnkelvoudigInformatieObject deels bijwerken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -11862,7 +11751,10 @@
 													"script": {
 														"id": "71ace9a4-f7ae-457c-94e9-7a0501d4f10e",
 														"exec": [
-															"pm.globals.set(\"gebruiksrechten_url\", pm.response.json().url);"
+															"pm.globals.set(\"gebruiksrechten_url\", pm.response.json().url);",
+															"",
+															"postman.setNextRequest(\"(COMMON) Lock EnkelvoudigInformatieObject\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-006c) EnkelvoudigInformatieObject bijwerken met indicatie gebruiksrecht true en Gebruiksrechten mogelijk\"]);"
 														],
 														"type": "text/javascript"
 													}
@@ -11920,6 +11812,7 @@
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
 															"body.indicatieGebruiksrecht = true;",
+															"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -11964,7 +11857,10 @@
 															"    ",
 															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken met indicatie gebruiksrecht true en Gebruiksrechten in drc past indicatie gebruiksrecht correct aan\", function() {",
 															"    pm.expect(pm.response.json().indicatieGebruiksrecht).to.be.equal(true);",
-															"});"
+															"});",
+															"",
+															"postman.setNextRequest(\"(COMMON) Unlock EnkelvoudigInformatieObject\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete Gebruiksrechten\"]);"
 														],
 														"type": "text/javascript"
 													}
@@ -11992,7 +11888,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"indicatieGebruiksrecht\": true\n}"
+													"raw": "{\n\t\"indicatieGebruiksrecht\": true,\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
 												},
 												"url": {
 													"raw": "{{informatieobject_url}}",
@@ -12112,7 +12008,10 @@
 															"    pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);",
 															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-007b) EnkelvoudigInformatieObject bijwerken met expliciet gedefinieerde vertrouwelijkheidaanduiding\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
-															"}"
+															"}",
+															"",
+															"postman.setNextRequest(\"(COMMON) Lock EnkelvoudigInformatieObject\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-007b) EnkelvoudigInformatieObject bijwerken met expliciet gedefinieerde vertrouwelijkheidaanduiding\"]);"
 														],
 														"type": "text/javascript"
 													}
@@ -12156,6 +12055,7 @@
 															"",
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
 															"body.vertrouwelijkheidaanduiding = pm.globals.get(\"expliciete_vertrouwelijkheidaanduiding\");",
+															"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -12218,7 +12118,10 @@
 														"exec": [
 															"pm.test(\"EnkelvoudigInformatieObject aanmaken met expliciet gedefinieerde vertrouwelijkheidaanduiding krijgt die waarde toegekend\", function() {",
 															"    pm.expect(pm.response.json().vertrouwelijkheidaanduiding).to.be.equal(pm.globals.get(\"expliciete_vertrouwelijkheidaanduiding\"));",
-															"});"
+															"});",
+															"",
+															"postman.setNextRequest(\"(COMMON) Unlock EnkelvoudigInformatieObject\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Retrieve Informatieobjecttype vertrouwelijkheidaanduiding\"]);"
 														],
 														"type": "text/javascript"
 													}
@@ -12236,7 +12139,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"vertrouwelijkheidaanduiding\": \"{{expliciete_vertrouwelijkheidaanduiding}}\"\n}"
+													"raw": "{\n\t\"vertrouwelijkheidaanduiding\": \"{{expliciete_vertrouwelijkheidaanduiding}}\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
 												},
 												"url": {
 													"raw": "{{informatieobject_url}}",
@@ -12528,6 +12431,508 @@
 													"    postman.setNextRequest(request_names.shift());",
 													"    pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
 													"}"
+												]
+											}
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "drc-009 (WIP)",
+									"item": [
+										{
+											"name": "(drc-009a) EnkelvoudigInformatieObject bijwerken zonder lock niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "e7d58a49-3ac9-49a2-8eec-f7ef4b3605da",
+														"exec": [
+															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
+															"pm.globals.set(\"aangepaste_titel\", \"aangepast\");",
+															"body.titel = pm.globals.get(\"aangepaste_titel\");",
+															"",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "d011b349-c63f-444c-9fc4-7192cde596e2",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject bijwerken zonder lock geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"lock\");",
+															"    pm.expect(error.code).to.be.equal(\"required\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}",
+													"host": [
+														"{{informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009b) EnkelvoudigInformatieObject bijwerken terwijl unlocked niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "e7d58a49-3ac9-49a2-8eec-f7ef4b3605da",
+														"exec": [
+															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
+															"pm.globals.set(\"aangepaste_titel\", \"aangepast\");",
+															"body.titel = pm.globals.get(\"aangepaste_titel\");",
+															"body.lock = \"some_incorrect_lock\";",
+															"",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "d011b349-c63f-444c-9fc4-7192cde596e2",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject bijwerken zonder lock geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"unlocked\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}",
+													"host": [
+														"{{informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009c) EnkelvoudigInformatieObject deels bijwerken terwijl unlocked niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "e7d58a49-3ac9-49a2-8eec-f7ef4b3605da",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "d011b349-c63f-444c-9fc4-7192cde596e2",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken zonder lock geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"unlocked\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"auteur\": \"{{aangepaste_auteur}}\"\n}"
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}",
+													"host": [
+														"{{informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009d) EnkelvoudigInformatieObject locken geeft een lockId terug",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "162df981-cf95-464d-8cc3-35e5798fe483",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject locken geeft een lockId terug\", function() {",
+															"    pm.response.to.have.status(200);",
+															"    ",
+															"    var lock = pm.response.json().lock;",
+															"    ",
+															"    // Check if returned lock is valid hexadecimal",
+															"    var regex = /[0-9A-Fa-f]{6}/g;",
+															"    pm.expect(regex.test(lock)).to.be.true;",
+															"    pm.globals.set(\"informatieobject_lock_id\", lock);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}/lock",
+													"host": [
+														"{{informatieobject_url}}"
+													],
+													"path": [
+														"lock"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009e) EnkelvoudigInformatieObject bijwerken is mogelijk na lock",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject bijwerken met valide gegevens geeft 200\", function() {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"EnkelvoudigInformatieObject bijwerken past gegevens correct aan\", function() {",
+															"    pm.expect(pm.response.json().titel).to.be.equal(pm.globals.get(\"aangepaste_titel\"));",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
+														"exec": [
+															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
+															"pm.globals.set(\"aangepaste_titel\", \"aangepast\");",
+															"body.titel = pm.globals.get(\"aangepaste_titel\");",
+															"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
+															"",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}",
+													"host": [
+														"{{informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009f) EnkelvoudigInformatieObject deels bijwerken is mogelijk na lock",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken met valide gegevens geeft 200\", function() {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken past gegevens correct aan\", function() {",
+															"    pm.expect(pm.response.json().auteur).to.be.equal(pm.globals.get(\"aangepaste_auteur\"));",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
+														"exec": [
+															"pm.globals.set(\"aangepaste_auteur\", \"aangepaste auteur\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"auteur\": \"{{aangepaste_auteur}}\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}",
+													"host": [
+														"{{informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009g) EnkelvoudigInformatieObject bijwerken met verkeerd lockId niet toegestaan",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject bijwerken met verkeerd lockId geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"incorrect-lock-id\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
+														"exec": [
+															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
+															"pm.globals.set(\"aangepaste_titel\", \"aangepast\");",
+															"body.titel = pm.globals.get(\"aangepaste_titel\");",
+															"body.lock = \"some_incorrect_lock_id\";",
+															"",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}",
+													"host": [
+														"{{informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009h) EnkelvoudigInformatieObject deels bijwerken met verkeerd lockId niet toegestaan",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject bijwerken met verkeerd lockId geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"incorrect-lock-id\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"auteur\": \"{{aangepaste_auteur}}\",\n\t\"lock\": \"some_incorrect_lock_id\"\n}"
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}",
+													"host": [
+														"{{informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009i) EnkelvoudigInformatieObject geforceerd unlocken is mogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "6321d127-27d9-48fd-aa51-7e0cbe69eeb2",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject geforceerd unlocked geeft 204\", function() {",
+															"    pm.response.to.have.status(204);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}/unlock",
+													"host": [
+														"{{informatieobject_url}}"
+													],
+													"path": [
+														"unlock"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "4d540057-80d7-4dc7-9f91-db3ba07e22db",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "b59fc102-70eb-4be5-9634-7abfa4eacb5e",
+												"type": "text/javascript",
+												"exec": [
+													""
 												]
 											}
 										}
@@ -12950,6 +13355,68 @@
 													"raw": "{{created_gebruiksrechten_url}}",
 													"host": [
 														"{{created_gebruiksrechten_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(COMMON) Lock EnkelvoudigInformatieObject",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "0bf15990-9838-4e20-a001-d2634b68f1f1",
+														"exec": [
+															"pm.globals.set(\"informatieobject_lock_id\", pm.response.json().lock);",
+															"console.log(pm.globals.get(\"informatieobject_lock_id\"))"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}/lock",
+													"host": [
+														"{{informatieobject_url}}"
+													],
+													"path": [
+														"lock"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(COMMON) Unlock EnkelvoudigInformatieObject",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}/unlock",
+													"host": [
+														"{{informatieobject_url}}"
+													],
+													"path": [
+														"unlock"
 													]
 												}
 											},
