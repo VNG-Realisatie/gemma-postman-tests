@@ -9183,6 +9183,81 @@
 											"response": []
 										},
 										{
+											"name": "Add Deelzaak to Zaak",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5bf28e6c-1d36-49eb-a6d5-9594eb638b02",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
+															"body.hoofdzaak = pm.globals.get(\"created_zaak_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "f80ae041-7e43-4126-996d-4f8b58b8c70b",
+														"exec": [
+															"pm.globals.set(\"deelzaak_url\", pm.response.json().url);",
+															"",
+															"if(pm.response.code != 201) {",
+															"    if(pm.globals.get(\"created_zaak_url\")) {",
+															"        postman.setNextRequest(\"Add Resultaat to Zaak\");",
+															"    } else if(pm.globals.get(\"zaak_url\")) {",
+															"        postman.setNextRequest(\"Delete Zaak\");",
+															"    } else {",
+															"        postman.setNextRequest(\"Retrieve Informatieobjecttype, Zaaktype and Besluittype\");",
+															"    }",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept-Crs",
+														"value": "EPSG:4326",
+														"type": "text"
+													},
+													{
+														"key": "Content-Crs",
+														"value": "EPSG:4326",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/zaken",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"zaken"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "Add Resultaat to Zaak",
 											"event": [
 												{
@@ -9578,7 +9653,7 @@
 														"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
 														"exec": [
 															"pm.test(\"Zaak verwijderen geeft 204\", function() {",
-															"   pm.response.to.have.status(204); ",
+															"   pm.response.to.have.status(204);",
 															"});"
 														],
 														"type": "text/javascript"
@@ -9617,7 +9692,9 @@
 														"exec": [
 															"pm.test(\"Zaak ophalen uit zrc na verwijdering geeft 404\", function() {",
 															"    pm.response.to.have.status(404); ",
-															"});"
+															"});",
+															"",
+															"pm.globals.unset(\"created_zaak_url\");"
 														],
 														"type": "text/javascript"
 													}
@@ -9942,6 +10019,49 @@
 												}
 											},
 											"response": []
+										},
+										{
+											"name": "(zrc-017k) Deelzaak verdwijnt na verwijdering Hoofdzaak",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "b8dfc112-61a2-49a9-afef-dc36f7198fd3",
+														"exec": [
+															"pm.test(\"Deelzaak wordt ook uit ZRC verwijderd als Hoofdzaak verwijderd is\", function() {",
+															"    pm.response.to.have.status(404); ",
+															"});",
+															"",
+															"if(pm.response.code == 200) {",
+															"    postman.setNextRequest(\"(COMMON) Delete Deelzaak\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete Zaak\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept-Crs",
+														"value": "EPSG:4326",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{deelzaak_url}}",
+													"host": [
+														"{{deelzaak_url}}"
+													]
+												}
+											},
+											"response": []
 										}
 									],
 									"event": [
@@ -10257,6 +10377,42 @@
 													],
 													"path": [
 														"unlock"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(COMMON) Delete Deelzaak",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ac5c912a-3f98-4eed-bd99-1d63c254e479",
+														"exec": [
+															"pm.globals.unset(\"deelzaak_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept-Crs",
+														"value": "EPSG:4326",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{deelzaak_url}}",
+													"host": [
+														"{{deelzaak_url}}"
 													]
 												}
 											},
