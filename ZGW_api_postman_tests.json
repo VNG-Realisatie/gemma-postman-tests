@@ -146,27 +146,42 @@
 											"response": []
 										},
 										{
-											"name": "Retrieve EnkelvoudigInformatieObjecten",
+											"name": "Create EnkelvoudigInformatieObject",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "265f65b0-37e3-418b-bc59-d7cef6c08e1d",
+														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
 														"exec": [
-															"var informatieobjecten = pm.response.json();",
-															"pm.globals.set(\"informatieobject_url\", informatieobjecten[0].url);",
-															"pm.globals.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);"
+															"pm.globals.set(\"informatieobject_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
+														"exec": [
+															"pm.globals.set(\"object_inhoud\", btoa(\"string\"))"
 														],
 														"type": "text/javascript"
 													}
 												}
 											],
 											"request": {
-												"method": "GET",
-												"header": [],
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
 												"body": {
 													"mode": "raw",
-													"raw": ""
+													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\"\n}"
 												},
 												"url": {
 													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
@@ -176,8 +191,85 @@
 													"path": [
 														"enkelvoudiginformatieobjecten"
 													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Add Gebruiksrechten to EnkelvoudigInformatieObject",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"startdatum\": \"2019-01-01T12:00:00\",\n\t\"omschrijvingVoorwaarden\": \"test\"\n}"
 												},
-												"description": "Haalt twee EnkelvoudigInformatieObjecten op uit het DRC."
+												"url": {
+													"raw": "{{drc_url}}/gebruiksrechten",
+													"host": [
+														"{{drc_url}}"
+													],
+													"path": [
+														"gebruiksrechten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create EnkelvoudigInformatieObject with indicatieGebruiksrecht null",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
+														"exec": [
+															"pm.globals.set(\"informatieobject_gebruiksrecht_null_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
+														"exec": [
+															"pm.globals.set(\"object_inhoud\", btoa(\"string\"))"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"indicatieGebruiksrecht\": null\n}"
+												},
+												"url": {
+													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
+													"host": [
+														"{{drc_url}}"
+													],
+													"path": [
+														"enkelvoudiginformatieobjecten"
+													]
+												}
 											},
 											"response": []
 										}
@@ -2002,7 +2094,7 @@
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_zaakinformatieobject_url\", pm.response.json().url);",
 															"} else {",
-															"    postman.setNextRequest(\"(zrc-006a) Valideer zaaktypeclaims zaak_list\");",
+															"    postman.setNextRequest(\"Retrieve Autorisatie details\");",
 															"}",
 															""
 														],
@@ -9887,8 +9979,7 @@
 													"script": {
 														"id": "d119b2b8-8897-4495-8802-ab28c4f43d05",
 														"exec": [
-															"// Continue to the drc tests",
-															"postman.setNextRequest(\"Retrieve Informatieobjecttype, Zaaktype and Besluittype\");"
+															""
 														],
 														"type": "text/javascript"
 													}
@@ -9911,6 +10002,55 @@
 													"raw": "{{zaak_url}}",
 													"host": [
 														"{{zaak_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete EnkelvoudigInformatieObject",
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}",
+													"host": [
+														"{{informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete EnkelvoudigInformatieObject indicatieGebruiksrecht null",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "9d6cec16-5d15-491b-8928-009b5f61f3e4",
+														"exec": [
+															"// Continue to the drc tests",
+															"postman.setNextRequest(\"Retrieve Informatieobjecttype, Zaaktype and Besluittype\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{informatieobject_gebruiksrecht_null_url}}",
+													"host": [
+														"{{informatieobject_gebruiksrecht_null_url}}"
 													]
 												}
 											},
@@ -10347,7 +10487,7 @@
 													"script": {
 														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
 														"exec": [
-															""
+															"pm.globals.set(\"object_inhoud\", btoa(\"string\"))"
 														],
 														"type": "text/javascript"
 													}
@@ -10365,7 +10505,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{{informatieobject_body}}"
+													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\"\n}"
 												},
 												"url": {
 													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
@@ -13016,7 +13156,7 @@
 													"script": {
 														"id": "f76a1690-81c3-40c4-8c7e-8b71a32a2653",
 														"exec": [
-															"postman.setNextRequest(\"Retrieve Besluittype\");"
+															"postman.setNextRequest(\"Retrieve Informatieobjecttype and Besluittype\");"
 														],
 														"type": "text/javascript"
 													}
@@ -13052,13 +13192,7 @@
 													"script": {
 														"id": "cc5e3f0c-f781-4d20-93e5-4a742058041a",
 														"exec": [
-															"pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);",
-															"",
-															"// var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
-															"// if(request_names != []) {",
-															"//     postman.setNextRequest(request_names.shift());",
-															"//     pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
-															"// }"
+															"pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);"
 														],
 														"type": "text/javascript"
 													}
@@ -13098,13 +13232,7 @@
 													"script": {
 														"id": "dca5f48b-2bbb-4d3d-8fdb-d8327a8ccf3d",
 														"exec": [
-															"pm.globals.set(\"created_zaakinformatieobject_url\", pm.response.json().url);",
-															"",
-															"// var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
-															"// if(request_names != []) {",
-															"//     postman.setNextRequest(request_names.shift());",
-															"//     pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
-															"// }"
+															"pm.globals.set(\"created_zaakinformatieobject_url\", pm.response.json().url);"
 														],
 														"type": "text/javascript"
 													}
@@ -13184,13 +13312,7 @@
 													"script": {
 														"id": "154f33db-9702-45d5-9ef6-73b7fe44fdb7",
 														"exec": [
-															"pm.globals.unset(\"created_informatieobject_url\");",
-															"",
-															"// var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
-															"// if(request_names != []) {",
-															"//     postman.setNextRequest(request_names.shift());",
-															"//     pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
-															"// }"
+															"pm.globals.unset(\"created_informatieobject_url\");"
 														],
 														"type": "text/javascript"
 													}
@@ -13220,13 +13342,7 @@
 													"script": {
 														"id": "499ce43f-d132-4fdd-949e-f1572c58a9bb",
 														"exec": [
-															"pm.globals.unset(\"created_objectinformatieobject_url\");",
-															"",
-															"// var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
-															"// if(request_names != []) {",
-															"//     postman.setNextRequest(request_names.shift());",
-															"//     pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
-															"// }"
+															"pm.globals.unset(\"created_objectinformatieobject_url\");"
 														],
 														"type": "text/javascript"
 													}
@@ -13256,13 +13372,7 @@
 													"script": {
 														"id": "603464af-77b9-43b8-a4e2-7d4ee67f84d4",
 														"exec": [
-															"pm.globals.unset(\"created_zaakinformatieobject_url\");",
-															"",
-															"// var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
-															"// if(request_names != []) {",
-															"//     postman.setNextRequest(request_names.shift());",
-															"//     pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
-															"// }"
+															"pm.globals.unset(\"created_zaakinformatieobject_url\");"
 														],
 														"type": "text/javascript"
 													}
@@ -13302,13 +13412,7 @@
 													"script": {
 														"id": "0ad036b5-8626-4c1c-bfb9-9ed58f4ed59a",
 														"exec": [
-															"pm.globals.unset(\"created_besluitinformatieobject_url\");",
-															"",
-															"// var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
-															"// if(request_names != []) {",
-															"//     postman.setNextRequest(request_names.shift());",
-															"//     pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
-															"// }"
+															"pm.globals.unset(\"created_besluitinformatieobject_url\");"
 														],
 														"type": "text/javascript"
 													}
@@ -13368,8 +13472,7 @@
 													"script": {
 														"id": "0bf15990-9838-4e20-a001-d2634b68f1f1",
 														"exec": [
-															"pm.globals.set(\"informatieobject_lock_id\", pm.response.json().lock);",
-															"console.log(pm.globals.get(\"informatieobject_lock_id\"))"
+															"pm.globals.set(\"informatieobject_lock_id\", pm.response.json().lock);"
 														],
 														"type": "text/javascript"
 													}
@@ -13483,13 +13586,15 @@
 									"name": "setUp",
 									"item": [
 										{
-											"name": "Retrieve Besluittype",
+											"name": "Retrieve Informatieobjecttype and Besluittype",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "75c656ba-6fd2-4a7a-94e3-7485eed53d6f",
 														"exec": [
+															"pm.globals.set(\"zaaktype_url\", pm.response.json()[0].zaaktypen[0]);",
+															"pm.globals.set(\"informatieobjecttype_url\", pm.response.json()[0].informatieobjecttypen[0]);",
 															"pm.globals.set(\"besluittype_url\", pm.response.json()[0].besluittypen[0]);"
 														],
 														"type": "text/javascript"
@@ -13516,28 +13621,42 @@
 											"response": []
 										},
 										{
-											"name": "Retrieve EnkelvoudigInformatieObjecten",
+											"name": "Create EnkelvoudigInformatieObject",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "265f65b0-37e3-418b-bc59-d7cef6c08e1d",
+														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
 														"exec": [
-															"var informatieobjecten = pm.response.json();",
-															"console.log(informatieobjecten[0])",
-															"pm.globals.set(\"informatieobject_url\", informatieobjecten[0].url);",
-															"pm.globals.set(\"informatieobject_gebruiksrecht_null_url\", informatieobjecten[1].url);"
+															"pm.globals.set(\"informatieobject_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
+														"exec": [
+															"pm.globals.set(\"object_inhoud\", btoa(\"string\"))"
 														],
 														"type": "text/javascript"
 													}
 												}
 											],
 											"request": {
-												"method": "GET",
-												"header": [],
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
 												"body": {
 													"mode": "raw",
-													"raw": ""
+													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\"\n}"
 												},
 												"url": {
 													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
@@ -13547,8 +13666,7 @@
 													"path": [
 														"enkelvoudiginformatieobjecten"
 													]
-												},
-												"description": "Haalt twee EnkelvoudigInformatieObjecten op uit het DRC."
+												}
 											},
 											"response": []
 										}
@@ -15098,7 +15216,7 @@
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_besluitinformatieobject_url\", pm.response.json().url);",
 															"} else {",
-															"    postman.setNextRequest(\"Delete Besluit\");",
+															"    postman.setNextRequest(\"Create Besluit to be deleted\");",
 															"}",
 															""
 														],
@@ -15257,6 +15375,170 @@
 									"_postman_isSubFolder": true
 								},
 								{
+									"name": "brc-006",
+									"item": [
+										{
+											"name": "Create Besluit to be deleted",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "9c8ceeec-2656-47a4-9571-148599918b48",
+														"exec": [
+															"pm.globals.set(\"created_besluit_url\", pm.response.json().url);",
+															"",
+															"postman.setNextRequest(\"(COMMON) Create BesluitInformatieObject\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete created Besluit\"]);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{besluit_body}}"
+												},
+												"url": {
+													"raw": "{{brc_url}}/besluiten",
+													"host": [
+														"{{brc_url}}"
+													],
+													"path": [
+														"besluiten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete created Besluit",
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_besluit_url}}",
+													"host": [
+														"{{created_besluit_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(brc-006a) Besluit verwijderen cascade door naar gerelateerde BesluitInformatieObjecten",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "0fdb971c-a1a9-4b02-906f-5626892540c5",
+														"exec": [
+															"pm.variables.set(\"encoded_url\", encodeURIComponent(pm.globals.get(\"created_besluit_url\")))"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "b061f7db-dcb6-4769-baf7-97f122454b87",
+														"exec": [
+															"pm.test(\"Besluit verwijderen verwijdert ook alle gerelateerde BesluitInformatieObjecten uit het BRC\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"besluit\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid\");",
+															"});",
+															"",
+															"if(pm.response.code != 400) {",
+															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-008c) EnkelvoudigInformatieObject verwijderen cascade door naar gerelateerde audit trail\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{brc_url}}/besluitinformatieobjecten?besluit={{encoded_url}}",
+													"host": [
+														"{{brc_url}}"
+													],
+													"path": [
+														"besluitinformatieobjecten"
+													],
+													"query": [
+														{
+															"key": "besluit",
+															"value": "{{encoded_url}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(brc-006b) Besluit verwijderen cascade door naar gerelateerde audit trail",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c10dce8d-2f7e-451d-8eca-6bfa3117eaf9",
+														"exec": [
+															"pm.test(\"Besluit verwijderen verwijdert ook de gerelateerde audit trail uit het BRC\", function() {",
+															"    pm.response.to.have.status(404);",
+															"});",
+															"",
+															"pm.globals.unset(\"created_besluit_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_informatieobject_url}}/audittrail",
+													"host": [
+														"{{created_informatieobject_url}}"
+													],
+													"path": [
+														"audittrail"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
 									"name": "tearDown",
 									"item": [
 										{
@@ -15267,7 +15549,7 @@
 													"script": {
 														"id": "a80cc599-41c6-4c9f-9019-4429fb4f3835",
 														"exec": [
-															"postman.setNextRequest(null);"
+															""
 														],
 														"type": "text/javascript"
 													}
@@ -15288,6 +15570,36 @@
 												}
 											},
 											"response": []
+										},
+										{
+											"name": "Delete EnkelvoudigInformatieObject",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "24f449ba-057a-4ef0-9c6e-280869d4b38c",
+														"exec": [
+															"postman.setNextRequest(null);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{informatieobject_url}}",
+													"host": [
+														"{{informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
 										}
 									],
 									"_postman_isSubFolder": true
@@ -15295,6 +15607,46 @@
 								{
 									"name": "common requests",
 									"item": [
+										{
+											"name": "(COMMON) Create BesluitInformatieObject",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "91869b75-b1bc-4b1c-acbd-e6c9ccc09384",
+														"exec": [
+															"pm.globals.set(\"created_zaakinformatieobject_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"besluit\": \"{{besluit_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\"\n}"
+												},
+												"url": {
+													"raw": "{{brc_url}}/besluitinformatieobjecten",
+													"host": [
+														"{{brc_url}}"
+													],
+													"path": [
+														"besluitinformatieobjecten"
+													]
+												}
+											},
+											"response": []
+										},
 										{
 											"name": "(COMMON) Delete Besluit",
 											"event": [
