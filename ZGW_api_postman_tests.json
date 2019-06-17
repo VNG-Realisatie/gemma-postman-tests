@@ -9136,7 +9136,7 @@
 															"",
 															"if(pm.response.code != 201) {",
 															"    if(pm.globals.get(\"zaak_url\")) {",
-															"        postman.setNextRequest(\"Delete Zaak\");",
+															"        postman.setNextRequest(\"(ZRC) Delete Zaak\");",
 															"    } else {",
 															"        postman.setNextRequest(\"Retrieve Informatieobjecttype, Zaaktype and Besluittype\");",
 															"    }",
@@ -9211,7 +9211,7 @@
 															"    if(pm.globals.get(\"created_zaak_url\")) {",
 															"        postman.setNextRequest(\"Add Resultaat to Zaak\");",
 															"    } else if(pm.globals.get(\"zaak_url\")) {",
-															"        postman.setNextRequest(\"Delete Zaak\");",
+															"        postman.setNextRequest(\"(ZRC) Delete Zaak\");",
 															"    } else {",
 															"        postman.setNextRequest(\"Retrieve Informatieobjecttype, Zaaktype and Besluittype\");",
 															"    }",
@@ -10034,7 +10034,7 @@
 															"",
 															"if(pm.response.code == 200) {",
 															"    postman.setNextRequest(\"(COMMON) Delete Deelzaak\");",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete Zaak\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ZRC) Delete Zaak\"]);",
 															"}"
 														],
 														"type": "text/javascript"
@@ -10092,7 +10092,7 @@
 									"name": "tearDown",
 									"item": [
 										{
-											"name": "Delete Zaak",
+											"name": "(ZRC) Delete Zaak",
 											"event": [
 												{
 													"listen": "test",
@@ -15622,7 +15622,7 @@
 															"",
 															"if(pm.response.code != 400) {",
 															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-008c) EnkelvoudigInformatieObject verwijderen cascade door naar gerelateerde audit trail\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-006b) Besluit verwijderen cascade door naar gerelateerde audit trail\"]);",
 															"}"
 														],
 														"type": "text/javascript"
