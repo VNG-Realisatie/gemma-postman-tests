@@ -361,7 +361,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{{zaak_body}}"
+													"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"zaaktype\": \"http://localhost:8002/api/v1/catalogussen/85a3f4f6-76d4-47a9-a3af-8ffa3e44d98d/zaaktypen/97f64bef-ce72-41e2-8cc1-cb6c2e0d1896\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatumGepland\": \"2019-04-20\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"betalingsindicatie\": \"geheel\",\n    \"laatsteBetaalDatum\": \"2019-01-01\",\n    \"zaakgeometrie\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            53,\n            5\n        ]\n    },\n    \"opschorting\": {\n        \"indicatie\": true,\n        \"reden\": \"string\"\n    },\n    \"selectielijstklasse\": \"http://example.com\",\n    \"archiefstatus\": \"nog_te_archiveren\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/zaken",
@@ -4513,7 +4513,10 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.relevanteAndereZaken = [pm.environment.get(\"mock_url\") + \"/404\"];",
+															"body.relevanteAndereZaken = [{",
+															"    \"zaak\": pm.environment.get(\"mock_url\") + \"/404\",",
+															"    \"aardRelatie\": \"vervolg\"",
+															"}];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -4591,7 +4594,10 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.relevanteAndereZaken = [pm.environment.get(\"mock_url\") + \"/404\"];",
+															"body.relevanteAndereZaken = [{",
+															"    \"zaak\": pm.environment.get(\"mock_url\") + \"/404\",",
+															"    \"aardRelatie\": \"vervolg\"",
+															"}];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -4703,7 +4709,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"relevanteAndereZaken\": [\n\t\t\"{{mock_url}}/404\"\t\n\t]\n}"
+													"raw": "{\n\t\"relevanteAndereZaken\": [{\n\t    \"zaak\": \"{{mock_url}}/404\",\n\t    \"aardRelatie\": \"vervolg\"\n\t}]\n}"
 												},
 												"url": {
 													"raw": "{{zaak_url}}",
@@ -4724,7 +4730,10 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.relevanteAndereZaken = [pm.globals.get(\"zaak_url\")];",
+															"body.relevanteAndereZaken = [{",
+															"    \"zaak\": pm.globals.get(\"zaak_url\"),",
+															"    \"aardRelatie\": \"vervolg\"",
+															"}];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -4796,7 +4805,10 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.relevanteAndereZaken = [pm.globals.get(\"zaak_url\")];",
+															"body.relevanteAndereZaken = [{",
+															"    \"zaak\": pm.globals.get(\"zaak_url\"),",
+															"    \"aardRelatie\": \"vervolg\"",
+															"}];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -4893,7 +4905,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"relevanteAndereZaken\": [\n\t\t\"{{zaak_url}}\"\n\t]\n}"
+													"raw": "{\n\t\"relevanteAndereZaken\": [{\n\t    \"zaak\": \"{{zaak_url}}\",\n\t    \"aardRelatie\": \"vervolg\"\n\t}]\n}"
 												},
 												"url": {
 													"raw": "{{zaak_url}}",
@@ -13870,7 +13882,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{{besluit_body}}"
+													"raw": "{\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"besluittype\": \"http://localhost:8002/api/v1/catalogussen/85a3f4f6-76d4-47a9-a3af-8ffa3e44d98d/besluittypen/ce0da338-2a62-46b0-973c-c4eff8c7f500\",\n    \"datum\": \"2019-01-01\",\n    \"ingangsdatum\": \"2018-01-01\"\n}"
 												},
 												"url": {
 													"raw": "{{brc_url}}/besluiten",
