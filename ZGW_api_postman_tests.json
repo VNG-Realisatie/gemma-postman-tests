@@ -12,7 +12,7 @@
 					"name": "standaard.md",
 					"item": [
 						{
-							"name": "zrc",
+							"name": "ac",
 							"item": [
 								{
 									"name": "setUp",
@@ -25,8 +25,243 @@
 													"script": {
 														"id": "017d57e0-038d-4621-be41-11e103f859ac",
 														"exec": [
+															"pm.globals.set(\"zaaktype_url\", pm.response.json()[0].zaaktypen[0]);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{ztc_url}}/catalogussen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"catalogussen"
+													]
+												},
+												"description": "Haalt een Zaaktype op uit het ZTC."
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "(ac-001)",
+									"item": [
+										{
+											"name": "(ac-001a) Applicatie aanmaken met meerdere clientIds is mogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "2577270f-b66a-4f6a-b057-0a1638c2b6ae",
+														"exec": [
+															"pm.test(\"Applicatie aanmaken met meerdere clientIds geeft 201\", function() {",
+															"    pm.response.to.have.status(201);",
+															"",
+															"    var clientIds = pm.response.json().clientIds;",
+															"    ",
+															"    pm.expect(pm.globals.get(\"applicatie_client_ids\")[0]).to.be.equal(clientIds[0]);",
+															"    pm.expect(pm.globals.get(\"applicatie_client_ids\")[1]).to.be.equal(clientIds[1]);",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
+															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
+															"    ",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "741ae768-fbee-4279-9d17-c0e2c234039f",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id1\",\n\t\t\"test_id2\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"ZRC\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "(ac-002)",
+									"item": [
+										{
+											"name": "(ac-002a) Applicatie aanmaken met heeftAlleAutorisaties en expliciete autorisaties is niet mogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "90ac0738-8ed5-4f87-9269-c8ca933c73b2",
+														"exec": [
+															"pm.test(\"Applicatie aanmaken met heeftAlleAutorisaties op true en expliciet meegegeven autorisaties is niet mogelijk\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"ambiguous-authorizations-specified\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id1\",\n\t\t\"test_id2\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"ZRC\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "tearDown",
+									"item": [],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "common requests",
+									"item": [
+										{
+											"name": "(COMMON) Delete Applicatie",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "21d2e5b5-3db9-423f-8589-c7a9b48f43ee",
+														"exec": [
+															"pm.globals.unset(\"created_applicatie_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_applicatie_url}}",
+													"host": [
+														"{{created_applicatie_url}}"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "58ee3d85-22e5-49d5-a039-9743305b791f",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "90dda561-571f-494a-8d99-605e27aaf734",
+												"type": "text/javascript",
+												"exec": [
+													"var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
+													"if(request_names) {",
+													"    postman.setNextRequest(request_names.shift());",
+													"    pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
+													"}"
+												]
+											}
+										}
+									],
+									"_postman_isSubFolder": true
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "zrc",
+							"item": [
+								{
+									"name": "setUp",
+									"item": [
+										{
+											"name": "Retrieve Zaaktype, Besluittype, Informatieobjecttype from catalogus",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "017d57e0-038d-4621-be41-11e103f859ac",
+														"exec": [
 															"pm.globals.set(\"zaaktype_url\", pm.response.json()[0].zaaktypen[0]);",
-															"pm.globals.set(\"besluittype_url\", pm.response.json()[0].besluittypen[0]);"
+															"pm.globals.set(\"besluittype_url\", pm.response.json()[0].besluittypen[0]);",
+															"pm.globals.set(\"informatieobjecttype_url\", pm.response.json()[0].informatieobjecttypen[0]);"
 														],
 														"type": "text/javascript"
 													}
@@ -361,7 +596,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"zaaktype\": \"http://localhost:8002/api/v1/catalogussen/85a3f4f6-76d4-47a9-a3af-8ffa3e44d98d/zaaktypen/97f64bef-ce72-41e2-8cc1-cb6c2e0d1896\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatumGepland\": \"2019-04-20\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"betalingsindicatie\": \"geheel\",\n    \"laatsteBetaalDatum\": \"2019-01-01\",\n    \"zaakgeometrie\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            53,\n            5\n        ]\n    },\n    \"opschorting\": {\n        \"indicatie\": true,\n        \"reden\": \"string\"\n    },\n    \"selectielijstklasse\": \"http://example.com\",\n    \"archiefstatus\": \"nog_te_archiveren\"\n}"
+													"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"zaaktype\": \"{{zaaktype_url}}\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatumGepland\": \"2019-04-20\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"betalingsindicatie\": \"geheel\",\n    \"laatsteBetaalDatum\": \"2019-01-01\",\n    \"zaakgeometrie\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            53,\n            5\n        ]\n    },\n    \"opschorting\": {\n        \"indicatie\": true,\n        \"reden\": \"string\"\n    },\n    \"selectielijstklasse\": \"http://example.com\",\n    \"archiefstatus\": \"nog_te_archiveren\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/zaken",
@@ -9074,10 +9309,14 @@
 															"    // Loop",
 															"    pm.globals.set(\"archiefstatus_index\", index + 1);",
 															"    if (pm.globals.get(\"created_objectinformatieobject_url\")) {",
-															"        pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Zaak to be archived\"]);",
-															"        postman.setNextRequest(\"(COMMON) Delete ZaakInformatieObject\");",
+															"        pm.globals.set(\"NEXT_REQUEST_NAMES\", [",
+															"            \"(COMMON) Delete ZaakInformatieObject\",",
+															"            \"Create Zaak to be archived\"",
+															"        ]);",
+															"        postman.setNextRequest(\"(COMMON) Unlock EnkelvoudigInformatieObject\");",
 															"    } else {",
-															"        postman.setNextRequest(\"Create Zaak to be archived\");",
+															"        postman.setNextRequest(\"(COMMON) Unlock EnkelvoudigInformatieObject\");",
+															"        pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Zaak to be archived\"]);",
 															"    }",
 															"}"
 														],
@@ -13882,7 +14121,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"besluittype\": \"http://localhost:8002/api/v1/catalogussen/85a3f4f6-76d4-47a9-a3af-8ffa3e44d98d/besluittypen/ce0da338-2a62-46b0-973c-c4eff8c7f500\",\n    \"datum\": \"2019-01-01\",\n    \"ingangsdatum\": \"2018-01-01\"\n}"
+													"raw": "{\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"besluittype\": \"{{besluittype_url}}\",\n    \"datum\": \"2019-01-01\",\n    \"ingangsdatum\": \"2018-01-01\"\n}"
 												},
 												"url": {
 													"raw": "{{brc_url}}/besluiten",
@@ -15692,9 +15931,9 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "{{created_informatieobject_url}}/audittrail",
+													"raw": "{{created_besluit_url}}/audittrail",
 													"host": [
-														"{{created_informatieobject_url}}"
+														"{{created_besluit_url}}"
 													],
 													"path": [
 														"audittrail"
