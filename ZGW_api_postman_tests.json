@@ -2543,6 +2543,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
 															"body.zaaktype = pm.globals.get(\"autorisaties_zaaktype\");",
+															"body.vertrouwelijkheidaanduiding = pm.globals.get(\"autorisaties_maxVertrouwelijkheidaanduiding\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -2566,6 +2567,16 @@
 												}
 											],
 											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
 												"method": "POST",
 												"header": [
 													{
@@ -8757,7 +8768,7 @@
 															"",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(zrc-016b) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd\"]);",
-															"    postman.setNextRequest(\"(COMMON) Create ZaakInformatieObject\");   ",
+															"    postman.setNextRequest(\"(COMMON) (ZRC) Create ZaakInformatieObject\");   ",
 															"} else {",
 															"    postman.setNextRequest(\"Create Zaak to delete\");",
 															"}"
@@ -10492,7 +10503,7 @@
 											"response": []
 										},
 										{
-											"name": "(COMMON) Create ZaakInformatieObject",
+											"name": "(COMMON) (ZRC) Create ZaakInformatieObject",
 											"event": [
 												{
 													"listen": "test",
