@@ -12572,12 +12572,15 @@
 															"",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-007b) EnkelvoudigInformatieObject bijwerken met expliciet gedefinieerde vertrouwelijkheidaanduiding\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [",
+															"        \"(COMMON) Lock EnkelvoudigInformatieObject\",",
+															"        \"(drc-007b) EnkelvoudigInformatieObject bijwerken met expliciet gedefinieerde vertrouwelijkheidaanduiding\"",
+															"    ]);",
 															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
-															"}",
-															"",
-															"postman.setNextRequest(\"(COMMON) Lock EnkelvoudigInformatieObject\");",
-															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-007b) EnkelvoudigInformatieObject bijwerken met expliciet gedefinieerde vertrouwelijkheidaanduiding\"]);"
+															"} else {",
+															"    postman.setNextRequest(\"(COMMON) Lock EnkelvoudigInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-007b) EnkelvoudigInformatieObject bijwerken met expliciet gedefinieerde vertrouwelijkheidaanduiding\"]);   ",
+															"}"
 														],
 														"type": "text/javascript"
 													}
