@@ -25,7 +25,7 @@
 													"script": {
 														"id": "017d57e0-038d-4621-be41-11e103f859ac",
 														"exec": [
-															"pm.globals.set(\"zaaktype_url\", pm.response.json()[0].zaaktypen[0]);"
+															"pm.globals.set(\"zaaktype_url\", pm.response.json().results[0].zaaktypen[0]);"
 														],
 														"type": "text/javascript"
 													}
@@ -267,9 +267,9 @@
 													"script": {
 														"id": "017d57e0-038d-4621-be41-11e103f859ac",
 														"exec": [
-															"pm.globals.set(\"zaaktype_url\", pm.response.json()[0].zaaktypen[0]);",
-															"pm.globals.set(\"besluittype_url\", pm.response.json()[0].besluittypen[0]);",
-															"pm.globals.set(\"informatieobjecttype_url\", pm.response.json()[0].informatieobjecttypen[0]);"
+															"pm.globals.set(\"zaaktype_url\", pm.response.json().results[0].zaaktypen[0]);",
+															"pm.globals.set(\"besluittype_url\", pm.response.json().results[0].besluittypen[0]);",
+															"pm.globals.set(\"informatieobjecttype_url\", pm.response.json().results[0].informatieobjecttypen[0]);"
 														],
 														"type": "text/javascript"
 													}
@@ -314,7 +314,7 @@
 														"id": "3c58c28b-0bdd-461e-9332-086d1db0ccb9",
 														"exec": [
 															"var res = pm.response.json();",
-															"pm.globals.set(\"zaaktype_vertrouwelijkheid\", pm.response.json().vertrouwelijkheidaanduiding);",
+															"pm.globals.set(\"zaaktype_vertrouwelijkheid\", res.vertrouwelijkheidaanduiding);",
 															"pm.globals.set(\"zaaktype_productenOfDiensten\", res.productenOfDiensten);",
 															"pm.globals.set(\"zaaktype_resultaattypen\", res.resultaattypen);",
 															"pm.globals.set(\"zaaktype_eigenschap\", res.eigenschappen[0]);",
@@ -363,7 +363,7 @@
 															"// pm.globals.set(\"zaaktype_afleidingswijze_afgehandeld_url\", zaaktypen[0]);",
 															"// pm.globals.set(\"zaaktype_afleidingswijze_termijn_url\", zaaktypen[1]);",
 															"",
-															"pm.globals.set(\"archiving_zaaktypen\", pm.response.json()[0].zaaktypen);"
+															"pm.globals.set(\"archiving_zaaktypen\", pm.response.json().results[0].zaaktypen);"
 														],
 														"type": "text/javascript"
 													}
@@ -4768,7 +4768,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
 															"body.relevanteAndereZaken = [{",
-															"    \"zaak\": pm.environment.get(\"mock_url\") + \"/404\",",
+															"    \"url\": pm.environment.get(\"mock_url\") + \"/404\",",
 															"    \"aardRelatie\": \"vervolg\"",
 															"}];",
 															"",
@@ -4788,7 +4788,7 @@
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"relevanteAndereZaken.0\");",
+															"    pm.expect(error.name).to.be.equal(\"relevanteAndereZaken.0.url\");",
 															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
 															"});",
 															"",
@@ -4849,7 +4849,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
 															"body.relevanteAndereZaken = [{",
-															"    \"zaak\": pm.environment.get(\"mock_url\") + \"/404\",",
+															"    \"url\": pm.environment.get(\"mock_url\") + \"/404\",",
 															"    \"aardRelatie\": \"vervolg\"",
 															"}];",
 															"",
@@ -4869,7 +4869,7 @@
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"relevanteAndereZaken.0\");",
+															"    pm.expect(error.name).to.be.equal(\"relevanteAndereZaken.0.url\");",
 															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
 															"});"
 														],
@@ -4933,7 +4933,7 @@
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"relevanteAndereZaken.0\");",
+															"    pm.expect(error.name).to.be.equal(\"relevanteAndereZaken.0.url\");",
 															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
 															"});"
 														],
@@ -4963,7 +4963,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"relevanteAndereZaken\": [{\n\t    \"zaak\": \"{{mock_url}}/404\",\n\t    \"aardRelatie\": \"vervolg\"\n\t}]\n}"
+													"raw": "{\n\t\"relevanteAndereZaken\": [{\n\t    \"url\": \"{{mock_url}}/404\",\n\t    \"aardRelatie\": \"vervolg\"\n\t}]\n}"
 												},
 												"url": {
 													"raw": "{{zaak_url}}",
@@ -4985,7 +4985,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
 															"body.relevanteAndereZaken = [{",
-															"    \"zaak\": pm.globals.get(\"zaak_url\"),",
+															"    \"url\": pm.globals.get(\"zaak_url\"),",
 															"    \"aardRelatie\": \"vervolg\"",
 															"}];",
 															"",
@@ -5060,7 +5060,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
 															"body.relevanteAndereZaken = [{",
-															"    \"zaak\": pm.globals.get(\"zaak_url\"),",
+															"    \"url\": pm.globals.get(\"zaak_url\"),",
 															"    \"aardRelatie\": \"vervolg\"",
 															"}];",
 															"",
@@ -5159,7 +5159,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"relevanteAndereZaken\": [{\n\t    \"zaak\": \"{{zaak_url}}\",\n\t    \"aardRelatie\": \"vervolg\"\n\t}]\n}"
+													"raw": "{\n\t\"relevanteAndereZaken\": [{\n\t    \"url\": \"{{zaak_url}}\",\n\t    \"aardRelatie\": \"vervolg\"\n\t}]\n}"
 												},
 												"url": {
 													"raw": "{{zaak_url}}",
@@ -9703,7 +9703,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"object\": \"{{informatieobject_url}}\",\n\t\"type\": \"VerblijfsObject\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"type\": \"zakelijkRecht\",\n\t\"object\": \"{{mock_url}}/200\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/zaakobjecten",
@@ -10757,9 +10757,9 @@
 													"script": {
 														"id": "75c656ba-6fd2-4a7a-94e3-7485eed53d6f",
 														"exec": [
-															"pm.globals.set(\"zaaktype_url\", pm.response.json()[0].zaaktypen[0]);",
-															"pm.globals.set(\"informatieobjecttype_url\", pm.response.json()[0].informatieobjecttypen[0]);",
-															"pm.globals.set(\"besluittype_url\", pm.response.json()[0].besluittypen[0]);"
+															"pm.globals.set(\"zaaktype_url\", pm.response.json().results[0].zaaktypen[0]);",
+															"pm.globals.set(\"informatieobjecttype_url\", pm.response.json().results[0].informatieobjecttypen[0]);",
+															"pm.globals.set(\"besluittype_url\", pm.response.json().results[0].besluittypen[0]);"
 														],
 														"type": "text/javascript"
 													}
@@ -10825,7 +10825,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"zaaktype\": \"{{zaaktype_url}}\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatumGepland\": \"2019-04-20\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"betalingsindicatie\": \"geheel\",\n\t\"laatsteBetaalDatum\": \"2019-01-01\",\n\t\"zaakgeometrie\": \n\t{\n\t    \"type\": \"Point\",\n\t    \"coordinates\": [53, 5]\n\t},\n\t\"opschorting\": \n\t{\n\t    \"indicatie\": true,\n\t    \"reden\": \"string\"\n\t},\n\t\"selectielijstklasse\": \"http://example.com\",\n\t\"relevanteAndereZaken\": \n\t[\n\n    \"http://example.com\"\n\n],\n    \"archiefstatus\": \"nog_te_archiveren\"\n}"
+													"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"zaaktype\": \"{{zaaktype_url}}\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatumGepland\": \"2019-04-20\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"betalingsindicatie\": \"geheel\",\n\t\"laatsteBetaalDatum\": \"2019-01-01\",\n\t\"zaakgeometrie\": \n\t{\n\t    \"type\": \"Point\",\n\t    \"coordinates\": [53, 5]\n\t},\n\t\"opschorting\": \n\t{\n\t    \"indicatie\": true,\n\t    \"reden\": \"string\"\n\t},\n\t\"selectielijstklasse\": \"http://example.com\",\n    \"archiefstatus\": \"nog_te_archiveren\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/zaken",
@@ -14022,9 +14022,9 @@
 													"script": {
 														"id": "75c656ba-6fd2-4a7a-94e3-7485eed53d6f",
 														"exec": [
-															"pm.globals.set(\"zaaktype_url\", pm.response.json()[0].zaaktypen[0]);",
-															"pm.globals.set(\"informatieobjecttype_url\", pm.response.json()[0].informatieobjecttypen[0]);",
-															"pm.globals.set(\"besluittype_url\", pm.response.json()[0].besluittypen[0]);"
+															"pm.globals.set(\"zaaktype_url\", pm.response.json().results[0].zaaktypen[0]);",
+															"pm.globals.set(\"informatieobjecttype_url\", pm.response.json().results[0].informatieobjecttypen[0]);",
+															"pm.globals.set(\"besluittype_url\", pm.response.json().results[0].besluittypen[0]);"
 														],
 														"type": "text/javascript"
 													}
@@ -15057,7 +15057,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-002d) Genereer unieke identificatie voor Besluit onder verantwoordelijke_organisatie",
+											"name": "(brc-002d) Genereer unieke identificatie voor Besluit onder verantwoordelijke_organisatie",
 											"event": [
 												{
 													"listen": "test",
@@ -15073,7 +15073,8 @@
 															"    ",
 															"    // Compare the identificatie of the created Besluit with all the identificaties of other Besluiten",
 															"    // with the same verantwoordelijke_organisatie",
-															"    var besluiten_with_same_id = pm.globals.get(\"besluiten_for_verantwoordelijke_organisatie\").filter(besluit => besluit.identificatie === created_besluit_id);",
+															"    console.log(pm.globals.get(\"besluiten_for_verantwoordelijke_organisatie\"))",
+															"    var besluiten_with_same_id = pm.globals.get(\"besluiten_for_verantwoordelijke_organisatie\").results.filter(besluit => besluit.identificatie === created_besluit_id);",
 															"    ",
 															"    // Verify that the identificatie for the created Besluit isn't the same as any other",
 															"    pm.expect(besluiten_with_same_id.length).to.be.equal(0);",
