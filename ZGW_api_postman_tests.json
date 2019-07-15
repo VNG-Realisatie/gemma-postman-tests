@@ -797,7 +797,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaten/d8bd516e-95b5-47ee-988d-d6624e94db1f\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/resultaattypen",
@@ -1060,14 +1060,14 @@
 															"    pm.response.to.have.status(201);",
 															"});",
 															"",
-															"var zaak = pm.response.json();",
-															"pm.globals.set(\"zaak_url\", zaak.url);",
-															"pm.globals.set(\"zaak_id\", zaak.identificatie);",
-															"pm.globals.set(\"zaak_bronorganisatie\", zaak.bronorganisatie);",
-															"pm.globals.set(\"zaak_geometrie\", zaak.zaakgeometrie);",
-															"pm.globals.set(\"zaak_body\", pm.request.body.raw);",
-															"",
-															"if(!pm.globals.get(\"zaak_url\")) {",
+															"if(pm.response.code == 201) {",
+															"    var zaak = pm.response.json();",
+															"    pm.globals.set(\"zaak_url\", zaak.url);",
+															"    pm.globals.set(\"zaak_id\", zaak.identificatie);",
+															"    pm.globals.set(\"zaak_bronorganisatie\", zaak.bronorganisatie);",
+															"    pm.globals.set(\"zaak_geometrie\", zaak.zaakgeometrie);",
+															"    pm.globals.set(\"zaak_body\", pm.request.body.raw);   ",
+															"} else {",
 															"    postman.setNextRequest(\"(zrc-001d) Zaak aanmaken met ongeldige zaaktype url is onmogelijk\");",
 															"}"
 														],
@@ -7995,7 +7995,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_nihil_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaten/d8bd516e-95b5-47ee-988d-d6624e94db1f\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_nihil_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/resultaattypen",
@@ -8080,7 +8080,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_ingeschatte_bestaansduur_object_url}}\",\n\t\"omschrijving\": \"Afgewezen\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaten/7a27b912-4aa5-4cee-9bef-4a123cdaaaba\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"termijn\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_ingeschatte_bestaansduur_object_url}}\",\n\t\"omschrijving\": \"Afgewezen\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"termijn\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/resultaattypen",
@@ -8183,7 +8183,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"omschrijving\": \"Test\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaten/33400fb3-607f-4f63-a11f-fc34d87a8826\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"ander_datumkenmerk\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"omschrijving\": \"Test\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"ander_datumkenmerk\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/resultaattypen",
