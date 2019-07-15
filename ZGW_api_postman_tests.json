@@ -17845,17 +17845,614 @@
 							"item": [
 								{
 									"name": "setUp",
-									"item": [],
+									"item": [
+										{
+											"name": "(ZTC) Retrieve existing Catalogus",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "0825d296-16c6-4483-b880-517cd9d855ee",
+														"exec": [
+															"if(pm.response.json().count) {",
+															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
+															"    postman.setNextRequest(\"(BRC) Create Besluittype\");",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{ztc_url}}/catalogussen?domein=TEST",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"catalogussen"
+													],
+													"query": [
+														{
+															"key": "domein",
+															"value": "TEST"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Catalogus",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "b30ebe0b-0168-465a-86f6-7268b1dabeee",
+														"exec": [
+															"pm.globals.set(\"catalogus_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"domein\": \"TEST\",\n\t\"rsin\": \"000000000\",\n\t\"contactpersoonBeheerNaam\": \"Test Persoon\"\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/catalogussen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"catalogussen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ZTC) Create Besluittype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ac59321b-e1dc-4b95-bfef-64f93006c159",
+														"exec": [
+															"pm.globals.set(\"besluittype_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypes\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create InformatieObjecttype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "66f2c324-d3e3-4fd6-b414-62c37088e56c",
+														"exec": [
+															"pm.globals.set(\"informatieobjecttype_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/informatieobjecttypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										}
+									],
 									"_postman_isSubFolder": true
 								},
 								{
 									"name": "ztc-001",
-									"item": [],
+									"item": [
+										{
+											"name": "(ztc-001a) Zaaktype aanmaken is mogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "49c6500e-9665-4e83-9580-bd8b32a09901",
+														"exec": [
+															"pm.test(\"Zaaktype aanmaken met valide gegevens geeft 201\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"zaaktype_url\", pm.response.json().url);",
+															"}",
+															"",
+															"pm.globals.set(\"zaaktype_body\", pm.request.body.raw);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"Melding Openbare Ruimte\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"Extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{mock_url}}/200\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-001b) Zaaktype aanmaken met selectielijstProcestype url die niet wijst naar Procestype is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "2592fef9-9a4d-45ad-b429-ce355a0851ae",
+														"exec": [
+															"pm.test(\"Zaaktype aanmaken met selectielijstProcestype url die niet wijst naar Procestype resource geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"selectielijstProcestype\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-002a) Resultaattype aanmaken valideert op brondatumArchiefprocedure.afleidingswijze\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "ac0aa3f9-6863-4ccb-8083-faeced0a973c",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.selectielijstProcestype = pm.environment.get(\"mock_url\") + \"/200\";",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "ztc-002",
+									"item": [
+										{
+											"name": "(ztc-002a) Resultaattype met selectielijstklasse.procestermijn nihil en niet afleidingswijze afgehandeld is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met selectielijstklasse.procestermijn nihil en niet brondatumArchiefprocedure.afleidingswijze afgehandeld geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // TODO",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"selectielijstProcestype\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-002b) Resultaattype met selectielijstklasse.procestermijn nihil en niet afleidingswijze afgehandeld is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"termijn\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-002b) Resultaattype met selectielijstklasse.procestermijn nihil en afleidingswijze afgehandeld is mogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met selectielijstklasse.procestermijn nihil en brondatumArchiefprocedure.afleidingswijze afgehandeld geeft 201\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-002c) Resultaattype met selectielijstklasse.procestermijn nihil en niet afleidingswijze afgehandeld is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-002c) Resultaattype met selectielijstklasse.procestermijn ingeschatte_bestaansduur_procesobject en niet afleidingswijze termijn is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met selectielijstklasse.procestermijn ingeschatte_bestaansduur_procesobject en niet brondatumArchiefprocedure.afleidingswijze termijn geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // TODO",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"selectielijstProcestype\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-002d)\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										}
+									],
 									"_postman_isSubFolder": true
 								},
 								{
 									"name": "tearDown",
-									"item": [],
+									"item": [
+										{
+											"name": "(ZTC) Delete Zaaktype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3cdda0cf-72a6-4ee7-864e-d4c28c74a84a",
+														"exec": [
+															"postman.setNextRequest(\"...\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{zaaktype_url}}",
+													"host": [
+														"{{zaaktype_url}}"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "common requests",
+									"item": [
+										{
+											"name": "(COMMON) Delete Zaaktype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "a4bd1602-194d-44c1-b79c-3cdeb7c43c78",
+														"exec": [
+															"pm.globals.unset(\"created_zaaktype_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_zaaktype_url}}",
+													"host": [
+														"{{created_zaaktype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(COMMON) Delete Resultaattype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "8f421196-f2ce-43c2-ac69-c5a59cc6266a",
+														"exec": [
+															"pm.globals.unset(\"created_resultaattype_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_resultaattype_url}}",
+													"host": [
+														"{{created_resultaattype_url}}"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "f45635cb-2408-4cc5-9ed9-2662b6f3e752",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "1eb7b427-aa9e-4445-9f91-960e5cd99b79",
+												"type": "text/javascript",
+												"exec": [
+													"var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
+													"if(request_names) {",
+													"    postman.setNextRequest(request_names.shift());",
+													"    pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
+													"}"
+												]
+											}
+										}
+									],
 									"_postman_isSubFolder": true
 								}
 							],
