@@ -280,7 +280,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id1\",\n\t\t\"test_id2\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"ZRC\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id1\",\n\t\t\"test_id2\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -337,7 +337,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id1\",\n\t\t\"test_id2\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"ZRC\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id1\",\n\t\t\"test_id2\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -1474,7 +1474,7 @@
 													"script": {
 														"id": "759de81f-fe06-48a8-9586-d495f3c77444",
 														"exec": [
-															"pm.test.skip(\"Zaak aanmaken met zaaktype url die niet wijst naar Zaaktype-resource geeft 400\", function() {",
+															"pm.test(\"Zaak aanmaken met zaaktype url die niet wijst naar Zaaktype-resource geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -1553,7 +1553,7 @@
 													"script": {
 														"id": "759de81f-fe06-48a8-9586-d495f3c77444",
 														"exec": [
-															"pm.test.skip(\"Zaak bijwerken met zaaktype url die niet wijst naar Zaaktype-resource geeft 400\", function() {",
+															"pm.test(\"Zaak bijwerken met zaaktype url die niet wijst naar Zaaktype-resource geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -1622,7 +1622,7 @@
 													"script": {
 														"id": "759de81f-fe06-48a8-9586-d495f3c77444",
 														"exec": [
-															"pm.test.skip(\"Zaak deels bijwerken met zaaktype url die niet wijst naar Zaaktype-resource geeft 400\", function() {",
+															"pm.test(\"Zaak deels bijwerken met zaaktype url die niet wijst naar Zaaktype-resource geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -2999,7 +2999,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-006 (WIP)",
+									"name": "zrc-006",
 									"item": [
 										{
 											"name": "Create authorized Zaaktype",
@@ -3085,7 +3085,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"clientIds\": [\n        \"demolimited\"\n    ],\n    \"label\": \"Demo User with limited access\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"ZRC\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_for_auth_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+													"raw": "{\n    \"clientIds\": [\n        \"demolimited\"\n    ],\n    \"label\": \"Demo User with limited access\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_for_auth_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -3605,7 +3605,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-007 (WIP)",
+									"name": "zrc-007 (WIP) (NI)",
 									"item": [
 										{
 											"name": "Create Zaak to close",
@@ -4019,7 +4019,7 @@
 													"script": {
 														"id": "9e3dd206-12d7-43e7-ac77-8e9122340e37",
 														"exec": [
-															"pm.test.skip(\"Afgesloten Zaak bijwerken geeft 403\", function() {",
+															"pm.test(\"Afgesloten Zaak bijwerken geeft 403\", function() {",
 															"    pm.response.to.have.status(403);",
 															"});"
 														],
@@ -4086,7 +4086,7 @@
 													"script": {
 														"id": "9e3dd206-12d7-43e7-ac77-8e9122340e37",
 														"exec": [
-															"pm.test.skip(\"Afgesloten Zaak bijwerken geeft 403\", function() {",
+															"pm.test(\"Afgesloten Zaak bijwerken geeft 403\", function() {",
 															"    pm.response.to.have.status(403);",
 															"});",
 															"",
@@ -4417,7 +4417,7 @@
 													"script": {
 														"id": "f0914778-27b4-4cb3-8af8-7fce47ecc6f6",
 														"exec": [
-															"pm.globals.set(\"expliciete_vertrouwelijkheid\", \"zeer geheim\");",
+															"pm.globals.set(\"expliciete_vertrouwelijkheid\", \"zeer_geheim\");",
 															"",
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
@@ -5951,7 +5951,7 @@
 													"script": {
 														"id": "c3d8939f-9c16-49c6-a507-bfbd34abc9b6",
 														"exec": [
-															"pm.test.skip(\"Zaak deels bijwerken met opschorting zonder indicatie en reden geeft 400\", function() {",
+															"pm.test(\"Zaak deels bijwerken met opschorting zonder indicatie en reden geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -6171,7 +6171,7 @@
 													"script": {
 														"id": "82250c04-55c0-410a-b319-04edc0658119",
 														"exec": [
-															"pm.test.skip(\"Zaak deels bijwerken met verlenging zonder reden en duur geeft 400\", function() {",
+															"pm.test(\"Zaak deels bijwerken met verlenging zonder reden en duur geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -9231,7 +9231,7 @@
 															"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.globals.get(\"resultaattype_archiefnominatie\"));",
 															"});",
 															"",
-															"pm.test.skip(\"Resultaat met afleidingswijze ander_datumkenmerk toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
+															"pm.test(\"Resultaat met afleidingswijze ander_datumkenmerk toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
 															"    var jsonData = pm.response.json();",
 															"    ",
 															"    if (pm.globals.get(\"resultaattype_archiefactietermijn\")) {",
@@ -10595,7 +10595,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"betrokkene\": \"http://example.com/2d0815580af94ee0a15aa677aa646e1a\",\n\t\"betrokkeneType\": \"Natuurlijk persoon\",\n\t\"rolomschrijving\": \"Behandelaar\",\n\t\"roltoelichting\": \"testrol\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"betrokkene\": \"http://example.com/2d0815580af94ee0a15aa677aa646e1a\",\n\t\"betrokkeneType\": \"natuurlijk_persoon\",\n\t\"rolomschrijving\": \"behandelaar\",\n\t\"roltoelichting\": \"testrol\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/rollen",
@@ -10635,7 +10635,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"type\": \"zakelijkRecht\",\n\t\"object\": \"{{mock_url}}/200\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"type\": \"zakelijk_recht\",\n\t\"object\": \"{{mock_url}}/200\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/zaakobjecten",
@@ -12334,7 +12334,7 @@
 													"script": {
 														"id": "9983c33d-404e-4f04-9abc-82a130620b5e",
 														"exec": [
-															"pm.test.skip(\"EnkelvoudigInformatieObject aanmaken met informatieobjecttype url die niet wijst naar Informatieobjecttype geeft 400\", function() {",
+															"pm.test(\"EnkelvoudigInformatieObject aanmaken met informatieobjecttype url die niet wijst naar Informatieobjecttype geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
@@ -12399,7 +12399,7 @@
 													"script": {
 														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
 														"exec": [
-															"pm.test.skip(\"EnkelvoudigInformatieObject bijwerken met informatieobjecttype url die niet wijst naar Informatieobjecttype geeft 400\", function() {",
+															"pm.test(\"EnkelvoudigInformatieObject bijwerken met informatieobjecttype url die niet wijst naar Informatieobjecttype geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
@@ -12455,7 +12455,7 @@
 													"script": {
 														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
 														"exec": [
-															"pm.test.skip(\"EnkelvoudigInformatieObject deels bijwerken met informatieobjecttype url die niet wijst naar Informatieobjecttype geeft 400\", function() {",
+															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken met informatieobjecttype url die niet wijst naar Informatieobjecttype geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
@@ -12618,7 +12618,7 @@
 													"script": {
 														"id": "069de5e5-b099-45d2-af4c-17009b2ec3be",
 														"exec": [
-															"pm.test.skip(\"ObjectInformatieObject aanmaken met objecttype zaak en object url die niet wijst naar Zaak geeft 400\", function() {",
+															"pm.test(\"ObjectInformatieObject aanmaken met objecttype zaak en object url die niet wijst naar Zaak geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
@@ -12670,7 +12670,7 @@
 													"script": {
 														"id": "069de5e5-b099-45d2-af4c-17009b2ec3be",
 														"exec": [
-															"pm.test.skip(\"ObjectInformatieObject aanmaken met objecttype besluit en object url die niet wijst naar Besluit geeft 400\", function() {",
+															"pm.test(\"ObjectInformatieObject aanmaken met objecttype besluit en object url die niet wijst naar Besluit geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
@@ -13047,7 +13047,7 @@
 														"id": "52592cd1-86f0-4bbd-8bfb-7a641b89cedd",
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.status = \"in bewerking\";",
+															"body.status = \"in_bewerking\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -13104,8 +13104,9 @@
 														"id": "4fe7f30d-9def-45d9-aa11-a296125f4ff3",
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.status = \"in bewerking\";",
+															"body.status = \"in_bewerking\";",
 															"body.ontvangstdatum = \"2019-01-01\";",
+															"body.lock = pm.globals.get(\"created_informatieobject_lock_id\");",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -13157,7 +13158,7 @@
 														"id": "4fe7f30d-9def-45d9-aa11-a296125f4ff3",
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.status = \"in bewerking\";",
+															"body.status = \"in_bewerking\";",
 															"body.ontvangstdatum = \"2019-01-01\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -13215,7 +13216,7 @@
 														"id": "52592cd1-86f0-4bbd-8bfb-7a641b89cedd",
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.status = \"in bewerking\";",
+															"body.status = \"in_bewerking\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -13273,8 +13274,9 @@
 														"id": "4fe7f30d-9def-45d9-aa11-a296125f4ff3",
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.status = \"ter vaststelling\";",
+															"body.status = \"ter_vaststelling\";",
 															"body.ontvangstdatum = \"2019-01-01\";",
+															"body.lock = pm.globals.get(\"created_informatieobject_lock_id\");",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -13326,7 +13328,7 @@
 														"id": "4fe7f30d-9def-45d9-aa11-a296125f4ff3",
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.status = \"ter vaststelling\";",
+															"body.status = \"ter_vaststelling\";",
 															"body.ontvangstdatum = \"2019-01-01\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -13882,7 +13884,7 @@
 													"script": {
 														"id": "d8dbc102-90f7-46c7-a6c2-10e412c9d831",
 														"exec": [
-															"pm.globals.set(\"expliciete_vertrouwelijkheidaanduiding\", \"zeer geheim\");"
+															"pm.globals.set(\"expliciete_vertrouwelijkheidaanduiding\", \"zeer_geheim\");"
 														],
 														"type": "text/javascript"
 													}
@@ -14214,7 +14216,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "drc-009 (WIP)",
+									"name": "drc-009",
 									"item": [
 										{
 											"name": "(drc-009a) EnkelvoudigInformatieObject bijwerken zonder lock niet toegestaan",
@@ -16029,7 +16031,7 @@
 													"script": {
 														"id": "7c424f91-6f67-4601-a88d-8ce8a626f111",
 														"exec": [
-															"pm.test.skip(\"Besluit aanmaken met besluittype url die niet wijst naar Besluittype-resource geeft 400\", function() {",
+															"pm.test(\"Besluit aanmaken met besluittype url die niet wijst naar Besluittype-resource geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -16098,7 +16100,7 @@
 													"script": {
 														"id": "433d0426-73d2-46c1-bd23-2abc0c89520a",
 														"exec": [
-															"pm.test.skip(\"Besluit bijwerken met besluittype url die niet wijst naar Besluittype-resource geeft 400\", function() {",
+															"pm.test(\"Besluit bijwerken met besluittype url die niet wijst naar Besluittype-resource geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -16152,7 +16154,7 @@
 													"script": {
 														"id": "433d0426-73d2-46c1-bd23-2abc0c89520a",
 														"exec": [
-															"pm.test.skip(\"Besluit deels bijwerken met besluittype url die niet wijst naar Besluittype-resource geeft 400\", function() {",
+															"pm.test(\"Besluit deels bijwerken met besluittype url die niet wijst naar Besluittype-resource geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -16688,7 +16690,7 @@
 													"script": {
 														"id": "cdc41a58-61a8-4faa-89d0-721351f3942c",
 														"exec": [
-															"pm.test(\"BesluitInformatieObject aanmaken met informatieobject url die niet resulteert in 200 geeft 404\", function() {",
+															"pm.test(\"BesluitInformatieObject aanmaken met informatieobject url die niet resulteert in 200 geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that error was thrown for correct reason",
@@ -18637,7 +18639,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"resultaattype_body\"));",
 															"body.selectielijstklasse = pm.environment.get(\"selectielijstklasse_procestermijn_nihil_url\");",
-															"bode.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
+															"body.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
