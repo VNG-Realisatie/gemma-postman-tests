@@ -3997,6 +3997,46 @@
 											"response": []
 										},
 										{
+											"name": "Create Applicatie without geforceerd bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "01473a2c-f195-4761-bff0-61b43c41f40a",
+														"exec": [
+															"pm.globals.set(\"applicatie_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"clientIds\": [\n        \"demolimited\"\n    ],\n    \"label\": \"Demo User without geforceerd bijwerken\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "(zrc-007c) Afgesloten zaak bijwerken is niet toegestaan",
 											"event": [
 												{
@@ -4029,7 +4069,14 @@
 											],
 											"request": {
 												"auth": {
-													"type": "noauth"
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
 												},
 												"method": "PUT",
 												"header": [
@@ -4048,11 +4095,6 @@
 														"key": "Content-Crs",
 														"type": "text",
 														"value": "EPSG:4326"
-													},
-													{
-														"key": "Authorization",
-														"value": "{{jwt_token_no_geforceerd_bijwerken}}",
-														"type": "text"
 													}
 												],
 												"body": {
@@ -4099,7 +4141,14 @@
 											],
 											"request": {
 												"auth": {
-													"type": "noauth"
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
 												},
 												"method": "PATCH",
 												"header": [
@@ -4118,11 +4167,6 @@
 														"key": "Content-Crs",
 														"type": "text",
 														"value": "EPSG:4326"
-													},
-													{
-														"key": "Authorization",
-														"value": "{{jwt_token_no_geforceerd_bijwerken}}",
-														"type": "text"
 													}
 												],
 												"body": {
@@ -4357,6 +4401,24 @@
 													"raw": "{{created_zaak_url}}",
 													"host": [
 														"{{created_zaak_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete Applicatie without geforceerd bijwerken",
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{applicatie_url}}",
+													"host": [
+														"{{applicatie_url}}"
 													]
 												}
 											},
@@ -16701,7 +16763,7 @@
 															"",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_besluitinformatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-004a) BesluitInformatieObject aanmaken zet aard_relatie op legt_vast\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create different Besluit\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
 															"}"
 														],
@@ -16741,157 +16803,6 @@
 								{
 									"name": "brc-004",
 									"item": [
-										{
-											"name": "(brc-004a) BesluitInformatieObject aanmaken zet aard_relatie op legt_vast",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "1cc9ef47-2191-4b69-9b2c-34c7517b8b3e",
-														"exec": [
-															"pm.test(\"BesluitInformatieObject aanmaken zet aardRelatie op legt_vast\", function() {",
-															"    pm.expect(pm.response.json().aardRelatieWeergave).to.include(\"Legt vast\");",
-															"});",
-															"",
-															"if(pm.response.code == 201) {",
-															"    pm.globals.set(\"created_besluitinformatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"besluitinformatieobject_body\", pm.request.body.raw)",
-															"} else {",
-															"    postman.setNextRequest(\"Create BesluitInformatieObject\");",
-															"}",
-															""
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"value": "application/json",
-														"type": "text"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"besluit\": \"{{besluit_url}}\"\n}"
-												},
-												"url": {
-													"raw": "{{brc_url}}/besluitinformatieobjecten",
-													"host": [
-														"{{brc_url}}"
-													],
-													"path": [
-														"besluitinformatieobjecten"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(brc-004b) BesluitInformatieObject bijwerken relatie aanpassen is niet mogelijk",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "242cf78b-35ac-4bec-83f8-cf47d03e461e",
-														"exec": [
-															"pm.test(\"BesluitInformatieObject bijwerken relatie aanpassen is niet mogelijk\", function() {",
-															"    pm.expect(pm.response.json().aardRelatieWeergave).to.include(\"Legt vast\");",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "c8ca8ad9-e1d5-4a70-ad7f-3d30d5d067a2",
-														"exec": [
-															"var body = JSON.parse(pm.globals.get(\"besluitinformatieobject_body\"));",
-															"body.aardRelatieWeergave = \"aangepast\";",
-															"",
-															"pm.globals.set(\"request_body\", JSON.stringify(body));"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"value": "application/json",
-														"type": "text"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{{request_body}}"
-												},
-												"url": {
-													"raw": "{{created_besluitinformatieobject_url}}",
-													"host": [
-														"{{created_besluitinformatieobject_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(brc-004c) BesluitInformatieObject deels bijwerken relatie aanpassen is niet mogelijk",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "242cf78b-35ac-4bec-83f8-cf47d03e461e",
-														"exec": [
-															"pm.test(\"BesluitInformatieObject deels bijwerken relatie is niet mogelijk\", function() {",
-															"    pm.expect(pm.response.json().aardRelatieWeergave).to.include(\"Legt vast\");",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "c8ca8ad9-e1d5-4a70-ad7f-3d30d5d067a2",
-														"exec": [
-															""
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PATCH",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"aardRelatieWeergave\": \"aangepast\"\n}"
-												},
-												"url": {
-													"raw": "{{created_besluitinformatieobject_url}}",
-													"host": [
-														"{{created_besluitinformatieobject_url}}"
-													]
-												}
-											},
-											"response": []
-										},
 										{
 											"name": "Create different Besluit",
 											"event": [
