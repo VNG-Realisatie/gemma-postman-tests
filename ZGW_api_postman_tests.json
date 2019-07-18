@@ -16815,6 +16815,8 @@
 														"exec": [
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_besluit_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Create BesluitInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-004a) BesluitInformatieObject bijwerken besluit aanpassen is niet toegestaan\"]);",
 															"} else {",
 															"    postman.setNextRequest(\"Create BesluitInformatieObject\");",
 															"}"
@@ -16850,7 +16852,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-004d) BesluitInformatieObject bijwerken besluit aanpassen is niet toegestaan",
+											"name": "(brc-004a) BesluitInformatieObject bijwerken besluit aanpassen is niet toegestaan",
 											"event": [
 												{
 													"listen": "test",
@@ -16903,7 +16905,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-004e) BesluitInformatieObject deels bijwerken besluit aanpassen is niet toegestaan",
+											"name": "(brc-004b) BesluitInformatieObject deels bijwerken besluit aanpassen is niet toegestaan",
 											"event": [
 												{
 													"listen": "test",
@@ -16956,7 +16958,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-004f) BesluitInformatieObject bijwerken informatieobject aanpassen is niet toegestaan",
+											"name": "(brc-004c) BesluitInformatieObject bijwerken informatieobject aanpassen is niet toegestaan",
 											"event": [
 												{
 													"listen": "test",
@@ -17009,7 +17011,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-004g) BesluitInformatieObject deels bijwerken informatieobject aanpassen is niet toegestaan",
+											"name": "(brc-004d) BesluitInformatieObject deels bijwerken informatieobject aanpassen is niet toegestaan",
 											"event": [
 												{
 													"listen": "test",
@@ -17631,7 +17633,7 @@
 													"script": {
 														"id": "91869b75-b1bc-4b1c-acbd-e6c9ccc09384",
 														"exec": [
-															"pm.globals.set(\"created_zaakinformatieobject_url\", pm.response.json().url);"
+															"pm.globals.set(\"created_besluitinformatieobject_url\", pm.response.json().url);"
 														],
 														"type": "text/javascript"
 													}
