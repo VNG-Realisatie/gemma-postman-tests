@@ -2,6 +2,7 @@
 
 ZRC:
 - **zrc-001g** until **zrc-001i**: resource validation on `zaaktype`-url for `Zaak` not yet implemented
+- **zrc-002b-c**: when updating identificatie gives `wijzigen-niet-toelaten`
 - **zrc-006a**: `zaak_list` returns `Zaak`en with `zaaktype`s that are not part of the zaaktypes_claim in the JWT token  
 - **zrc-006b**: `zaak__zoek` returns `Zaak`en with `zaaktype`s that are not part of the zaaktypes_claim in the JWT token  
 - **zrc-006c**: `zaak_detail` returns `Zaak`en with `zaaktype`s that are not part of the zaaktypes_claim in the JWT token
