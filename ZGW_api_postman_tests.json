@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0e72434b-d78f-4907-9720-3612e4260ea3",
+		"_postman_id": "4d24c6ac-d54b-45cc-ba33-9c850246add5",
 		"name": "ZGW api tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -3752,7 +3752,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"resultaatType\": \"{{resultaattype_url}}\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"resultaattype\": \"{{resultaattype_url}}\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/resultaten",
@@ -3802,7 +3802,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-20T13:37:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statustype\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-20T13:37:00\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
@@ -4022,7 +4022,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"clientIds\": [\n        \"demolimited\"\n    ],\n    \"label\": \"Demo User without geforceerd bijwerken\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+													"raw": "{\n    \"clientIds\": [\n        \"demolimited\"\n    ],\n    \"label\": \"Demo User without geforceerd bijwerken\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\",\n                \"zaken.bijwerken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -4282,7 +4282,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-22T13:37:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statustype\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-22T13:37:00\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
@@ -4332,7 +4332,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-22T13:39:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statustype\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-22T13:39:00\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
@@ -8345,7 +8345,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{hoofdzaak_url}}\",\n\t\"resultaatType\": \"{{resultaattype}}\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{hoofdzaak_url}}\",\n\t\"resultaattype\": \"{{resultaattype}}\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/resultaten",
@@ -8395,7 +8395,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{hoofdzaak_url}}\",\n\t\"statusType\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-18T13:37:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{hoofdzaak_url}}\",\n\t\"statustype\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-18T13:37:00\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
@@ -8642,7 +8642,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{zaak_zonder_archiefnominatie_url}}\",\n\t\"resultaatType\": \"{{current_resultaattype}}\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{zaak_zonder_archiefnominatie_url}}\",\n\t\"resultaattype\": \"{{current_resultaattype}}\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/resultaten",
@@ -8692,7 +8692,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{zaak_zonder_archiefnominatie_url}}\",\n\t\"statusType\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-26T13:37:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{zaak_zonder_archiefnominatie_url}}\",\n\t\"statustype\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-26T13:37:00\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
@@ -10557,7 +10557,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"resultaatType\": \"{{resultaattype_url}}\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"resultaattype\": \"{{resultaattype_url}}\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/resultaten",
@@ -10607,7 +10607,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statusType\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-20T13:37:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statustype\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-20T13:37:00\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
@@ -10697,7 +10697,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"type\": \"zakelijk_recht\",\n\t\"object\": \"{{mock_url}}/200\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"objectType\": \"zakelijk_recht\",\n\t\"object\": \"{{mock_url}}/200\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/zaakobjecten",
@@ -12305,6 +12305,7 @@
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
 															"body.informatieobjecttype = pm.environment.get(\"mock_url\") + \"/404\";",
+															"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -12377,7 +12378,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"informatieobjecttype\": \"{{mock_url}}/404\"\n}"
+													"raw": "{\n\t\"informatieobjecttype\": \"{{mock_url}}/404\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
 												},
 												"url": {
 													"raw": "{{informatieobject_url}}",
@@ -12479,6 +12480,7 @@
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
 															"body.informatieobjecttype = pm.environment.get(\"mock_url\") + \"/200\";",
+															"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -12551,7 +12553,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"informatieobjecttype\": \"{{mock_url}}/200\"\n}"
+													"raw": "{\n\t\"informatieobjecttype\": \"{{mock_url}}/200\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
 												},
 												"url": {
 													"raw": "{{informatieobject_url}}",
