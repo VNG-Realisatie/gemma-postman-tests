@@ -26,8 +26,16 @@
 														"id": "0825d296-16c6-4483-b880-517cd9d855ee",
 														"exec": [
 															"if(pm.response.json().count) {",
-															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
+															"    var catalogus = pm.response.json().results[0];",
+															"    pm.globals.set(\"catalogus_url\", catalogus.url);",
 															"    postman.setNextRequest(\"(AC) Retrieve Besluittype\");",
+															"    ",
+															"    if(catalogus.besluittypen) {",
+															"        pm.globals.set(\"besluittype_url\", catalogus.besluittypen[0]);",
+															"    }",
+															"    if(catalogus.informatieobjecttypen) {",
+															"        pm.globals.set(\"informatieobjecttype_url\", catalogus.informatieobjecttypen[0]);",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -107,16 +115,22 @@
 													"script": {
 														"id": "e6119392-3d60-48a2-8876-206df5ee6e57",
 														"exec": [
-															"if(pm.response.json().count) {",
-															"    var results = pm.response.json().results;",
-															"    for(var i=0; i<results.length; i++) {",
-															"        if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
-															"            pm.globals.set(\"besluittype_url\", results[i].url);",
-															"            postman.setNextRequest(\"(AC) Retrieve Informatieobjecttype\");",
-															"            break;",
-															"        }",
-															"    }",
-															"}"
+															"// TODO",
+															"// if(pm.response.json().count) {",
+															"//     var results = pm.response.json().results;",
+															"//     for(var i=0; i<results.length; i++) {",
+															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
+															"//             pm.globals.set(\"besluittype_url\", results[i].url);",
+															"//             postman.setNextRequest(\"(AC) Retrieve Informatieobjecttype\");",
+															"//             break;",
+															"//         }",
+															"//     }",
+															"// }",
+															"",
+															"if(pm.globals.get(\"besluittype_url\")) {",
+															"    postman.setNextRequest(\"(AC) Retrieve Informatieobjecttype\");",
+															"}",
+															""
 														],
 														"type": "text/javascript"
 													}
@@ -189,15 +203,20 @@
 													"script": {
 														"id": "362ebaee-63d2-417a-9d22-6ca23954a6e4",
 														"exec": [
-															"if(pm.response.json().count) {",
-															"    var results = pm.response.json().results;",
-															"    for(var i=0; i<results.length; i++) {",
-															"        if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
-															"            pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
-															"            postman.setNextRequest(\"Create Zaaktype\");",
-															"            break;",
-															"        }",
-															"    }",
+															"// TODO",
+															"// if(pm.response.json().count) {",
+															"//     var results = pm.response.json().results;",
+															"//     for(var i=0; i<results.length; i++) {",
+															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
+															"//             pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
+															"//             postman.setNextRequest(\"Create Zaaktype\");",
+															"//             break;",
+															"//         }",
+															"//     }",
+															"// }",
+															"",
+															"if(pm.globals.get(\"informatieobjecttype_url\")) {",
+															"    postman.setNextRequest(\"(AC) Create Zaaktype\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -264,7 +283,7 @@
 											"response": []
 										},
 										{
-											"name": "Create Zaaktype",
+											"name": "(AC) Create Zaaktype",
 											"event": [
 												{
 													"listen": "test",
@@ -618,8 +637,16 @@
 														"id": "0825d296-16c6-4483-b880-517cd9d855ee",
 														"exec": [
 															"if(pm.response.json().count) {",
+															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
 															"    postman.setNextRequest(\"(ZRC) Retrieve Besluittype\");",
+															"    ",
+															"    if(catalogus.besluittypen) {",
+															"        pm.globals.set(\"besluittype_url\", catalogus.besluittypen[0]);",
+															"    }",
+															"    if(catalogus.informatieobjecttypen) {",
+															"        pm.globals.set(\"informatieobjecttype_url\", catalogus.informatieobjecttypen[0]);",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -699,15 +726,19 @@
 													"script": {
 														"id": "e6119392-3d60-48a2-8876-206df5ee6e57",
 														"exec": [
-															"if(pm.response.json().count) {",
-															"    var results = pm.response.json().results;",
-															"    for(var i=0; i<results.length; i++) {",
-															"        if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
-															"            pm.globals.set(\"besluittype_url\", results[i].url);",
-															"            postman.setNextRequest(\"(ZRC) Retrieve Informatieobjecttype\");",
-															"            break;",
-															"        }",
-															"    }",
+															"// if(pm.response.json().count) {",
+															"//     var results = pm.response.json().results;",
+															"//     for(var i=0; i<results.length; i++) {",
+															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
+															"//             pm.globals.set(\"besluittype_url\", results[i].url);",
+															"//             postman.setNextRequest(\"(ZRC) Retrieve Informatieobjecttype\");",
+															"//             break;",
+															"//         }",
+															"//     }",
+															"// }",
+															"",
+															"if(pm.globals.get(\"besluittype_url\")) {",
+															"    postman.setNextRequest(\"(ZRC) Retrieve Informatieobjecttype\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -781,15 +812,19 @@
 													"script": {
 														"id": "362ebaee-63d2-417a-9d22-6ca23954a6e4",
 														"exec": [
-															"if(pm.response.json().count) {",
-															"    var results = pm.response.json().results;",
-															"    for(var i=0; i<results.length; i++) {",
-															"        if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
-															"            pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
-															"            postman.setNextRequest(\"Create Zaaktype\");",
-															"            break;",
-															"        }",
-															"    }",
+															"// if(pm.response.json().count) {",
+															"//     var results = pm.response.json().results;",
+															"//     for(var i=0; i<results.length; i++) {",
+															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
+															"//             pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
+															"//             postman.setNextRequest(\"Create Zaaktype\");",
+															"//             break;",
+															"//         }",
+															"//     }",
+															"// }",
+															"",
+															"if(pm.globals.get(\"informatieobjecttype_url\")) {",
+															"    postman.setNextRequest(\"(ZRC) Create Zaaktype\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -856,7 +891,7 @@
 											"response": []
 										},
 										{
-											"name": "Create Zaaktype",
+											"name": "(ZRC) Create Zaaktype",
 											"event": [
 												{
 													"listen": "test",
@@ -12249,8 +12284,16 @@
 														"id": "0825d296-16c6-4483-b880-517cd9d855ee",
 														"exec": [
 															"if(pm.response.json().count) {",
+															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
 															"    postman.setNextRequest(\"(DRC) Retrieve Besluittype\");",
+															"    ",
+															"    if(catalogus.besluittypen) {",
+															"        pm.globals.set(\"besluittype_url\", catalogus.besluittypen[0]);",
+															"    }",
+															"    if(catalogus.informatieobjecttypen) {",
+															"        pm.globals.set(\"informatieobjecttype_url\", catalogus.informatieobjecttypen[0]);",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -12330,15 +12373,19 @@
 													"script": {
 														"id": "e6119392-3d60-48a2-8876-206df5ee6e57",
 														"exec": [
-															"if(pm.response.json().count) {",
-															"    var results = pm.response.json().results;",
-															"    for(var i=0; i<results.length; i++) {",
-															"        if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
-															"            pm.globals.set(\"besluittype_url\", results[i].url);",
-															"            postman.setNextRequest(\"(DRC) Retrieve Informatieobjecttype\");",
-															"            break;",
-															"        }",
-															"    }",
+															"// if(pm.response.json().count) {",
+															"//     var results = pm.response.json().results;",
+															"//     for(var i=0; i<results.length; i++) {",
+															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
+															"//             pm.globals.set(\"besluittype_url\", results[i].url);",
+															"//             postman.setNextRequest(\"(DRC) Retrieve Informatieobjecttype\");",
+															"//             break;",
+															"//         }",
+															"//     }",
+															"// }",
+															"",
+															"if(pm.globals.get(\"besluittype_url\")) {",
+															"    postman.setNextRequest(\"(DRC) Retrieve Informatieobjecttype\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -12412,15 +12459,19 @@
 													"script": {
 														"id": "362ebaee-63d2-417a-9d22-6ca23954a6e4",
 														"exec": [
-															"if(pm.response.json().count) {",
-															"    var results = pm.response.json().results;",
-															"    for(var i=0; i<results.length; i++) {",
-															"        if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
-															"            pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
-															"            postman.setNextRequest(\"Create Zaaktype\");",
-															"            break;",
-															"        }",
-															"    }",
+															"// if(pm.response.json().count) {",
+															"//     var results = pm.response.json().results;",
+															"//     for(var i=0; i<results.length; i++) {",
+															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
+															"//             pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
+															"//             postman.setNextRequest(\"Create Zaaktype\");",
+															"//             break;",
+															"//         }",
+															"//     }",
+															"// }",
+															"",
+															"if(pm.globals.get(\"informatieobjecttype_url\")) {",
+															"    postman.setNextRequest(\"(DRC) Create Zaaktype\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -12487,7 +12538,7 @@
 											"response": []
 										},
 										{
-											"name": "Create Zaaktype",
+											"name": "(DRC) Create Zaaktype",
 											"event": [
 												{
 													"listen": "test",
@@ -15908,8 +15959,16 @@
 														"id": "0825d296-16c6-4483-b880-517cd9d855ee",
 														"exec": [
 															"if(pm.response.json().count) {",
+															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
 															"    postman.setNextRequest(\"(BRC) Retrieve Besluittype\");",
+															"    ",
+															"    if(catalogus.besluittypen) {",
+															"        pm.globals.set(\"besluittype_url\", catalogus.besluittypen[0]);",
+															"    }",
+															"    if(catalogus.informatieobjecttypen) {",
+															"        pm.globals.set(\"informatieobjecttype_url\", catalogus.informatieobjecttypen[0]);",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -15989,15 +16048,19 @@
 													"script": {
 														"id": "e6119392-3d60-48a2-8876-206df5ee6e57",
 														"exec": [
-															"if(pm.response.json().count) {",
-															"    var results = pm.response.json().results;",
-															"    for(var i=0; i<results.length; i++) {",
-															"        if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
-															"            pm.globals.set(\"besluittype_url\", results[i].url);",
-															"            postman.setNextRequest(\"(BRC) Retrieve Informatieobjecttype\");",
-															"            break;",
-															"        }",
-															"    }",
+															"// if(pm.response.json().count) {",
+															"//     var results = pm.response.json().results;",
+															"//     for(var i=0; i<results.length; i++) {",
+															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
+															"//             pm.globals.set(\"besluittype_url\", results[i].url);",
+															"//             postman.setNextRequest(\"(BRC) Retrieve Informatieobjecttype\");",
+															"//             break;",
+															"//         }",
+															"//     }",
+															"// }",
+															"",
+															"if(pm.globals.get(\"besluittype_url\")) {",
+															"    postman.setNextRequest(\"(BRC) Retrieve Informatieobjecttype\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -16071,15 +16134,19 @@
 													"script": {
 														"id": "362ebaee-63d2-417a-9d22-6ca23954a6e4",
 														"exec": [
-															"if(pm.response.json().count) {",
-															"    var results = pm.response.json().results;",
-															"    for(var i=0; i<results.length; i++) {",
-															"        if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
-															"            pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
-															"            postman.setNextRequest(\"Create Zaaktype\");",
-															"            break;",
-															"        }",
-															"    }",
+															"// if(pm.response.json().count) {",
+															"//     var results = pm.response.json().results;",
+															"//     for(var i=0; i<results.length; i++) {",
+															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
+															"//             pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
+															"//             postman.setNextRequest(\"Create Zaaktype\");",
+															"//             break;",
+															"//         }",
+															"//     }",
+															"// }",
+															"",
+															"if(pm.globals.get(\"informatieobjecttype_url\")) {",
+															"    postman.setNextRequest(\"(BRC) Create Zaaktype\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -16146,7 +16213,7 @@
 											"response": []
 										},
 										{
-											"name": "Create Zaaktype",
+											"name": "(BRC) Create Zaaktype",
 											"event": [
 												{
 													"listen": "test",
@@ -18381,8 +18448,16 @@
 														"id": "0825d296-16c6-4483-b880-517cd9d855ee",
 														"exec": [
 															"if(pm.response.json().count) {",
+															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
 															"    postman.setNextRequest(\"(ZTC) Retrieve Besluittype\");",
+															"    ",
+															"    if(catalogus.besluittypen) {",
+															"        pm.globals.set(\"besluittype_url\", catalogus.besluittypen[0]);",
+															"    }",
+															"    if(catalogus.informatieobjecttypen) {",
+															"        pm.globals.set(\"informatieobjecttype_url\", catalogus.informatieobjecttypen[0]);",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -18462,15 +18537,19 @@
 													"script": {
 														"id": "e6119392-3d60-48a2-8876-206df5ee6e57",
 														"exec": [
-															"if(pm.response.json().count) {",
-															"    var results = pm.response.json().results;",
-															"    for(var i=0; i<results.length; i++) {",
-															"        if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
-															"            pm.globals.set(\"besluittype_url\", results[i].url);",
-															"            postman.setNextRequest(\"(ZTC) Retrieve Informatieobjecttype\");",
-															"            break;",
-															"        }",
-															"    }",
+															"// if(pm.response.json().count) {",
+															"//     var results = pm.response.json().results;",
+															"//     for(var i=0; i<results.length; i++) {",
+															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
+															"//             pm.globals.set(\"besluittype_url\", results[i].url);",
+															"//             postman.setNextRequest(\"(ZTC) Retrieve Informatieobjecttype\");",
+															"//             break;",
+															"//         }",
+															"//     }",
+															"// }",
+															"",
+															"if(pm.globals.get(\"besluittype_url\")) {",
+															"    postman.setNextRequest(\"(ZTC) Retrieve Informatieobjecttype\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -18544,15 +18623,19 @@
 													"script": {
 														"id": "362ebaee-63d2-417a-9d22-6ca23954a6e4",
 														"exec": [
-															"if(pm.response.json().count) {",
-															"    var results = pm.response.json().results;",
-															"    for(var i=0; i<results.length; i++) {",
-															"        if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
-															"            pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
-															"            postman.setNextRequest(\"Create Zaaktype\");",
-															"            break;",
-															"        }",
-															"    }",
+															"// if(pm.response.json().count) {",
+															"//     var results = pm.response.json().results;",
+															"//     for(var i=0; i<results.length; i++) {",
+															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
+															"//             pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
+															"//             postman.setNextRequest(\"Create Zaaktype\");",
+															"//             break;",
+															"//         }",
+															"//     }",
+															"// }",
+															"",
+															"if(pm.globals.get(\"informatieobjecttype_url\")) {",
+															"    postman.setNextRequest(\"(ztc-001a) Zaaktype aanmaken is mogelijk\");",
 															"}"
 														],
 														"type": "text/javascript"
