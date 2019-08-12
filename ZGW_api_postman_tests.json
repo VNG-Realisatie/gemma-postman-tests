@@ -25,6 +25,9 @@
 													"script": {
 														"id": "0825d296-16c6-4483-b880-517cd9d855ee",
 														"exec": [
+															"pm.globals.unset(\"besluittype_url\");",
+															"pm.globals.unset(\"informatieobjecttype_url\");",
+															"",
 															"if(pm.response.json().count) {",
 															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", catalogus.url);",
@@ -636,6 +639,9 @@
 													"script": {
 														"id": "0825d296-16c6-4483-b880-517cd9d855ee",
 														"exec": [
+															"pm.globals.unset(\"besluittype_url\");",
+															"pm.globals.unset(\"informatieobjecttype_url\");",
+															"",
 															"if(pm.response.json().count) {",
 															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
@@ -12283,6 +12289,9 @@
 													"script": {
 														"id": "0825d296-16c6-4483-b880-517cd9d855ee",
 														"exec": [
+															"pm.globals.unset(\"besluittype_url\");",
+															"pm.globals.unset(\"informatieobjecttype_url\");",
+															"",
 															"if(pm.response.json().count) {",
 															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
@@ -15958,6 +15967,9 @@
 													"script": {
 														"id": "0825d296-16c6-4483-b880-517cd9d855ee",
 														"exec": [
+															"pm.globals.unset(\"besluittype_url\");",
+															"pm.globals.unset(\"informatieobjecttype_url\");",
+															"",
 															"if(pm.response.json().count) {",
 															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
@@ -18447,6 +18459,9 @@
 													"script": {
 														"id": "0825d296-16c6-4483-b880-517cd9d855ee",
 														"exec": [
+															"pm.globals.unset(\"besluittype_url\");",
+															"pm.globals.unset(\"informatieobjecttype_url\");",
+															"",
 															"if(pm.response.json().count) {",
 															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
@@ -18874,7 +18889,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"{{resultaattypeomschrijving_url}}\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"termijn\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"{{resultaattypeomschrijving_url}}\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"gerelateerde_zaak\",\n\t\t\"procestermijn\": \"\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/resultaattypen",
@@ -21972,7 +21987,7 @@
 													"script": {
 														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
 														"exec": [
-															"pm.test(\"Resultaattype aanmaken met afleidingswijze afgehandeld en geen registratie geeft 400\", function() {",
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze afgehandeld en registratie geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // TODO",
@@ -22036,7 +22051,7 @@
 													"script": {
 														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
 														"exec": [
-															"pm.test(\"Resultaattype aanmaken met afleidingswijze eigenschap en geen registratie geeft 400\", function() {",
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze eigenschap en registratie geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // TODO",
@@ -22100,7 +22115,7 @@
 													"script": {
 														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
 														"exec": [
-															"pm.test(\"Resultaattype aanmaken met afleidingswijze gerelateerde_zaak en geen registratie geeft 400\", function() {",
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze gerelateerde_zaak en registratie geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // TODO",
@@ -22164,7 +22179,7 @@
 													"script": {
 														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
 														"exec": [
-															"pm.test(\"Resultaattype aanmaken met afleidingswijze hoofdzaak en geen registratie geeft 400\", function() {",
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze hoofdzaak en registratie geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // TODO",
@@ -22228,7 +22243,7 @@
 													"script": {
 														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
 														"exec": [
-															"pm.test(\"Resultaattype aanmaken met afleidingswijze ingangsdatum_besluit en geen registratie geeft 400\", function() {",
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze ingangsdatum_besluit en registratie geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // TODO",
@@ -22292,7 +22307,7 @@
 													"script": {
 														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
 														"exec": [
-															"pm.test(\"Resultaattype aanmaken met afleidingswijze termijn en geen registratie geeft 400\", function() {",
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze termijn en registratie geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // TODO",
@@ -22356,7 +22371,7 @@
 													"script": {
 														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
 														"exec": [
-															"pm.test(\"Resultaattype aanmaken met afleidingswijze vervaldatum_besluit en geen registratie geeft 400\", function() {",
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze vervaldatum_besluit en registratie geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // TODO",
@@ -22420,7 +22435,7 @@
 													"script": {
 														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
 														"exec": [
-															"pm.test(\"Resultaattype aanmaken met afleidingswijze zaakobject en geen registratie geeft 400\", function() {",
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze zaakobject en registratie geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // TODO",
@@ -22433,7 +22448,7 @@
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
 															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-008a) ...\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-008a) Resultaattype met afleidingswijze termijn en geen procestermijn is onmogelijk\"]);",
 															"}"
 														],
 														"type": "text/javascript"
@@ -22481,7 +22496,584 @@
 								},
 								{
 									"name": "ztc-008",
-									"item": [],
+									"item": [
+										{
+											"name": "(ztc-008a) Resultaattype met afleidingswijze termijn en geen procestermijn is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze termijn en geen procestermijn geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // TODO",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-008b) Resultaattype met afleidingswijze afgehandeld en registratie is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"termijn\",\n\t\t\"procestermijn\": \"\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-008b) Resultaattype met afleidingswijze afgehandeld en registratie is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze afgehandeld en procestermijn geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // TODO",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-008c) Resultaattype met afleidingswijze ander_datumkenmerk en procestermijn is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-008c) Resultaattype met afleidingswijze ander_datumkenmerk en procestermijn is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze ander_datumkenmerk en procestermijn geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // TODO",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-008d) Resultaattype met afleidingswijze eigenschap en procestermijn is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"ander_datumkenmerk\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"identificatie\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"pand\",\n\t\t\"registratie\": \"test\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-008d) Resultaattype met afleidingswijze eigenschap en procestermijn is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze eigenschap en procestermijn geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // TODO",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-008e) Resultaattype met afleidingswijze gerelateerde_zaak en procestermijn is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"eigenschap\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"identificatie\",\n\t\t\"einddatumBekend\": true,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-008e) Resultaattype met afleidingswijze gerelateerde_zaak en procestermijn is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze gerelateerde_zaak en procestermijn geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // TODO",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-008f) Resultaattype met afleidingswijze hoofdzaak en procestermijn is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"gerelateerde_zaak\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": true,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-008f) Resultaattype met afleidingswijze hoofdzaak en procestermijn is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze hoofdzaak en procestermijn geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // TODO",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-008g) Resultaattype met afleidingswijze ingangsdatum_besluit en procestermijn is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"hoofdzaak\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": true,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-008g) Resultaattype met afleidingswijze ingangsdatum_besluit en procestermijn is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze ingangsdatum_besluit en procestermijn geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // TODO",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-008h) Resultaattype met afleidingswijze vervaldatum_besluit en procestermijn is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"ingangsdatum_besluit\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": true,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-008h) Resultaattype met afleidingswijze vervaldatum_besluit en procestermijn is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze vervaldatum_besluit en procestermijn geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // TODO",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-008i) Resultaattype met afleidingswijze zaakobject en registratie is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"vervaldatum_besluit\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": true,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-008i) Resultaattype met afleidingswijze zaakobject en registratie is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5491e8e-8e56-421d-bb63-020afbda4c5c",
+														"exec": [
+															"pm.test(\"Resultaattype aanmaken met afleidingswijze zaakobject en procestermijn geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // TODO",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ZTC) Delete Zaaktype\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "5b4de2a4-4809-4870-885c-0129c844191b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"zaakobject\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"identificatie\",\n\t\t\"einddatumBekend\": true,\n\t\t\"objecttype\": \"pand\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/resultaattypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										}
+									],
 									"_postman_isSubFolder": true
 								},
 								{
