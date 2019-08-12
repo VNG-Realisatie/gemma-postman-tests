@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b6732c0a-25c0-4940-9b80-6f1c7d7297ca",
+		"_postman_id": "6f9cf274-ac3d-4f7d-a477-b30770374cb7",
 		"name": "ZGW api tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -897,6 +897,96 @@
 											"response": []
 										},
 										{
+											"name": "Retrieve procestype for procestermijn nihil",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
+														"exec": [
+															"pm.globals.set(\"procestype_procestermijn_nihil_url\", pm.response.json().procesType);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{selectielijstklasse_procestermijn_nihil_url}}",
+													"host": [
+														"{{selectielijstklasse_procestermijn_nihil_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Retrieve procestype for procestermijn ingeschatte_bestaansduur_object",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
+														"exec": [
+															"pm.globals.set(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\", pm.response.json().procesType);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}",
+													"host": [
+														"{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Retrieve procestype for procestermijn vast_te_leggen_datum",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
+														"exec": [
+															"pm.globals.set(\"procestype_procestermijn_vast_te_leggen_datum_url\", pm.response.json().procesType);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}",
+													"host": [
+														"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "(ZRC) Create Zaaktype",
 											"event": [
 												{
@@ -928,7 +1018,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"Melding Openbare Ruimte\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
+													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"Melding Openbare Ruimte\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/zaaktypen",
@@ -1011,7 +1101,7 @@
 											"response": []
 										},
 										{
-											"name": "Create Resultaattype procestermijn nihil",
+											"name": "Create Resultaattype afleidingswijze afgehandeld",
 											"event": [
 												{
 													"listen": "test",
@@ -1030,13 +1120,13 @@
 													{
 														"key": "Content-Type",
 														"name": "Content-Type",
-														"value": "application/json",
-														"type": "text"
+														"type": "text",
+														"value": "application/json"
 													}
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/resultaattypen",
@@ -1206,7 +1296,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\"\n}"
+													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"bestandsomvang\": 6\n}"
 												},
 												"url": {
 													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
@@ -1284,7 +1374,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"indicatieGebruiksrecht\": null\n}"
+													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"indicatieGebruiksrecht\": null,\n\t\"bestandsomvang\": 6\n}"
 												},
 												"url": {
 													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
@@ -8385,8 +8475,8 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
-															"body.omschrijving = \"Zaaktype for archiving tests\";",
-															"body.identificatie = 4;",
+															"body.omschrijving = \"Zaaktype for archiving tests nihil\";",
+															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_nihil_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -8447,7 +8537,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_nihil_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_nihil_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/resultaattypen",
@@ -8482,8 +8572,8 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
-															"body.omschrijving = \"Zaaktype for archiving tests\";",
-															"body.identificatie = 3;",
+															"body.omschrijving = \"Zaaktype for archiving tests ingeschatte_bestaansduur_procesobject\";",
+															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -8573,8 +8663,8 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
-															"body.omschrijving = \"Zaaktype for archiving tests\";",
-															"body.identificatie = 4;",
+															"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
+															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -8635,7 +8725,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"omschrijving\": \"Test\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"ander_datumkenmerk\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"omschrijving\": \"Test\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"ander_datumkenmerk\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"identificatie\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"pand\",\n\t\t\"registratie\": \"test\"\n\t}\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/resultaattypen",
@@ -12750,7 +12840,9 @@
 													"script": {
 														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
 														"exec": [
-															"pm.globals.set(\"object_inhoud\", btoa(\"string\"))"
+															"pm.globals.set(\"object_inhoud\", btoa(\"string\"));",
+															"",
+															""
 														],
 														"type": "text/javascript"
 													}
@@ -12768,7 +12860,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\"\n}"
+													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"bestandsomvang\": 6\n}"
 												},
 												"url": {
 													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
@@ -16306,7 +16398,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\"\n}"
+													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"bestandsomvang\": 6\n}"
 												},
 												"url": {
 													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
@@ -16384,7 +16476,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"indicatieGebruiksrecht\": null\n}"
+													"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"indicatieGebruiksrecht\": null,\n\t\"bestandsomvang\": 6\n}"
 												},
 												"url": {
 													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
@@ -16835,7 +16927,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"besluit_body\"));",
-															"body.besluittype = pm.environment.get(\"mock_url\") + \"/404\";",
+															"body.besluittype = pm.environment.get(\"mock_url\") + \"/200\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -16927,7 +17019,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"besluittype\": \"{{mock_url}}/404\"\n}"
+													"raw": "{\n\t\"besluittype\": \"{{mock_url}}/200\"\n}"
 												},
 												"url": {
 													"raw": "{{besluit_url}}",
@@ -18650,7 +18742,7 @@
 															"// }",
 															"",
 															"if(pm.globals.get(\"informatieobjecttype_url\")) {",
-															"    postman.setNextRequest(\"(ztc-001a) Zaaktype aanmaken is mogelijk\");",
+															"    postman.setNextRequest(\"(ZTC) Retrieve procestype for procestermijn nihil\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -18711,6 +18803,96 @@
 													],
 													"path": [
 														"informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ZTC) Retrieve procestype for procestermijn nihil",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
+														"exec": [
+															"pm.globals.set(\"procestype_procestermijn_nihil_url\", pm.response.json().procesType);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{selectielijstklasse_procestermijn_nihil_url}}",
+													"host": [
+														"{{selectielijstklasse_procestermijn_nihil_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Retrieve procestype for procestermijn ingeschatte_bestaansduur_object",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
+														"exec": [
+															"pm.globals.set(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\", pm.response.json().procesType);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}",
+													"host": [
+														"{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Retrieve procestype for procestermijn vast_te_leggen_datum",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
+														"exec": [
+															"pm.globals.set(\"procestype_procestermijn_vast_te_leggen_datum_url\", pm.response.json().procesType);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}",
+													"host": [
+														"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}"
 													]
 												}
 											},
@@ -18807,6 +18989,122 @@
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype for afleidingswijze afgehandeld",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "da11fafb-886f-4639-a230-9d8e77b653d8",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.omschrijving = \"zaaktype afleidingswijze afgehandeld\";",
+															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_nihil_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "318e1d78-5188-4449-8c2b-8208c81816d7",
+														"exec": [
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"zaaktype_afleidingswijze_afgehandeld_url\", pm.response.json().url);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype for afleidingswijze termijn",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "da11fafb-886f-4639-a230-9d8e77b653d8",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.omschrijving = \"zaaktype afleidingswijze termijn\";",
+															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "318e1d78-5188-4449-8c2b-8208c81816d7",
+														"exec": [
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"zaaktype_afleidingswijze_termijn_url\", pm.response.json().url);",
+															"}"
 														],
 														"type": "text/javascript"
 													}
@@ -19089,6 +19387,8 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"resultaattype_body\"));",
 															"body.selectielijstklasse = pm.environment.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\");",
+															"body.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
+															"body.brondatumArchiefprocedure.procestermijn = \"P5M\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -19107,8 +19407,8 @@
 															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"selectielijstklasse\");",
-															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"procestype-mismatch\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -19321,11 +19621,10 @@
 															"pm.test(\"Resultaattype aanmaken met selectielijstklasse.procestermijn nihil en niet brondatumArchiefprocedure.afleidingswijze afgehandeld geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
-															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"selectielijstProcestype\");",
-															"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
+															"    var error = pm.response.json()[\"invalidParams\"][1];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid-afleidingswijze-for-procestermijn\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -19366,7 +19665,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"termijn\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_afleidingswijze_termijn_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"termijn\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/resultaattypen",
@@ -19424,7 +19723,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_afleidingswijze_afgehandeld_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/resultaattypen",
@@ -19451,9 +19750,9 @@
 															"    ",
 															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"selectielijstProcestype\");",
-															"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
+															"    var error = pm.response.json()[\"invalidParams\"][1];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid-afleidingswijze-for-procestermijn\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -19488,7 +19787,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_afleidingswijze_afgehandeld_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/resultaattypen",
@@ -20030,8 +20329,8 @@
 															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"    pm.expect(error.name).to.be.equal(\"brondatumArchiefprocedure.datumkenmerk\");",
+															"    pm.expect(error.code).to.be.equal(\"required\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -20158,8 +20457,8 @@
 															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"    pm.expect(error.name).to.be.equal(\"brondatumArchiefprocedure.datumkenmerk\");",
+															"    pm.expect(error.code).to.be.equal(\"required\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -20280,8 +20579,8 @@
 															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"    pm.expect(error.name).to.be.equal(\"brondatumArchiefprocedure.datumkenmerk\");",
+															"    pm.expect(error.code).to.be.equal(\"required\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -20402,8 +20701,8 @@
 															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"    pm.expect(error.name).to.be.equal(\"brondatumArchiefprocedure.datumkenmerk\");",
+															"    pm.expect(error.code).to.be.equal(\"must-be-empty\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -20466,8 +20765,8 @@
 															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"    pm.expect(error.name).to.be.equal(\"brondatumArchiefprocedure.datumkenmerk\");",
+															"    pm.expect(error.code).to.be.equal(\"must-be-empty\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -20530,8 +20829,8 @@
 															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"    pm.expect(error.name).to.be.equal(\"brondatumArchiefprocedure.datumkenmerk\");",
+															"    pm.expect(error.code).to.be.equal(\"must-be-empty\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -20594,8 +20893,8 @@
 															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"    pm.expect(error.name).to.be.equal(\"brondatumArchiefprocedure.datumkenmerk\");",
+															"    pm.expect(error.code).to.be.equal(\"must-be-empty\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -20658,8 +20957,8 @@
 															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"    pm.expect(error.name).to.be.equal(\"brondatumArchiefprocedure.datumkenmerk\");",
+															"    pm.expect(error.code).to.be.equal(\"must-be-empty\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -20722,8 +21021,8 @@
 															"    // TODO",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-															"    pm.expect(error.code).to.be.equal(\"...\");",
+															"    pm.expect(error.name).to.be.equal(\"brondatumArchiefprocedure.datumkenmerk\");",
+															"    pm.expect(error.code).to.be.equal(\"must-be-empty\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
