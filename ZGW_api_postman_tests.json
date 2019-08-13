@@ -17202,7 +17202,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"besluit_body\"));",
-															"body.identificatie = pm.globals.get(\"besluit_id\");",
+															"body.identificatie = \"nieuwe identificatie\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -17215,7 +17215,7 @@
 													"script": {
 														"id": "b34be4ba-bf87-4ded-8794-c3a0084faa5d",
 														"exec": [
-															"pm.test(\"Besluit bijwerken met bestaande combinatie verantwoordelijke_organisatie en identificatie geeft 400\", function() {",
+															"pm.test(\"Besluit bijwerken identificatie geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
@@ -17278,11 +17278,142 @@
 													"script": {
 														"id": "b34be4ba-bf87-4ded-8794-c3a0084faa5d",
 														"exec": [
-															"pm.test(\"Besluit deels bijwerken met bestaande combinatie verantwoordelijke_organisatie en identificatie geeft 400\", function() {",
+															"pm.test(\"Besluit deels bijwerken identificatie geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"identificatie\");",
+															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Accept-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													},
+													{
+														"key": "Content-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													},
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"identificatie\": \"{{besluit_id}}\"\n}"
+												},
+												"url": {
+													"raw": "{{created_besluit_url}}",
+													"host": [
+														"{{created_besluit_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(brc-002d) Besluit bijwerken verantwoordelijke_organisatie aanpassen niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "27106eae-1a93-4e78-82d5-5b0d4719673f",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"besluit_body\"));",
+															"body.verantwoordelijkeOrganisatie = \"245122461\"",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "b34be4ba-bf87-4ded-8794-c3a0084faa5d",
+														"exec": [
+															"pm.test(\"Besluit bijwerken met bestaande combinatie verantwoordelijke_organisatie en identificatie geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"verantwoordelijkeOrganisatie\");",
+															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Accept-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													},
+													{
+														"key": "Content-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													},
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{created_besluit_url}}",
+													"host": [
+														"{{created_besluit_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(brc-002e) Besluit deels bijwerken verantwoordelijke_organisatie aanpassen niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "27106eae-1a93-4e78-82d5-5b0d4719673f",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "b34be4ba-bf87-4ded-8794-c3a0084faa5d",
+														"exec": [
+															"pm.test(\"Besluit deels bijwerken met bestaande combinatie verantwoordelijke_organisatie en identificatie geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"verantwoordelijkeOrganisatie\");",
 															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
 															"});",
 															"",
@@ -17315,7 +17446,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"{{besluit_id}}\"\n}"
+													"raw": "{\n\t\"verantwoordelijkeOrganisatie\": \"245122461\"\n}"
 												},
 												"url": {
 													"raw": "{{created_besluit_url}}",
@@ -17372,7 +17503,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-002d) Genereer unieke identificatie voor Besluit onder verantwoordelijke_organisatie",
+											"name": "(brc-002f) Genereer unieke identificatie voor Besluit onder verantwoordelijke_organisatie",
 											"event": [
 												{
 													"listen": "test",
