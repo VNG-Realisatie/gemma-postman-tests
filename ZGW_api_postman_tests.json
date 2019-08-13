@@ -355,9 +355,7 @@
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
-															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
-															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ac-002a) Applicatie aanmaken met heeftAlleAutorisaties en expliciete autorisaties is niet mogelijk\"]);",
+															"    pm.globals.set(\"applicatie_url\", pm.response.json().url);",
 															"}"
 														],
 														"type": "text/javascript"
@@ -399,6 +397,95 @@
 												}
 											},
 											"response": []
+										},
+										{
+											"name": "(ac-001b) Applicatie aanmaken met al gebruikte client_id is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "2577270f-b66a-4f6a-b057-0a1638c2b6ae",
+														"exec": [
+															"pm.test(\"Applicatie aanmaken een client_id die al gebruikt is voor een andere applicatie geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"clientIds\");",
+															"    pm.expect(error.code).to.be.equal(\"clientId-exists\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
+															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
+															"    ",
+															"    if(pm.globals.get(\"applicatie_url\")) {",
+															"        pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete created Applicatie\"]);   ",
+															"    } else {",
+															"        pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ac-002a) Applicatie aanmaken met heeftAlleAutorisaties en expliciete autorisaties is niet mogelijk\"]);",
+															"    }",
+															"} else {",
+															"    if(!pm.globals.get(\"applicatie_url\")) {",
+															"        postman.setNextRequest(\"(ac-002a) Applicatie aanmaken met heeftAlleAutorisaties en expliciete autorisaties is niet mogelijk\");",
+															"    }",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "741ae768-fbee-4279-9d17-c0e2c234039f",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"clientIds\": [\"test_id1\"],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": []\n}"
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete created Applicatie",
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{applicatie_url}}",
+													"host": [
+														"{{applicatie_url}}"
+													]
+												}
+											},
+											"response": []
 										}
 									],
 									"_postman_isSubFolder": true
@@ -414,12 +501,64 @@
 													"script": {
 														"id": "90ac0738-8ed5-4f87-9269-c8ca933c73b2",
 														"exec": [
-															"pm.test(\"Applicatie aanmaken met heeftAlleAutorisaties op true en expliciet meegegeven autorisaties is niet mogelijk\", function() {",
+															"pm.test(\"Applicatie aanmaken met heeftAlleAutorisaties op true en expliciet meegegeven autorisaties geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json().invalidParams[0];",
 															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
 															"    pm.expect(error.code).to.be.equal(\"ambiguous-authorizations-specified\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
+															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ac-002b) Applicatie aanmaken met heeftAlleAutorisaties false en geen autorisaties is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ac-002b) Applicatie aanmaken met heeftAlleAutorisaties false en geen autorisaties is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "90ac0738-8ed5-4f87-9269-c8ca933c73b2",
+														"exec": [
+															"pm.test(\"Applicatie aanmaken met heeftAlleAutorisaties false en geen expliciet meegegeven autorisaties geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"missing-authorizations\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
@@ -444,7 +583,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id4\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": false,\n\t\"autorisaties\": []\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
