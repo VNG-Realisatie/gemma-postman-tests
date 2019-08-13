@@ -39,6 +39,15 @@
 															"    if(catalogus.informatieobjecttypen) {",
 															"        pm.globals.set(\"informatieobjecttype_url\", catalogus.informatieobjecttypen[0]);",
 															"    }",
+															"    if(catalogus.informatieobjecttypen) {",
+															"        var zaaktypen = catalogus.zaaktypen",
+															"        for(i=0; i<zaaktypen.length; i++) {",
+															"            if(zaaktypen[i].omschrijving == \"ac_tests_1\") {",
+															"                pm.globals.set(\"zaaktype_url\", zaaktypen[i]);",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -286,7 +295,42 @@
 											"response": []
 										},
 										{
-											"name": "(AC) Create Zaaktype",
+											"name": "(AC) Retrieve Zaaktype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3fb68965-5143-4f35-a058-85ad13592d77",
+														"exec": [
+															"if(pm.globals.get(\"zaaktype_url\")) {",
+															"    postman.setNextRequest(\"(ac-001a) Applicatie aanmaken met meerdere clientIds is mogelijk\");",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype",
 											"event": [
 												{
 													"listen": "test",
@@ -317,7 +361,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"Melding Openbare Ruimte\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true\n}"
+													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"ac_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/zaaktypen",
@@ -792,6 +836,15 @@
 															"    if(catalogus.informatieobjecttypen) {",
 															"        pm.globals.set(\"informatieobjecttype_url\", catalogus.informatieobjecttypen[0]);",
 															"    }",
+															"    if(catalogus.informatieobjecttypen) {",
+															"        var zaaktypen = catalogus.zaaktypen",
+															"        for(i=0; i<zaaktypen.length; i++) {",
+															"            if(zaaktypen[i].omschrijving == \"zrc_tests_1\") {",
+															"                pm.globals.set(\"zaaktype_url\", zaaktypen[i]);",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -1126,7 +1179,42 @@
 											"response": []
 										},
 										{
-											"name": "(ZRC) Create Zaaktype",
+											"name": "(ZRC) Retrieve Zaaktype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3fb68965-5143-4f35-a058-85ad13592d77",
+														"exec": [
+															"if(pm.globals.get(\"zaaktype_url\")) {",
+															"    postman.setNextRequest(\"(ZRC) Create Zaaktype-InformatieObjectType relation\");",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype",
 											"event": [
 												{
 													"listen": "test",
@@ -1157,7 +1245,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"Melding Openbare Ruimte\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
+													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/zaaktypen",
@@ -1172,7 +1260,7 @@
 											"response": []
 										},
 										{
-											"name": "Create Zaaktype-InformatieObjectType relation",
+											"name": "(ZRC) Create Zaaktype-InformatieObjectType relation",
 											"request": {
 												"method": "POST",
 												"header": [
@@ -12532,6 +12620,15 @@
 															"    if(catalogus.informatieobjecttypen) {",
 															"        pm.globals.set(\"informatieobjecttype_url\", catalogus.informatieobjecttypen[0]);",
 															"    }",
+															"    if(catalogus.informatieobjecttypen) {",
+															"        var zaaktypen = catalogus.zaaktypen",
+															"        for(i=0; i<zaaktypen.length; i++) {",
+															"            if(zaaktypen[i].omschrijving == \"drc_tests_1\") {",
+															"                pm.globals.set(\"zaaktype_url\", zaaktypen[i]);",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -12776,7 +12873,42 @@
 											"response": []
 										},
 										{
-											"name": "(DRC) Create Zaaktype",
+											"name": "(DRC) Retrieve Zaaktype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3fb68965-5143-4f35-a058-85ad13592d77",
+														"exec": [
+															"if(pm.globals.get(\"zaaktype_url\")) {",
+															"    postman.setNextRequest(\"Create Zaaktype-InformatieObjectType relation\");",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype",
 											"event": [
 												{
 													"listen": "test",
@@ -12807,7 +12939,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"Melding Openbare Ruimte\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true\n}"
+													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"drc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/zaaktypen",
@@ -13865,7 +13997,7 @@
 															"",
 															"if (pm.response.code == 201) {",
 															"    pm.globals.set(\"created_objectinformatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create EnkelvoudigInformatieObject with status in bewerking\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-005a) EnkelvoudigInformatieobject aanmaken met ontvangstdatum en status in bewerking is onmogelijk\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete ObjectInformatieObject\");",
 															"}"
 														],
@@ -13903,10 +14035,10 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "drc-005 (WIP) (NI)",
+									"name": "drc-005",
 									"item": [
 										{
-											"name": "Create EnkelvoudigInformatieObject with status in bewerking",
+											"name": "(drc-005a) EnkelvoudigInformatieobject aanmaken met ontvangstdatum en status in bewerking is onmogelijk",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -13915,6 +14047,7 @@
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
 															"body.status = \"in_bewerking\";",
+															"body.ontvangstdatum = \"2019-01-01\";",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -13926,11 +14059,17 @@
 													"script": {
 														"id": "728ef173-68ae-4bd0-a484-852e477b5999",
 														"exec": [
-															"pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);",
+															"pm.test(\"EnkelvoudigInformatieobject aanmaken met een waarde voor ontvangstdatum en status in bewerking geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"status\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid_for_received\");",
+															"});",
 															"",
-															"if(pm.response.code != 201) {",
-															"    // TODO remove skip",
-															"    postman.setNextRequest(\"Create EnkelvoudigInformatieObject with status ter vaststelling\");",
+															"if(pm.response.code == 201) {",
+															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create EnkelvoudigInformatieObject with status in bewerking\"]);",
 															"}"
 														],
 														"type": "text/javascript"
@@ -13964,7 +14103,68 @@
 											"response": []
 										},
 										{
-											"name": "(drc-005a) EnkelvoudigInformatieObject bijwerken ontvangstdatum zetten als status in bewerking is niet toegestaan",
+											"name": "Create EnkelvoudigInformatieObject with status in bewerking",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "52592cd1-86f0-4bbd-8bfb-7a641b89cedd",
+														"exec": [
+															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
+															"body.status = \"in_bewerking\";",
+															"",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "728ef173-68ae-4bd0-a484-852e477b5999",
+														"exec": [
+															"pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);",
+															"",
+															"if(pm.response.code != 201) {",
+															"    // TODO remove skip",
+															"    postman.setNextRequest(\"(drc-005d) EnkelvoudigInformatieobject aanmaken met ontvangstdatum en status ter vaststelling is onmogelijk\");",
+															"} else {",
+															"    postman.setNextRequest(\"(COMMON) Lock created EnkelvoudigInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-005b) EnkelvoudigInformatieObject bijwerken ontvangstdatum zetten als status in bewerking is niet toegestaan\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
+													"host": [
+														"{{drc_url}}"
+													],
+													"path": [
+														"enkelvoudiginformatieobjecten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-005b) EnkelvoudigInformatieObject bijwerken ontvangstdatum zetten als status in bewerking is niet toegestaan",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -13987,7 +14187,11 @@
 														"id": "210802e1-bb4f-4d17-8aeb-8351fc60997b",
 														"exec": [
 															"pm.test(\"EnkelvoudigInformatieObject ontvangstdatum zetten als status in bewerking geeft 400\", function() {",
-															"    pm.response.to.have.status(400); ",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"status\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid_for_received\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -14018,18 +14222,14 @@
 											"response": []
 										},
 										{
-											"name": "(drc-005b) EnkelvoudigInformatieObject deels bijwerken ontvangstdatum zetten als status in bewerking is niet toegestaan",
+											"name": "(drc-005c) EnkelvoudigInformatieObject deels bijwerken ontvangstdatum zetten als status in bewerking is niet toegestaan",
 											"event": [
 												{
 													"listen": "prerequest",
 													"script": {
 														"id": "4fe7f30d-9def-45d9-aa11-a296125f4ff3",
 														"exec": [
-															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.status = \"in_bewerking\";",
-															"body.ontvangstdatum = \"2019-01-01\";",
-															"",
-															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+															""
 														],
 														"type": "text/javascript"
 													}
@@ -14040,11 +14240,15 @@
 														"id": "210802e1-bb4f-4d17-8aeb-8351fc60997b",
 														"exec": [
 															"pm.test(\"EnkelvoudigInformatieObject ontvangstdatum zetten als status in bewerking geeft 400\", function() {",
-															"    pm.response.to.have.status(400); ",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"status\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid_for_received\");",
 															"});",
 															"",
 															"if(pm.globals.get(\"created_informatieobject_url\")) {",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create EnkelvoudigInformatieObject with status ter vaststelling\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-005d) EnkelvoudigInformatieobject aanmaken met ontvangstdatum en status ter vaststelling is onmogelijk\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
 															"}"
 														],
@@ -14064,12 +14268,77 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{{request_body}}"
+													"raw": "{\n\t\"status\": \"in_bewerking\",\n\t\"ontvangstdatum\": \"2019-01-01\",\n\t\"lock\": \"{{created_informatieobject_lock_id}}\"\n}"
 												},
 												"url": {
 													"raw": "{{created_informatieobject_url}}",
 													"host": [
 														"{{created_informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-005d) EnkelvoudigInformatieobject aanmaken met ontvangstdatum en status ter vaststelling is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "52592cd1-86f0-4bbd-8bfb-7a641b89cedd",
+														"exec": [
+															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
+															"body.status = \"ter_vaststelling\";",
+															"body.ontvangstdatum = \"2019-01-01\";",
+															"",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "728ef173-68ae-4bd0-a484-852e477b5999",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieobject aanmaken met een waarde voor ontvangstdatum en status ter vaststelling geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"status\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid_for_received\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create EnkelvoudigInformatieObject with status ter vaststelling\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
+													"host": [
+														"{{drc_url}}"
+													],
+													"path": [
+														"enkelvoudiginformatieobjecten"
 													]
 												}
 											},
@@ -14101,6 +14370,9 @@
 															"// TODO remove skip",
 															"if(pm.response.code != 201) {",
 															"    postman.setNextRequest(\"(drc-006a) Valideren default indicatie gebruiksrecht bij aanmaken EnkelvoudigInformatieObject\");",
+															"} else {",
+															"    postman.setNextRequest(\"(COMMON) Lock created EnkelvoudigInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-005e) EnkelvoudigInformatieObject bijwerken ontvangstdatum zetten als status ter vaststelling is niet toegestaan\"]);",
 															"}"
 														],
 														"type": "text/javascript"
@@ -14134,7 +14406,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-005c) EnkelvoudigInformatieObject bijwerken ontvangstdatum zetten als status ter vaststelling is niet toegestaan",
+											"name": "(drc-005e) EnkelvoudigInformatieObject bijwerken ontvangstdatum zetten als status ter vaststelling is niet toegestaan",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -14157,7 +14429,11 @@
 														"id": "98c02693-1303-4ef4-8569-7a8af71ace58",
 														"exec": [
 															"pm.test(\"EnkelvoudigInformatieObject ontvangstdatum zetten als status ter vaststelling geeft 400\", function() {",
-															"    pm.response.to.have.status(400); ",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"status\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid_for_received\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -14188,18 +14464,14 @@
 											"response": []
 										},
 										{
-											"name": "(drc-005d) EnkelvoudigInformatieObject deels bijwerken ontvangstdatum zetten als status ter vaststelling is niet toegestaan",
+											"name": "(drc-005f) EnkelvoudigInformatieObject deels bijwerken ontvangstdatum zetten als status ter vaststelling is niet toegestaan",
 											"event": [
 												{
 													"listen": "prerequest",
 													"script": {
 														"id": "4fe7f30d-9def-45d9-aa11-a296125f4ff3",
 														"exec": [
-															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.status = \"ter_vaststelling\";",
-															"body.ontvangstdatum = \"2019-01-01\";",
-															"",
-															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+															""
 														],
 														"type": "text/javascript"
 													}
@@ -14210,7 +14482,11 @@
 														"id": "98c02693-1303-4ef4-8569-7a8af71ace58",
 														"exec": [
 															"pm.test(\"EnkelvoudigInformatieObject ontvangstdatum zetten als status ter vaststelling geeft 400\", function() {",
-															"    pm.response.to.have.status(400); ",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"status\");",
+															"    pm.expect(error.code).to.be.equal(\"invalid_for_received\");",
 															"});",
 															"",
 															"if(pm.globals.get(\"created_informatieobject_url\")) {",
@@ -14234,7 +14510,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{{request_body}}"
+													"raw": "{\n\t\"status\": \"ter_vaststelling\",\n\t\"ontvangstdatum\": \"2019-01-01\",\n\t\"lock\": \"{{created_informatieobject_lock_id}}\"\n}"
 												},
 												"url": {
 													"raw": "{{created_informatieobject_url}}",
@@ -14394,10 +14670,7 @@
 													"script": {
 														"id": "71ace9a4-f7ae-457c-94e9-7a0501d4f10e",
 														"exec": [
-															"pm.globals.set(\"gebruiksrechten_url\", pm.response.json().url);",
-															"",
-															"postman.setNextRequest(\"(COMMON) Lock EnkelvoudigInformatieObject\");",
-															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-006c) EnkelvoudigInformatieObject bijwerken met indicatie gebruiksrecht true en Gebruiksrechten mogelijk\"]);"
+															"pm.globals.set(\"gebruiksrechten_url\", pm.response.json().url);"
 														],
 														"type": "text/javascript"
 													}
@@ -14430,108 +14703,27 @@
 											"response": []
 										},
 										{
-											"name": "(drc-006c) EnkelvoudigInformatieObject bijwerken met indicatie gebruiksrecht true en Gebruiksrechten mogelijk",
+											"name": "(drc-006c) Aanmaken Gebruiksrechten zet EnkelvoudigInformatieObject.indicatieGebruiksrecht op true",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "df7215fd-6f12-404c-b47d-6628ae6b0b69",
+														"id": "1ce1a3ed-5044-456a-a316-5ff0cc82bf82",
 														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject bijwerken met indicatie gebruiksrecht true en Gebruiksrechten in drc geeft 200\", function() {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"    ",
-															"pm.test(\"EnkelvoudigInformatieObject bijwerken met indicatie gebruiksrecht true en Gebruiksrechten in drc past indicatie gebruiksrecht correct aan\", function() {",
-															"    pm.expect(pm.response.json().indicatieGebruiksrecht).to.be.equal(true);",
+															"pm.test(\"Aanmaken Gebruiksrechten zet EnkelvoudigInformatieObject.indicatieGebruiksrecht op true\", function() {",
+															"    pm.expect(pm.response.json().indicatieGebruiksrecht).to.be.equal(true); ",
 															"});"
 														],
 														"type": "text/javascript"
 													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "bf34ae64-12e7-403e-91e3-c36f821e7135",
-														"exec": [
-															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.indicatieGebruiksrecht = true;",
-															"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
-															"",
-															"pm.globals.set(\"request_body\", JSON.stringify(body));"
-														],
-														"type": "text/javascript"
-													}
 												}
 											],
 											"request": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
+												"method": "GET",
+												"header": [],
 												"body": {
 													"mode": "raw",
-													"raw": "{{request_body}}"
-												},
-												"url": {
-													"raw": "{{informatieobject_url}}",
-													"host": [
-														"{{informatieobject_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(drc-006d) EnkelvoudigInformatieObject deels bijwerken met indicatie gebruiksrecht true en Gebruiksrechten mogelijk",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "df7215fd-6f12-404c-b47d-6628ae6b0b69",
-														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken met indicatie gebruiksrecht true en Gebruiksrechten in drc geeft 200\", function() {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"    ",
-															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken met indicatie gebruiksrecht true en Gebruiksrechten in drc past indicatie gebruiksrecht correct aan\", function() {",
-															"    pm.expect(pm.response.json().indicatieGebruiksrecht).to.be.equal(true);",
-															"});",
-															"",
-															"postman.setNextRequest(\"(COMMON) Unlock EnkelvoudigInformatieObject\");",
-															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete Gebruiksrechten\"]);"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "bf34ae64-12e7-403e-91e3-c36f821e7135",
-														"exec": [
-															""
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PATCH",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"indicatieGebruiksrecht\": true,\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
+													"raw": ""
 												},
 												"url": {
 													"raw": "{{informatieobject_url}}",
@@ -14834,7 +15026,10 @@
 													"script": {
 														"id": "d8dbc102-90f7-46c7-a6c2-10e412c9d831",
 														"exec": [
-															""
+															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
+															"delete body.vertrouwelijkheidaanduiding;",
+															"",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
 														"type": "text/javascript"
 													}
@@ -14880,7 +15075,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{{informatieobject_body}}"
+													"raw": "{{request_body}}"
 												},
 												"url": {
 													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
@@ -14911,7 +15106,9 @@
 															"pm.test(\"EnkelvoudigInformatieObject verwijderen terwijl er ObjectInformatieObjecten aan gekoppeld zijn is niet toegestaan\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
-															"    // todo",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"pending-relations\");",
 															"});",
 															"",
 															"postman.setNextRequest(\"(COMMON) Delete ZaakInformatieObject\");",
@@ -15093,41 +15290,21 @@
 									"name": "drc-009",
 									"item": [
 										{
-											"name": "(drc-009a) EnkelvoudigInformatieObject bijwerken zonder lock niet toegestaan",
+											"name": "Create applicatie for lock tests",
 											"event": [
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "e7d58a49-3ac9-49a2-8eec-f7ef4b3605da",
-														"exec": [
-															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"pm.globals.set(\"aangepaste_titel\", \"aangepast\");",
-															"body.titel = pm.globals.get(\"aangepaste_titel\");",
-															"",
-															"pm.globals.set(\"request_body\", JSON.stringify(body));"
-														],
-														"type": "text/javascript"
-													}
-												},
 												{
 													"listen": "test",
 													"script": {
-														"id": "d011b349-c63f-444c-9fc4-7192cde596e2",
+														"id": "1b5db4b2-62f8-410a-80d2-d3282f1686e0",
 														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject bijwerken zonder lock geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    var error = pm.response.json().invalidParams[0];",
-															"    pm.expect(error.name).to.be.equal(\"lock\");",
-															"    pm.expect(error.code).to.be.equal(\"required\");",
-															"});"
+															"pm.globals.set(\"applicatie_url\", pm.response.json().url);"
 														],
 														"type": "text/javascript"
 													}
 												}
 											],
 											"request": {
-												"method": "PUT",
+												"method": "POST",
 												"header": [
 													{
 														"key": "Content-Type",
@@ -15138,19 +15315,62 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{{request_body}}"
+													"raw": "{\n    \"clientIds\": [\n        \"zgw_api_tests_limited-d0sVJ8FQa9W7\"\n    ],\n    \"label\": \"Demo User for document lock tests\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"drc\",\n            \"componentWeergave\": \"Documentregistratiecomponent\",\n            \"scopes\": [\n            \t\"documenten.lezen\",\n                \"documenten.bijwerken\",\n                \"documenten.lock\"\n            ],\n            \"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"geheim\"\n        }\n    ]\n}"
 												},
 												"url": {
-													"raw": "{{informatieobject_url}}",
+													"raw": "{{ac_url}}/applicaties",
 													"host": [
-														"{{informatieobject_url}}"
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
 													]
 												}
 											},
 											"response": []
 										},
 										{
-											"name": "(drc-009b) EnkelvoudigInformatieObject bijwerken terwijl unlocked niet toegestaan",
+											"name": "Create EnkelvoudigInformatieobject for lock tests",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "2a56f0d6-334c-4742-9475-fea1e936bcbd",
+														"exec": [
+															"pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{informatieobject_body}}"
+												},
+												"url": {
+													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
+													"host": [
+														"{{drc_url}}"
+													],
+													"path": [
+														"enkelvoudiginformatieobjecten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009a) EnkelvoudigInformatieObject bijwerken terwijl unlocked niet toegestaan",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -15185,6 +15405,16 @@
 												}
 											],
 											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
 												"method": "PUT",
 												"header": [
 													{
@@ -15199,16 +15429,16 @@
 													"raw": "{{request_body}}"
 												},
 												"url": {
-													"raw": "{{informatieobject_url}}",
+													"raw": "{{created_informatieobject_url}}",
 													"host": [
-														"{{informatieobject_url}}"
+														"{{created_informatieobject_url}}"
 													]
 												}
 											},
 											"response": []
 										},
 										{
-											"name": "(drc-009c) EnkelvoudigInformatieObject deels bijwerken terwijl unlocked niet toegestaan",
+											"name": "(drc-009b) EnkelvoudigInformatieObject deels bijwerken terwijl unlocked niet toegestaan",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -15238,6 +15468,16 @@
 												}
 											],
 											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
 												"method": "PATCH",
 												"header": [
 													{
@@ -15252,16 +15492,16 @@
 													"raw": "{\n\t\"auteur\": \"{{aangepaste_auteur}}\"\n}"
 												},
 												"url": {
-													"raw": "{{informatieobject_url}}",
+													"raw": "{{created_informatieobject_url}}",
 													"host": [
-														"{{informatieobject_url}}"
+														"{{created_informatieobject_url}}"
 													]
 												}
 											},
 											"response": []
 										},
 										{
-											"name": "(drc-009d) EnkelvoudigInformatieObject locken geeft een lockId terug",
+											"name": "(drc-009c) EnkelvoudigInformatieObject locken geeft een lockId terug",
 											"event": [
 												{
 													"listen": "test",
@@ -15284,6 +15524,16 @@
 												}
 											],
 											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
 												"method": "POST",
 												"header": [],
 												"body": {
@@ -15291,9 +15541,9 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "{{informatieobject_url}}/lock",
+													"raw": "{{created_informatieobject_url}}/lock",
 													"host": [
-														"{{informatieobject_url}}"
+														"{{created_informatieobject_url}}"
 													],
 													"path": [
 														"lock"
@@ -15303,7 +15553,137 @@
 											"response": []
 										},
 										{
-											"name": "(drc-009e) EnkelvoudigInformatieObject bijwerken is mogelijk na lock",
+											"name": "(drc-009d) EnkelvoudigInformatieObject bijwerken zonder lock niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "e7d58a49-3ac9-49a2-8eec-f7ef4b3605da",
+														"exec": [
+															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
+															"pm.globals.set(\"aangepaste_titel\", \"aangepast\");",
+															"body.titel = pm.globals.get(\"aangepaste_titel\");",
+															"",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "d011b349-c63f-444c-9fc4-7192cde596e2",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject bijwerken zonder lock geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"lock\");",
+															"    pm.expect(error.code).to.be.equal(\"required\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{created_informatieobject_url}}",
+													"host": [
+														"{{created_informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009e) EnkelvoudigInformatieObject deels bijwerken zonder lock niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "e7d58a49-3ac9-49a2-8eec-f7ef4b3605da",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "d011b349-c63f-444c-9fc4-7192cde596e2",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken zonder lock geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"missing-lock-id\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"titel\": \"aangepaste_titel\"\n}"
+												},
+												"url": {
+													"raw": "{{created_informatieobject_url}}",
+													"host": [
+														"{{created_informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009f) EnkelvoudigInformatieObject bijwerken is mogelijk na lock",
 											"event": [
 												{
 													"listen": "test",
@@ -15338,6 +15718,16 @@
 												}
 											],
 											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
 												"method": "PUT",
 												"header": [
 													{
@@ -15352,16 +15742,16 @@
 													"raw": "{{request_body}}"
 												},
 												"url": {
-													"raw": "{{informatieobject_url}}",
+													"raw": "{{created_informatieobject_url}}",
 													"host": [
-														"{{informatieobject_url}}"
+														"{{created_informatieobject_url}}"
 													]
 												}
 											},
 											"response": []
 										},
 										{
-											"name": "(drc-009f) EnkelvoudigInformatieObject deels bijwerken is mogelijk na lock",
+											"name": "(drc-009g) EnkelvoudigInformatieObject deels bijwerken is mogelijk na lock",
 											"event": [
 												{
 													"listen": "test",
@@ -15391,6 +15781,16 @@
 												}
 											],
 											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
 												"method": "PATCH",
 												"header": [
 													{
@@ -15405,16 +15805,16 @@
 													"raw": "{\n\t\"auteur\": \"{{aangepaste_auteur}}\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
 												},
 												"url": {
-													"raw": "{{informatieobject_url}}",
+													"raw": "{{created_informatieobject_url}}",
 													"host": [
-														"{{informatieobject_url}}"
+														"{{created_informatieobject_url}}"
 													]
 												}
 											},
 											"response": []
 										},
 										{
-											"name": "(drc-009g) EnkelvoudigInformatieObject bijwerken met verkeerd lockId niet toegestaan",
+											"name": "(drc-009h) EnkelvoudigInformatieObject bijwerken met verkeerd lockId niet toegestaan",
 											"event": [
 												{
 													"listen": "test",
@@ -15449,6 +15849,16 @@
 												}
 											],
 											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
 												"method": "PUT",
 												"header": [
 													{
@@ -15463,16 +15873,16 @@
 													"raw": "{{request_body}}"
 												},
 												"url": {
-													"raw": "{{informatieobject_url}}",
+													"raw": "{{created_informatieobject_url}}",
 													"host": [
-														"{{informatieobject_url}}"
+														"{{created_informatieobject_url}}"
 													]
 												}
 											},
 											"response": []
 										},
 										{
-											"name": "(drc-009h) EnkelvoudigInformatieObject deels bijwerken met verkeerd lockId niet toegestaan",
+											"name": "(drc-009i) EnkelvoudigInformatieObject deels bijwerken met verkeerd lockId niet toegestaan",
 											"event": [
 												{
 													"listen": "test",
@@ -15502,6 +15912,16 @@
 												}
 											],
 											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
 												"method": "PATCH",
 												"header": [
 													{
@@ -15516,25 +15936,112 @@
 													"raw": "{\n\t\"auteur\": \"{{aangepaste_auteur}}\",\n\t\"lock\": \"some_incorrect_lock_id\"\n}"
 												},
 												"url": {
-													"raw": "{{informatieobject_url}}",
+													"raw": "{{created_informatieobject_url}}",
 													"host": [
-														"{{informatieobject_url}}"
+														"{{created_informatieobject_url}}"
 													]
 												}
 											},
 											"response": []
 										},
 										{
-											"name": "(drc-009i) EnkelvoudigInformatieObject geforceerd unlocken is mogelijk",
+											"name": "(drc-009j) EnkelvoudigInformatieObject geforceerd unlocken zonder applicatie is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "6321d127-27d9-48fd-aa51-7e0cbe69eeb2",
 														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject geforceerd unlocked geeft 204\", function() {",
-															"    pm.response.to.have.status(204);",
+															"pm.test(\"EnkelvoudigInformatieObject geforceerd unlocken zonder applicatie met juiste scope geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
 															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_informatieobject_url}}/unlock",
+													"host": [
+														"{{created_informatieobject_url}}"
+													],
+													"path": [
+														"unlock"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete lock Applicatie",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "e7955417-8362-4725-8655-9571c3ec93af",
+														"exec": [
+															"pm.globals.unset(\"applicatie_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{applicatie_url}}",
+													"host": [
+														"{{applicatie_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-009k) EnkelvoudigInformatieObject geforceerd unlocken is mogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "6321d127-27d9-48fd-aa51-7e0cbe69eeb2",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject geforceerd unlocken geeft 204\", function() {",
+															"    pm.response.to.have.status(204);",
+															"});",
+															"",
+															"if(pm.globals.get(\"created_informatieobject_url\")) {",
+															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(DRC) Delete EnkelvoudigInformatieObject\"]);",
+															"}"
 														],
 														"type": "text/javascript"
 													}
@@ -15552,12 +16059,12 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
+													"raw": ""
 												},
 												"url": {
-													"raw": "{{informatieobject_url}}/unlock",
+													"raw": "{{created_informatieobject_url}}/unlock",
 													"host": [
-														"{{informatieobject_url}}"
+														"{{created_informatieobject_url}}"
 													],
 													"path": [
 														"unlock"
@@ -15595,7 +16102,7 @@
 									"name": "tearDown",
 									"item": [
 										{
-											"name": "Delete EnkelvoudigInformatieObject",
+											"name": "(DRC) Delete EnkelvoudigInformatieObject",
 											"event": [
 												{
 													"listen": "test",
@@ -16103,6 +16610,39 @@
 											"response": []
 										},
 										{
+											"name": "(COMMON) Lock created EnkelvoudigInformatieObject",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "0bf15990-9838-4e20-a001-d2634b68f1f1",
+														"exec": [
+															"pm.globals.set(\"created_informatieobject_lock_id\", pm.response.json().lock);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_informatieobject_url}}/lock",
+													"host": [
+														"{{created_informatieobject_url}}"
+													],
+													"path": [
+														"lock"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "(COMMON) Unlock EnkelvoudigInformatieObject",
 											"request": {
 												"method": "POST",
@@ -16211,6 +16751,15 @@
 															"    }",
 															"    if(catalogus.informatieobjecttypen) {",
 															"        pm.globals.set(\"informatieobjecttype_url\", catalogus.informatieobjecttypen[0]);",
+															"    }",
+															"    if(catalogus.informatieobjecttypen) {",
+															"        var zaaktypen = catalogus.zaaktypen",
+															"        for(i=0; i<zaaktypen.length; i++) {",
+															"            if(zaaktypen[i].omschrijving == \"brc_tests_1\") {",
+															"                pm.globals.set(\"zaaktype_url\", zaaktypen[i]);",
+															"                break;",
+															"            }",
+															"        }",
 															"    }",
 															"}"
 														],
@@ -16456,7 +17005,42 @@
 											"response": []
 										},
 										{
-											"name": "(BRC) Create Zaaktype",
+											"name": "(BRC) Retrieve Zaaktype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3fb68965-5143-4f35-a058-85ad13592d77",
+														"exec": [
+															"if(pm.globals.get(\"zaaktype_url\")) {",
+															"    postman.setNextRequest(\"(BRC) Create EnkelvoudigInformatieObject\");",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype",
 											"event": [
 												{
 													"listen": "test",
@@ -16487,7 +17071,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"Melding Openbare Ruimte\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true\n}"
+													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"brc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/zaaktypen",
@@ -16502,7 +17086,7 @@
 											"response": []
 										},
 										{
-											"name": "Create EnkelvoudigInformatieObject",
+											"name": "(BRC) Create EnkelvoudigInformatieObject",
 											"event": [
 												{
 													"listen": "test",
