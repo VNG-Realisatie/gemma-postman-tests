@@ -31,7 +31,7 @@
 															"if(pm.response.json().count) {",
 															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", catalogus.url);",
-															"    postman.setNextRequest(\"(AC) Retrieve Besluittype\");",
+															"    postman.setNextRequest(\"(AC) Get Selectielijstklassen and Procestypen\");",
 															"    ",
 															"    if(catalogus.besluittypen) {",
 															"        for(i=0; i<catalogus.besluittypen.length; i++) {",
@@ -39,7 +39,7 @@
 															"                \"url\": catalogus.besluittypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -51,7 +51,7 @@
 															"                \"url\": catalogus.informatieobjecttypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -63,7 +63,7 @@
 															"                \"url\": catalogus.zaaktypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -141,29 +141,34 @@
 											"response": []
 										},
 										{
-											"name": "(AC) Retrieve Besluittype",
+											"name": "(AC) Get Selectielijstklassen and Procestypen",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "e6119392-3d60-48a2-8876-206df5ee6e57",
+														"id": "61f743b9-d5bc-4f84-9de8-5d8c2fa57dbe",
 														"exec": [
-															"// TODO",
-															"// if(pm.response.json().count) {",
-															"//     var results = pm.response.json().results;",
-															"//     for(var i=0; i<results.length; i++) {",
-															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
-															"//             pm.globals.set(\"besluittype_url\", results[i].url);",
-															"//             postman.setNextRequest(\"(AC) Retrieve Informatieobjecttype\");",
-															"//             break;",
-															"//         }",
-															"//     }",
-															"// }",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_nihil_url\");",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\");",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\");",
 															"",
-															"if(pm.globals.get(\"besluittype_url\")) {",
-															"    postman.setNextRequest(\"(AC) Retrieve Informatieobjecttype\");",
-															"}",
-															""
+															"if(pm.response.code == 200) {",
+															"    var results = pm.response.json().results;",
+															"    for(i=0; i<results.length; i++) {",
+															"        if(results[i].procestermijn == \"nihil\" && !pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_nihil_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_nihil_url\", results[i].procesType);",
+															"        } if(results[i].procestermijn == \"ingeschatte_bestaansduur_procesobject\" && !pm.globals.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].procesType);",
+															"        } if(results[i].procestermijn == \"vast_te_leggen_datum\" && !pm.globals.get(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\", results[i].url);",
+															"            pm.globals.set(\"selectielijstklasse_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_vast_te_leggen_datum_url\", results[i].procesType);",
+															"            pm.globals.set(\"procestype_url\", results[i].procesType);",
+															"        }",
+															"    }",
+															"}"
 														],
 														"type": "text/javascript"
 													}
@@ -177,19 +182,19 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "{{ztc_url}}/besluittypen",
+													"raw": "{{referentielijst_url}}/resultaten",
 													"host": [
-														"{{ztc_url}}"
+														"{{referentielijst_url}}"
 													],
 													"path": [
-														"besluittypen"
+														"resultaten"
 													]
 												}
 											},
 											"response": []
 										},
 										{
-											"name": "Create Besluittype",
+											"name": "(AC) Create Besluittype",
 											"event": [
 												{
 													"listen": "test",
@@ -223,53 +228,6 @@
 													],
 													"path": [
 														"besluittypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(AC) Retrieve Informatieobjecttype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "362ebaee-63d2-417a-9d22-6ca23954a6e4",
-														"exec": [
-															"// TODO",
-															"// if(pm.response.json().count) {",
-															"//     var results = pm.response.json().results;",
-															"//     for(var i=0; i<results.length; i++) {",
-															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
-															"//             pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
-															"//             postman.setNextRequest(\"Create Zaaktype\");",
-															"//             break;",
-															"//         }",
-															"//     }",
-															"// }",
-															"",
-															"if(pm.globals.get(\"informatieobjecttype_url\")) {",
-															"    postman.setNextRequest(\"(AC) Retrieve Zaaktype\");",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/informatieobjecttypen",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"informatieobjecttypen"
 													]
 												}
 											},
@@ -310,50 +268,6 @@
 													],
 													"path": [
 														"informatieobjecttypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(AC) Retrieve Zaaktype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "3fb68965-5143-4f35-a058-85ad13592d77",
-														"exec": [
-															"var response = pm.response.json();",
-															"",
-															"if(response.count) {",
-															"    var zaaktypen = response.results",
-															"    for(i=0; i<zaaktypen.length; i++) {",
-															"        if(zaaktypen[i].omschrijving == \"ac_tests_1\") {",
-															"            pm.globals.set(\"zaaktype_url\", zaaktypen[i].url);",
-															"            postman.setNextRequest(\"(ac-001a) Applicatie aanmaken met meerdere clientIds is mogelijk\");",
-															"            break;",
-															"        }",
-															"    }",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/zaaktypen",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"zaaktypen"
 													]
 												}
 											},
@@ -858,7 +772,7 @@
 															"if(pm.response.json().count) {",
 															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
-															"    postman.setNextRequest(\"(ZRC) Retrieve Besluittype\");",
+															"    postman.setNextRequest(\"(ZRC) Get Selectielijstklassen and Procestypen\");",
 															"    ",
 															"    if(catalogus.besluittypen) {",
 															"        for(i=0; i<catalogus.besluittypen.length; i++) {",
@@ -866,7 +780,7 @@
 															"                \"url\": catalogus.besluittypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -878,7 +792,7 @@
 															"                \"url\": catalogus.informatieobjecttypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -890,7 +804,7 @@
 															"                \"url\": catalogus.zaaktypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -968,26 +882,33 @@
 											"response": []
 										},
 										{
-											"name": "(ZRC) Retrieve Besluittype",
+											"name": "(ZRC) Get Selectielijstklassen and Procestypen",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "e6119392-3d60-48a2-8876-206df5ee6e57",
+														"id": "61f743b9-d5bc-4f84-9de8-5d8c2fa57dbe",
 														"exec": [
-															"// if(pm.response.json().count) {",
-															"//     var results = pm.response.json().results;",
-															"//     for(var i=0; i<results.length; i++) {",
-															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
-															"//             pm.globals.set(\"besluittype_url\", results[i].url);",
-															"//             postman.setNextRequest(\"(ZRC) Retrieve Informatieobjecttype\");",
-															"//             break;",
-															"//         }",
-															"//     }",
-															"// }",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_nihil_url\");",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\");",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\");",
 															"",
-															"if(pm.globals.get(\"besluittype_url\")) {",
-															"    postman.setNextRequest(\"(ZRC) Retrieve Informatieobjecttype\");",
+															"if(pm.response.code == 200) {",
+															"    var results = pm.response.json().results;",
+															"    for(i=0; i<results.length; i++) {",
+															"        if(results[i].procestermijn == \"nihil\" && !pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_nihil_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_nihil_url\", results[i].procesType);",
+															"        } if(results[i].procestermijn == \"ingeschatte_bestaansduur_procesobject\" && !pm.globals.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].procesType);",
+															"        } if(results[i].procestermijn == \"vast_te_leggen_datum\" && !pm.globals.get(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\", results[i].url);",
+															"            pm.globals.set(\"selectielijstklasse_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_vast_te_leggen_datum_url\", results[i].procesType);",
+															"            pm.globals.set(\"procestype_url\", results[i].procesType);",
+															"        }",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -1002,12 +923,45 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "{{ztc_url}}/besluittypen",
+													"raw": "{{referentielijst_url}}/resultaten",
 													"host": [
-														"{{ztc_url}}"
+														"{{referentielijst_url}}"
 													],
 													"path": [
-														"besluittypen"
+														"resultaten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Get Resultaattypeomschrijving",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "2bbc2f34-a4ee-4033-b024-df027a36f682",
+														"exec": [
+															"pm.globals.set(\"resultaattypeomschrijving_url\", pm.response.json()[0].url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{referentielijst_url}}/resultaattypeomschrijvingen",
+													"host": [
+														"{{referentielijst_url}}"
+													],
+													"path": [
+														"resultaattypeomschrijvingen"
 													]
 												}
 											},
@@ -1054,52 +1008,6 @@
 											"response": []
 										},
 										{
-											"name": "(ZRC) Retrieve Informatieobjecttype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "362ebaee-63d2-417a-9d22-6ca23954a6e4",
-														"exec": [
-															"// if(pm.response.json().count) {",
-															"//     var results = pm.response.json().results;",
-															"//     for(var i=0; i<results.length; i++) {",
-															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
-															"//             pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
-															"//             postman.setNextRequest(\"Create Zaaktype\");",
-															"//             break;",
-															"//         }",
-															"//     }",
-															"// }",
-															"",
-															"if(pm.globals.get(\"informatieobjecttype_url\")) {",
-															"    postman.setNextRequest(\"Retrieve procestype for procestermijn nihil\");",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/informatieobjecttypen",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"informatieobjecttypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "Create InformatieObjecttype",
 											"event": [
 												{
@@ -1134,146 +1042,6 @@
 													],
 													"path": [
 														"informatieobjecttypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Retrieve procestype for procestermijn nihil",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
-														"exec": [
-															"pm.globals.set(\"procestype_procestermijn_nihil_url\", pm.response.json().procesType);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{selectielijstklasse_procestermijn_nihil_url}}",
-													"host": [
-														"{{selectielijstklasse_procestermijn_nihil_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Retrieve procestype for procestermijn ingeschatte_bestaansduur_object",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
-														"exec": [
-															"pm.globals.set(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\", pm.response.json().procesType);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}",
-													"host": [
-														"{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Retrieve procestype for procestermijn vast_te_leggen_datum",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
-														"exec": [
-															"pm.globals.set(\"procestype_procestermijn_vast_te_leggen_datum_url\", pm.response.json().procesType);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}",
-													"host": [
-														"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(ZRC) Retrieve Zaaktype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "3fb68965-5143-4f35-a058-85ad13592d77",
-														"exec": [
-															"var response = pm.response.json();",
-															"",
-															"if(response.count) {",
-															"    var zaaktypen = response.results",
-															"    for(i=0; i<zaaktypen.length; i++) {",
-															"        if(zaaktypen[i].omschrijving == \"zrc_tests_1\") {",
-															"            pm.globals.set(\"zaaktype_url\", zaaktypen[i].url);",
-															"            postman.setNextRequest(\"(ZRC) Create Zaaktype-InformatieObjectType relation\");",
-															"            break;",
-															"        }",
-															"    }",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/zaaktypen?status=alles",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"zaaktypen"
-													],
-													"query": [
-														{
-															"key": "status",
-															"value": "alles"
-														}
 													]
 												}
 											},
@@ -1354,54 +1122,6 @@
 											"response": []
 										},
 										{
-											"name": "Retrieve Eigenschap",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "ad88cef4-7bbc-4330-8a7e-7366e6a91aa8",
-														"exec": [
-															"if(pm.response.code == 200) {",
-															"    if(pm.response.json().results.length) {",
-															"        pm.globals.set(\"zaaktype_eigenschap\", pm.response.json().results[0].url);",
-															"        postman.setNextRequest(\"Retrieve Resultaattype\");",
-															"    }",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/eigenschappen?status=alles&naam=test eigenschap",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"eigenschappen"
-													],
-													"query": [
-														{
-															"key": "status",
-															"value": "alles"
-														},
-														{
-															"key": "naam",
-															"value": "test eigenschap"
-														}
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "Create Eigenschap",
 											"event": [
 												{
@@ -1436,54 +1156,6 @@
 													],
 													"path": [
 														"eigenschappen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Retrieve Resultaattype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "ad88cef4-7bbc-4330-8a7e-7366e6a91aa8",
-														"exec": [
-															"if(pm.response.code == 200) {",
-															"    if(pm.response.json().results.length) {",
-															"        pm.globals.set(\"resultaattype_url\", pm.response.json().results[0].url);",
-															"        postman.setNextRequest(\"Retrieve begin Statustype\");",
-															"    }",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/resultaattypen?status=alles&zaaktype={{zaaktype_url}}",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"resultaattypen"
-													],
-													"query": [
-														{
-															"key": "status",
-															"value": "alles"
-														},
-														{
-															"key": "zaaktype",
-															"value": "{{zaaktype_url}}"
-														}
 													]
 												}
 											},
@@ -1530,58 +1202,6 @@
 											"response": []
 										},
 										{
-											"name": "Retrieve begin Statustype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "ad88cef4-7bbc-4330-8a7e-7366e6a91aa8",
-														"exec": [
-															"if(pm.response.code == 200) {",
-															"    var results = pm.response.json().results;",
-															"    for(i=0; i<results.length; i++) {",
-															"        if(results[i].volgnummer == 1) {",
-															"            pm.globals.set(\"non_eindstatustype\", results[i].url);",
-															"            postman.setNextRequest(\"Retrieve eind Statustype\");",
-															"            break;",
-															"        }",
-															"    }",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/statustypen?status=alles&zaaktype={{zaaktype_url}}",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"statustypen"
-													],
-													"query": [
-														{
-															"key": "status",
-															"value": "alles"
-														},
-														{
-															"key": "zaaktype",
-															"value": "{{zaaktype_url}}"
-														}
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "Create begin Statustype",
 											"event": [
 												{
@@ -1622,58 +1242,6 @@
 											"response": []
 										},
 										{
-											"name": "Retrieve eind Statustype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "ad88cef4-7bbc-4330-8a7e-7366e6a91aa8",
-														"exec": [
-															"if(pm.response.code == 200) {",
-															"    var results = pm.response.json().results;",
-															"    for(i=0; i<results.length; i++) {",
-															"        if(results[i].volgnummer == 2) {",
-															"            pm.globals.set(\"eindstatustype\", results[i].url);",
-															"            postman.setNextRequest(\"Retrieve Roltype\");",
-															"            break;",
-															"        }",
-															"    }",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/statustypen?status=alles&zaaktype={{zaaktype_url}}",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"statustypen"
-													],
-													"query": [
-														{
-															"key": "status",
-															"value": "alles"
-														},
-														{
-															"key": "zaaktype",
-															"value": "{{zaaktype_url}}"
-														}
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "Create eind Statustype",
 											"event": [
 												{
@@ -1708,54 +1276,6 @@
 													],
 													"path": [
 														"statustypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Retrieve Roltype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "ad88cef4-7bbc-4330-8a7e-7366e6a91aa8",
-														"exec": [
-															"if(pm.response.code == 200) {",
-															"    if(pm.response.json().results.length) {",
-															"        pm.globals.set(\"roltype_url\", pm.response.json().results[0].url);",
-															"        postman.setNextRequest(\"(ZRC) Create EnkelvoudigInformatieObject\");",
-															"    }",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/roltypen?status=alles&zaaktype={{zaaktype_url}}",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"roltypen"
-													],
-													"query": [
-														{
-															"key": "status",
-															"value": "alles"
-														},
-														{
-															"key": "zaaktype",
-															"value": "{{zaaktype_url}}"
-														}
 													]
 												}
 											},
@@ -4683,7 +4203,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-007 (WIP) (NI)",
+									"name": "zrc-007",
 									"item": [
 										{
 											"name": "Create Zaak to close",
@@ -13617,7 +13137,7 @@
 															"if(pm.response.json().count) {",
 															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
-															"    postman.setNextRequest(\"(DRC) Retrieve Besluittype\");",
+															"    postman.setNextRequest(\"(DRC) Get Selectielijstklassen and Procestypen\");",
 															"    ",
 															"    if(catalogus.besluittypen) {",
 															"        for(i=0; i<catalogus.besluittypen.length; i++) {",
@@ -13625,7 +13145,7 @@
 															"                \"url\": catalogus.besluittypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -13637,7 +13157,7 @@
 															"                \"url\": catalogus.informatieobjecttypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -13649,7 +13169,7 @@
 															"                \"url\": catalogus.zaaktypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -13727,26 +13247,33 @@
 											"response": []
 										},
 										{
-											"name": "(DRC) Retrieve Besluittype",
+											"name": "(DRC) Get Selectielijstklassen and Procestypen",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "e6119392-3d60-48a2-8876-206df5ee6e57",
+														"id": "61f743b9-d5bc-4f84-9de8-5d8c2fa57dbe",
 														"exec": [
-															"// if(pm.response.json().count) {",
-															"//     var results = pm.response.json().results;",
-															"//     for(var i=0; i<results.length; i++) {",
-															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
-															"//             pm.globals.set(\"besluittype_url\", results[i].url);",
-															"//             postman.setNextRequest(\"(DRC) Retrieve Informatieobjecttype\");",
-															"//             break;",
-															"//         }",
-															"//     }",
-															"// }",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_nihil_url\");",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\");",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\");",
 															"",
-															"if(pm.globals.get(\"besluittype_url\")) {",
-															"    postman.setNextRequest(\"(DRC) Retrieve Informatieobjecttype\");",
+															"if(pm.response.code == 200) {",
+															"    var results = pm.response.json().results;",
+															"    for(i=0; i<results.length; i++) {",
+															"        if(results[i].procestermijn == \"nihil\" && !pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_nihil_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_nihil_url\", results[i].procesType);",
+															"        } if(results[i].procestermijn == \"ingeschatte_bestaansduur_procesobject\" && !pm.globals.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].procesType);",
+															"        } if(results[i].procestermijn == \"vast_te_leggen_datum\" && !pm.globals.get(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\", results[i].url);",
+															"            pm.globals.set(\"selectielijstklasse_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_vast_te_leggen_datum_url\", results[i].procesType);",
+															"            pm.globals.set(\"procestype_url\", results[i].procesType);",
+															"        }",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -13761,12 +13288,12 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "{{ztc_url}}/besluittypen",
+													"raw": "{{referentielijst_url}}/resultaten",
 													"host": [
-														"{{ztc_url}}"
+														"{{referentielijst_url}}"
 													],
 													"path": [
-														"besluittypen"
+														"resultaten"
 													]
 												}
 											},
@@ -13813,52 +13340,6 @@
 											"response": []
 										},
 										{
-											"name": "(DRC) Retrieve Informatieobjecttype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "362ebaee-63d2-417a-9d22-6ca23954a6e4",
-														"exec": [
-															"// if(pm.response.json().count) {",
-															"//     var results = pm.response.json().results;",
-															"//     for(var i=0; i<results.length; i++) {",
-															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
-															"//             pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
-															"//             postman.setNextRequest(\"Create Zaaktype\");",
-															"//             break;",
-															"//         }",
-															"//     }",
-															"// }",
-															"",
-															"if(pm.globals.get(\"informatieobjecttype_url\")) {",
-															"    postman.setNextRequest(\"(DRC) Create Zaaktype\");",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/informatieobjecttypen",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"informatieobjecttypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "Create InformatieObjecttype",
 											"event": [
 												{
@@ -13893,50 +13374,6 @@
 													],
 													"path": [
 														"informatieobjecttypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(DRC) Retrieve Zaaktype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "3fb68965-5143-4f35-a058-85ad13592d77",
-														"exec": [
-															"var response = pm.response.json();",
-															"",
-															"if(response.count) {",
-															"    var zaaktypen = response.results",
-															"    for(i=0; i<zaaktypen.length; i++) {",
-															"        if(zaaktypen[i].omschrijving == \"drc_tests_1\") {",
-															"            pm.globals.set(\"zaaktype_url\", zaaktypen[i].url);",
-															"            postman.setNextRequest(\"Create Zaaktype-InformatieObjectType relation\");",
-															"            break;",
-															"        }",
-															"    }",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/zaaktypen",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"zaaktypen"
 													]
 												}
 											},
@@ -17779,7 +17216,7 @@
 															"if(pm.response.json().count) {",
 															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
-															"    postman.setNextRequest(\"(BRC) Retrieve Besluittype\");",
+															"    postman.setNextRequest(\"(BRC) Get Selectielijstklassen and Procestypen\");",
 															"    ",
 															"    if(catalogus.besluittypen) {",
 															"        for(i=0; i<catalogus.besluittypen.length; i++) {",
@@ -17787,7 +17224,7 @@
 															"                \"url\": catalogus.besluittypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -17799,7 +17236,7 @@
 															"                \"url\": catalogus.informatieobjecttypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -17811,7 +17248,7 @@
 															"                \"url\": catalogus.zaaktypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -17889,26 +17326,33 @@
 											"response": []
 										},
 										{
-											"name": "(BRC) Retrieve Besluittype",
+											"name": "(BRC) Get Selectielijstklassen and Procestypen",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "e6119392-3d60-48a2-8876-206df5ee6e57",
+														"id": "61f743b9-d5bc-4f84-9de8-5d8c2fa57dbe",
 														"exec": [
-															"// if(pm.response.json().count) {",
-															"//     var results = pm.response.json().results;",
-															"//     for(var i=0; i<results.length; i++) {",
-															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
-															"//             pm.globals.set(\"besluittype_url\", results[i].url);",
-															"//             postman.setNextRequest(\"(BRC) Retrieve Informatieobjecttype\");",
-															"//             break;",
-															"//         }",
-															"//     }",
-															"// }",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_nihil_url\");",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\");",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\");",
 															"",
-															"if(pm.globals.get(\"besluittype_url\")) {",
-															"    postman.setNextRequest(\"(BRC) Retrieve Informatieobjecttype\");",
+															"if(pm.response.code == 200) {",
+															"    var results = pm.response.json().results;",
+															"    for(i=0; i<results.length; i++) {",
+															"        if(results[i].procestermijn == \"nihil\" && !pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_nihil_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_nihil_url\", results[i].procesType);",
+															"        } if(results[i].procestermijn == \"ingeschatte_bestaansduur_procesobject\" && !pm.globals.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].procesType);",
+															"        } if(results[i].procestermijn == \"vast_te_leggen_datum\" && !pm.globals.get(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\", results[i].url);",
+															"            pm.globals.set(\"selectielijstklasse_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_vast_te_leggen_datum_url\", results[i].procesType);",
+															"            pm.globals.set(\"procestype_url\", results[i].procesType);",
+															"        }",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -17923,12 +17367,12 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "{{ztc_url}}/besluittypen",
+													"raw": "{{referentielijst_url}}/resultaten",
 													"host": [
-														"{{ztc_url}}"
+														"{{referentielijst_url}}"
 													],
 													"path": [
-														"besluittypen"
+														"resultaten"
 													]
 												}
 											},
@@ -17975,52 +17419,6 @@
 											"response": []
 										},
 										{
-											"name": "(BRC) Retrieve Informatieobjecttype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "362ebaee-63d2-417a-9d22-6ca23954a6e4",
-														"exec": [
-															"// if(pm.response.json().count) {",
-															"//     var results = pm.response.json().results;",
-															"//     for(var i=0; i<results.length; i++) {",
-															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
-															"//             pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
-															"//             postman.setNextRequest(\"Create Zaaktype\");",
-															"//             break;",
-															"//         }",
-															"//     }",
-															"// }",
-															"",
-															"if(pm.globals.get(\"informatieobjecttype_url\")) {",
-															"    postman.setNextRequest(\"(BRC) Create Zaaktype\");",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/informatieobjecttypen",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"informatieobjecttypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "Create InformatieObjecttype",
 											"event": [
 												{
@@ -18055,50 +17453,6 @@
 													],
 													"path": [
 														"informatieobjecttypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(BRC) Retrieve Zaaktype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "3fb68965-5143-4f35-a058-85ad13592d77",
-														"exec": [
-															"var response = pm.response.json();",
-															"",
-															"if(response.count) {",
-															"    var zaaktypen = response.results",
-															"    for(i=0; i<zaaktypen.length; i++) {",
-															"        if(zaaktypen[i].omschrijving == \"brc_tests_1\") {",
-															"            pm.globals.set(\"zaaktype_url\", zaaktypen[i].url);",
-															"            postman.setNextRequest(\"(BRC) Create EnkelvoudigInformatieObject\");",
-															"            break;",
-															"        }",
-															"    }",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/zaaktypen",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"zaaktypen"
 													]
 												}
 											},
@@ -18282,7 +17636,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "brc-001 (NI)",
+									"name": "brc-001",
 									"item": [
 										{
 											"name": "(brc-001a) Besluit aanmaken is mogelijk",
@@ -20476,7 +19830,7 @@
 															"if(pm.response.json().count) {",
 															"    var catalogus = pm.response.json().results[0];",
 															"    pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
-															"    postman.setNextRequest(\"(ZTC) Retrieve Besluittype\");",
+															"    postman.setNextRequest(\"(ZTC) Get Selectielijstklassen and Procestypen\");",
 															"    ",
 															"    if(catalogus.besluittypen) {",
 															"        for(i=0; i<catalogus.besluittypen.length; i++) {",
@@ -20484,7 +19838,7 @@
 															"                \"url\": catalogus.besluittypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -20496,7 +19850,7 @@
 															"                \"url\": catalogus.informatieobjecttypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -20508,7 +19862,7 @@
 															"                \"url\": catalogus.zaaktypen[i],",
 															"                \"method\": \"DELETE\",",
 															"                \"header\": {",
-															"                    \"Authorization\": \"Bearer \" + pm.environment.get(\"jwt_token\")",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
 															"                }",
 															"            });",
 															"        }",
@@ -20586,26 +19940,33 @@
 											"response": []
 										},
 										{
-											"name": "(ZTC) Retrieve Besluittype",
+											"name": "(ZTC) Get Selectielijstklassen and Procestypen",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "e6119392-3d60-48a2-8876-206df5ee6e57",
+														"id": "61f743b9-d5bc-4f84-9de8-5d8c2fa57dbe",
 														"exec": [
-															"// if(pm.response.json().count) {",
-															"//     var results = pm.response.json().results;",
-															"//     for(var i=0; i<results.length; i++) {",
-															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"test\") {",
-															"//             pm.globals.set(\"besluittype_url\", results[i].url);",
-															"//             postman.setNextRequest(\"(ZTC) Retrieve Informatieobjecttype\");",
-															"//             break;",
-															"//         }",
-															"//     }",
-															"// }",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_nihil_url\");",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\");",
+															"pm.globals.unset(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\");",
 															"",
-															"if(pm.globals.get(\"besluittype_url\")) {",
-															"    postman.setNextRequest(\"(ZTC) Retrieve Informatieobjecttype\");",
+															"if(pm.response.code == 200) {",
+															"    var results = pm.response.json().results;",
+															"    for(i=0; i<results.length; i++) {",
+															"        if(results[i].procestermijn == \"nihil\" && !pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_nihil_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_nihil_url\", results[i].procesType);",
+															"        } if(results[i].procestermijn == \"ingeschatte_bestaansduur_procesobject\" && !pm.globals.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].procesType);",
+															"        } if(results[i].procestermijn == \"vast_te_leggen_datum\" && !pm.globals.get(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\")) {",
+															"            pm.globals.set(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\", results[i].url);",
+															"            pm.globals.set(\"selectielijstklasse_url\", results[i].url);",
+															"            pm.globals.set(\"procestype_procestermijn_vast_te_leggen_datum_url\", results[i].procesType);",
+															"            pm.globals.set(\"procestype_url\", results[i].procesType);",
+															"        }",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -20620,12 +19981,45 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "{{ztc_url}}/besluittypen",
+													"raw": "{{referentielijst_url}}/resultaten",
 													"host": [
-														"{{ztc_url}}"
+														"{{referentielijst_url}}"
 													],
 													"path": [
-														"besluittypen"
+														"resultaten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Get Resultaattypeomschrijving",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "2bbc2f34-a4ee-4033-b024-df027a36f682",
+														"exec": [
+															"pm.globals.set(\"resultaattypeomschrijving_url\", pm.response.json()[0].url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{referentielijst_url}}/resultaattypeomschrijvingen",
+													"host": [
+														"{{referentielijst_url}}"
+													],
+													"path": [
+														"resultaattypeomschrijvingen"
 													]
 												}
 											},
@@ -20672,52 +20066,6 @@
 											"response": []
 										},
 										{
-											"name": "(ZTC) Retrieve Informatieobjecttype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "362ebaee-63d2-417a-9d22-6ca23954a6e4",
-														"exec": [
-															"// if(pm.response.json().count) {",
-															"//     var results = pm.response.json().results;",
-															"//     for(var i=0; i<results.length; i++) {",
-															"//         if(results[i].catalogus == pm.globals.get(\"catalogus_url\") && results[i].omschrijving == \"informatieobject\") {",
-															"//             pm.globals.set(\"informatieobjecttype_url\", results[i].url);",
-															"//             postman.setNextRequest(\"Create Zaaktype\");",
-															"//             break;",
-															"//         }",
-															"//     }",
-															"// }",
-															"",
-															"if(pm.globals.get(\"informatieobjecttype_url\")) {",
-															"    postman.setNextRequest(\"(ZTC) Retrieve procestype for procestermijn nihil\");",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{ztc_url}}/informatieobjecttypen",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"informatieobjecttypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "Create InformatieObjecttype",
 											"event": [
 												{
@@ -20752,96 +20100,6 @@
 													],
 													"path": [
 														"informatieobjecttypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(ZTC) Retrieve procestype for procestermijn nihil",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
-														"exec": [
-															"pm.globals.set(\"procestype_procestermijn_nihil_url\", pm.response.json().procesType);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{selectielijstklasse_procestermijn_nihil_url}}",
-													"host": [
-														"{{selectielijstklasse_procestermijn_nihil_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Retrieve procestype for procestermijn ingeschatte_bestaansduur_object",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
-														"exec": [
-															"pm.globals.set(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\", pm.response.json().procesType);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}",
-													"host": [
-														"{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Retrieve procestype for procestermijn vast_te_leggen_datum",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "8e412620-2f58-4ca5-add1-ad461bade58d",
-														"exec": [
-															"pm.globals.set(\"procestype_procestermijn_vast_te_leggen_datum_url\", pm.response.json().procesType);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}",
-													"host": [
-														"{{selectielijstklasse_procestermijn_vast_te_leggen_datum_url}}"
 													]
 												}
 											},
@@ -21335,7 +20593,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"resultaattype_body\"));",
-															"body.selectielijstklasse = pm.environment.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\");",
+															"body.selectielijstklasse = pm.globals.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\");",
 															"body.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
 															"body.brondatumArchiefprocedure.procestermijn = \"P5M\";",
 															"",
@@ -21604,7 +20862,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"resultaattype_body\"));",
-															"body.selectielijstklasse = pm.environment.get(\"selectielijstklasse_procestermijn_nihil_url\");",
+															"body.selectielijstklasse = pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\");",
 															"body.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -22923,7 +22181,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"resultaattype_body\"));",
-															"body.selectielijstklasse = pm.environment.get(\"selectielijstklasse_procestermijn_nihil_url\");",
+															"body.selectielijstklasse = pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\");",
 															"body.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -23688,7 +22946,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"resultaattype_body\"));",
-															"body.selectielijstklasse = pm.environment.get(\"selectielijstklasse_procestermijn_nihil_url\");",
+															"body.selectielijstklasse = pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\");",
 															"body.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -23752,7 +23010,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"resultaattype_body\"));",
-															"body.selectielijstklasse = pm.environment.get(\"selectielijstklasse_procestermijn_nihil_url\");",
+															"body.selectielijstklasse = pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\");",
 															"body.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -23822,7 +23080,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"resultaattype_body\"));",
-															"body.selectielijstklasse = pm.environment.get(\"selectielijstklasse_procestermijn_nihil_url\");",
+															"body.selectielijstklasse = pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\");",
 															"body.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -23886,7 +23144,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"resultaattype_body\"));",
-															"body.selectielijstklasse = pm.environment.get(\"selectielijstklasse_procestermijn_nihil_url\");",
+															"body.selectielijstklasse = pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\");",
 															"body.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
