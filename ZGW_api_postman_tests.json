@@ -11647,7 +11647,7 @@
 															"        postman.setNextRequest(\"(ZRC) Delete Zaak\");",
 															"    } else {",
 															"        // TODO remove skip",
-															"        postman.setNextRequest(\"Retrieve Informatieobjecttype, Zaaktype and Besluittype\");",
+															"        postman.setNextRequest(\"(ZRC) Delete EnkelvoudigInformatieObject\");",
 															"    }",
 															"}"
 														],
