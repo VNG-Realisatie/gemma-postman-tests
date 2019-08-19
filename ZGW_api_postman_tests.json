@@ -18,6 +18,55 @@
 									"name": "setUp",
 									"item": [
 										{
+											"name": "Delete existing Applicaties for client_id_limited",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3779c0d9-c2fc-4515-90f7-4f9de08920dd",
+														"exec": [
+															"var results = pm.response.json().results;",
+															"",
+															"for(i=0; i<results.length; i++) {",
+															"    pm.sendRequest({",
+															"        \"url\": results[i].url,",
+															"        \"method\": \"DELETE\",",
+															"        \"header\": {",
+															"            \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
+															"        }",
+															"    });",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties?clientIds={{client_id_limited}}",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													],
+													"query": [
+														{
+															"key": "clientIds",
+															"value": "{{client_id_limited}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "(AC) Retrieve existing Catalogus",
 											"event": [
 												{
