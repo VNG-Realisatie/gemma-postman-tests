@@ -28,13 +28,15 @@
 															"var results = pm.response.json().results;",
 															"",
 															"for(i=0; i<results.length; i++) {",
-															"    pm.sendRequest({",
-															"        \"url\": results[i].url,",
-															"        \"method\": \"DELETE\",",
-															"        \"header\": {",
-															"            \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
-															"        }",
-															"    });",
+															"    if(results[i].clientIds.includes(pm.environment.get(\"client_id_limited\"))) {",
+															"        pm.sendRequest({",
+															"            \"url\": results[i].url,",
+															"            \"method\": \"DELETE\",",
+															"            \"header\": {",
+															"                \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
+															"            }",
+															"        });   ",
+															"    }",
 															"}"
 														],
 														"type": "text/javascript"
@@ -799,6 +801,29 @@
 									"_postman_isSubFolder": true
 								}
 							],
+							"description": "Bevat alle business logic tests voor het Autorisatiecomponent (AC)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "d9ca3f5f-0e31-4ed5-bda0-e34c4dd44c51",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "cfa9a81e-db3d-459b-88b8-65a546ff1dd1",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
 							"_postman_isSubFolder": true
 						},
 						{
@@ -1499,7 +1524,6 @@
 											"response": []
 										}
 									],
-									"description": "Bevat requests die resources ophalen of aanmaken die gebruikt worden in de tests.\n\nOmdat het nog niet mogelijk is POST requests te doen op het ZTC, worder er enkele aannames gemaakt voor het slagen van deze requests:\n\n- In het ZTC bestaat 1 Catalogus met: \n\t- 1 Zaaktype waaraan minimaal 2 Statustypen gekoppeld zijn.\n\t\t- 1 Resultaattype dat relevant is voor dit Zaaktype.\n\t- 1 Informatieobjecttype\n- In het DRC bestaat minstens 2 EnkelvoudigInformatieObjecten, waarvan een met Indicatie gebruiksrecht `onbekend` en een met Indicatie gebruiksrecht `Ja` of `Nee`.\n\nOm bij het archiveringsproces (**zrc-016**) het afleiden van Zaak.archiefdatum voor alle mogelijke afleidingswijzen te testen, dienen er 9 Resultaattypes te zijn (ieder met een andere afleidingswijze en archiefactietermijn gevuld), die relevant zijn voor het eerder genoemde Zaaktype.",
 									"event": [
 										{
 											"listen": "prerequest",
@@ -13141,7 +13165,7 @@
 									"_postman_isSubFolder": true
 								}
 							],
-							"description": "Bevat alle business logic tests voor het Zaakregistratiecomponent",
+							"description": "Bevat alle business logic tests voor het Zaakregistratiecomponent (ZRC)",
 							"event": [
 								{
 									"listen": "prerequest",
@@ -17221,6 +17245,7 @@
 									"_postman_isSubFolder": true
 								}
 							],
+							"description": "Bevat alle business logic tests voor het Documentregistratiecomponent (DRC)",
 							"event": [
 								{
 									"listen": "prerequest",
@@ -19855,6 +19880,29 @@
 										}
 									],
 									"_postman_isSubFolder": true
+								}
+							],
+							"description": "Bevat alle business logic tests voor het Besluitregistratiecomponent (BRC)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7b14745f-dbfe-45f3-9d3a-5e67aeceaf27",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "b7486259-a7bc-4226-82ae-f92dddfcbfa3",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							],
 							"_postman_isSubFolder": true
@@ -25874,10 +25922,33 @@
 									"_postman_isSubFolder": true
 								}
 							],
+							"description": "Bevat alle business logic tests voor de Zaaktypecatalogus (ZTC)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "2f690b30-d1de-4452-96b9-b83b70955382",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "dd08d1cc-e5c5-4aca-b272-9f0d7d0a3f40",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
 							"_postman_isSubFolder": true
 						}
 					],
-					"description": "Deze folder bevat de Postman test suite voor de ZGW API's, elke folder bevat tests voor de business logic zoals die gespecificeerd is in https://github.com/VNG-Realisatie/gemma-zaken/blob/master/docs/_content/standaard/standaard.md.\n\nDe variabelen voor de urls naar de individuele componenten zijn standaard gezet op http://ref.tst.vng.cloud/, maar kunnen lokaal veranderd worden naar bijv. localhost voor test doeleinden.\n\nDe namen van de folders (bijv. **zrc/zrc-001**) verwijzen naar de specificaties in de link hierboven, zo zijn de tests te koppelen aan de specificaties.\n\nAlle requests met een prefix zoals **(zrc-xxx)** (of een ander ZGW api) bevatten tests, alle andere requests zijn ter ondersteuning van die requests en bevatten dus geen tests.\n\nOm te zorgen dat de tests correct werken, moeten alle tests van een specifiek component (bijv. zrc) door de Postman Collection Runner uitgevoerd worden, tests individueel uitvoeren is dus niet mogelijk.\n\nOpmerkingen:\n- (WIP) houdt in dat de test nog niet correct geimplementeerd is.\n- (NI) houdt in dat de test faalt omdat de business logic nog niet geimplementeerd is in de desbetreffende API's.",
+					"description": "Deze folder bevat de Postman test suite voor de ZGW API's, elke folder bevat tests voor de business logic zoals die gespecificeerd is in https://github.com/VNG-Realisatie/gemma-zaken/tree/master/docs/_content/standaard.\n\nDe variabelen voor de urls naar de individuele componenten zijn standaard gezet op http://ref.tst.vng.cloud/, maar kunnen lokaal veranderd worden naar bijv. localhost voor test doeleinden.\n\nDe namen van de folders (bijv. **zrc/zrc-001**) verwijzen naar de specificaties in de link hierboven, zo zijn de tests te koppelen aan de specificaties.\n\nAlle requests met een prefix zoals **(zrc-xxx)** (of een andere ZGW api) bevatten tests, alle andere requests zijn ter ondersteuning van die requests en bevatten dus geen tests.\n\nOpmerkingen:\n- (WIP) houdt in dat de test nog niet correct geimplementeerd is.\n- (NI) houdt in dat de test faalt omdat de business logic nog niet geimplementeerd is in de desbetreffende API's.",
 					"event": [
 						{
 							"listen": "prerequest",
