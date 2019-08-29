@@ -17732,7 +17732,7 @@
 															"    pm.globals.set(\"besluit_body\", pm.request.body.raw);",
 															"} else {",
 															"    // TODO remove skip",
-															"    postman.setNextRequest(\"(brc-001d) Besluit aanmaken met ongeldige besluittype-url is onmogelijk\");",
+															"    postman.setNextRequest(\"(brc-001d) Besluit aanmaken met ongeldige besluittype url is onmogelijk\");",
 															"}"
 														],
 														"type": "text/javascript"
