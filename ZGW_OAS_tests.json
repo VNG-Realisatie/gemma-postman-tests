@@ -2058,12 +2058,12 @@
 									"script": {
 										"id": "224c3ce9-bf77-45ca-8006-567e079cd8ff",
 										"exec": [
-											"// Retrieve the Zaak body template and modify as needed",
+											"// Retrieve the Resultaat body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"resultaat_body\"));",
 											"pm.globals.set(\"toelichting\", \"aangepaste toelichting\");",
 											"body.toelichting = pm.globals.get(\"toelichting\");",
 											"",
-											"// Store the modified Zaak body, allowing it to be used in the main request",
+											"// Store the modified Resultaat body, allowing it to be used in the main request",
 											"pm.globals.set(\"request_body\", JSON.stringify(body));"
 										],
 										"type": "text/javascript"
@@ -2810,12 +2810,12 @@
 									"script": {
 										"id": "33d46fef-e0ce-4fae-b7a5-d2b75f26c7a2",
 										"exec": [
-											"// Retrieve the Zaak body template and modify as needed",
+											"// Retrieve the Zaakinformatieobject body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"zio_body\"));",
 											"pm.globals.set(\"titel\", \"aangepaste titel\");",
 											"body.toelichting = pm.globals.get(\"titel\");",
 											"",
-											"// Store the modified Zaak body, allowing it to be used in the main request",
+											"// Store the modified Zaakinformatieobject body, allowing it to be used in the main request",
 											"pm.globals.set(\"request_body\", JSON.stringify(body));"
 										],
 										"type": "text/javascript"
@@ -3483,13 +3483,13 @@
 									"script": {
 										"id": "b8fb5548-d258-4a10-a33b-65968490b54d",
 										"exec": [
-											"// Retrieve the Zaak body template and modify as needed",
+											"// Retrieve the Informatieobject body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
 											"pm.globals.set(\"beschrijving\", \"aangepaste beschrijving\");",
 											"body.beschrijving = pm.globals.get(\"beschrijving\");",
 											"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
 											"",
-											"// Store the modified Zaak body, allowing it to be used in the main request",
+											"// Store the modified Informatieobject body, allowing it to be used in the main request",
 											"pm.globals.set(\"request_body\", JSON.stringify(body));"
 										],
 										"type": "text/javascript"
@@ -3974,12 +3974,12 @@
 									"script": {
 										"id": "3dc2f45f-e6bc-40a2-b950-2ecd3bff714e",
 										"exec": [
-											"// Retrieve the Zaak body template and modify as needed",
+											"// Retrieve the Gebruiksrecht body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"gebruiksrecht_body\"));",
 											"pm.globals.set(\"omschrijvingVoorwaarden\", \"aangepaste omschrijvingVoorwaarden\");",
 											"body.omschrijvingVoorwaarden = pm.globals.get(\"omschrijvingVoorwaarden\");",
 											"",
-											"// Store the modified Zaak body, allowing it to be used in the main request",
+											"// Store the modified Gebruiksrecht body, allowing it to be used in the main request",
 											"pm.globals.set(\"request_body\", JSON.stringify(body));"
 										],
 										"type": "text/javascript"
@@ -6496,12 +6496,12 @@
 									"script": {
 										"id": "8fb6b266-cd95-4adb-a6c8-4d68d1c62064",
 										"exec": [
-											"// Retrieve the Zaak body template and modify as needed",
+											"// Retrieve the Besluit body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"besluit_body\"));",
 											"pm.globals.set(\"toelichting\", \"aangepaste toelichting\");",
 											"body.toelichting = pm.globals.get(\"toelichting\");",
 											"",
-											"// Store the modified Zaak body, allowing it to be used in the main request",
+											"// Store the modified Besluit body, allowing it to be used in the main request",
 											"pm.globals.set(\"request_body\", JSON.stringify(body));"
 										],
 										"type": "text/javascript"
@@ -6984,7 +6984,525 @@
 		},
 		{
 			"name": "NRC",
-			"item": []
+			"item": [
+				{
+					"name": "abonnement",
+					"item": [
+						{
+							"name": "Alle ABONNEMENTen opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "22806701-9da0-468e-8af8-c58883a14833",
+										"exec": [
+											"pm.test(\"Alle ABONNEMENTen opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{nrc_url}}/abonnement",
+									"host": [
+										"{{nrc_url}}"
+									],
+									"path": [
+										"abonnement"
+									]
+								},
+								"description": "Alle ABONNEMENTen opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een ABONNEMENT aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ae4b02e1-203c-4946-903c-f008b8d9ed26",
+										"exec": [
+											"pm.test(\"Maak een ABONNEMENT aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_abonnement_url\", pm.response.json().url);",
+											"    pm.globals.set(\"abonnement_body\", pm.request.body.raw);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"callbackUrl\": \"https://example.com\",\n    \"auth\": \"Bearer token\",\n    \"kanalen\": [\n\t\t{\n\t    \"filters\": \n            {},\n            \"naam\": \"zaken\"\n        }\n    ]\n\n}\n"
+								},
+								"url": {
+									"raw": "{{nrc_url}}/abonnement",
+									"host": [
+										"{{nrc_url}}"
+									],
+									"path": [
+										"abonnement"
+									]
+								},
+								"description": "Maak een ABONNEMENT aan."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifiek ABONNEMENT opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a15f4c03-7927-4d7f-9b9a-afdb5d94cf43",
+										"exec": [
+											"pm.test(\"Een specifiek ABONNEMENT opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_abonnement_url}}",
+									"host": [
+										"{{created_abonnement_url}}"
+									]
+								},
+								"description": "Een specifiek ABONNEMENT opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een ABONNEMENT in zijn geheel bij.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "047e3f71-f4c5-42b8-9daa-15790f7c3788",
+										"exec": [
+											"// Retrieve the Abonnement body template and modify as needed",
+											"var body = JSON.parse(pm.globals.get(\"abonnement_body\"));",
+											"pm.globals.set(\"callbackUrl\", \"https://google.com\");",
+											"body.callbackUrl = pm.globals.get(\"callbackUrl\");",
+											"",
+											"// Store the modified Zaak Abonnement, allowing it to be used in the main request",
+											"pm.globals.set(\"request_body\", JSON.stringify(body));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "a9866cfe-73aa-480a-81e9-9ba07f1a4a40",
+										"exec": [
+											"pm.test(\"Werk een ABONNEMENT in zijn geheel bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{request_body}}"
+								},
+								"url": {
+									"raw": "{{created_abonnement_url}}",
+									"host": [
+										"{{created_abonnement_url}}"
+									]
+								},
+								"description": "Werk een ABONNEMENT in zijn geheel bij."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een ABONNEMENT deels bij.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9ab3022b-beca-42d4-bf45-206c36c40fa4",
+										"exec": [
+											"pm.test(\"Werk een ABONNEMENT deels bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"callbackUrl\": \"https://example.com\"\n}"
+								},
+								"url": {
+									"raw": "{{created_abonnement_url}}",
+									"host": [
+										"{{created_abonnement_url}}"
+									]
+								},
+								"description": "Werk een ABONNEMENT deels bij."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een ABONNEMENT.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d7644839-a3b7-4607-ad5d-fe563fa03d7d",
+										"exec": [
+											"pm.test(\"Verwijder een ABONNEMENT geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_abonnement_url}}",
+									"host": [
+										"{{created_abonnement_url}}"
+									]
+								},
+								"description": "Verwijder een ABONNEMENT."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for abonnement",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "kanaal",
+					"item": [
+						{
+							"name": "Alle KANAALen opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2e9118b2-1af0-44c8-aef8-34c0e598afe6",
+										"exec": [
+											"pm.test(\"Alle KANAALen opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"if(pm.response.code == 200) {",
+											"    if(pm.response.json().length) {",
+											"        pm.globals.set(\"kanaal_url\", pm.response.json()[0].url);",
+											"        postman.setNextRequest(\"Een specifiek KANAAL opvragen.\");",
+											"    }",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{nrc_url}}/kanaal?naam=testkanaal",
+									"host": [
+										"{{nrc_url}}"
+									],
+									"path": [
+										"kanaal"
+									],
+									"query": [
+										{
+											"key": "naam",
+											"value": "testkanaal"
+										}
+									]
+								},
+								"description": "Alle KANAALen opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een KANAAL aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "07bb8d0d-0c94-445c-8a1b-44a89622f2df",
+										"exec": [
+											"pm.test(\"Maak een ABONNEMENT aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"kanaal_url\", pm.response.json().url);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"naam\": \"testkanaal\",\n\t\"documentatieLink\": \"https://example.com\",\n\t\"filters\": []\n}"
+								},
+								"url": {
+									"raw": "{{nrc_url}}/kanaal",
+									"host": [
+										"{{nrc_url}}"
+									],
+									"path": [
+										"kanaal"
+									]
+								},
+								"description": "Maak een KANAAL aan."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifiek KANAAL opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "dc38e32c-df48-4141-abfb-496109bf9b85",
+										"exec": [
+											"pm.test(\"Een specifiek KANAAL opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{kanaal_url}}",
+									"host": [
+										"{{kanaal_url}}"
+									]
+								},
+								"description": "Een specifiek KANAAL opvragen."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for kanaal",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "notificaties",
+					"item": [
+						{
+							"name": "Publiceer een notificatie.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "80f6bfc7-fecb-453c-8989-1da1f5206c60",
+										"exec": [
+											"pm.test(\"Publiceer een NOTIFICATIE geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"kanaal\": \"testkanaal\",\n\t\"hoofdObject\": \"https://example.com\",\n\t\"resource\": \"test\",\n\t\"resourceUrl\": \"https://example.com\",\n\t\"actie\": \"CREATE\",\n\t\"aanmaakdatum\": \"2019-01-01T12:00:00Z\",\n\t\"kenmerken\": {}\n}"
+								},
+								"url": {
+									"raw": "{{nrc_url}}/notificaties",
+									"host": [
+										"{{nrc_url}}"
+									],
+									"path": [
+										"notificaties"
+									]
+								},
+								"description": "Publiceer een notificatie."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for notificaties",
+					"_postman_isSubFolder": true
+				}
+			],
+			"description": "Een API om een notificatierouteringscomponent te benaderen.\n\nDeze API voorziet in drie functionaliteiten voor notificaties:\n\n* registreren van kanalen (=exchanges)\n* abonneren van consumers op kanalen\n* ontvangen en routeren van berichten\n\n**Registreren van kanalen**\n\nEen component dekt een bepaald domein af, en heeft het recht om hiervoor een\nkanaal te registeren waarop eigen notificaties verstuurd worden. Een kanaal\nis uniek in naam. Een component dient dus te controleren of een kanaal al\nbestaat voor het registreren. Bij het registeren van kanalen wordt een\ndocumentatielink verwacht die beschrijft welke events en kenmerken van\ntoepassing zijn op het kanaal.\n\n**Abonneren**\n\nConsumers kunnen een abonnement aanmaken voor een of meerdere kanalen. Per\nkanaal kan op de kenmerken van het kanaal gefilterd worden. Consumers dienen\nzelf een endpoint te bouwen waarop berichten afgeleverd (kunnen) worden.\n\n**Routeren van berichten**\n\nBronnen sturen berichten naar deze API, die vervolgens de berichten onveranderd\nrouteert naar alle abonnees.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Autorisaties API\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6453e362-1196-47b7-ae6a-a5543db33dca",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "77b6abef-9a07-48e5-ab74-2d1613b5962e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
 		},
 		{
 			"name": "AC",
