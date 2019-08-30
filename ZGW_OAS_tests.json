@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "50a126b0-c9c1-490a-8004-b568fa55692e",
 		"name": "ZGW OAS tests",
+		"description": "Een API om een besluitregistratiecomponent (BRC) te benaderen.\n\nEen BESLUIT wordt veelal schriftelijk vastgelegd maar dit is niet\nnoodzakelijk. Omgekeerd kan het voorkomen dat in een INFORMATIEOBJECT meerdere\nbesluiten vastgelegd zijn. Vandaar de N:M-relatie naar INFORMATIEOBJECT. Een\nbesluit komt voort uit een zaak van de zaakbehandelende organisatie dan wel is\neen besluit van een andere organisatie dat het onderwerp (object) is van een\nzaak van de zaakbehandelende organisatie. BESLUIT heeft dan ook een optionele\nrelatie met de ZAAK waarvan het een uitkomst is.\n\nDe typering van BESLUITen is in de Catalogi API (ZTC) ondergebracht in de vorm \nvan BESLUITTYPEn.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Catalogi API\n* Notificaties API\n* Documenten API *(optioneel)*\n* Zaken API *(optioneel)*\n* Autorisaties API *(optioneel)*\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n**Notificaties**\n\nDeze API publiceert notificaties op het kanaal `besluiten`.\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -707,10 +708,6 @@
 							"script": {
 								"id": "3093d650-a1a9-439b-91e9-f5e8fa900f8f",
 								"exec": [
-									"pm.test(\"Maak een ZAAK aan geeft 201\", function() {",
-									"    pm.response.to.have.status(201);",
-									"});",
-									"",
 									"if(pm.response.code == 201) {",
 									"    pm.globals.set(\"global_zaak_url\", pm.response.json().url);",
 									"    pm.globals.set(\"zaak_uuid\", pm.response.json().uuid);",
@@ -770,6 +767,48 @@
 							]
 						},
 						"description": "Indien geen identificatie gegeven is, dan wordt deze automatisch\ngegenereerd. De identificatie moet uniek zijn binnen de bronorganisatie.\n\n**Er wordt gevalideerd op**:\n- `zaaktype` moet een geldige URL zijn.\n- `laatsteBetaaldatum` mag niet in de toekomst liggen.\n- `laatsteBetaaldatum` mag niet gezet worden als de betalingsindicatie\n  \"nvt\" is.\n- `archiefnominatie` moet een waarde hebben indien `archiefstatus` niet de\n  waarde \"nog_te_archiveren\" heeft.\n- `archiefactiedatum` moet een waarde hebben indien `archiefstatus` niet de\n  waarde \"nog_te_archiveren\" heeft.\n- `archiefstatus` kan alleen een waarde anders dan \"nog_te_archiveren\"\n  hebben indien van alle gerelateeerde INFORMATIEOBJECTen het attribuut\n  `status` de waarde \"gearchiveerd\" heeft."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Besluit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1678d3fd-3566-4342-b5b5-ca502fa73bd2",
+								"exec": [
+									"if(pm.response.code == 201) {",
+									"    pm.globals.set(\"besluit_url\", pm.response.json().url);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"besluittype\": \"{{besluittype_url}}\",\n    \"datum\": \"2019-01-01\",\n    \"ingangsdatum\": \"2018-01-01\"\n}"
+						},
+						"url": {
+							"raw": "{{brc_url}}/besluiten",
+							"host": [
+								"{{brc_url}}"
+							],
+							"path": [
+								"besluiten"
+							]
+						}
 					},
 					"response": []
 				}
@@ -6075,7 +6114,7 @@
 											"    pm.response.to.have.status(204);",
 											"});",
 											"",
-											"postman.setNextRequest(\"Delete Zaak\");"
+											"postman.setNextRequest(\"Alle BESLUITen opvragen.\");"
 										],
 										"type": "text/javascript"
 									}
@@ -6170,6 +6209,776 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "BRC",
+			"item": [
+				{
+					"name": "besluiten",
+					"item": [
+						{
+							"name": "Alle BESLUITen opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0d7f9c58-b932-452d-bdda-609df64fdcb2",
+										"exec": [
+											"pm.test(\"Alle BESLUITen opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{brc_url}}/besluiten?besluittype={{besluittype_url}}",
+									"host": [
+										"{{brc_url}}"
+									],
+									"path": [
+										"besluiten"
+									],
+									"query": [
+										{
+											"key": "identificatie",
+											"value": "{{identificatie}}",
+											"disabled": true
+										},
+										{
+											"key": "verantwoordelijkeOrganisatie",
+											"value": "{{verantwoordelijkeOrganisatie}}",
+											"disabled": true
+										},
+										{
+											"key": "besluittype",
+											"value": "{{besluittype_url}}"
+										},
+										{
+											"key": "zaak",
+											"value": "{{zaak}}",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "{{page}}",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een BESLUIT aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f3c60a0e-e293-4abd-bafc-cf6e41d0b8d2",
+										"exec": [
+											"pm.test(\"Maak een BESLUIT aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_besluit_url\", pm.response.json().url);",
+											"    pm.globals.set(\"besluit_body\", pm.request.body.raw);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"besluittype\": \"{{besluittype_url}}\",\n    \"datum\": \"2019-01-01\",\n    \"ingangsdatum\": \"2018-01-01\"\n}"
+								},
+								"url": {
+									"raw": "{{brc_url}}/besluiten",
+									"host": [
+										"{{brc_url}}"
+									],
+									"path": [
+										"besluiten"
+									]
+								},
+								"description": "Indien geen identificatie gegeven is, dan wordt deze automatisch\ngegenereerd.\n\nEr wordt gevalideerd op:\n- uniciteit van `verantwoorlijkeOrganisatie` + `identificatie`\n- geldigheid `verantwoorlijkeOrganisatie` RSIN\n- geldigheid `besluittype` URL\n- geldigheid `zaak` URL\n- `datum` in het verleden of nu"
+							},
+							"response": []
+						},
+						{
+							"name": "Alle audit trail regels behorend bij het BESLUIT.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "22eb1e47-590d-4d46-8156-2d14b112b761",
+										"exec": [
+											"pm.test(\"Alle audit trail regels behorend bij het BESLUIT geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"if(pm.response.code == 200) {",
+											"    pm.globals.set(\"audittrail_uuid\", pm.response.json()[0].uuid);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_besluit_url}}/audittrail",
+									"host": [
+										"{{created_besluit_url}}"
+									],
+									"path": [
+										"audittrail"
+									]
+								},
+								"description": "Alle audit trail regels behorend bij het BESLUIT."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke audit trail regel opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "25ef9d18-fc1d-4aa8-ba44-6cfd9a7558ba",
+										"exec": [
+											"pm.test(\"Een specifieke audit trail regel opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_besluit_url}}/audittrail/{{audittrail_uuid}}",
+									"host": [
+										"{{created_besluit_url}}"
+									],
+									"path": [
+										"audittrail",
+										"{{audittrail_uuid}}"
+									]
+								},
+								"description": "Een specifieke audit trail regel opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifiek BESLUIT opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e758b514-1bbd-42c9-894d-a5d7fc8c1127",
+										"exec": [
+											"pm.test(\"Een specifiek BESLUIT opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_besluit_url}}",
+									"host": [
+										"{{created_besluit_url}}"
+									]
+								},
+								"description": "Een specifiek BESLUIT opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een BESLUIT in zijn geheel bij.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "8fb6b266-cd95-4adb-a6c8-4d68d1c62064",
+										"exec": [
+											"// Retrieve the Zaak body template and modify as needed",
+											"var body = JSON.parse(pm.globals.get(\"besluit_body\"));",
+											"pm.globals.set(\"toelichting\", \"aangepaste toelichting\");",
+											"body.toelichting = pm.globals.get(\"toelichting\");",
+											"",
+											"// Store the modified Zaak body, allowing it to be used in the main request",
+											"pm.globals.set(\"request_body\", JSON.stringify(body));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "fa4e9ead-4c31-44cc-be8c-15cb781c6c40",
+										"exec": [
+											"pm.test(\"Werk een BESLUIT in zijn geheel bij 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{request_body}}"
+								},
+								"url": {
+									"raw": "{{created_besluit_url}}",
+									"host": [
+										"{{created_besluit_url}}"
+									]
+								},
+								"description": "Er wordt gevalideerd op:\n- uniciteit van `verantwoorlijkeOrganisatie` + `identificatie`\n- geldigheid `verantwoorlijkeOrganisatie` RSIN\n- geldigheid `besluittype` URL\n- geldigheid `zaak` URL\n- `datum` in het verleden of nu"
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een BESLUIT deels bij.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ba4c4595-2d5d-4823-82f2-81e424fd418a",
+										"exec": [
+											"pm.test(\"Werk een BESLUIT in zijn geheel bij 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"toelichting\": \"aangepast2\"\n}"
+								},
+								"url": {
+									"raw": "{{created_besluit_url}}",
+									"host": [
+										"{{created_besluit_url}}"
+									]
+								},
+								"description": "Er wordt gevalideerd op:\n- uniciteit van `verantwoorlijkeOrganisatie` + `identificatie`\n- geldigheid `verantwoorlijkeOrganisatie` RSIN\n- geldigheid `besluittype` URL\n- geldigheid `zaak` URL\n- `datum` in het verleden of nu"
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een BESLUIT.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1a82dee9-457e-4ae7-8108-1f629edea096",
+										"exec": [
+											"pm.test(\"Verwijder een BESLUIT geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_besluit_url}}",
+									"host": [
+										"{{created_besluit_url}}"
+									]
+								},
+								"description": "Verwijder een BESLUIT samen met alle gerelateerde resources binnen deze API.\n\n**De gerelateerde resources zijn**\n- `BESLUITINFORMATIEOBJECT`\n- audit trail regels"
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for besluiten",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "besluitinformatieobjecten",
+					"item": [
+						{
+							"name": "Alle BESLUIT-INFORMATIEOBJECT relaties opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "90cc4865-c518-4ef0-b818-f43c77da8ccd",
+										"exec": [
+											"pm.test(\"Alle BESLUIT-INFORMATIEOBJECT relaties opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{brc_url}}/besluitinformatieobjecten?besluit={{besluit_url}}&informatieobject={{informatieobject_url}}",
+									"host": [
+										"{{brc_url}}"
+									],
+									"path": [
+										"besluitinformatieobjecten"
+									],
+									"query": [
+										{
+											"key": "besluit",
+											"value": "{{besluit_url}}"
+										},
+										{
+											"key": "informatieobject",
+											"value": "{{informatieobject_url}}"
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een BESLUIT-INFORMATIEOBJECT relatie aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2e5a9c62-a8af-4ea7-82c9-9c6e4dea468e",
+										"exec": [
+											"pm.test(\"Maak een BESLUIT-INFORMATIEOBJECT relatie aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"bio_url\", pm.response.json().url);",
+											"    pm.globals.set(\"bio_body\", pm.request.body.raw);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"besluit\": \"{{besluit_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\"\n}"
+								},
+								"url": {
+									"raw": "{{brc_url}}/besluitinformatieobjecten",
+									"host": [
+										"{{brc_url}}"
+									],
+									"path": [
+										"besluitinformatieobjecten"
+									]
+								},
+								"description": "Registreer een INFORMATIEOBJECT bij een BESLUIT. Er worden twee types van\nrelaties met andere objecten gerealiseerd:\n\n**Er wordt gevalideerd op**\n- geldigheid `besluit` URL\n- geldigheid `informatieobject` URL\n- de combinatie `informatieobject` en `besluit` moet uniek zijn\n\n**Opmerkingen**\n- De `registratiedatum` wordt door het systeem op 'NU' gezet. De\n  `aardRelatie` wordt ook door het systeem gezet.\n- Bij het aanmaken wordt ook in de Documenten API de gespiegelde relatie\n  aangemaakt, echter zonder de relatie-informatie."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke BESLUIT-INFORMATIEOBJECT relatie opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "eee94029-4d09-44ed-8303-5126b945ab4a",
+										"exec": [
+											"pm.test(\"Alle BESLUIT-INFORMATIEOBJECT relaties opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"postman.setNextRequest(\"Verwijder een BESLUIT-INFORMATIEOBJECT relatie.\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{bio_url}}",
+									"host": [
+										"{{bio_url}}"
+									]
+								},
+								"description": "Een specifieke BESLUIT-INFORMATIEOBJECT relatie opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een BESLUIT-INFORMATIEOBJECT relatie in zijn geheel bij.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "79bdc335-566f-489b-b0c0-792030e2e88c",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{bio_url}}",
+									"host": [
+										"{{bio_url}}"
+									]
+								},
+								"description": "Je mag enkel de gegevens van de relatie bewerken, en niet de relatie zelf\naanpassen.\n\n**Er wordt gevalideerd op**\n- `informatieobject` URL en `besluit` URL mogen niet veranderen"
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een BESLUIT-INFORMATIEOBJECT relatie deels bij.",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"besluit\": \"{{created_besluit_url}}\"\n}"
+								},
+								"url": {
+									"raw": "{{bio_url}}",
+									"host": [
+										"{{bio_url}}"
+									]
+								},
+								"description": "Je mag enkel de gegevens van de relatie bewerken, en niet de relatie zelf\naanpassen.\n\n**Er wordt gevalideerd op**\n- `informatieobject` URL en `besluit` URL mogen niet veranderen"
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een BESLUIT-INFORMATIEOBJECT relatie.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bcdc5461-72bb-42d0-a264-73025f007aa0",
+										"exec": [
+											"pm.test(\"Verwijder een BESLUIT-INFORMATIEOBJECT relatie geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{bio_url}}",
+									"host": [
+										"{{bio_url}}"
+									]
+								},
+								"description": "Verwijder een BESLUIT-INFORMATIEOBJECT relatie."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for besluitinformatieobjecten",
+					"_postman_isSubFolder": true
 				}
 			]
 		},
