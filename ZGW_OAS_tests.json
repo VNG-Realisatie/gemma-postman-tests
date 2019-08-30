@@ -6512,7 +6512,7 @@
 									"script": {
 										"id": "fa4e9ead-4c31-44cc-be8c-15cb781c6c40",
 										"exec": [
-											"pm.test(\"Werk een BESLUIT in zijn geheel bij 200\", function() {",
+											"pm.test(\"Werk een BESLUIT in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
 											"});",
 											""
@@ -6567,7 +6567,7 @@
 									"script": {
 										"id": "ba4c4595-2d5d-4823-82f2-81e424fd418a",
 										"exec": [
-											"pm.test(\"Werk een BESLUIT in zijn geheel bij 200\", function() {",
+											"pm.test(\"Werk een BESLUIT in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
 											"});",
 											""
@@ -6979,6 +6979,388 @@
 					],
 					"description": "Folder for besluitinformatieobjecten",
 					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "NRC",
+			"item": []
+		},
+		{
+			"name": "AC",
+			"item": [
+				{
+					"name": "applicaties",
+					"item": [
+						{
+							"name": "Geef een collectie van applicaties, met ingesloten autorisaties.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "66428d5a-a7aa-45bb-aba2-75494a493576",
+										"exec": [
+											"pm.test(\"Geef een collectie van applicaties, met ingesloten autorisaties geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ac_url}}/applicaties?",
+									"host": [
+										"{{ac_url}}"
+									],
+									"path": [
+										"applicaties"
+									],
+									"query": [
+										{
+											"key": "clientIds",
+											"value": "{{clientIds}}",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "{{page}}",
+											"disabled": true
+										}
+									]
+								},
+								"description": "De autorisaties zijn gedefinieerd op een specifieke component, bijvoorbeeld\nhet ZRC, en geven aan welke scopes van toepassing zijn voor dit component.\nDe waarde van de `component` bepaalt ook welke verdere informatie ingesloten\nis, zoals `zaaktype` en `maxVertrouwelijkheidaanduiding` voor het ZRC.\n\nIn dit voorbeeld gelden er dus zaaktype-specifieke scopes en mogen zaken\nvan het betreffende zaaktype met een striktere vertrouwelijkheidaanduiding\ndan `maxVertrouwelijkheidaanduiding` niet ontsloten worden.\n\nDe collectie kan doorzocht worden met de ``clientIds`` query parameter."
+							},
+							"response": []
+						},
+						{
+							"name": "Registreer een applicatie met een bepaalde set van autorisaties.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e08fe562-70d3-40f0-851c-8137750df9bf",
+										"exec": [
+											"pm.test(\"Registreer een applicatie met een bepaalde set van autorisaties geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url);",
+											"    pm.globals.set(\"applicatie_body\", pm.request.body.raw);",
+											"    pm.globals.set(\"applicatie_clientId\", pm.response.json().clientIds[0]);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id1\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{ac_url}}/applicaties",
+									"host": [
+										"{{ac_url}}"
+									],
+									"path": [
+										"applicaties"
+									]
+								},
+								"description": "Indien `heeftAlleAutorisaties` gezet is, dan moet je\n`autorisaties` leeg (of weg) laten.\n\nIndien je `autorisaties` meegeeft, dan moet `heeftAlleAutorisaties` de\nwaarde `false` hebben of weggelaten worden.\n\nNa het aanmaken wordt een notificatie verstuurd."
+							},
+							"response": []
+						},
+						{
+							"name": "Vraag een applicatie op, op basis van clientId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ae9c061f-9ee6-40aa-ad69-5348cb46be6e",
+										"exec": [
+											"pm.test(\"Vraag een applicatie op, op basis van clientId geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ac_url}}/applicaties/consumer?clientId={{applicatie_clientId}}",
+									"host": [
+										"{{ac_url}}"
+									],
+									"path": [
+										"applicaties",
+										"consumer"
+									],
+									"query": [
+										{
+											"key": "clientId",
+											"value": "{{applicatie_clientId}}"
+										}
+									]
+								},
+								"description": "Gegeven een `clientId`, via de query string, zoek de bijbehorende applicatie\nop. Het antwoord bevat de applicatie met ingesloten autorisaties."
+							},
+							"response": []
+						},
+						{
+							"name": "Vraag een applicatie op, met ingesloten autorisaties.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1d76543b-82a6-4b7f-9943-63115cd69946",
+										"exec": [
+											"pm.test(\"Vraag een applicatie op, met ingesloten autorisaties geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_applicatie_url}}",
+									"host": [
+										"{{created_applicatie_url}}"
+									]
+								},
+								"description": "De autorisaties zijn gedefinieerd op een specifieke component, bijvoorbeeld\nhet ZRC, en geven aan welke scopes van toepassing zijn voor dit component.\nDe waarde van de `component` bepaalt ook welke verdere informatie ingesloten\nis, zoals `zaaktype` en `maxVertrouwelijkheidaanduiding` voor het ZRC.\n\nIn dit voorbeeld gelden er dus zaaktype-specifieke scopes en mogen zaken\nvan het betreffende zaaktype met een striktere vertrouwelijkheidaanduiding\ndan `maxVertrouwelijkheidaanduiding` niet ontsloten worden."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk de applicatie bij.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "16cd4eab-b4a0-4c62-bb9c-a4de6a726dc4",
+										"exec": [
+											"// Retrieve the Zaak body template and modify as needed",
+											"var body = JSON.parse(pm.globals.get(\"applicatie_body\"));",
+											"pm.globals.set(\"scope\", \"zaken.aanmaken\");",
+											"body.autorisaties[0].scopes.push(pm.globals.get(\"scope\"));",
+											"",
+											"// Store the modified Zaak body, allowing it to be used in the main request",
+											"pm.globals.set(\"request_body\", JSON.stringify(body));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc0ac274-87a9-407f-8f4b-a686f7417573",
+										"exec": [
+											"pm.test(\"Werk de applicatie bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{request_body}}"
+								},
+								"url": {
+									"raw": "{{created_applicatie_url}}",
+									"host": [
+										"{{created_applicatie_url}}"
+									]
+								},
+								"description": "Indien `heeftAlleAutorisaties` gezet is, dan moet je\n`autorisaties` leeg (of weg) laten.\n\nIndien je `autorisaties` meegeeft, dan moet `heeftAlleAutorisaties` de\nwaarde `false` hebben of weggelaten worden.\n\nNa het bijwerken wordt een notificatie verstuurd."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk (een deel van) de applicatie bij.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "27d567c1-85fc-472d-aabb-692080ed587b",
+										"exec": [
+											"pm.test(\"Werk (een deel van) de applicatie bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"autorisaties\": [\n\t\t{\n\t\t\t\"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"vertrouwelijk\"\n\t\t}\t\n\t]\n}"
+								},
+								"url": {
+									"raw": "{{created_applicatie_url}}",
+									"host": [
+										"{{created_applicatie_url}}"
+									]
+								},
+								"description": "Indien `autorisaties` meegegeven is, dan worden de bestaande `autorisaties`\nvervangen met de nieuwe set van `autorisaties`.\n\nIndien `heeftAlleAutorisaties` gezet is, dan moet je\n`autorisaties` leeg (of weg) laten.\n\nIndien je `autorisaties` meegeeft, dan moet `heeftAlleAutorisaties` de\nwaarde `false` hebben of weggelaten worden.\n\nNa het bijwerken wordt een notificatie verstuurd."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een applicatie met de bijhorende autorisaties.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ebb1ffb0-b7a5-443a-9761-f5b3a86fca5c",
+										"exec": [
+											"pm.test(\"Verwijder een applicatie met de bijhorende autorisaties geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_applicatie_url}}",
+									"host": [
+										"{{created_applicatie_url}}"
+									]
+								},
+								"description": "Na het verwijderen wordt een notificatie verstuurd."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for applicaties",
+					"_postman_isSubFolder": true
+				}
+			],
+			"description": "Een API om een autorisatiecomponent te benaderen.\n\nDe `AUTORISATIE` is het kernobject in deze API. Autorisaties worden toegekend\naan applicaties. Een applicatie is een representatie van een (web) app die\ncommuniceert met de API van (andere) componenten, zoals het ZRC, DRC, ZTC en\nBRC.\n\nDeze API laat toe om autorisaties van een (taak)applicatie te beheren en uit\nte lezen.\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://ref.tst.vng.cloud/tokens/) gebruiken om JWT-tokens te\ngenereren.\n\n**Notificaties**\n\nDeze component publiceert notificaties op het kanaal `TODO`.\n\n**Handige links**\n\n* [Aan de slag](https://ref.tst.vng.cloud/ontwikkelaars/)\n* [\"Papieren\" standaard](https://ref.tst.vng.cloud/standaard/)\n",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0bf14bc5-9a8c-45a9-b734-c3e90789ff5f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3e3bb850-e892-4f02-afb2-f3e684c059c2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
