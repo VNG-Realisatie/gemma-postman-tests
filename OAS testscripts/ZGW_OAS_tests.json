@@ -1,8 +1,7 @@
 {
 	"info": {
 		"_postman_id": "50a126b0-c9c1-490a-8004-b568fa55692e",
-		"name": "Zaken API",
-		"description": "Een API om een zaakregistratiecomponent (ZRC) te benaderen.\n\nDe ZAAK is het kernobject in deze API, waaraan verschillende andere\nresources gerelateerd zijn. De Zaken API werkt samen met andere API's voor\nZaakgericht werken om tot volledige functionaliteit te komen.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Catalogi API\n* Notificaties API\n* Documenten API *(optioneel)*\n* Besluiten API *(optioneel)*\n* Autorisaties API *(optioneel)*\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n**Notificaties**\n\nDeze API publiceert notificaties op het kanaal `zaken`.\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
+		"name": "ZGW OAS tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -1682,13 +1681,9 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{zrc_url}}/zaken/{{zaak_uuid}}",
+									"raw": "{{zaak_url}}",
 									"host": [
-										"{{zrc_url}}"
-									],
-									"path": [
-										"zaken",
-										"{{zaak_uuid}}"
+										"{{zaak_url}}"
 									]
 								},
 								"description": "**De gerelateerde resources zijn hierbij**\n- `zaak` - de deelzaken van de verwijderde hoofzaak\n- `status` - alle statussen van de verwijderde zaak\n- `resultaat` - het resultaat van de verwijderde zaak\n- `rol` - alle rollen bij de zaak\n- `zaakobject` - alle zaakobjecten bij de zaak\n- `zaakeigenschap` - alle eigenschappen van de zaak\n- `zaakkenmerk` - alle kenmerken van de zaak\n- `zaakinformatieobject` - dit moet door-cascaden naar de Documenten API,\n  zie ook: https://github.com/VNG-Realisatie/gemma-zaken/issues/791 (TODO)\n- `klantcontact` - alle klantcontacten bij een zaak"
@@ -3110,6 +3105,1239 @@
 					],
 					"description": "Folder for zaakobjecten",
 					"_postman_isSubFolder": true
+				}
+			],
+			"description": "Een API om een zaakregistratiecomponent (ZRC) te benaderen.\n\nDe ZAAK is het kernobject in deze API, waaraan verschillende andere\nresources gerelateerd zijn. De Zaken API werkt samen met andere API's voor\nZaakgericht werken om tot volledige functionaliteit te komen.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Catalogi API\n* Notificaties API\n* Documenten API *(optioneel)*\n* Besluiten API *(optioneel)*\n* Autorisaties API *(optioneel)*\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n**Notificaties**\n\nDeze API publiceert notificaties op het kanaal `zaken`.\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9f24ac2a-9600-46d7-93ed-c1934a03488d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cf02c731-0e26-4cae-870b-b074a5b1329a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "DRC",
+			"item": [
+				{
+					"name": "enkelvoudiginformatieobjecten",
+					"item": [
+						{
+							"name": "Alle (ENKELVOUDIGe) INFORMATIEOBJECTen opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "513576bd-7894-41b3-8f65-7aef04d2c594",
+										"exec": [
+											"pm.test(\"Alle (ENKELVOUDIGe) INFORMATIEOBJECTen opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
+									"host": [
+										"{{drc_url}}"
+									],
+									"path": [
+										"enkelvoudiginformatieobjecten"
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters.\n\nDe objecten bevatten metadata over de documenten en de downloadlink\n(`inhoud`) naar de binary data. Alleen de laatste versie van elk\n(ENKELVOUDIG) INFORMATIEOBJECT wordt getoond. Specifieke versies kunnen\nalleen"
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een (ENKELVOUDIG) INFORMATIEOBJECT aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cbdbbf58-55eb-4594-a1ff-0b82713b951c",
+										"exec": [
+											"pm.test(\"Maak een (ENKELVOUDIG) INFORMATIEOBJECT aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);",
+											"    pm.globals.set(\"informatieobject_body\", pm.request.body.raw);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"bestandsomvang\": 6\n}"
+								},
+								"url": {
+									"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
+									"host": [
+										"{{drc_url}}"
+									],
+									"path": [
+										"enkelvoudiginformatieobjecten"
+									]
+								},
+								"description": "**Er wordt gevalideerd op**\n- geldigheid `informatieobjecttype` URL"
+							},
+							"response": []
+						},
+						{
+							"name": "Alle audit trail regels behorend bij het INFORMATIEOBJECT.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "76413e39-37d2-426e-8ae3-b61da75deeb9",
+										"exec": [
+											"pm.test(\"Alle audit trail regels behorend bij het INFORMATIEOBJECT geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"if(pm.response.code == 200) {",
+											"    pm.globals.set(\"audittrail_uuid\", pm.response.json()[0].uuid);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_informatieobject_url}}/audittrail",
+									"host": [
+										"{{created_informatieobject_url}}"
+									],
+									"path": [
+										"audittrail"
+									]
+								},
+								"description": "Alle audit trail regels behorend bij het INFORMATIEOBJECT."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke audit trail regel opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "132c43ee-77a2-4d6c-bb67-142a775af99d",
+										"exec": [
+											"pm.test(\"Een specifieke audit trail regel opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_informatieobject_url}}/audittrail/{{audittrail_uuid}}",
+									"host": [
+										"{{created_informatieobject_url}}"
+									],
+									"path": [
+										"audittrail",
+										"{{audittrail_uuid}}"
+									]
+								},
+								"description": "Een specifieke audit trail regel opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifiek (ENKELVOUDIG) INFORMATIEOBJECT opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7105245b-d6d0-48ec-ae2e-eed45f161681",
+										"exec": [
+											"pm.test(\"Een specifiek (ENKELVOUDIG) INFORMATIEOBJECT opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_informatieobject_url}}?versie=1",
+									"host": [
+										"{{created_informatieobject_url}}"
+									],
+									"query": [
+										{
+											"key": "versie",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Het object bevat metadata over het document en de downloadlink (`inhoud`)\nnaar de binary data. Dit geeft standaard de laatste versie van het\n(ENKELVOUDIG) INFORMATIEOBJECT. Specifieke versies kunnen middels\nquery-string parameters worden opgevraagd."
+							},
+							"response": []
+						},
+						{
+							"name": "Vergrendel een (ENKELVOUDIG) INFORMATIEOBJECT.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "88023d60-5a98-4419-9834-1896a073f266",
+										"exec": [
+											"pm.test(\"Een specifiek (ENKELVOUDIG) INFORMATIEOBJECT opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"if(pm.response.code == 200) {",
+											"    pm.globals.set(\"informatieobject_lock_id\", pm.response.json().lock);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_informatieobject_url}}/lock",
+									"host": [
+										"{{created_informatieobject_url}}"
+									],
+									"path": [
+										"lock"
+									]
+								},
+								"description": "Voert een \"checkout\" uit waardoor het (ENKELVOUDIG) INFORMATIEOBJECT\nvergrendeld wordt met een `lock` waarde. Alleen met deze waarde kan het\n(ENKELVOUDIG) INFORMATIEOBJECT bijgewerkt (`PUT`, `PATCH`) en weer\nontgrendeld worden."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een (ENKELVOUDIG) INFORMATIEOBJECT in zijn geheel bij.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "b8fb5548-d258-4a10-a33b-65968490b54d",
+										"exec": [
+											"// Retrieve the Zaak body template and modify as needed",
+											"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
+											"pm.globals.set(\"beschrijving\", \"aangepaste beschrijving\");",
+											"body.beschrijving = pm.globals.get(\"beschrijving\");",
+											"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
+											"",
+											"// Store the modified Zaak body, allowing it to be used in the main request",
+											"pm.globals.set(\"request_body\", JSON.stringify(body));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "2402541b-5e97-4e1a-a0dc-bed0d23437cd",
+										"exec": [
+											"pm.test(\"Werk een (ENKELVOUDIG) INFORMATIEOBJECT in zijn geheel bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{request_body}}"
+								},
+								"url": {
+									"raw": "{{created_informatieobject_url}}",
+									"host": [
+										"{{created_informatieobject_url}}"
+									]
+								},
+								"description": "Dit creëert altijd een nieuwe versie van het (ENKELVOUDIG) INFORMATIEOBJECT.\n\n**Er wordt gevalideerd op**\n- correcte `lock` waarde\n- geldigheid `informatieobjecttype` URL\n\n*TODO*\n- valideer immutable attributes"
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een (ENKELVOUDIG) INFORMATIEOBJECT deels bij.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5ae4b3eb-96d9-4b0a-9ee7-88594fb06299",
+										"exec": [
+											"// Retrieve the Zaak body template and modify as needed",
+											"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
+											"pm.globals.set(\"beschrijving\", \"aangepaste beschrijving\");",
+											"body.beschrijving = pm.globals.get(\"beschrijving\");",
+											"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
+											"",
+											"// Store the modified Zaak body, allowing it to be used in the main request",
+											"pm.globals.set(\"request_body\", JSON.stringify(body));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc716e31-cb64-48b6-bff2-71fbcffa0a20",
+										"exec": [
+											"pm.test(\"Werk een (ENKELVOUDIG) INFORMATIEOBJECT deels bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"titel\": \"titel2\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
+								},
+								"url": {
+									"raw": "{{created_informatieobject_url}}",
+									"host": [
+										"{{created_informatieobject_url}}"
+									]
+								},
+								"description": "Dit creëert altijd een nieuwe versie van het (ENKELVOUDIG) INFORMATIEOBJECT.\n\n**Er wordt gevalideerd op**\n- correcte `lock` waarde\n- geldigheid `informatieobjecttype` URL\n\n*TODO*\n- valideer immutable attributes"
+							},
+							"response": []
+						},
+						{
+							"name": "Ontgrendel een (ENKELVOUDIG) INFORMATIEOBJECT.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "67153d83-fd33-48ff-9832-43cd680b4c9d",
+										"exec": [
+											"pm.test(\"Ontgrendel een (ENKELVOUDIG) INFORMATIEOBJECT geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_informatieobject_url}}/unlock",
+									"host": [
+										"{{created_informatieobject_url}}"
+									],
+									"path": [
+										"unlock"
+									]
+								},
+								"description": "Heft de \"checkout\" op waardoor het (ENKELVOUDIG) INFORMATIEOBJECT\nontgrendeld wordt."
+							},
+							"response": []
+						},
+						{
+							"name": "Download de binaire data van het (ENKELVOUDIG) INFORMATIEOBJECT.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ce667ea1-7874-417a-9668-34ae7e064d38",
+										"exec": [
+											"pm.test(\"Download de binaire data van het (ENKELVOUDIG) INFORMATIEOBJECT geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/octet-stream"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_informatieobject_url}}/download?versie=1",
+									"host": [
+										"{{created_informatieobject_url}}"
+									],
+									"path": [
+										"download"
+									],
+									"query": [
+										{
+											"key": "versie",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Download de binaire data van het (ENKELVOUDIG) INFORMATIEOBJECT."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een (ENKELVOUDIG) INFORMATIEOBJECT.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "00be8be5-72e1-4d54-a31a-e46dfee75787",
+										"exec": [
+											"pm.test(\"Verwijder een (ENKELVOUDIG) INFORMATIEOBJECT geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_informatieobject_url}}",
+									"host": [
+										"{{created_informatieobject_url}}"
+									]
+								},
+								"description": "Verwijder een (ENKELVOUDIG) INFORMATIEOBJECT en alle bijbehorende versies,\nsamen met alle gerelateerde resources binnen deze API.\n\n**Gerelateerde resources**\n- OBJECT-INFORMATIEOBJECT\n- GEBRUIKSRECHTen\n- audit trail regels"
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for enkelvoudiginformatieobjecten",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "gebruiksrechten",
+					"item": [
+						{
+							"name": "Alle GEBRUIKSRECHTen opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ec5d9670-ba2f-4514-9958-730370ac3365",
+										"exec": [
+											"pm.test(\"Alle GEBRUIKSRECHTen opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{drc_url}}/gebruiksrechten?informatieobject={{informatieobject_url}}",
+									"host": [
+										"{{drc_url}}"
+									],
+									"path": [
+										"gebruiksrechten"
+									],
+									"query": [
+										{
+											"key": "informatieobject",
+											"value": "{{informatieobject_url}}"
+										},
+										{
+											"key": "startdatum__lt",
+											"value": "{{startdatum__lt}}",
+											"disabled": true
+										},
+										{
+											"key": "startdatum__lte",
+											"value": "{{startdatum__lte}}",
+											"disabled": true
+										},
+										{
+											"key": "startdatum__gt",
+											"value": "{{startdatum__gt}}",
+											"disabled": true
+										},
+										{
+											"key": "startdatum__gte",
+											"value": "{{startdatum__gte}}",
+											"disabled": true
+										},
+										{
+											"key": "einddatum__lt",
+											"value": "{{einddatum__lt}}",
+											"disabled": true
+										},
+										{
+											"key": "einddatum__lte",
+											"value": "{{einddatum__lte}}",
+											"disabled": true
+										},
+										{
+											"key": "einddatum__gt",
+											"value": "{{einddatum__gt}}",
+											"disabled": true
+										},
+										{
+											"key": "einddatum__gte",
+											"value": "{{einddatum__gte}}",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een GEBRUIKSRECHT aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ffbbdf4b-f7d1-44e1-85a7-f3f9b6d98769",
+										"exec": [
+											"pm.test(\"Maak een GEBRUIKSRECHT aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"gebruiksrecht_url\", pm.response.json().url);",
+											"    pm.globals.set(\"gebruiksrecht_body\", pm.request.body.raw);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"startdatum\": \"2019-01-01T12:00:00\",\n\t\"omschrijvingVoorwaarden\": \"test\"\n}"
+								},
+								"url": {
+									"raw": "{{drc_url}}/gebruiksrechten",
+									"host": [
+										"{{drc_url}}"
+									],
+									"path": [
+										"gebruiksrechten"
+									]
+								},
+								"description": "Voeg GEBRUIKSRECHTen toe voor een INFORMATIEOBJECT.\n\n**Opmerkingen**\n- Het toevoegen van gebruiksrechten zorgt ervoor dat de\n  `indicatieGebruiksrecht` op het informatieobject op `true` gezet wordt."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifiek GEBRUIKSRECHT opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7cc88b35-ca87-4c6f-8afc-58bfeeb49468",
+										"exec": [
+											"pm.test(\"Een specifiek GEBRUIKSRECHT opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{gebruiksrecht_url}}",
+									"host": [
+										"{{gebruiksrecht_url}}"
+									]
+								},
+								"description": "Een specifieke GEBRUIKSRECHT opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een GEBRUIKSRECHT in zijn geheel bij.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3dc2f45f-e6bc-40a2-b950-2ecd3bff714e",
+										"exec": [
+											"// Retrieve the Zaak body template and modify as needed",
+											"var body = JSON.parse(pm.globals.get(\"gebruiksrecht_body\"));",
+											"pm.globals.set(\"omschrijvingVoorwaarden\", \"aangepaste omschrijvingVoorwaarden\");",
+											"body.omschrijvingVoorwaarden = pm.globals.get(\"omschrijvingVoorwaarden\");",
+											"",
+											"// Store the modified Zaak body, allowing it to be used in the main request",
+											"pm.globals.set(\"request_body\", JSON.stringify(body));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "dd3b4943-ae7f-437e-8733-2e3d41dcec75",
+										"exec": [
+											"pm.test(\"Werk een GEBRUIKSRECHT in zijn geheel bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{request_body}}"
+								},
+								"url": {
+									"raw": "{{gebruiksrecht_url}}",
+									"host": [
+										"{{gebruiksrecht_url}}"
+									]
+								},
+								"description": "Werk een GEBRUIKSRECHT in zijn geheel bij."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een GEBRUIKSRECHT relatie deels bij.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bfb72cea-47bb-4b50-b291-9a0b4fa5ef13",
+										"exec": [
+											"pm.test(\"Werk een GEBRUIKSRECHT in zijn geheel bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"omschrijvingVoorwaarden\": \"aangepast2\"\n}"
+								},
+								"url": {
+									"raw": "{{gebruiksrecht_url}}",
+									"host": [
+										"{{gebruiksrecht_url}}"
+									]
+								},
+								"description": "Werk een GEBRUIKSRECHT relatie deels bij."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een GEBRUIKSRECHT.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7f0bdf07-923a-467b-9628-9ef38ba3b6f6",
+										"exec": [
+											"pm.test(\"Verwijder een GEBRUIKSRECHT geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{gebruiksrecht_url}}",
+									"host": [
+										"{{gebruiksrecht_url}}"
+									]
+								},
+								"description": "**Opmerkingen**\n- Indien het laatste GEBRUIKSRECHT van een INFORMATIEOBJECT verwijderd\n  wordt, dan wordt de `indicatieGebruiksrecht` van het INFORMATIEOBJECT op\n  `null` gezet."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for gebruiksrechten",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "objectinformatieobjecten",
+					"item": [
+						{
+							"name": "Alle OBJECT-INFORMATIEOBJECT relaties opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d4c407b9-0ba4-42ed-b434-f7206bdad75c",
+										"exec": [
+											"pm.test(\"Alle OBJECT-INFORMATIEOBJECT relaties opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{drc_url}}/objectinformatieobjecten?informatieobject={{informatieobject_url}}",
+									"host": [
+										"{{drc_url}}"
+									],
+									"path": [
+										"objectinformatieobjecten"
+									],
+									"query": [
+										{
+											"key": "informatieobject",
+											"value": "{{informatieobject_url}}"
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een OBJECT-INFORMATIEOBJECT relatie aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0a080d03-988a-41c6-a8b7-2ca7ca73b0c4",
+										"exec": [
+											"pm.test(\"Maak een OBJECT-INFORMATIEOBJECT relatie aan geeft 400\", function() {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"postman.setNextRequest(\"Delete Zaak\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"object\": \"{{global_zaak_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"objectType\": \"zaak\"\n}"
+								},
+								"url": {
+									"raw": "{{drc_url}}/objectinformatieobjecten",
+									"host": [
+										"{{drc_url}}"
+									],
+									"path": [
+										"objectinformatieobjecten"
+									]
+								},
+								"description": "**LET OP: Dit endpoint hoor je als consumer niet zelf aan te spreken.**\n\nAndere API's, zoals de Zaken API en de Besluiten API, gebruiken dit\nendpoint bij het synchroniseren van relaties.\n\n**Er wordt gevalideerd op**\n- geldigheid `informatieobject` URL\n- de combinatie `informatieobject` en `object` moet uniek zijn\n- bestaan van `object` URL"
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke OBJECT-INFORMATIEOBJECT relatie opvragen.",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://documenten-api.vng.cloud/api/v1/objectinformatieobjecten/:uuid",
+									"protocol": "https",
+									"host": [
+										"documenten-api",
+										"vng",
+										"cloud"
+									],
+									"path": [
+										"api",
+										"v1",
+										"objectinformatieobjecten",
+										":uuid"
+									],
+									"variable": [
+										{
+											"key": "uuid"
+										}
+									]
+								},
+								"description": "Een specifieke OBJECT-INFORMATIEOBJECT relatie opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een OBJECT-INFORMATIEOBJECT relatie.",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://documenten-api.vng.cloud/api/v1/objectinformatieobjecten/:uuid",
+									"protocol": "https",
+									"host": [
+										"documenten-api",
+										"vng",
+										"cloud"
+									],
+									"path": [
+										"api",
+										"v1",
+										"objectinformatieobjecten",
+										":uuid"
+									],
+									"variable": [
+										{
+											"key": "uuid"
+										}
+									]
+								},
+								"description": "**LET OP: Dit endpoint hoor je als consumer niet zelf aan te spreken.**\n\nAndere API's, zoals de Zaken API en de Besluiten API, gebruiken dit\nendpoint bij het synchroniseren van relaties."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for objectinformatieobjecten",
+					"_postman_isSubFolder": true
+				}
+			],
+			"description": "Een API om een documentregistratiecomponent (DRC) te benaderen.\n\nIn een documentregistratiecomponent worden INFORMATIEOBJECTen opgeslagen. Een \nINFORMATIEOBJECT is een digitaal document voorzien van meta-gegevens. \nINFORMATIEOBJECTen kunnen aan andere objecten zoals zaken en besluiten worden \ngerelateerd (maar dat hoeft niet) en kunnen gebruiksrechten hebben. \n\nGEBRUIKSRECHTEN leggen voorwaarden op aan het gebruik van het INFORMATIEOBJECT\n(buiten raadpleging). Deze GEBRUIKSRECHTEN worden niet door de API gevalideerd\nof gehandhaafd.\n\nDe typering van INFORMATIEOBJECTen is in de Catalogi API (ZTC) ondergebracht in\nde vorm van INFORMATIEOBJECTTYPEn.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Catalogi API\n* Notificaties API\n* Autorisaties API *(optioneel)*\n* Zaken API *(optioneel)*\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n**Notificaties**\n\nDeze API publiceert notificaties op het kanaal `documenten`.\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fe6ef02c-0b28-4111-a231-e9fffec4fcf2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "65e66b30-d0e0-42c9-856f-865a5b961a16",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
