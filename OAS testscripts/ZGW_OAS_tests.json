@@ -4172,7 +4172,7 @@
 											"    pm.response.to.have.status(400);",
 											"});",
 											"",
-											"postman.setNextRequest(\"Delete Zaak\");"
+											"postman.setNextRequest(\"Alle BESLUITTYPEn opvragen.\");"
 										],
 										"type": "text/javascript"
 									}
@@ -4333,6 +4333,1838 @@
 					"listen": "test",
 					"script": {
 						"id": "65e66b30-d0e0-42c9-856f-865a5b961a16",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "ZTC",
+			"item": [
+				{
+					"name": "besluittypen",
+					"item": [
+						{
+							"name": "Alle BESLUITTYPEn opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "35884dd6-bb65-465d-8657-8ca647d1aa99",
+										"exec": [
+											"pm.test(\"Alle BESLUITTYPEn opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ztc_url}}/besluittypen?catalogus={{catalogus_url}}",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"besluittypen"
+									],
+									"query": [
+										{
+											"key": "catalogus",
+											"value": "{{catalogus_url}}"
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een BESLUITTYPE aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d93c2aa8-1b0b-46d3-b097-c0c38e714e8c",
+										"exec": [
+											"pm.test(\"Maak een BESLUITTYPE aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_besluittype_url\", pm.response.json().url);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"besluittype test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypes\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/besluittypen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"besluittypen"
+									]
+								},
+								"description": "Maak een BESLUITTYPE aan."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifiek BESLUITTYPE opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "17844939-b0ab-4ad6-ae4d-744080a795ee",
+										"exec": [
+											"pm.test(\"Een specifiek BESLUITTYPE opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_besluittype_url}}",
+									"host": [
+										"{{created_besluittype_url}}"
+									]
+								},
+								"description": "Een specifieke BESLUITTYPE opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een BESLUITTYPE.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5dcba5cc-ba44-48c4-8fd3-e84b53ed9136",
+										"exec": [
+											"pm.test(\"Verwijder een BESLUITTYPE geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});",
+											"",
+											"postman.setNextRequest(\"Alle CATALOGUSsen opvragen.\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_besluittype_url}}",
+									"host": [
+										"{{created_besluittype_url}}"
+									]
+								},
+								"description": "Verwijder een BESLUITTYPE. Dit kan alleen als het een concept betreft."
+							},
+							"response": []
+						},
+						{
+							"name": "Opvragen en bewerken van BESLUITTYPEn nodig voor BESLUITEN in de Besluiten\nAPI.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "dd938319-7b70-45ac-b4ef-ffa1abefb04d",
+										"exec": [
+											"pm.test(\"Opvragen en bewerken van BESLUITTYPEn nodig voor BESLUITEN in de BesluitenAPI geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_besluittype_url}}/publish",
+									"host": [
+										"{{created_besluittype_url}}"
+									],
+									"path": [
+										"publish"
+									]
+								},
+								"description": "Alle BESLUITTYPEn van de besluiten die het resultaat kunnen zijn van het\nzaakgericht werken van de behandelende organisatie(s)."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for besluittypen",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "catalogussen",
+					"item": [
+						{
+							"name": "Alle CATALOGUSsen opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05aeb6f-7837-467c-b8c3-757b3002e7be",
+										"exec": [
+											"pm.test(\"Alle CATALOGUSsen opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"if(pm.response.code == 200) {",
+											"    if(pm.response.json().count) {",
+											"        pm.globals.set(\"catalogus_url\", pm.response.json().results[0].url);",
+											"        postman.setNextRequest(\"Een specifieke CATALOGUS opvragen.\");",
+											"    }",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ztc_url}}/catalogussen?domein=ZGWT",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"catalogussen"
+									],
+									"query": [
+										{
+											"key": "domein",
+											"value": "ZGWT"
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een CATALOGUS aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ce6c3ab5-baeb-42ed-a432-4d0110636539",
+										"exec": [
+											"pm.globals.set(\"catalogus_url\", pm.response.json().url);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"domein\": \"ZGWT\",\n\t\"rsin\": \"000000000\",\n\t\"contactpersoonBeheerNaam\": \"Test Persoon\"\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/catalogussen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"catalogussen"
+									]
+								},
+								"description": "Maak een CATALOGUS aan."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke CATALOGUS opvragen.",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://catalogi-api.vng.cloud/api/v1/catalogussen/:uuid",
+									"protocol": "https",
+									"host": [
+										"catalogi-api",
+										"vng",
+										"cloud"
+									],
+									"path": [
+										"api",
+										"v1",
+										"catalogussen",
+										":uuid"
+									],
+									"variable": [
+										{
+											"key": "uuid"
+										}
+									]
+								},
+								"description": "Een specifieke CATALOGUS opvragen."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for catalogussen",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "eigenschappen",
+					"item": [
+						{
+							"name": "Alle EIGENSCHAPpen opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2b56b134-6194-483c-bd6a-4a7a39233351",
+										"exec": [
+											"pm.test(\"Alle EIGENSCHAPpen opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ztc_url}}/eigenschappen?zaaktype={{zaaktype_url}}",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"eigenschappen"
+									],
+									"query": [
+										{
+											"key": "zaaktype",
+											"value": "{{zaaktype_url}}"
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een EIGENSCHAP aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4b59c752-0aa2-4947-80a2-6418f0b1da64",
+										"exec": [
+											"pm.test(\"Maak een EIGENSCHAP aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.globals.set(\"eigenschap_url\", pm.response.json().url);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"naam\": \"test eigenschap2\",\n\t\"definitie\": \"for test\",\n\t\"zaaktype\": \"{{zaaktype_url}}\"\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/eigenschappen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"eigenschappen"
+									]
+								},
+								"description": "Maak een EIGENSCHAP aan. Dit kan alleen als het bijbehorende ZAAKTYPE een\nconcept betreft."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke EIGENSCHAP opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "276d1af1-d023-46b8-aa55-e07e48c34cb2",
+										"exec": [
+											"pm.test(\"Een specifieke EIGENSCHAP opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{eigenschap_url}}",
+									"host": [
+										"{{eigenschap_url}}"
+									]
+								},
+								"description": "Een specifieke EIGENSCHAP opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een EIGENSCHAP.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9dca389b-5111-4275-9fed-7bfd360a80b6",
+										"exec": [
+											"pm.test(\"Verwijder een EIGENSCHAP geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{eigenschap_url}}",
+									"host": [
+										"{{eigenschap_url}}"
+									]
+								},
+								"description": "Verwijder een EIGENSCHAP. Dit kan alleen als het bijbehorende ZAAKTYPE een\nconcept betreft."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for eigenschappen",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "informatieobjecttypen",
+					"item": [
+						{
+							"name": "Alle INFORMATIEOBJECTTYPEn opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "35b0f571-bbb7-48d6-ab81-f97ba4a4d2c8",
+										"exec": [
+											"pm.test(\"Alle INFORMATIEOBJECTTYPEn opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ztc_url}}/informatieobjecttypen?catalogus={{catalogus_url}}",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"informatieobjecttypen"
+									],
+									"query": [
+										{
+											"key": "catalogus",
+											"value": "{{catalogus_url}}"
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een INFORMATIEOBJECTTYPE aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "884a5bc2-35cb-4d0d-ac50-795c01e6354d",
+										"exec": [
+											"pm.test(\"Maak een INFORMATIEOBJECTTYPE aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_informatieobjecttype_url\", pm.response.json().url);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/informatieobjecttypen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"informatieobjecttypen"
+									]
+								},
+								"description": "Maak een INFORMATIEOBJECTTYPE aan."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifiek INFORMATIEOBJECTTYPE opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bcfa03ce-2e3d-473f-a4f2-5b006f742290",
+										"exec": [
+											"pm.test(\"Een specifiek INFORMATIEOBJECTTYPE opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_informatieobjecttype_url}}",
+									"host": [
+										"{{created_informatieobjecttype_url}}"
+									]
+								},
+								"description": "Een specifieke INFORMATIEOBJECTTYPE opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een INFORMATIEOBJECTTYPE.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ee186222-d8eb-4174-8a8d-74309f07a0ba",
+										"exec": [
+											"pm.test(\"Verwijder een INFORMATIEOBJECTTYPE geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});",
+											"",
+											"postman.setNextRequest(\"Alle RESULTAATTYPEn opvragen.\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_informatieobjecttype_url}}",
+									"host": [
+										"{{created_informatieobjecttype_url}}"
+									]
+								},
+								"description": "Verwijder een INFORMATIEOBJECTTYPE. Dit kan alleen als het een concept\nbetreft."
+							},
+							"response": []
+						},
+						{
+							"name": "Opvragen en bewerken van INFORMATIEOBJECTTYPEn nodig voor\nINFORMATIEOBJECTen in de Documenten API.",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://catalogi-api.vng.cloud/api/v1/informatieobjecttypen/:uuid/publish",
+									"protocol": "https",
+									"host": [
+										"catalogi-api",
+										"vng",
+										"cloud"
+									],
+									"path": [
+										"api",
+										"v1",
+										"informatieobjecttypen",
+										":uuid",
+										"publish"
+									],
+									"variable": [
+										{
+											"key": "uuid"
+										}
+									]
+								},
+								"description": "Een INFORMATIEOBJECTTYPE beschijft de karakteristieken van een document of\nander object dat informatie bevat."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for informatieobjecttypen",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "resultaattypen",
+					"item": [
+						{
+							"name": "Alle RESULTAATTYPEn opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "dcd1c452-05f4-4141-9c00-af192d1af95a",
+										"exec": [
+											"pm.test(\"Alle RESULTAATTYPEn opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ztc_url}}/resultaattypen?zaaktype={{zaaktype_url}}",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"resultaattypen"
+									],
+									"query": [
+										{
+											"key": "zaaktype",
+											"value": "{{zaaktype_url}}"
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een RESULTAATTYPE aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fa5002f5-8ca8-4d31-9c04-976092849568",
+										"exec": [
+											"pm.test(\"Maak een RESULTAATTYPE aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"Klaar 2\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/resultaattypen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"resultaattypen"
+									]
+								},
+								"description": "Maak een RESULTAATTYPE aan. Dit kan alleen als het bijbehorende ZAAKTYPE een\nconcept betreft."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke RESULTAATTYPE opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1cb5ac01-e85e-46ca-bc69-dc38d55122b9",
+										"exec": [
+											"pm.test(\"Een specifiek RESULTAATTYPE opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_resultaattype_url}}",
+									"host": [
+										"{{created_resultaattype_url}}"
+									]
+								},
+								"description": "Een specifieke RESULTAATTYPE opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een RESULTAATTYPE.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cd1b56c9-3ba4-4a96-bd39-714fd47b562c",
+										"exec": [
+											"pm.test(\"Verwijder een RESULTAATTYPE opvragen geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_resultaattype_url}}",
+									"host": [
+										"{{created_resultaattype_url}}"
+									]
+								},
+								"description": "Verwijder een RESULTAATTYPE. Dit kan alleen als het bijbehorende ZAAKTYPE\neen concept betreft."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for resultaattypen",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "roltypen",
+					"item": [
+						{
+							"name": "Alle ROLTYPEn opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6f82cda0-4c9f-4608-ac9c-1e62fe368873",
+										"exec": [
+											"pm.test(\"Alle ROLTYPEn opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ztc_url}}/roltypen?zaaktype={{zaaktype_url}}",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"roltypen"
+									],
+									"query": [
+										{
+											"key": "zaaktype",
+											"value": "{{zaaktype_url}}"
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een ROLTYPE aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a60da288-81b4-4fda-967c-27f500b40c61",
+										"exec": [
+											"pm.test(\"Maak een ROLTYPE aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_roltype_url\", pm.response.json().url);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"test2\",\n\t\"omschrijvingGeneriek\": \"adviseur\"\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/roltypen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"roltypen"
+									]
+								},
+								"description": "Maak een ROLTYPE aan. Dit kan alleen als het bijbehorende ZAAKTYPE een\nconcept betreft."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke ROLTYPE opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7651c622-9e2b-46ab-8463-2f08e5d36e1a",
+										"exec": [
+											"pm.test(\"Een specifiek ROLTYPE opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{roltype_url}}",
+									"host": [
+										"{{roltype_url}}"
+									]
+								},
+								"description": "Een specifieke ROLTYPE opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een ROLTYPE.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f426a7ba-ea59-451a-bb99-bd1dc84d6fe8",
+										"exec": [
+											"pm.test(\"Verwijder een ROLTYPE opvragen geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_roltype_url}}",
+									"host": [
+										"{{created_roltype_url}}"
+									]
+								},
+								"description": "Verwijder een ROLTYPE. Dit kan alleen als het bijbehorende ZAAKTYPE een\nconcept betreft."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for roltypen",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "statustypen",
+					"item": [
+						{
+							"name": "Alle STATUSTYPEn opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a40f9065-f69c-4fb8-a597-722ed49c9c62",
+										"exec": [
+											"pm.test(\"Alle STATUSTYPEn opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ztc_url}}/statustypen?zaaktype={{zaaktype_url}}",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"statustypen"
+									],
+									"query": [
+										{
+											"key": "zaaktype",
+											"value": "{{zaaktype_url}}"
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een STATUSTYPE aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "60ec4a00-fcc1-4e93-8a9a-fdcd9d79858e",
+										"exec": [
+											"pm.test(\"Maak een STATUSTYPE aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_statustype_url\", pm.response.json().url);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"omschrijving\": \"Eind2\",\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"volgnummer\": 3\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/statustypen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"statustypen"
+									]
+								},
+								"description": "Maak een STATUSTYPE aan. Dit kan alleen als het bijbehorende ZAAKTYPE een\nconcept betreft."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke STATUSTYPE opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cce8425a-9683-432d-961f-9b4059f1fe51",
+										"exec": [
+											"pm.test(\"Een specifiek STATUSTYPE opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_statustype_url}}",
+									"host": [
+										"{{created_statustype_url}}"
+									]
+								},
+								"description": "Een specifieke STATUSTYPE opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een STATUSTYPE.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5c518f22-ba60-4dba-955e-a83eec13b168",
+										"exec": [
+											"pm.test(\"Verwijder een STATUSTYPE opvragen geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_statustype_url}}",
+									"host": [
+										"{{created_statustype_url}}"
+									]
+								},
+								"description": "Verwijder een STATUSTYPE. Dit kan alleen als het bijbehorende ZAAKTYPE een\nconcept betreft."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for statustypen",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "zaaktype-informatieobjecttypen",
+					"item": [
+						{
+							"name": "Alle ZAAKTYPE-INFORMATIEOBJECTTYPE relaties opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "98cf6b1f-f8d5-4994-bcfb-7a7abf0ac5e5",
+										"exec": [
+											"pm.test(\"Alle ZAAKTYPE-INFORMATIEOBJECTTYPE relaties opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen?zaaktype={{zaaktype_url}}&informatieobjecttype={{informatieobjecttype_url}}",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"zaaktype-informatieobjecttypen"
+									],
+									"query": [
+										{
+											"key": "zaaktype",
+											"value": "{{zaaktype_url}}"
+										},
+										{
+											"key": "informatieobjecttype",
+											"value": "{{informatieobjecttype_url}}"
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een ZAAKTYPE-INFORMATIEOBJECTTYPE relatie aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fcb0087f-0c5e-47ac-ba38-1af1e3d7bbc6",
+										"exec": [
+											"pm.test(\"Maak een ZAAKTYPE-INFORMATIEOBJECTTYPE relatie aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_relatie_url\", pm.response.json().url);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"volgnummer\": 2,\n\t\"richting\": \"intern\"\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"zaaktype-informatieobjecttypen"
+									]
+								},
+								"description": "Maak een ZAAKTYPE-INFORMATIEOBJECTTYPE relatie aan. Dit kan alleen als het\nbijbehorende ZAAKTYPE een concept betreft."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke ZAAKTYPE-INFORMATIEOBJECTTYPE relatie opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a71a9314-8b8c-4edc-9c9d-023577d176ed",
+										"exec": [
+											"pm.test(\"Een specifieke ZAAKTYPE-INFORMATIEOBJECTTYPE relatie opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_relatie_url}}",
+									"host": [
+										"{{created_relatie_url}}"
+									]
+								},
+								"description": "Een specifieke ZAAKTYPE-INFORMATIEOBJECTTYPE relatie opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een ZAAKTYPE-INFORMATIEOBJECTTYPE relatie.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b8faab3a-f712-40eb-ae6a-5717ef132759",
+										"exec": [
+											"pm.test(\"Verwijder een ZAAKTYPE-INFORMATIEOBJECTTYPE relatie geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_relatie_url}}",
+									"host": [
+										"{{created_relatie_url}}"
+									]
+								},
+								"description": "Verwijder een ZAAKTYPE-INFORMATIEOBJECTTYPE relatie. Dit kan alleen als\nhet bijbehorende ZAAKTYPE een concept betreft."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for zaaktype-informatieobjecttypen",
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "zaaktypen",
+					"item": [
+						{
+							"name": "Alle ZAAKTYPEn opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5c3c428b-dd18-4541-bdf9-b475df2e49c7",
+										"exec": [
+											"pm.test(\"Alle ZAAKTYPEn opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ztc_url}}/zaaktypen?catalogus={{catalogus_url}}",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"zaaktypen"
+									],
+									"query": [
+										{
+											"key": "catalogus",
+											"value": "{{catalogus_url}}"
+										},
+										{
+											"key": "identificatie",
+											"value": "{{identificatie}}",
+											"disabled": true
+										},
+										{
+											"key": "trefwoorden",
+											"value": "{{trefwoorden}}",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "{{status}}",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "{{page}}",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een ZAAKTYPE aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1419332d-0ce8-43e8-86f3-1dcf0a1e5234",
+										"exec": [
+											"pm.test(\"Maak een ZAAKTYPE aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/zaaktypen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"zaaktypen"
+									]
+								},
+								"description": "Maak een ZAAKTYPE aan.\n\nEr wordt gevalideerd op:\n- geldigheid `catalogus` URL, dit moet een catalogus binnen dezelfde API zijn\n- Uniciteit `catalogus` en `omschrijving`. Dezelfde omeschrijving mag enkel\n  opnieuw gebruikt worden als het zaaktype een andere geldigheidsperiode\n  kent dan bestaande zaaktypen."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke ZAAKTYPE opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8c39f2ec-5967-4b22-bc0a-0981e8ba2345",
+										"exec": [
+											"pm.test(\"Een specifiek ZAAKTYPE opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{created_zaaktype_url}}",
+									"host": [
+										"{{created_zaaktype_url}}"
+									]
+								},
+								"description": "Een specifieke ZAAKTYPE opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een ZAAKTYPE.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b7c82f18-cbea-4366-ac1c-fcadb5b033f5",
+										"exec": [
+											"pm.test(\"Verwijder een ZAAKTYPE geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});",
+											"",
+											"postman.setNextRequest(\"Delete Zaak\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{created_zaaktype_url}}",
+									"host": [
+										"{{created_zaaktype_url}}"
+									]
+								},
+								"description": "Verwijder een ZAAKTYPE. Dit kan alleen als het een concept betreft."
+							},
+							"response": []
+						},
+						{
+							"name": "Opvragen en bewerken van ZAAKTYPEn nodig voor ZAKEN in de Zaken API.",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://catalogi-api.vng.cloud/api/v1/zaaktypen/:uuid/publish",
+									"protocol": "https",
+									"host": [
+										"catalogi-api",
+										"vng",
+										"cloud"
+									],
+									"path": [
+										"api",
+										"v1",
+										"zaaktypen",
+										":uuid",
+										"publish"
+									],
+									"variable": [
+										{
+											"key": "uuid"
+										}
+									]
+								},
+								"description": "Een ZAAKTYPE beschrijft het geheel van karakteristieke eigenschappen van\nzaken van eenzelfde soort."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for zaaktypen",
+					"_postman_isSubFolder": true
+				}
+			],
+			"description": "Een API om een zaaktypecatalogus (ZTC) te benaderen.\n\nDe zaaktypecatalogus helpt gemeenten om het proces vanuit de 'vraag van een\nklant' (productaanvraag, melding, aangifte, informatieverzoek e.d.) tot en met\nhet leveren van een passend antwoord daarop in te richten, inclusief de\nbijbehorende informatievoorziening.\n\nEen CATALOGUS bestaat uit ZAAKTYPEn, INFORMATIEOBJECTTYPEn en BESLUITTYPEn en\nwordt typisch gebruikt om een ZAAK (in de Zaken API), INFORMATIEOBJECT (in de\nDocumenten API) en BESLUIT (in de Besluiten API) te voorzien van type,\nstandaardwaarden en processtructuur.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Gemeentelijke Selectielijst API\n* Autorisaties API *(optioneel)*\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n### Notificaties\n\nDeze API publiceert notificaties op het kanaal `zaaktypen`.\n\n**Main resource**\n\n`zaaktype`\n\n\n\n**Kenmerken**\n\n* `catalogus`: URL-referentie naar de CATALOGUS waartoe dit ZAAKTYPE behoort.\n\n**Resources en acties**\n- `zaaktype`: create, destroy\n\n\nDeze API publiceert notificaties op het kanaal `besluittypen`.\n\n**Main resource**\n\n`besluittype`\n\n\n\n**Kenmerken**\n\n* `catalogus`: URL-referentie naar de CATALOGUS waartoe dit BESLUITTYPE behoort.\n\n**Resources en acties**\n- `besluittype`: create, destroy\n\n\nDeze API publiceert notificaties op het kanaal `informatieobjecttypen`.\n\n**Main resource**\n\n`informatieobjecttype`\n\n\n\n**Kenmerken**\n\n* `catalogus`: URL-referentie naar de CATALOGUS waartoe dit INFORMATIEOBJECTTYPE behoort.\n\n**Resources en acties**\n- `informatieobjecttype`: create, destroy\n\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "922a3cd9-0d9a-48cb-81df-9c899f794c0b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "57729294-71c7-4802-ad43-09ede90d182e",
 						"type": "text/javascript",
 						"exec": [
 							""
