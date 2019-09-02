@@ -169,14 +169,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
-					"raw": "{{url}}/zaaktype",
+					"raw": "{{mock_url}}/zaaktype",
 					"host": [
-						"{{url}}"
+						"{{mock_url}}"
 					],
 					"path": [
 						"zaaktype"
@@ -189,10 +185,6 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{url}}/zaaktype",
 							"host": [
@@ -217,14 +209,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
-					"raw": "{{url}}/zaak",
+					"raw": "{{mock_url}}/zaak",
 					"host": [
-						"{{url}}"
+						"{{mock_url}}"
 					],
 					"path": [
 						"zaak"
@@ -237,10 +225,6 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{url}}/zaak",
 							"host": [
@@ -265,14 +249,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
-					"raw": "{{url}}/communicatiekanaal",
+					"raw": "{{mock_url}}/communicatiekanaal",
 					"host": [
-						"{{url}}"
+						"{{mock_url}}"
 					],
 					"path": [
 						"communicatiekanaal"
@@ -285,10 +265,6 @@
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{url}}/communicatiekanaal",
 							"host": [
@@ -305,6 +281,91 @@
 					"header": null,
 					"cookie": [],
 					"body": "{\n    \"url\": \"http://example.com\",\n    \"naam\": \"string\",\n    \"omschrijving\": \"string\"\n}"
+				}
+			]
+		},
+		{
+			"name": "mock callbackUrl",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{mock_url}}/callback",
+					"host": [
+						"{{mock_url}}"
+					],
+					"path": [
+						"callback"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "mock callbackUrl",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/callback",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"callback"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 02 Sep 2019 11:25:36 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"af-bSa5cAxI104Ca3LcOmn/GNRqvZo\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=7595d391d51684ec"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=a908b68152dde90d"
+						},
+						{
+							"key": "Content-Length",
+							"value": "157"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": ""
 				}
 			]
 		}
