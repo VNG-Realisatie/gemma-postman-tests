@@ -1778,7 +1778,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"zaak\": \"{{global_zaak_url}}\",\n    \"identificatie\": \"string\",\n    \"datumtijd\": \"2019-08-29T14:14:21Z\",\n    \"kanaal\": \"string\"\n}"
+									"raw": "{\n    \"zaak\": \"{{global_zaak_url}}\",\n    \"identificatie\": \"klantcontact\",\n    \"datumtijd\": \"2019-08-29T14:14:21Z\",\n    \"kanaal\": \"string\"\n}"
 								},
 								"url": {
 									"raw": "{{zrc_url}}/klantcontacten",
@@ -6846,7 +6846,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"callbackUrl\": \"https://example.com\",\n    \"auth\": \"Bearer token\",\n    \"kanalen\": [\n\t\t{\n\t    \"filters\": \n            {},\n            \"naam\": \"zaken\"\n        }\n    ]\n\n}\n"
+									"raw": "{\n    \"callbackUrl\": \"{{mock_url}}/callback\",\n    \"auth\": \"Bearer token\",\n    \"kanalen\": [\n\t\t{\n\t    \"filters\": \n            {},\n            \"naam\": \"zaken\"\n        }\n    ]\n\n}\n"
 								},
 								"url": {
 									"raw": "{{nrc_url}}/abonnement",
@@ -6909,8 +6909,8 @@
 										"exec": [
 											"// Retrieve the Abonnement body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"abonnement_body\"));",
-											"pm.globals.set(\"callbackUrl\", \"https://google.com\");",
-											"body.callbackUrl = pm.globals.get(\"callbackUrl\");",
+											"pm.globals.set(\"kanalen\", [{\"naam\": \"documenten\", \"filters\": {}}]);",
+											"body.kanalen = pm.globals.get(\"kanalen\");",
 											"",
 											"// Store the modified Zaak Abonnement, allowing it to be used in the main request",
 											"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -6989,7 +6989,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"callbackUrl\": \"https://example.com\"\n}"
+									"raw": "{\n\t\"kanalen\": [\n\t\t{\n\t\t\t\"naam\": \"zaken\",\n\t\t\t\"filters\": {}\n\t\t}\t\n\t]\n}"
 								},
 								"url": {
 									"raw": "{{created_abonnement_url}}",
