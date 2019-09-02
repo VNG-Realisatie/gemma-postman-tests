@@ -46,10 +46,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties?clientIds={{client_id_limited}}",
 													"host": [
@@ -129,10 +125,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{ztc_url}}/catalogussen?domein=ZGWT",
 													"host": [
@@ -228,10 +220,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{referentielijst_url}}/resultaten",
 													"host": [
@@ -893,10 +881,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{ztc_url}}/catalogussen?domein=ZGWT",
 													"host": [
@@ -992,10 +976,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{referentielijst_url}}/resultaten",
 													"host": [
@@ -1025,10 +1005,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{referentielijst_url}}/resultaattypeomschrijvingen",
 													"host": [
@@ -2506,10 +2482,6 @@
 														"type": "text"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zrc_url}}/zaken?bronorganisatie={{zaak_bronorganisatie}}",
 													"host": [
@@ -3413,10 +3385,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{drc_url}}/objectinformatieobjecten?object={{zaak_url}}&informatieobject={{informatieobject_url}}",
 													"host": [
@@ -3477,10 +3445,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{drc_url}}/objectinformatieobjecten?object={{zaak_url}}&informatieobject={{informatieobject_url}}",
 													"host": [
@@ -3884,10 +3848,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zrc_url}}/zaken",
 													"host": [
@@ -3988,7 +3948,7 @@
 													"script": {
 														"id": "7a821ebf-37d5-43e6-a93f-42f2cc4268e4",
 														"exec": [
-															"pm.test(\"Zaken lezen zonder applicatie met zaken.aanmaken in autorisatie scopes geeft 403\", function() {",
+															"pm.test(\"Zaken lezen zonder applicatie met zaken.lezen in autorisatie scopes geeft 403\", function() {",
 															"    pm.response.to.have.status(403);",
 															"});"
 														],
@@ -4580,10 +4540,6 @@
 														"type": "text"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zrc_url}}/zaakinformatieobjecten?zaak={{created_zaak_url}}&informatieobject={{informatieobject_url}}",
 													"host": [
@@ -4656,10 +4612,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{current_related_informatieobject_url}}",
 													"host": [
@@ -5068,10 +5020,6 @@
 														"value": "application/json"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{created_zaak_url}}",
 													"host": [
@@ -5355,10 +5303,6 @@
 														"type": "text"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{created_zaak_url}}",
 													"host": [
@@ -9713,10 +9657,6 @@
 														"type": "text"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{hoofdzaak_url}}",
 													"host": [
@@ -9864,10 +9804,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{current_zaaktype}}",
 													"host": [
@@ -10071,10 +10007,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{current_resultaattype}}",
 													"host": [
@@ -10110,10 +10042,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{brc_url}}/besluiten?zaak={{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -10158,10 +10086,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{brc_url}}/besluiten?zaak={{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -10197,10 +10121,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zrc_url}}/zaakobjecten?zaak={{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -10261,10 +10181,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -10326,10 +10242,6 @@
 														"type": "text"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -10393,10 +10305,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -10458,10 +10366,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -10523,10 +10427,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -10580,10 +10480,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -10638,10 +10534,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -10693,10 +10585,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -10748,10 +10636,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zaak_zonder_archiefnominatie_url}}",
 													"host": [
@@ -12152,10 +12036,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{drc_url}}/objectinformatieobjecten?object={{created_zaak_url}}&informatieobject={{informatieobject_url}}",
 													"host": [
@@ -12293,10 +12173,6 @@
 														"type": "text"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{created_zaak_url}}",
 													"host": [
@@ -12331,10 +12207,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{resultaat_url}}",
 													"host": [
@@ -12369,10 +12241,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{status_url}}",
 													"host": [
@@ -12407,10 +12275,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{rol_url}}",
 													"host": [
@@ -12445,10 +12309,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zaakobject_url}}",
 													"host": [
@@ -12483,10 +12343,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{zaakeigenschap_url}}",
 													"host": [
@@ -12521,10 +12377,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{objectinformatieobject_url}}",
 													"host": [
@@ -12559,10 +12411,6 @@
 														"value": "EPSG:4326"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{created_zaakinformatieobject_url}}",
 													"host": [
@@ -12591,10 +12439,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{klantcontact_url}}",
 													"host": [
@@ -12634,10 +12478,6 @@
 														"type": "text"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{deelzaak_url}}",
 													"host": [
@@ -12788,10 +12628,6 @@
 											"request": {
 												"method": "DELETE",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{resultaattype_url}}",
 													"host": [
@@ -13257,10 +13093,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{ztc_url}}/catalogussen?domein=ZGWT",
 													"host": [
@@ -13356,10 +13188,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{referentielijst_url}}/resultaten",
 													"host": [
@@ -15266,10 +15094,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{informatieobject_url}}",
 													"host": [
@@ -15316,10 +15140,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{informatieobject_url}}",
 													"host": [
@@ -15550,10 +15370,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{informatieobjecttype_url}}",
 													"host": [
@@ -15743,10 +15559,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{drc_url}}/gebruiksrechten?informatieobject={{encoded_url}}",
 													"host": [
@@ -15786,10 +15598,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{created_informatieobject_url}}/audittrail",
 													"host": [
@@ -17337,10 +17145,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{ztc_url}}/catalogussen?domein=ZGWT",
 													"host": [
@@ -17436,10 +17240,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{referentielijst_url}}/resultaten",
 													"host": [
@@ -18696,10 +18496,6 @@
 														"type": "text"
 													}
 												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{brc_url}}/besluiten?verantwoordelijke_organisatie={{besluit_verantwoordelijke_organisatie}}",
 													"host": [
@@ -19303,10 +19099,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{drc_url}}/objectinformatieobjecten?object={{besluit_url}}&informatieobject={{informatieobject_url}}",
 													"host": [
@@ -19367,10 +19159,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{drc_url}}/objectinformatieobjecten?object={{besluit_url}}&informatieobject={{informatieobject_url}}",
 													"host": [
@@ -19498,10 +19286,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{brc_url}}/besluitinformatieobjecten?besluit={{encoded_url}}",
 													"host": [
@@ -19541,10 +19325,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{created_besluit_url}}/audittrail",
 													"host": [
@@ -19974,10 +19754,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{ztc_url}}/catalogussen?domein=ZGWT",
 													"host": [
@@ -20073,10 +19849,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{referentielijst_url}}/resultaten",
 													"host": [
@@ -20106,10 +19878,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{referentielijst_url}}/resultaattypeomschrijvingen",
 													"host": [
@@ -20529,10 +20297,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{resultaattypeomschrijving_url}}",
 													"host": [
@@ -20769,10 +20533,6 @@
 											"request": {
 												"method": "GET",
 												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
 												"url": {
 													"raw": "{{selectielijstklasse_url}}",
 													"host": [
@@ -25983,10 +25743,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{mock_url}}/200",
 							"host": [
@@ -26004,10 +25760,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{mock_url}}/404",
 							"host": [
@@ -26025,10 +25777,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{mock_url}}/zaaktype",
 							"host": [
@@ -26046,10 +25794,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{mock_url}}/zaak",
 							"host": [
@@ -26067,10 +25811,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{mock_url}}/communicatiekanaal",
 							"host": [
