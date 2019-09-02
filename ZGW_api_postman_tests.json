@@ -18685,8 +18685,10 @@
 															"",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_besluitinformatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create different Besluit\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create BesluitInformatieObject\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
+															"} else {",
+															"    postman.setNextRequest(\"Create BesluitInformatieObject\");",
 															"}"
 														],
 														"type": "text/javascript"
