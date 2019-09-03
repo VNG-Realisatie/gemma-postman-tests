@@ -17650,12 +17650,7 @@
 															"",
 															"pm.test(\"Besluit deels bijwerken past gegevens correct aan\", function() {",
 															"    pm.expect(pm.response.json().bestuursorgaan).to.be.equal(pm.globals.get(\"bestuursorgaan\"));",
-															"});",
-															"",
-															"if(pm.globals.get(\"created_besluit_url\")) {",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-001d) Besluit aanmaken met ongeldige besluittype url is onmogelijk\"]);",
-															"    postman.setNextRequest(\"(COMMON) Delete Besluit\");",
-															"}"
+															"});"
 														],
 														"type": "text/javascript"
 													}
