@@ -3567,7 +3567,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"clientIds\": [\n        \"zgw_api_tests_limited-d0sVJ8FQa9W7\"\n    ],\n    \"label\": \"Demo User with limited access\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_for_auth_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+													"raw": "{\n    \"clientIds\": [\n        \"{{client_id_limited}}\"\n    ],\n    \"label\": \"Demo User with limited access\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_for_auth_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -3916,7 +3916,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"clientIds\": [\n        \"zgw_api_tests_limited-d0sVJ8FQa9W7\"\n    ],\n    \"label\": \"Demo User with limited access\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n            ],\n            \"zaaktype\": \"{{zaaktype_for_auth_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+													"raw": "{\n    \"clientIds\": [\n        \"{{client_id_limited}}\"\n    ],\n    \"label\": \"Demo User with limited access\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n            ],\n            \"zaaktype\": \"{{zaaktype_for_auth_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -3950,6 +3950,7 @@
 														"exec": [
 															"pm.test(\"Zaken lezen zonder applicatie met zaken.lezen in autorisatie scopes geeft 403\", function() {",
 															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -4024,6 +4025,7 @@
 														"exec": [
 															"pm.test(\"Zaak aanmaken met applicatie zonder zaken.aanmaken in autorisatie scopes niet toegestaan\", function() {",
 															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
 															"});",
 															"",
 															"var next_requests = [];",
@@ -4647,7 +4649,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"clientIds\": [\n        \"zgw_api_tests_limited-d0sVJ8FQa9W7\"\n    ],\n    \"label\": \"Demo User without geforceerd bijwerken\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\",\n                \"zaken.bijwerken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+													"raw": "{\n    \"clientIds\": [\n        \"{{client_id_limited}}\"\n    ],\n    \"label\": \"Demo User without geforceerd bijwerken\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\",\n                \"zaken.bijwerken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -5388,7 +5390,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"clientIds\": [\n        \"zgw_api_tests_limited-d0sVJ8FQa9W7\"\n    ],\n    \"label\": \"Applicatie without heropenen\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\",\n                \"zaken.statussen.toevoegen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+													"raw": "{\n    \"clientIds\": [\n        \"{{client_id_limited}}\"\n    ],\n    \"label\": \"Applicatie without heropenen\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\",\n                \"zaken.statussen.toevoegen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -15668,7 +15670,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"clientIds\": [\n        \"zgw_api_tests_limited-d0sVJ8FQa9W7\"\n    ],\n    \"label\": \"Demo User for document lock tests\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"drc\",\n            \"componentWeergave\": \"Documentregistratiecomponent\",\n            \"scopes\": [\n            \t\"documenten.lezen\",\n                \"documenten.bijwerken\",\n                \"documenten.lock\"\n            ],\n            \"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"geheim\"\n        }\n    ]\n}"
+													"raw": "{\n    \"clientIds\": [\n        \"{{client_id_limited}}\"\n    ],\n    \"label\": \"Demo User for document lock tests\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"drc\",\n            \"componentWeergave\": \"Documentregistratiecomponent\",\n            \"scopes\": [\n            \t\"documenten.lezen\",\n                \"documenten.bijwerken\",\n                \"documenten.lock\"\n            ],\n            \"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"geheim\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
