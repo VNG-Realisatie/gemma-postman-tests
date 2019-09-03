@@ -18685,7 +18685,7 @@
 															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create BesluitInformatieObject\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
 															"} else {",
-															"    postman.setNextRequest(\"Create BesluitInformatieObject\");",
+															"    postman.setNextRequest(\"Create different Besluit\");",
 															"}"
 														],
 														"type": "text/javascript"
