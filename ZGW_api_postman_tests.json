@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "40623432-8961-46e5-8441-d90380f04c1c",
+		"_postman_id": "6422ed3f-ed3a-4a9e-9210-e4e21fad6d88",
 		"name": "ZGW api tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -18685,7 +18685,7 @@
 															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create BesluitInformatieObject\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
 															"} else {",
-															"    postman.setNextRequest(\"Create different Besluit\");",
+															"    postman.setNextRequest(\"Create BesluitInformatieObject\");",
 															"}"
 														],
 														"type": "text/javascript"
