@@ -1301,7 +1301,9 @@
 										"exec": [
 											"pm.test(\"Alle ZAAKBESLUITen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
-											"});"
+											"});",
+											"",
+											"postman.setNextRequest(\"Alle ZAAKEIGENSCHAPpen opvragen.\");"
 										],
 										"type": "text/javascript"
 									}
@@ -1378,7 +1380,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"besluit\": \"https://example.com\"\n}"
+									"raw": "{\n\t\"besluit\": \"{{besluit_url}}\"\n}"
 								},
 								"url": {
 									"raw": "{{global_zaak_url}}/besluiten",
@@ -1663,11 +1665,6 @@
 									{
 										"key": "X-Audit-Toelichting",
 										"value": "{{X-Audit-Toelichting}}"
-									},
-									{
-										"key": "Accept-Crs",
-										"value": "EPSG:4326",
-										"type": "text"
 									}
 								],
 								"body": {
