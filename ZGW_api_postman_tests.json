@@ -591,7 +591,7 @@
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
 															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(AC) Delete Zaaktype\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ac-003a) Autorisatie met component zrc scope m.b.t. zaken en zonder maxVertrouwelijkheidaanduiding en zaaktype is onmogelijk\"]);",
 															"}"
 														],
 														"type": "text/javascript"
@@ -611,6 +611,323 @@
 												"body": {
 													"mode": "raw",
 													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id4\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": false,\n\t\"autorisaties\": []\n}"
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "(ac-003)",
+									"item": [
+										{
+											"name": "(ac-003a) Autorisatie met component zrc scope m.b.t. zaken en zonder maxVertrouwelijkheidaanduiding en zaaktype is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "bb53923b-2d2a-4318-a8b2-aa9193449424",
+														"exec": [
+															"pm.test(\"Applicatie aanmaken met Autorisatie met component zrc en scope m.b.t. zaken zonder maxVertrouwelijkheidaanduiding en zaaktype is onmogelijk\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var errors = pm.response.json().invalidParams;",
+															"    errors.sort((a, b) => (a.name > b.name) ? 1 : -1);",
+															"    ",
+															"    pm.expect(errors[0].name).to.be.equal(\"autorisaties.0.maxVertrouwelijkheidaanduiding\");",
+															"    pm.expect(errors[0].code).to.be.equal(\"required\");",
+															"    ",
+															"    pm.expect(errors[1].name).to.be.equal(\"autorisaties.0.zaaktype\");",
+															"    pm.expect(errors[1].code).to.be.equal(\"required\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
+															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ac-003b) Autorisatie met component zrc zonder scope m.b.t. zaken en zonder maxVertrouwelijkheidaanduiding en zaaktype is mogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"\",\n            \"maxVertrouwelijkheidaanduiding\": \"\"\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ac-003b) Autorisatie met component zrc zonder scope m.b.t. zaken en zonder maxVertrouwelijkheidaanduiding en zaaktype is mogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "bb53923b-2d2a-4318-a8b2-aa9193449424",
+														"exec": [
+															"pm.test(\"Applicatie aanmaken met Autorisatie met component zrc zonder scope m.b.t. zaken en zonder maxVertrouwelijkheidaanduiding en zaaktype is mogelijk\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
+															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ac-003c) Autorisatie met component drc scope m.b.t. documenten en zonder maxVertrouwelijkheidaanduiding en informatieobjecttype is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"notificaties.publiceren\"\n            ],\n            \"zaaktype\": \"\",\n            \"maxVertrouwelijkheidaanduiding\": \"\"\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ac-003c) Autorisatie met component drc scope m.b.t. documenten en zonder maxVertrouwelijkheidaanduiding en informatieobjecttype is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "bb53923b-2d2a-4318-a8b2-aa9193449424",
+														"exec": [
+															"pm.test(\"Applicatie aanmaken met Autorisatie met component drc en scope m.b.t. documenten zonder maxVertrouwelijkheidaanduiding en informatieobjecttype is onmogelijk\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var errors = pm.response.json().invalidParams;",
+															"    errors.sort((a, b) => (a.name > b.name) ? 1 : -1);",
+															"    ",
+															"    pm.expect(errors[0].name).to.be.equal(\"autorisaties.0.informatieobjecttype\");",
+															"    pm.expect(errors[0].code).to.be.equal(\"required\");",
+															"    ",
+															"    pm.expect(errors[1].name).to.be.equal(\"autorisaties.0.maxVertrouwelijkheidaanduiding\");",
+															"    pm.expect(errors[1].code).to.be.equal(\"required\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
+															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ac-003d) Autorisatie met component drc zonder scope m.b.t. documenten en zonder maxVertrouwelijkheidaanduiding en informatieobjecttype is mogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"drc\",\n            \"componentWeergave\": \"Documentregistratiecomponent\",\n            \"scopes\": [\n                \"documenten.lezen\"\n            ],\n            \"informatieobjecttype\": \"\",\n            \"maxVertrouwelijkheidaanduiding\": \"\"\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ac-003d) Autorisatie met component drc zonder scope m.b.t. documenten en zonder maxVertrouwelijkheidaanduiding en informatieobjecttype is mogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "bb53923b-2d2a-4318-a8b2-aa9193449424",
+														"exec": [
+															"pm.test(\"Applicatie aanmaken met Autorisatie met component drc zonder scope m.b.t. documenten zonder maxVertrouwelijkheidaanduiding en informatieobjecttype is mogelijk\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
+															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ac-003e) Autorisatie met component brc scope m.b.t. besluiten en zonder besluittype is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"drc\",\n            \"componentWeergave\": \"Documentregistratiecomponent\",\n            \"scopes\": [\n                \"notificaties.publiceren\"\n            ],\n            \"informatieobjecttype\": \"\",\n            \"maxVertrouwelijkheidaanduiding\": \"\"\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ac-003e) Autorisatie met component brc scope m.b.t. besluiten en zonder besluittype is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "bb53923b-2d2a-4318-a8b2-aa9193449424",
+														"exec": [
+															"pm.test(\"Applicatie aanmaken met Autorisatie met component brc en scope m.b.t. besluiten zonder besluittype is onmogelijk\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var errors = pm.response.json().invalidParams;",
+															"    ",
+															"    pm.expect(errors[0].name).to.be.equal(\"autorisaties.0.besluittype\");",
+															"    pm.expect(errors[0].code).to.be.equal(\"required\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
+															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ac-003f) Autorisatie met component brc zonder scope m.b.t. besluiten en zonder besluittype is mogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"brc\",\n            \"componentWeergave\": \"Besluitregistratiecomponent\",\n            \"scopes\": [\n                \"besluiten.lezen\"\n            ],\n            \"besluittype\": \"\"\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ac-003f) Autorisatie met component brc zonder scope m.b.t. besluiten en zonder besluittype is mogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "bb53923b-2d2a-4318-a8b2-aa9193449424",
+														"exec": [
+															"pm.test(\"Applicatie aanmaken met Autorisatie met component brc zonder scope m.b.t. besluiten zonder besluittype is mogelijk\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
+															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(AC) Delete Zaaktype\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"brc\",\n            \"componentWeergave\": \"Besluitregistratiecomponent\",\n            \"scopes\": [\n                \"notificaties.publiceren\"\n            ],\n            \"besluittype\": \"\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
