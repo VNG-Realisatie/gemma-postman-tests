@@ -58,7 +58,7 @@
 									"});",
 									"",
 									"if(pm.response.code == 201) {",
-									"    pm.globals.set(\"provider_run_id\", pm.response.json().id);",
+									"    pm.globals.set(\"provider_run_uuid\", pm.response.json().uuid);",
 									"    pm.globals.set(\"delay_time\", 1);",
 									"}"
 								],
@@ -111,13 +111,9 @@
 									"    ",
 									"    var response = pm.response.json();",
 									"    ",
-									"    pm.expect(response.id).to.be.equal(pm.globals.get(\"provider_run_id\"));",
+									"    pm.expect(response.uuid).to.be.equal(pm.globals.get(\"provider_run_uuid\"));",
 									"    pm.expect(response.test_scenario).to.be.equal(\"postman echo test\");",
 									"});",
-									"",
-									"if(pm.response.code == 200) {",
-									"    pm.globals.set(\"provider_run_uuid\", pm.response.json().uuid);",
-									"}",
 									"",
 									"if(pm.response.json().status == \"stopped\") {",
 									"    postman.setNextRequest(\"Retrieve provider run result\");",
@@ -137,13 +133,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api_url}}/provider-run/{{provider_run_id}}",
+							"raw": "{{api_url}}/provider-run/{{provider_run_uuid}}",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
 								"provider-run",
-								"{{provider_run_id}}"
+								"{{provider_run_uuid}}"
 							]
 						}
 					},
@@ -219,13 +215,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api_url}}/provider-run/{{provider_run_id}}/result",
+							"raw": "{{api_url}}/provider-run/{{provider_run_uuid}}/result",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
 								"provider-run",
-								"{{provider_run_id}}",
+								"{{provider_run_uuid}}",
 								"result"
 							]
 						}
@@ -336,9 +332,8 @@
 									"});",
 									"",
 									"if(pm.response.code == 201) {",
-									"    pm.globals.set(\"testsession_id\", pm.response.json().id);",
-									"    pm.globals.set(\"exposed_url\", pm.response.json().exposedurl_set[0].subdomain);",
 									"    pm.globals.set(\"testsession_uuid\", pm.response.json().uuid);",
+									"    pm.globals.set(\"exposed_url\", pm.response.json().exposedurl_set[0].subdomain);",
 									"}"
 								],
 								"type": "text/javascript"
@@ -408,13 +403,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api_url}}/testsessions/{{testsession_id}}",
+							"raw": "{{api_url}}/testsessions/{{testsession_uuid}}",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
 								"testsessions",
-								"{{testsession_id}}"
+								"{{testsession_uuid}}"
 							]
 						}
 					},
@@ -469,13 +464,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api_url}}/testsessions/{{testsession_id}}/stop",
+							"raw": "{{api_url}}/testsessions/{{testsession_uuid}}/stop",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
 								"testsessions",
-								"{{testsession_id}}",
+								"{{testsession_uuid}}",
 								"stop"
 							]
 						}
@@ -512,13 +507,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api_url}}/testsessions/{{testsession_id}}",
+							"raw": "{{api_url}}/testsessions/{{testsession_uuid}}",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
 								"testsessions",
-								"{{testsession_id}}"
+								"{{testsession_uuid}}"
 							]
 						}
 					},
@@ -557,13 +552,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{api_url}}/testsessions/{{testsession_id}}/result/",
+							"raw": "{{api_url}}/testsessions/{{testsession_uuid}}/result/",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
 								"testsessions",
-								"{{testsession_id}}",
+								"{{testsession_uuid}}",
 								"result",
 								""
 							]
