@@ -20285,6 +20285,51 @@
 												}
 											},
 											"response": []
+										},
+										{
+											"name": "Create Applicatie without scope ...",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "f46ed5a6-304b-467e-9e9e-1c59516fa394",
+														"exec": [
+															"pm.globals.set(\"applicatie_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"clientIds\": [\n        \"{{client_id_limited}}\"\n    ],\n    \"label\": \"Demo User for catalogi concept tests\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"ztc\",\n            \"componentWeergave\": \"Zaaktypecatalogus\",\n            \"scopes\": [\n            \t\"zaaktypes.lezen\",\n                \"zaaktypes.schrijven\"\n            ]\n        }\n    ]\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ac_url}}/applicaties",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													]
+												}
+											},
+											"response": []
 										}
 									],
 									"_postman_isSubFolder": true
@@ -25741,6 +25786,1038 @@
 									"_postman_isSubFolder": true
 								},
 								{
+									"name": "ztc-009",
+									"item": [
+										{
+											"name": "Create Zaaktype to Publish",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+														"exec": [
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.eindeGeldigheid = \"2010-01-10\";",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Zaaktype",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{created_zaaktype_url}}/publish",
+													"host": [
+														"{{created_zaaktype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-009a) Zaaktype met concept False bijwerken is niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.doel = \"aangepast doel\";",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+														"exec": [
+															"pm.test(\"Zaaktype met concept False bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403); ",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_zaaktype_url}}",
+													"host": [
+														"{{created_zaaktype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-009b) Zaaktype met concept False deels bijwerken is niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+														"exec": [
+															"pm.test(\"Zaaktype met concept False deels bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403); ",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"omschrijving\": \"aangepast\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_zaaktype_url}}",
+													"host": [
+														"{{created_zaaktype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-009c) Zaaktype met concept False verwijderen is niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+														"exec": [
+															"pm.test(\"Zaaktype met concept False verwijderen geeft 403\", function() {",
+															"    pm.response.to.have.status(403); ",
+															"});",
+															"",
+															"postman.setNextRequest(\"(ZTC) Delete Zaaktype\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Besluittype to Publish\"]);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{created_zaaktype_url}}",
+													"host": [
+														"{{created_zaaktype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Besluittype to Publish",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+														"exec": [
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_besluittype_url\", pm.response.json().url);",
+															"}",
+															"",
+															"pm.globals.set(\"besluittype_body\", pm.request.body.raw);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+														"exec": [
+															"// // Retrieve the Zaak body template and modify as needed",
+															"// var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
+															"// body.eindeGeldigheid = \"2010-01-10\";",
+															"",
+															"// // Store the modified Zaak body, allowing it to be used in the main request",
+															"// pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test publish\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypes\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Besluittype",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{created_besluittype_url}}/publish",
+													"host": [
+														"{{created_besluittype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-009d) Besluittype met concept False bijwerken is niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
+															"body.toelichting = \"aangepast\";",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+														"exec": [
+															"pm.test(\"Besluittype met concept False bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403); ",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_besluittype_url}}",
+													"host": [
+														"{{created_besluittype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-009e) Besluittype met concept False deels bijwerken is niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+														"exec": [
+															"pm.test(\"Besluittype met concept False deels bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403); ",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"omschrijving\": \"ja\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_besluittype_url}}",
+													"host": [
+														"{{created_besluittype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-009f) Besluittype met concept False verwijderen is niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+														"exec": [
+															"pm.test(\"Besluittype met concept False verwijderen geeft 403\", function() {",
+															"    pm.response.to.have.status(403); ",
+															"});",
+															"",
+															"postman.setNextRequest(\"(ZTC) Delete Besluittype\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Informatieobjecttype to Publish\"]);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{created_besluittype_url}}",
+													"host": [
+														"{{created_besluittype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Informatieobjecttype to Publish",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+														"exec": [
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_informatieobjecttype_url\", pm.response.json().url);",
+															"}",
+															"",
+															"pm.globals.set(\"informatieobjecttype_body\", pm.request.body.raw);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"publish test\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/informatieobjecttypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Informatieobjecttype",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{created_informatieobjecttype_url}}/publish",
+													"host": [
+														"{{created_informatieobjecttype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-009g) Informatieobjecttype met concept False bijwerken is niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"informatieobjecttype_body\"));",
+															"body.omschrijving = \"aangepast\";",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+														"exec": [
+															"pm.test(\"Informatieobjecttype met concept False bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403); ",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_informatieobjecttype_url}}",
+													"host": [
+														"{{created_informatieobjecttype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-009h) Informatieobjecttype met concept False deels bijwerken is niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+														"exec": [
+															"pm.test(\"Informatieobjecttype met concept False deels bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403); ",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"omschrijving\": \"aangepast\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_informatieobjecttype_url}}",
+													"host": [
+														"{{created_informatieobjecttype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-009i) Informatieobjecttype met concept False verwijderen is niet toegestaan",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+														"exec": [
+															"pm.test(\"Informatieobjecttype met concept False verwijderen geeft 403\", function() {",
+															"    pm.response.to.have.status(403); ",
+															"});",
+															"",
+															"postman.setNextRequest(\"(ZTC) Delete Informatieobjecttype\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete Applicatie for concept tests\"]);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{created_informatieobjecttype_url}}",
+													"host": [
+														"{{created_informatieobjecttype_url}}"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "ztc-010",
+									"item": [
+										{
+											"name": "Create Zaaktype to Publish2",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+														"exec": [
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.eindeGeldigheid = \"2010-01-10\";",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Informatieobjecttype to Publish2",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+														"exec": [
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_informatieobjecttype_url\", pm.response.json().url);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{informatieobjecttype_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/informatieobjecttypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Besluittype to connect",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "af8280d8-3f2b-4b79-8d8c-7c36c7c0a9f7",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
+															"body.zaaktypes = [pm.globals.get(\"created_zaaktype_url\")];",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "53c6d9c5-d8d2-4dd0-8b62-7799838a18d1",
+														"exec": [
+															"pm.globals."
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
 									"name": "tearDown",
 									"item": [
 										{
@@ -25768,6 +26845,32 @@
 													"raw": "{{zaaktype_url}}",
 													"host": [
 														"{{zaaktype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete Applicatie for concept tests",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "f103f712-c82e-4415-9420-f2785e62af0b",
+														"exec": [
+															"pm.globals.unset(\"applicatie_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{applicatie_url}}",
+													"host": [
+														"{{applicatie_url}}"
 													]
 												}
 											},

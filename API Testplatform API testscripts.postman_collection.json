@@ -59,6 +59,7 @@
 									"",
 									"if(pm.response.code == 201) {",
 									"    pm.globals.set(\"provider_run_uuid\", pm.response.json().uuid);",
+									"    pm.globals.set(\"environment_uuid\", pm.response.json().environment.uuid);",
 									"    pm.globals.set(\"delay_time\", 1);",
 									"}"
 								],
@@ -83,7 +84,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"test_scenario\": \"postman echo test\",\n\t\"endpoints\": [\n\t\t{\n\t\t\t\"name\": \"api_url\",\n\t\t\t\"value\": \"https://postman-echo.com/status\"\n\t\t}\n\t]\n}"
+							"raw": "{\n\t\"test_scenario\": \"postman echo test\",\n\t\"environment\": {\n\t\t\"name\": \"test\",\n\t\t\"endpoints\": []\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/provider-run/",
@@ -240,7 +241,7 @@
 									"    pm.response.to.have.status(200);",
 									"    ",
 									"    var resp = pm.response.json();",
-									"    pm.expect(resp.label).to.be.equal(\"API Test Platform (beta)\");",
+									"    pm.expect(resp.label).to.be.equal(\"API Test Platform\");",
 									"    pm.expect(resp.message).to.be.equal(\"Success\");",
 									"    pm.expect(resp.color).to.be.equal(\"green\");",
 									"    pm.expect(resp.isError).to.be.equal(false);",
@@ -267,6 +268,50 @@
 							"path": [
 								"provider-run-shield",
 								"{{provider_run_uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve test scenario latest badge",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7e4db738-dd13-43db-8215-41b53068c7f2",
+								"exec": [
+									"pm.test(\"Provider run shield is correct\", function() {",
+									"    pm.response.to.have.status(200);",
+									"    ",
+									"    var resp = pm.response.json();",
+									"    pm.expect(resp.label).to.be.equal(\"API Test Platform\");",
+									"    pm.expect(resp.message).to.be.equal(\"Success\");",
+									"    pm.expect(resp.color).to.be.equal(\"green\");",
+									"    pm.expect(resp.isError).to.be.equal(false);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/provider-latest-badge/{{environment_uuid}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"provider-latest-badge",
+								"{{environment_uuid}}"
 							]
 						}
 					},
@@ -578,7 +623,7 @@
 									"    pm.response.to.have.status(200);",
 									"    ",
 									"    var resp = pm.response.json();",
-									"    pm.expect(resp.label).to.be.equal(\"API Test Platform (beta)\");",
+									"    pm.expect(resp.label).to.be.equal(\"API Test Platform\");",
 									"    pm.expect(resp.message).to.be.equal(\"Success\");",
 									"    pm.expect(resp.color).to.be.equal(\"green\");",
 									"    pm.expect(resp.isError).to.be.equal(false);",
