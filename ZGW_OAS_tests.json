@@ -1775,7 +1775,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"zaak\": \"{{global_zaak_url}}\",\n    \"identificatie\": \"klantcontact\",\n    \"datumtijd\": \"2019-08-29T14:14:21Z\",\n    \"kanaal\": \"string\"\n}"
+									"raw": "{\n    \"zaak\": \"{{global_zaak_url}}\",\n    \"datumtijd\": \"2019-08-29T14:14:21Z\",\n    \"kanaal\": \"string\"\n}"
 								},
 								"url": {
 									"raw": "{{zrc_url}}/klantcontacten",
