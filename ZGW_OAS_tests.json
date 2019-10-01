@@ -9,6 +9,55 @@
 			"name": "setUp",
 			"item": [
 				{
+					"name": "Delete Applicatie for AC tests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4ebd8630-96d0-4ce5-b012-a514f9a60fd6",
+								"exec": [
+									"var results = pm.response.json().results;",
+									"if(results.length > 0) {",
+									"    for(i=0; i<results.length; i++) {",
+									"        if(results[i].clientIds.includes(\"test_id_oas_tests\")) {",
+									"            pm.sendRequest({",
+									"                \"url\": results[i].url,",
+									"                \"method\": \"DELETE\",",
+									"                \"header\": {",
+									"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
+									"                }",
+									"            });",
+									"        }",
+									"    }",
+									"    // pm.globals.set(\"besluittype_url\", catalogus.besluittypen[0]);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ac_url}}/applicaties?clientIds=test_id_oas_tests",
+							"host": [
+								"{{ac_url}}"
+							],
+							"path": [
+								"applicaties"
+							],
+							"query": [
+								{
+									"key": "clientIds",
+									"value": "test_id_oas_tests"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Retrieve existing Catalogus",
 					"event": [
 						{
@@ -317,7 +366,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
+							"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/zaaktypen",
@@ -425,7 +474,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+							"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"https://ref.tst.vng.cloud/referentielijsten/api/v1/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"gerelateerde_zaak\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/resultaattypen",
@@ -2661,7 +2710,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaak\": \"https://google.com\",\n\t\"informatieobject\": \"{{informatieobject_url}}\"\n}"
+									"raw": "{\n\t\"zaak\": \"{{global_zaak_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\"\n}"
 								},
 								"url": {
 									"raw": "{{zrc_url}}/zaakinformatieobjecten",
@@ -14974,7 +15023,9 @@
 										"exec": [
 											"pm.test(\"Alle ABONNEMENTen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
-											"});"
+											"});",
+											"",
+											"postman.setNextRequest(\"Alle KANAALen opvragen.\");"
 										],
 										"type": "text/javascript"
 									}
@@ -15558,7 +15609,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id1\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+									"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id_oas_tests\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
 								},
 								"url": {
 									"raw": "{{ac_url}}/applicaties",
