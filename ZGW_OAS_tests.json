@@ -1352,7 +1352,7 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"postman.setNextRequest(\"Alle ZAAKEIGENSCHAPpen opvragen.\");"
+											"// postman.setNextRequest(\"Alle ZAAKEIGENSCHAPpen opvragen.\");"
 										],
 										"type": "text/javascript"
 									}
@@ -4115,153 +4115,6 @@
 									]
 								},
 								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
-							},
-							"response": []
-						},
-						{
-							"name": "Maak een OBJECT-INFORMATIEOBJECT relatie aan.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "0a080d03-988a-41c6-a8b7-2ca7ca73b0c4",
-										"exec": [
-											"pm.test(\"Maak een OBJECT-INFORMATIEOBJECT relatie aan geeft 400\", function() {",
-											"    pm.response.to.have.status(400);",
-											"});",
-											"",
-											"postman.setNextRequest(\"Alle BESLUITTYPEn opvragen.\");"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "X-NLX-Request-Application-Id",
-										"value": "{{X-NLX-Request-Application-Id}}"
-									},
-									{
-										"key": "X-NLX-Request-User-Id",
-										"value": "{{X-NLX-Request-User-Id}}"
-									},
-									{
-										"key": "X-Audit-Toelichting",
-										"value": "{{X-Audit-Toelichting}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"object\": \"{{global_zaak_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"objectType\": \"zaak\"\n}"
-								},
-								"url": {
-									"raw": "{{drc_url}}/objectinformatieobjecten",
-									"host": [
-										"{{drc_url}}"
-									],
-									"path": [
-										"objectinformatieobjecten"
-									]
-								},
-								"description": "**LET OP: Dit endpoint hoor je als consumer niet zelf aan te spreken.**\n\nAndere API's, zoals de Zaken API en de Besluiten API, gebruiken dit\nendpoint bij het synchroniseren van relaties.\n\n**Er wordt gevalideerd op**\n- geldigheid `informatieobject` URL\n- de combinatie `informatieobject` en `object` moet uniek zijn\n- bestaan van `object` URL"
-							},
-							"response": []
-						},
-						{
-							"name": "Een specifieke OBJECT-INFORMATIEOBJECT relatie opvragen.",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "https://documenten-api.vng.cloud/api/v1/objectinformatieobjecten/:uuid",
-									"protocol": "https",
-									"host": [
-										"documenten-api",
-										"vng",
-										"cloud"
-									],
-									"path": [
-										"api",
-										"v1",
-										"objectinformatieobjecten",
-										":uuid"
-									],
-									"variable": [
-										{
-											"key": "uuid"
-										}
-									]
-								},
-								"description": "Een specifieke OBJECT-INFORMATIEOBJECT relatie opvragen."
-							},
-							"response": []
-						},
-						{
-							"name": "Verwijder een OBJECT-INFORMATIEOBJECT relatie.",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "X-NLX-Request-Application-Id",
-										"value": "{{X-NLX-Request-Application-Id}}"
-									},
-									{
-										"key": "X-NLX-Request-User-Id",
-										"value": "{{X-NLX-Request-User-Id}}"
-									},
-									{
-										"key": "X-Audit-Toelichting",
-										"value": "{{X-Audit-Toelichting}}"
-									}
-								],
-								"url": {
-									"raw": "https://documenten-api.vng.cloud/api/v1/objectinformatieobjecten/:uuid",
-									"protocol": "https",
-									"host": [
-										"documenten-api",
-										"vng",
-										"cloud"
-									],
-									"path": [
-										"api",
-										"v1",
-										"objectinformatieobjecten",
-										":uuid"
-									],
-									"variable": [
-										{
-											"key": "uuid"
-										}
-									]
-								},
-								"description": "**LET OP: Dit endpoint hoor je als consumer niet zelf aan te spreken.**\n\nAndere API's, zoals de Zaken API en de Besluiten API, gebruiken dit\nendpoint bij het synchroniseren van relaties."
 							},
 							"response": []
 						}
@@ -14806,9 +14659,7 @@
 										"exec": [
 											"pm.test(\"Alle BESLUIT-INFORMATIEOBJECT relaties opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"postman.setNextRequest(\"Verwijder een BESLUIT-INFORMATIEOBJECT relatie.\");"
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -14833,98 +14684,6 @@
 									]
 								},
 								"description": "Een specifieke BESLUIT-INFORMATIEOBJECT relatie opvragen."
-							},
-							"response": []
-						},
-						{
-							"name": "Werk een BESLUIT-INFORMATIEOBJECT relatie in zijn geheel bij.",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "79bdc335-566f-489b-b0c0-792030e2e88c",
-										"exec": [
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "X-NLX-Request-Application-Id",
-										"value": "{{X-NLX-Request-Application-Id}}"
-									},
-									{
-										"key": "X-NLX-Request-User-Id",
-										"value": "{{X-NLX-Request-User-Id}}"
-									},
-									{
-										"key": "X-Audit-Toelichting",
-										"value": "{{X-Audit-Toelichting}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{bio_url}}",
-									"host": [
-										"{{bio_url}}"
-									]
-								},
-								"description": "Je mag enkel de gegevens van de relatie bewerken, en niet de relatie zelf\naanpassen.\n\n**Er wordt gevalideerd op**\n- `informatieobject` URL en `besluit` URL mogen niet veranderen"
-							},
-							"response": []
-						},
-						{
-							"name": "Werk een BESLUIT-INFORMATIEOBJECT relatie deels bij.",
-							"request": {
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "X-NLX-Request-Application-Id",
-										"value": "{{X-NLX-Request-Application-Id}}"
-									},
-									{
-										"key": "X-NLX-Request-User-Id",
-										"value": "{{X-NLX-Request-User-Id}}"
-									},
-									{
-										"key": "X-Audit-Toelichting",
-										"value": "{{X-Audit-Toelichting}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"besluit\": \"{{created_besluit_url}}\"\n}"
-								},
-								"url": {
-									"raw": "{{bio_url}}",
-									"host": [
-										"{{bio_url}}"
-									]
-								},
-								"description": "Je mag enkel de gegevens van de relatie bewerken, en niet de relatie zelf\naanpassen.\n\n**Er wordt gevalideerd op**\n- `informatieobject` URL en `besluit` URL mogen niet veranderen"
 							},
 							"response": []
 						},
