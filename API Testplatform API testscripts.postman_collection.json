@@ -84,7 +84,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"test_scenario\": \"postman echo test\",\n\t\"environment\": {\n\t\t\"name\": \"test\",\n\t\t\"endpoints\": []\n\t}\n}"
+							"raw": "{\n\t\"test_scenario\": \"Demo API Test\",\n\t\"environment\": {\n\t\t\"name\": \"test\",\n\t\t\"endpoints\": [\n\t\t\t{\"demo_url\": \"https://demo.api-test.nl/api/v2\"}\n\t\t]\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/provider-run/",
@@ -113,7 +113,7 @@
 									"    var response = pm.response.json();",
 									"    ",
 									"    pm.expect(response.uuid).to.be.equal(pm.globals.get(\"provider_run_uuid\"));",
-									"    pm.expect(response.test_scenario).to.be.equal(\"postman echo test\");",
+									"    pm.expect(response.test_scenario).to.be.equal(\"Demo API Test\");",
 									"});",
 									"",
 									"if(pm.response.json().status == \"stopped\") {",
@@ -196,8 +196,7 @@
 									"    ",
 									"    var resp = pm.response.json();",
 									"    ",
-									"    pm.expect(resp.length).to.be.equal(1);",
-									"    pm.expect(resp[0].calls.length).to.be.equal(1);",
+									"    pm.expect(resp[0].calls.length).to.be.equal(6);",
 									"    ",
 									"    pm.expect(resp[0].status).to.be.equal(\"Success\");",
 									"});"
@@ -402,7 +401,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"session_type\": \"postman-echo\"\n}"
+							"raw": "{\n\t\"session_type\": \"Demo API\"\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/testsessions/",
@@ -430,6 +429,7 @@
 									"    ",
 									"    var resp = pm.response.json();",
 									"",
+									"    pm.expect(resp.session_type).to.be.equal(\"Demo API\");",
 									"    pm.expect(resp.stopped).to.be.equal(null);",
 									"    pm.expect(resp.status).to.be.equal(\"running\");",
 									"});"
@@ -461,27 +461,2569 @@
 					"response": []
 				},
 				{
-					"name": "Make call to exposed url",
+					"name": "Retrieve all quotes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "abcd7b01-eb56-45b4-8be0-0fff9ce7b3aa",
+								"exec": [
+									"pm.test(\"Call to exposed url works\", function() {",
+									"    pm.expect(pm.response.json().info).to.be.not.equal(\"The requested resource has been already turned off.\") ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "bearer"
+						},
 						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{exposed_url}}quotes",
+							"host": [
+								"{{exposed_url}}quotes"
+							]
+						},
+						"description": "Bekijk de lijst van quotes."
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes?page=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes?page=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes?page=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes?page=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Gone",
+							"code": 410,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes?page=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes?page=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"count\": \"<integer>\",\n \"results\": [\n  {\n   \"tekst\": \"<string>\",\n   \"bronNaam\": \"<string>\",\n   \"url\": \"<uri>\",\n   \"bronLink\": \"<uri>\",\n   \"aangemaakt\": \"<dateTime>\",\n   \"laatstBijgewerkt\": \"<dateTime>\"\n  },\n  {\n   \"tekst\": \"<string>\",\n   \"bronNaam\": \"<string>\",\n   \"url\": \"<uri>\",\n   \"bronLink\": \"<uri>\",\n   \"aangemaakt\": \"<dateTime>\",\n   \"laatstBijgewerkt\": \"<dateTime>\"\n  }\n ],\n \"next\": \"<uri>\",\n \"previous\": \"<uri>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes?page=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Not Acceptable",
+							"code": 406,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes?page=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes?page=<integer>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create quote",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "db8843eb-526f-480d-a064-9632c4d6fe14",
+								"exec": [
+									"pm.test(\"Call to exposed url works\", function() {",
+									"    pm.expect(pm.response.json().info).to.be.not.equal(\"The requested resource has been already turned off.\") ",
+									"});",
+									"",
+									"pm.globals.set(\"quote_url\", pm.response.json().url);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Token {{token}}",
-								"type": "text"
+								"key": "Content-Type",
+								"value": "application/json"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"http://example.com\",\n    \"bronLink\": \"http://example.com\"\n}"
+						},
 						"url": {
-							"raw": "{{exposed_url}}status/200",
+							"raw": "{{quote_url}}quotes",
 							"host": [
-								"{{exposed_url}}status"
+								"{{quote_url}}quotes"
+							]
+						},
+						"description": "Voeg een quote toe."
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
 							],
-							"path": [
-								"200"
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									]
+								}
+							},
+							"status": "Gone",
+							"code": 410,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"invalid-params\": [\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  },\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  }\n ],\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									]
+								}
+							},
+							"status": "Not Acceptable",
+							"code": 406,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Location",
+									"value": "<uri>",
+									"description": "URL waar de resource leeft."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"tekst\": \"<string>\",\n \"bronNaam\": \"<string>\",\n \"url\": \"<uri>\",\n \"bronLink\": \"<uri>\",\n \"aangemaakt\": \"<dateTime>\",\n \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes"
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "quote read",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e099c45b-e535-4c70-a619-919df7fd642e",
+								"exec": [
+									"pm.test(\"Call to exposed url works\", function() {",
+									"    pm.expect(pm.response.json().info).to.be.not.equal(\"The requested resource has been already turned off.\") ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{quote_url}}",
+							"host": [
+								"{{quote_url}}"
+							]
+						},
+						"description": "Bekijk een enkele quote."
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"tekst\": \"<string>\",\n \"bronNaam\": \"<string>\",\n \"url\": \"<uri>\",\n \"bronLink\": \"<uri>\",\n \"aangemaakt\": \"<dateTime>\",\n \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Not Acceptable",
+							"code": 406,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Gone",
+							"code": 410,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "quote update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e1457280-6dc8-4429-8aca-d89d8dc32e3a",
+								"exec": [
+									"pm.test(\"Call to exposed url works\", function() {",
+									"    pm.expect(pm.response.json().info).to.be.not.equal(\"The requested resource has been already turned off.\") ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tekst\": \"aangepast\",\n    \"bronNaam\": \"<string>\",\n    \"bronLink\": \"http://example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{quote_url}}",
+							"host": [
+								"{{quote_url}}"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"invalid-params\": [\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  },\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  }\n ],\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Not Acceptable",
+							"code": 406,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"tekst\": \"<string>\",\n \"bronNaam\": \"<string>\",\n \"url\": \"<uri>\",\n \"bronLink\": \"<uri>\",\n \"aangemaakt\": \"<dateTime>\",\n \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Gone",
+							"code": 410,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "quote partial update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "13e39933-1e97-48ec-ae82-234feea71127",
+								"exec": [
+									"pm.test(\"Call to exposed url works\", function() {",
+									"    pm.expect(pm.response.json().info).to.be.not.equal(\"The requested resource has been already turned off.\") ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"bronNaam\": \"aangepast\"\n}"
+						},
+						"url": {
+							"raw": "{{quote_url}}",
+							"host": [
+								"{{quote_url}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"tekst\": \"<string>\",\n \"bronNaam\": \"<string>\",\n \"url\": \"<uri>\",\n \"bronLink\": \"<uri>\",\n \"aangemaakt\": \"<dateTime>\",\n \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Not Acceptable",
+							"code": 406,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Gone",
+							"code": 410,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"invalid-params\": [\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  },\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  }\n ],\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"bronLink\": \"<uri>\",\n    \"aangemaakt\": \"<dateTime>\",\n    \"laatstBijgewerkt\": \"<dateTime>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "quote delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d88e1f03-d769-4cfe-9a55-41db966c314a",
+								"exec": [
+									"pm.test(\"Call to exposed url works\", function() {",
+									"    pm.expect(pm.response.json().info).to.be.not.equal(\"The requested resource has been already turned off.\") ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{quote_url}}",
+							"host": [
+								"{{quote_url}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Gone",
+							"code": 410,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Not Acceptable",
+							"code": 406,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						},
+						{
+							"name": "Untitled Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/quotes/<uuid>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quotes",
+										"<uuid>"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "API-version",
+									"value": "<string>",
+									"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Stop test session",
