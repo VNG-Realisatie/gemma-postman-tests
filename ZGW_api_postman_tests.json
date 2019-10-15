@@ -15859,11 +15859,7 @@
 														"id": "b061f7db-dcb6-4769-baf7-97f122454b87",
 														"exec": [
 															"pm.test(\"EnkelvoudigInformatieObject verwijderen verwijdert ook alle gerelateerde Gebruiksrechten uit het DRC\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    var error = pm.response.json().invalidParams[0];",
-															"    pm.expect(error.name).to.be.equal(\"informatieobject\");",
-															"    pm.expect(error.code).to.be.equal(\"invalid\");",
+															"    pm.expect(pm.response.json()).to.be.equal([]);",
 															"});",
 															"",
 															"if(pm.response.code != 400) {",
@@ -19583,11 +19579,7 @@
 														"id": "b061f7db-dcb6-4769-baf7-97f122454b87",
 														"exec": [
 															"pm.test(\"Besluit verwijderen verwijdert ook alle gerelateerde BesluitInformatieObjecten uit het BRC\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    var error = pm.response.json().invalidParams[0];",
-															"    pm.expect(error.name).to.be.equal(\"besluit\");",
-															"    pm.expect(error.code).to.be.equal(\"invalid\");",
+															"    pm.expect(pm.response.json()).to.be.equal([]);",
 															"});",
 															"",
 															"if(pm.response.code != 400) {",
@@ -25880,8 +25872,8 @@
 													"script": {
 														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 														"exec": [
-															"pm.test(\"Zaaktype met concept False bijwerken geeft 403\", function() {",
-															"    pm.response.to.have.status(403); ",
+															"pm.test(\"Zaaktype met concept False bijwerken geeft 400\", function() {",
+															"    pm.response.to.have.status(400); ",
 															"});"
 														],
 														"type": "text/javascript"
@@ -25944,8 +25936,8 @@
 													"script": {
 														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 														"exec": [
-															"pm.test(\"Zaaktype met concept False deels bijwerken geeft 403\", function() {",
-															"    pm.response.to.have.status(403); ",
+															"pm.test(\"Zaaktype met concept False deels bijwerken geeft 400\", function() {",
+															"    pm.response.to.have.status(400); ",
 															"});"
 														],
 														"type": "text/javascript"
@@ -26073,8 +26065,8 @@
 													"script": {
 														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 														"exec": [
-															"pm.test(\"Zaaktype met concept False verwijderen geeft 403\", function() {",
-															"    pm.response.to.have.status(403); ",
+															"pm.test(\"Zaaktype met concept False verwijderen geeft 400\", function() {",
+															"    pm.response.to.have.status(400); ",
 															"});",
 															"",
 															"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -26202,8 +26194,8 @@
 													"script": {
 														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 														"exec": [
-															"pm.test(\"Besluittype met concept False bijwerken geeft 403\", function() {",
-															"    pm.response.to.have.status(403); ",
+															"pm.test(\"Besluittype met concept False bijwerken geeft 400\", function() {",
+															"    pm.response.to.have.status(400); ",
 															"});"
 														],
 														"type": "text/javascript"
@@ -26266,8 +26258,8 @@
 													"script": {
 														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 														"exec": [
-															"pm.test(\"Besluittype met concept False deels bijwerken geeft 403\", function() {",
-															"    pm.response.to.have.status(403); ",
+															"pm.test(\"Besluittype met concept False deels bijwerken geeft 400\", function() {",
+															"    pm.response.to.have.status(400); ",
 															"});"
 														],
 														"type": "text/javascript"
@@ -26395,8 +26387,8 @@
 													"script": {
 														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 														"exec": [
-															"pm.test(\"Besluittype met concept False verwijderen geeft 403\", function() {",
-															"    pm.response.to.have.status(403); ",
+															"pm.test(\"Besluittype met concept False verwijderen geeft 400\", function() {",
+															"    pm.response.to.have.status(400); ",
 															"});",
 															"",
 															"postman.setNextRequest(\"(COMMON) Delete Besluittype\");",
@@ -26519,8 +26511,8 @@
 													"script": {
 														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 														"exec": [
-															"pm.test(\"Informatieobjecttype met concept False bijwerken geeft 403\", function() {",
-															"    pm.response.to.have.status(403); ",
+															"pm.test(\"Informatieobjecttype met concept False bijwerken geeft 400\", function() {",
+															"    pm.response.to.have.status(400); ",
 															"});"
 														],
 														"type": "text/javascript"
@@ -26583,8 +26575,8 @@
 													"script": {
 														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 														"exec": [
-															"pm.test(\"Informatieobjecttype met concept False deels bijwerken geeft 403\", function() {",
-															"    pm.response.to.have.status(403); ",
+															"pm.test(\"Informatieobjecttype met concept False deels bijwerken geeft 400\", function() {",
+															"    pm.response.to.have.status(400); ",
 															"});"
 														],
 														"type": "text/javascript"
@@ -26712,8 +26704,8 @@
 													"script": {
 														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 														"exec": [
-															"pm.test(\"Informatieobjecttype met concept False verwijderen geeft 403\", function() {",
-															"    pm.response.to.have.status(403); ",
+															"pm.test(\"Informatieobjecttype met concept False verwijderen geeft 400\", function() {",
+															"    pm.response.to.have.status(400); ",
 															"});",
 															"",
 															"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
@@ -26911,8 +26903,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Besluittype gerelateerd aan Zaaktype met concept False bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -26975,8 +26967,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Besluittype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -27104,8 +27096,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Besluittype gerelateerd aan Zaaktype met concept False verwijderen geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -27287,8 +27279,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Besluittype gerelateerd aan Informatieobjecttype met concept False bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype gerelateerd aan Informatieobjecttype met concept False bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -27351,8 +27343,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Besluittype gerelateerd aan Informatieobjecttype met concept False deels bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype gerelateerd aan Informatieobjecttype met concept False deels bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -27480,8 +27472,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Besluittype gerelateerd aan Informatieobjecttype met concept False verwijderen geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype gerelateerd aan Informatieobjecttype met concept False verwijderen geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
@@ -27672,8 +27664,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Eigenschap gerelateerd aan Zaaktype met concept False bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Eigenschap gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -27736,8 +27728,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Eigenschap gerelateerd aan Zaaktype met concept False deels bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Eigenschap gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -27800,8 +27792,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Eigenschap gerelateerd aan Zaaktype met concept False verwijderen geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Eigenschap gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -27993,8 +27985,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Informatieobjecttype gerelateerd aan Zaaktype met concept False bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Informatieobjecttype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28057,8 +28049,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Informatieobjecttype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Informatieobjecttype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28186,8 +28178,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Informatieobjecttype gerelateerd aan Zaaktype met concept False verwijderen geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Informatieobjecttype gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -28369,8 +28361,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Informatieobjecttype gerelateerd aan Besluittype met concept False bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Informatieobjecttype gerelateerd aan Besluittype met concept False bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28433,8 +28425,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Informatieobjecttype gerelateerd aan Besluittype met concept False deels bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Informatieobjecttype gerelateerd aan Besluittype met concept False deels bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28562,8 +28554,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Informatieobjecttype gerelateerd aan Besluittype met concept False verwijderen geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Informatieobjecttype gerelateerd aan Besluittype met concept False verwijderen geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -28754,8 +28746,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Resultaattype gerelateerd aan Zaaktype met concept False bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Resultaattype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28818,8 +28810,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Resultaattype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Resultaattype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28882,8 +28874,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Resultaattype gerelateerd aan Zaaktype met concept False verwijderen geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Resultaattype gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -29074,8 +29066,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Roltype gerelateerd aan Zaaktype met concept False bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Roltype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29138,8 +29130,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Roltype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Roltype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29202,8 +29194,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Roltype gerelateerd aan Zaaktype met concept False verwijderen geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Roltype gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -29416,8 +29408,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29480,8 +29472,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29544,8 +29536,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False verwijderen geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -29787,8 +29779,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29851,8 +29843,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Zaaktype gerelateerd aan Besluittype met concept False deels bijwerken geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Zaaktype gerelateerd aan Besluittype met concept False deels bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29980,8 +29972,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Zaaktype gerelateerd aan Besluittype met concept False verwijderen geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Zaaktype gerelateerd aan Besluittype met concept False verwijderen geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Besluittype\");",
@@ -30123,8 +30115,8 @@
 															"script": {
 																"id": "53c6d9c5-d8d2-4dd0-8b62-7799838a18d1",
 																"exec": [
-																	"pm.test(\"Besluittype aanmaken met relatie naar Zaaktype met concept False geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype aanmaken met relatie naar Zaaktype met concept False geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -30251,8 +30243,8 @@
 															"script": {
 																"id": "53c6d9c5-d8d2-4dd0-8b62-7799838a18d1",
 																"exec": [
-																	"pm.test(\"Besluittype aanmaken met relatie naar Informatieobjecttype met concept False geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype aanmaken met relatie naar Informatieobjecttype met concept False geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -30374,8 +30366,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Besluittype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -30438,8 +30430,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Besluittype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -30507,8 +30499,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Besluittype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -30571,8 +30563,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Besluittype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Besluittype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
@@ -30711,8 +30703,8 @@
 															"script": {
 																"id": "53c6d9c5-d8d2-4dd0-8b62-7799838a18d1",
 																"exec": [
-																	"pm.test(\"Eigenschap aanmaken met relatie naar Zaaktype met concept False geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Eigenschap aanmaken met relatie naar Zaaktype met concept False geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -30829,8 +30821,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Eigenschap bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Eigenschap bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -30893,8 +30885,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Eigenschap deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Eigenschap deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -31182,8 +31174,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Resultaattype bijwerken relatie leggen met Zaaktype met concept False geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Resultaattype bijwerken relatie leggen met Zaaktype met concept False geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -31246,8 +31238,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Resultaattype deels bijwerken relatie leggen met Zaaktype met concept False geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Resultaattype deels bijwerken relatie leggen met Zaaktype met concept False geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -31386,8 +31378,8 @@
 															"script": {
 																"id": "53c6d9c5-d8d2-4dd0-8b62-7799838a18d1",
 																"exec": [
-																	"pm.test(\"Roltype aanmaken met relatie naar Zaaktype met concept False geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Roltype aanmaken met relatie naar Zaaktype met concept False geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -31504,8 +31496,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Roltype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Roltype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -31568,8 +31560,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Roltype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Roltype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -31730,8 +31722,8 @@
 															"script": {
 																"id": "53c6d9c5-d8d2-4dd0-8b62-7799838a18d1",
 																"exec": [
-																	"pm.test(\"Statustype aanmaken met relatie naar Zaaktype met concept False geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Statustype aanmaken met relatie naar Zaaktype met concept False geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -31848,8 +31840,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Statustype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Statustype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -31912,8 +31904,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Statustype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Statustype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -32079,8 +32071,8 @@
 															"script": {
 																"id": "53c6d9c5-d8d2-4dd0-8b62-7799838a18d1",
 																"exec": [
-																	"pm.test(\"Zaaktype aanmaken met relatie naar Besluittype met concept False geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Zaaktype aanmaken met relatie naar Besluittype met concept False geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -32210,8 +32202,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Zaaktype bijwerken relatie leggen met Informatieobjecttype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Zaaktype bijwerken relatie leggen met Informatieobjecttype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -32274,8 +32266,8 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Zaaktype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 403\", function() {",
-																	"    pm.response.to.have.status(403); ",
+																	"pm.test(\"Zaaktype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
