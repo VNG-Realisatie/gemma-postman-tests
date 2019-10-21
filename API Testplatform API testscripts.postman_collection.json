@@ -84,7 +84,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"test_scenario\": \"Demo API Test\",\n\t\"environment\": {\n\t\t\"name\": \"test\",\n\t\t\"endpoints\": [\n\t\t\t{\"demo_url\": \"https://demo.api-test.nl/api/v2\"}\n\t\t]\n\t}\n}"
+							"raw": "{\n\t\"test_scenario\": \"Demo API Test\",\n\t\"environment\": {\n\t\t\"name\": \"productie\",\n\t\t\"endpoints\": [\n\t\t\t{\"demo_url\": \"https://demo.api-test.nl/api/v2\"}\n\t\t]\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/provider-run/",
@@ -469,7 +469,7 @@
 								"id": "abcd7b01-eb56-45b4-8be0-0fff9ce7b3aa",
 								"exec": [
 									"pm.test(\"Call to exposed url works\", function() {",
-									"    pm.expect(pm.response.json().info).to.be.not.equal(\"The requested resource has been already turned off.\") ",
+									"    pm.expect(pm.response.json().info).to.be.not.equal(\"The requested resource has been already turned off.\");",
 									"});"
 								],
 								"type": "text/javascript"
@@ -869,9 +869,9 @@
 							"raw": "{\n    \"tekst\": \"<string>\",\n    \"bronNaam\": \"<string>\",\n    \"url\": \"http://example.com\",\n    \"bronLink\": \"http://example.com\"\n}"
 						},
 						"url": {
-							"raw": "{{quote_url}}quotes",
+							"raw": "{{exposed_url}}quotes",
 							"host": [
-								"{{quote_url}}quotes"
+								"{{exposed_url}}quotes"
 							]
 						},
 						"description": "Voeg een quote toe."
@@ -2672,7 +2672,7 @@
 								"id": "d88e1f03-d769-4cfe-9a55-41db966c314a",
 								"exec": [
 									"pm.test(\"Call to exposed url works\", function() {",
-									"    pm.expect(pm.response.json().info).to.be.not.equal(\"The requested resource has been already turned off.\") ",
+									"    pm.response.to.have.status(204);",
 									"});"
 								],
 								"type": "text/javascript"
@@ -3077,7 +3077,7 @@
 									"    ",
 									"    var resp = pm.response.json();",
 									"",
-									"    pm.expect(resp.status).to.be.equal(\"stopped\");",
+									"    pm.expect([\"stopped\", \"shutting down\"].includes(resp.status));",
 									"});"
 								],
 								"type": "text/javascript"
@@ -3121,7 +3121,7 @@
 									"",
 									"    pm.expect(resp.result).to.be.equal(\"Succesvol\");",
 									"    ",
-									"    pm.expect(resp.report.length).to.be.equal(1);",
+									"    pm.expect(resp.report.length).to.be.equal(6);",
 									"    pm.expect(resp.report[0].result).to.be.equal(\"Succesvol\");",
 									"});"
 								],
