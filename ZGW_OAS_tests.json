@@ -915,12 +915,82 @@
 									}
 								],
 								"url": {
-									"raw": "{{zrc_url}}/zaken",
+									"raw": "{{zrc_url}}/zaken?identificatie=zaak&bronorganisatie=000000000&zaaktype={{zaaktype_url}}&archiefnominatie=blijvend_bewaren&archiefnominatie__in=blijvend_bewaren&archiefactiedatum=2019-01-02&archiefactiedatum__lt=2019-01-03&archiefactiedatum__gt=2019-01-01&archiefstatus=nog_te_archiveren&archiefstatus__in=nog_te_archiveren&startdatum=2019-01-02&startdatum__gt=2019-01-01&startdatum__gte=2019-01-01&startdatum__lt=2019-01-03&startdatum__lte=2019-01-03&ordering=identificatie&page=1",
 									"host": [
 										"{{zrc_url}}"
 									],
 									"path": [
 										"zaken"
+									],
+									"query": [
+										{
+											"key": "identificatie",
+											"value": "zaak"
+										},
+										{
+											"key": "bronorganisatie",
+											"value": "000000000"
+										},
+										{
+											"key": "zaaktype",
+											"value": "{{zaaktype_url}}"
+										},
+										{
+											"key": "archiefnominatie",
+											"value": "blijvend_bewaren"
+										},
+										{
+											"key": "archiefnominatie__in",
+											"value": "blijvend_bewaren"
+										},
+										{
+											"key": "archiefactiedatum",
+											"value": "2019-01-02"
+										},
+										{
+											"key": "archiefactiedatum__lt",
+											"value": "2019-01-03"
+										},
+										{
+											"key": "archiefactiedatum__gt",
+											"value": "2019-01-01"
+										},
+										{
+											"key": "archiefstatus",
+											"value": "nog_te_archiveren"
+										},
+										{
+											"key": "archiefstatus__in",
+											"value": "nog_te_archiveren"
+										},
+										{
+											"key": "startdatum",
+											"value": "2019-01-02"
+										},
+										{
+											"key": "startdatum__gt",
+											"value": "2019-01-01"
+										},
+										{
+											"key": "startdatum__gte",
+											"value": "2019-01-01"
+										},
+										{
+											"key": "startdatum__lt",
+											"value": "2019-01-03"
+										},
+										{
+											"key": "startdatum__lte",
+											"value": "2019-01-03"
+										},
+										{
+											"key": "ordering",
+											"value": "identificatie"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										}
 									]
 								},
 								"description": "Deze lijst kan gefilterd wordt met query-string parameters.\n\n**Opmerking**\n- er worden enkel zaken getoond van de zaaktypes waar u toe geautoriseerd\n  bent."
@@ -1613,12 +1683,18 @@
 									}
 								],
 								"url": {
-									"raw": "{{zrc_url}}/klantcontacten",
+									"raw": "{{zrc_url}}/klantcontacten?page=1",
 									"host": [
 										"{{zrc_url}}"
 									],
 									"path": [
 										"klantcontacten"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										}
 									]
 								},
 								"description": "Alle KLANTCONTACTen opvragen."
@@ -1760,7 +1836,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{zrc_url}}/resultaten?zaak={{global_zaak_url}}&resultaattype={{resultaattype_url}}",
+									"raw": "{{zrc_url}}/resultaten?zaak={{global_zaak_url}}&resultaattype={{resultaattype_url}}&page=1",
 									"host": [
 										"{{zrc_url}}"
 									],
@@ -1775,6 +1851,10 @@
 										{
 											"key": "resultaattype",
 											"value": "{{resultaattype_url}}"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -2096,7 +2176,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{zrc_url}}/rollen?zaak={{global_zaak_url}}",
+									"raw": "{{zrc_url}}/rollen?zaak={{global_zaak_url}}&betrokkene=https://example.com/&betrokkeneType=natuurlijk_persoon&betrokkeneIdentificatie__natuurlijkPersoon__inpBsn={{betrokkeneIdentificatie__natuurlijkPersoon__inpBsn}}&betrokkeneIdentificatie__natuurlijkPersoon__anpIdentificatie={{betrokkeneIdentificatie__natuurlijkPersoon__anpIdentificatie}}&betrokkeneIdentificatie__natuurlijkPersoon__inpA_nummer={{betrokkeneIdentificatie__natuurlijkPersoon__inpA_nummer}}&betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId={{betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId}}&betrokkeneIdentificatie__nietNatuurlijkPersoon__annIdentificatie={{betrokkeneIdentificatie__nietNatuurlijkPersoon__annIdentificatie}}&betrokkeneIdentificatie__vestiging__vestigingsNummer={{betrokkeneIdentificatie__vestiging__vestigingsNummer}}&betrokkeneIdentificatie__vestiging__identificatie={{betrokkeneIdentificatie__vestiging__identificatie}}&betrokkeneIdentificatie__medewerker__identificatie={{betrokkeneIdentificatie__medewerker__identificatie}}&roltype={{roltype_url}}&omschrijving={{omschrijving}}&omschrijvingGeneriek=adviseur&page=1",
 									"host": [
 										"{{zrc_url}}"
 									],
@@ -2110,68 +2190,59 @@
 										},
 										{
 											"key": "betrokkene",
-											"value": "{{betrokkene}}",
-											"disabled": true
+											"value": "https://example.com/"
 										},
 										{
 											"key": "betrokkeneType",
-											"value": "{{betrokkeneType}}",
-											"disabled": true
+											"value": "natuurlijk_persoon"
 										},
 										{
 											"key": "betrokkeneIdentificatie__natuurlijkPersoon__inpBsn",
-											"value": "{{betrokkeneIdentificatie__natuurlijkPersoon__inpBsn}}",
-											"disabled": true
+											"value": "{{betrokkeneIdentificatie__natuurlijkPersoon__inpBsn}}"
 										},
 										{
 											"key": "betrokkeneIdentificatie__natuurlijkPersoon__anpIdentificatie",
-											"value": "{{betrokkeneIdentificatie__natuurlijkPersoon__anpIdentificatie}}",
-											"disabled": true
+											"value": "{{betrokkeneIdentificatie__natuurlijkPersoon__anpIdentificatie}}"
 										},
 										{
 											"key": "betrokkeneIdentificatie__natuurlijkPersoon__inpA_nummer",
-											"value": "{{betrokkeneIdentificatie__natuurlijkPersoon__inpA_nummer}}",
-											"disabled": true
+											"value": "{{betrokkeneIdentificatie__natuurlijkPersoon__inpA_nummer}}"
 										},
 										{
 											"key": "betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId",
-											"value": "{{betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId}}",
-											"disabled": true
+											"value": "{{betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId}}"
 										},
 										{
 											"key": "betrokkeneIdentificatie__nietNatuurlijkPersoon__annIdentificatie",
-											"value": "{{betrokkeneIdentificatie__nietNatuurlijkPersoon__annIdentificatie}}",
-											"disabled": true
+											"value": "{{betrokkeneIdentificatie__nietNatuurlijkPersoon__annIdentificatie}}"
 										},
 										{
 											"key": "betrokkeneIdentificatie__vestiging__vestigingsNummer",
-											"value": "{{betrokkeneIdentificatie__vestiging__vestigingsNummer}}",
-											"disabled": true
+											"value": "{{betrokkeneIdentificatie__vestiging__vestigingsNummer}}"
 										},
 										{
 											"key": "betrokkeneIdentificatie__vestiging__identificatie",
-											"value": "{{betrokkeneIdentificatie__vestiging__identificatie}}",
-											"disabled": true
+											"value": "{{betrokkeneIdentificatie__vestiging__identificatie}}"
 										},
 										{
 											"key": "betrokkeneIdentificatie__medewerker__identificatie",
-											"value": "{{betrokkeneIdentificatie__medewerker__identificatie}}",
-											"disabled": true
+											"value": "{{betrokkeneIdentificatie__medewerker__identificatie}}"
 										},
 										{
 											"key": "roltype",
-											"value": "{{roltype}}",
-											"disabled": true
+											"value": "{{roltype_url}}"
 										},
 										{
 											"key": "omschrijving",
-											"value": "{{omschrijving}}",
-											"disabled": true
+											"value": "{{omschrijving}}"
 										},
 										{
 											"key": "omschrijvingGeneriek",
-											"value": "{{omschrijvingGeneriek}}",
-											"disabled": true
+											"value": "adviseur"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -2343,7 +2414,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{zrc_url}}/statussen?zaak={{global_zaak_url}}&statustype={{non_eindstatustype}}",
+									"raw": "{{zrc_url}}/statussen?zaak={{global_zaak_url}}&statustype={{non_eindstatustype}}&page=1",
 									"host": [
 										"{{zrc_url}}"
 									],
@@ -2358,6 +2429,10 @@
 										{
 											"key": "statustype",
 											"value": "{{non_eindstatustype}}"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -2824,7 +2899,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{zrc_url}}/zaakobjecten?zaak={{global_zaak_url}}",
+									"raw": "{{zrc_url}}/zaakobjecten?zaak={{global_zaak_url}}&object=https://example.com&objectType=pand&page=1",
 									"host": [
 										"{{zrc_url}}"
 									],
@@ -2835,6 +2910,18 @@
 										{
 											"key": "zaak",
 											"value": "{{global_zaak_url}}"
+										},
+										{
+											"key": "object",
+											"value": "https://example.com"
+										},
+										{
+											"key": "objectType",
+											"value": "pand"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -3005,12 +3092,26 @@
 									}
 								],
 								"url": {
-									"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
+									"raw": "{{drc_url}}/enkelvoudiginformatieobjecten?identificatie=document&bronorganisatie=000000000&page=1",
 									"host": [
 										"{{drc_url}}"
 									],
 									"path": [
 										"enkelvoudiginformatieobjecten"
+									],
+									"query": [
+										{
+											"key": "identificatie",
+											"value": "document"
+										},
+										{
+											"key": "bronorganisatie",
+											"value": "000000000"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										}
 									]
 								},
 								"description": "Deze lijst kan gefilterd wordt met query-string parameters.\n\nDe objecten bevatten metadata over de documenten en de downloadlink\n(`inhoud`) naar de binary data. Alleen de laatste versie van elk\n(ENKELVOUDIG) INFORMATIEOBJECT wordt getoond. Specifieke versies kunnen\nalleen"
@@ -3176,7 +3277,19 @@
 										"exec": [
 											"pm.test(\"Een specifiek (ENKELVOUDIG) INFORMATIEOBJECT opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
-											"});"
+											"});",
+											"",
+											"pm.globals.unset(\"current_timestamp\");"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "1c6dd581-142a-4809-838a-ffefefa00f4c",
+										"exec": [
+											"pm.globals.set('current_timestamp', new Date().toISOString());"
 										],
 										"type": "text/javascript"
 									}
@@ -3195,7 +3308,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{created_informatieobject_url}}?versie=1",
+									"raw": "{{created_informatieobject_url}}?versie=1&registratieOp={{current_timestamp}}",
 									"host": [
 										"{{created_informatieobject_url}}"
 									],
@@ -3203,6 +3316,10 @@
 										{
 											"key": "versie",
 											"value": "1"
+										},
+										{
+											"key": "registratieOp",
+											"value": "{{current_timestamp}}"
 										}
 									]
 								},
@@ -3456,7 +3573,19 @@
 										"exec": [
 											"pm.test(\"Download de binaire data van het (ENKELVOUDIG) INFORMATIEOBJECT geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
-											"});"
+											"});",
+											"",
+											"pm.globals.unset(\"current_timestamp\");"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f306b8ed-5d59-4289-b06c-2c4a00a01098",
+										"exec": [
+											"pm.globals.set('current_timestamp', new Date().toISOString());"
 										],
 										"type": "text/javascript"
 									}
@@ -3475,7 +3604,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{created_informatieobject_url}}/download?versie=1",
+									"raw": "{{created_informatieobject_url}}/download?versie=1&registratieOp={{current_timestamp}}",
 									"host": [
 										"{{created_informatieobject_url}}"
 									],
@@ -3486,6 +3615,10 @@
 										{
 											"key": "versie",
 											"value": "1"
+										},
+										{
+											"key": "registratieOp",
+											"value": "{{current_timestamp}}"
 										}
 									]
 								},
@@ -3579,7 +3712,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{drc_url}}/gebruiksrechten?informatieobject={{informatieobject_url}}",
+									"raw": "{{drc_url}}/gebruiksrechten?informatieobject={{informatieobject_url}}&startdatum__lt=2019-01-03T12:00:00&startdatum__lte=2019-01-03T12:00:00&startdatum__gt=2019-01-01T12:00:00&startdatum__gte=2019-01-01T12:00:00&einddatum__lt=2019-01-03T12:00:00&einddatum__lte=2019-01-03T12:00:00&einddatum__gt=2019-01-01T12:00:00&einddatum__gte=2019-01-01T12:00:00",
 									"host": [
 										"{{drc_url}}"
 									],
@@ -3593,43 +3726,35 @@
 										},
 										{
 											"key": "startdatum__lt",
-											"value": "{{startdatum__lt}}",
-											"disabled": true
+											"value": "2019-01-03T12:00:00"
 										},
 										{
 											"key": "startdatum__lte",
-											"value": "{{startdatum__lte}}",
-											"disabled": true
+											"value": "2019-01-03T12:00:00"
 										},
 										{
 											"key": "startdatum__gt",
-											"value": "{{startdatum__gt}}",
-											"disabled": true
+											"value": "2019-01-01T12:00:00"
 										},
 										{
 											"key": "startdatum__gte",
-											"value": "{{startdatum__gte}}",
-											"disabled": true
+											"value": "2019-01-01T12:00:00"
 										},
 										{
 											"key": "einddatum__lt",
-											"value": "{{einddatum__lt}}",
-											"disabled": true
+											"value": "2019-01-03T12:00:00"
 										},
 										{
 											"key": "einddatum__lte",
-											"value": "{{einddatum__lte}}",
-											"disabled": true
+											"value": "2019-01-03T12:00:00"
 										},
 										{
 											"key": "einddatum__gt",
-											"value": "{{einddatum__gt}}",
-											"disabled": true
+											"value": "2019-01-01T12:00:00"
 										},
 										{
 											"key": "einddatum__gte",
-											"value": "{{einddatum__gte}}",
-											"disabled": true
+											"value": "2019-01-01T12:00:00"
 										}
 									]
 								},
@@ -3947,7 +4072,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{drc_url}}/objectinformatieobjecten?informatieobject={{informatieobject_url}}",
+									"raw": "{{drc_url}}/objectinformatieobjecten?informatieobject={{informatieobject_url}}&object={{global_zaak_url}}",
 									"host": [
 										"{{drc_url}}"
 									],
@@ -3958,6 +4083,10 @@
 										{
 											"key": "informatieobject",
 											"value": "{{informatieobject_url}}"
+										},
+										{
+											"key": "object",
+											"value": "{{global_zaak_url}}"
 										}
 									]
 								},
@@ -4029,7 +4158,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{ztc_url}}/besluittypen?catalogus={{catalogus_url}}",
+									"raw": "{{ztc_url}}/besluittypen?catalogus={{catalogus_url}}&zaaktypes={{zaaktype_url}}&informatieobjecttypes={{informatieobjecttype_url}}&status=concept&page=1",
 									"host": [
 										"{{ztc_url}}"
 									],
@@ -4040,6 +4169,22 @@
 										{
 											"key": "catalogus",
 											"value": "{{catalogus_url}}"
+										},
+										{
+											"key": "zaaktypes",
+											"value": "{{zaaktype_url}}"
+										},
+										{
+											"key": "informatieobjecttypes",
+											"value": "{{informatieobjecttype_url}}"
+										},
+										{
+											"key": "status",
+											"value": "concept"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -5285,7 +5430,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{ztc_url}}/catalogussen?domein=ZGWT",
+									"raw": "{{ztc_url}}/catalogussen?domein=ZGWT&domein__in=ZGWT&rsin=000000000&rsin__in=000000000&page=1",
 									"host": [
 										"{{ztc_url}}"
 									],
@@ -5296,6 +5441,22 @@
 										{
 											"key": "domein",
 											"value": "ZGWT"
+										},
+										{
+											"key": "domein__in",
+											"value": "ZGWT"
+										},
+										{
+											"key": "rsin",
+											"value": "000000000"
+										},
+										{
+											"key": "rsin__in",
+											"value": "000000000"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -5420,7 +5581,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{ztc_url}}/eigenschappen?zaaktype={{zaaktype_url}}",
+									"raw": "{{ztc_url}}/eigenschappen?zaaktype={{zaaktype_url}}&status=concept&page=1",
 									"host": [
 										"{{ztc_url}}"
 									],
@@ -5431,6 +5592,14 @@
 										{
 											"key": "zaaktype",
 											"value": "{{zaaktype_url}}"
+										},
+										{
+											"key": "status",
+											"value": "concept"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -6623,7 +6792,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{ztc_url}}/informatieobjecttypen?catalogus={{catalogus_url}}",
+									"raw": "{{ztc_url}}/informatieobjecttypen?catalogus={{catalogus_url}}&status=concept&page=1",
 									"host": [
 										"{{ztc_url}}"
 									],
@@ -6634,6 +6803,14 @@
 										{
 											"key": "catalogus",
 											"value": "{{catalogus_url}}"
+										},
+										{
+											"key": "status",
+											"value": "concept"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -7869,7 +8046,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{ztc_url}}/resultaattypen?zaaktype={{zaaktype_url}}",
+									"raw": "{{ztc_url}}/resultaattypen?zaaktype={{zaaktype_url}}&status=concept&page=1",
 									"host": [
 										"{{ztc_url}}"
 									],
@@ -7880,6 +8057,14 @@
 										{
 											"key": "zaaktype",
 											"value": "{{zaaktype_url}}"
+										},
+										{
+											"key": "status",
+											"value": "concept"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -9074,7 +9259,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{ztc_url}}/roltypen?zaaktype={{zaaktype_url}}",
+									"raw": "{{ztc_url}}/roltypen?zaaktype={{zaaktype_url}}&omschrijvingGeneriek=adviseur&status=concept&page=1",
 									"host": [
 										"{{ztc_url}}"
 									],
@@ -9085,6 +9270,18 @@
 										{
 											"key": "zaaktype",
 											"value": "{{zaaktype_url}}"
+										},
+										{
+											"key": "omschrijvingGeneriek",
+											"value": "adviseur"
+										},
+										{
+											"key": "status",
+											"value": "concept"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -10279,7 +10476,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{ztc_url}}/statustypen?zaaktype={{zaaktype_url}}",
+									"raw": "{{ztc_url}}/statustypen?zaaktype={{zaaktype_url}}&status=concept&page=1",
 									"host": [
 										"{{ztc_url}}"
 									],
@@ -10290,6 +10487,14 @@
 										{
 											"key": "zaaktype",
 											"value": "{{zaaktype_url}}"
+										},
+										{
+											"key": "status",
+											"value": "concept"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -11484,7 +11689,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen?zaaktype={{zaaktype_url}}&informatieobjecttype={{informatieobjecttype_url}}",
+									"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen?zaaktype={{zaaktype_url}}&informatieobjecttype={{informatieobjecttype_url}}&richting=inkomend&status=concept&page=1",
 									"host": [
 										"{{ztc_url}}"
 									],
@@ -11499,6 +11704,18 @@
 										{
 											"key": "informatieobjecttype",
 											"value": "{{informatieobjecttype_url}}"
+										},
+										{
+											"key": "richting",
+											"value": "inkomend"
+										},
+										{
+											"key": "status",
+											"value": "concept"
+										},
+										{
+											"key": "page",
+											"value": "1"
 										}
 									]
 								},
@@ -12693,7 +12910,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{ztc_url}}/zaaktypen?catalogus={{catalogus_url}}",
+									"raw": "{{ztc_url}}/zaaktypen?catalogus={{catalogus_url}}&identificatie=000000000&trefwoorden=trefwoord&status=concept&page=1",
 									"host": [
 										"{{ztc_url}}"
 									],
@@ -12707,23 +12924,19 @@
 										},
 										{
 											"key": "identificatie",
-											"value": "{{identificatie}}",
-											"disabled": true
+											"value": "000000000"
 										},
 										{
 											"key": "trefwoorden",
-											"value": "{{trefwoorden}}",
-											"disabled": true
+											"value": "trefwoord"
 										},
 										{
 											"key": "status",
-											"value": "{{status}}",
-											"disabled": true
+											"value": "concept"
 										},
 										{
 											"key": "page",
-											"value": "{{page}}",
-											"disabled": true
+											"value": "1"
 										}
 									]
 								},
@@ -13975,7 +14188,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{brc_url}}/besluiten?besluittype={{besluittype_url}}",
+									"raw": "{{brc_url}}/besluiten?identificatie=rol&verantwoordelijkeOrganisatie=000000000&besluittype={{besluittype_url}}&zaak={{global_zaak_url}}&page=1",
 									"host": [
 										"{{brc_url}}"
 									],
@@ -13985,13 +14198,11 @@
 									"query": [
 										{
 											"key": "identificatie",
-											"value": "{{identificatie}}",
-											"disabled": true
+											"value": "rol"
 										},
 										{
 											"key": "verantwoordelijkeOrganisatie",
-											"value": "{{verantwoordelijkeOrganisatie}}",
-											"disabled": true
+											"value": "000000000"
 										},
 										{
 											"key": "besluittype",
@@ -13999,13 +14210,11 @@
 										},
 										{
 											"key": "zaak",
-											"value": "{{zaak}}",
-											"disabled": true
+											"value": "{{global_zaak_url}}"
 										},
 										{
 											"key": "page",
-											"value": "{{page}}",
-											"disabled": true
+											"value": "1"
 										}
 									]
 								},
@@ -15155,7 +15364,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{ac_url}}/applicaties?",
+									"raw": "{{ac_url}}/applicaties?clientIds=test_id&page=1",
 									"host": [
 										"{{ac_url}}"
 									],
@@ -15165,13 +15374,11 @@
 									"query": [
 										{
 											"key": "clientIds",
-											"value": "{{clientIds}}",
-											"disabled": true
+											"value": "test_id"
 										},
 										{
 											"key": "page",
-											"value": "{{page}}",
-											"disabled": true
+											"value": "1"
 										}
 									]
 								},
