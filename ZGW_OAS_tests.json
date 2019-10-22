@@ -5509,6 +5509,20 @@
 						},
 						{
 							"name": "Een specifieke CATALOGUS opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "02c635f0-2aff-4516-afd4-3f0c89733a56",
+										"exec": [
+											"pm.test(\"Een specifieke CATALOGUS opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [
@@ -5522,23 +5536,9 @@
 									}
 								],
 								"url": {
-									"raw": "https://catalogi-api.vng.cloud/api/v1/catalogussen/:uuid",
-									"protocol": "https",
+									"raw": "{{catalogus_url}}",
 									"host": [
-										"catalogi-api",
-										"vng",
-										"cloud"
-									],
-									"path": [
-										"api",
-										"v1",
-										"catalogussen",
-										":uuid"
-									],
-									"variable": [
-										{
-											"key": "uuid"
-										}
+										"{{catalogus_url}}"
 									]
 								},
 								"description": "Een specifieke CATALOGUS opvragen."
