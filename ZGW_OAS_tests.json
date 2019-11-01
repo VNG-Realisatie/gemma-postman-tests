@@ -191,13 +191,16 @@
 									"if(pm.response.code == 200) {",
 									"    var results = pm.response.json().results;",
 									"    for(i=0; i<results.length; i++) {",
-									"        if(results[i].procestermijn == \"nihil\" && !pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\")) {",
+									"        // if(results[i].procestermijn == \"nihil\" && !pm.globals.get(\"selectielijstklasse_procestermijn_nihil_url\")) {",
+									"        if(results[i].procestermijn == \"nihil\") {",
 									"            pm.globals.set(\"selectielijstklasse_procestermijn_nihil_url\", results[i].url);",
 									"            pm.globals.set(\"procestype_procestermijn_nihil_url\", results[i].procesType);",
-									"        } if(results[i].procestermijn == \"ingeschatte_bestaansduur_procesobject\" && !pm.globals.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\")) {",
+									"        // } if(results[i].procestermijn == \"ingeschatte_bestaansduur_procesobject\" && !pm.globals.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\")) {",
+									"        } if(results[i].procestermijn == \"ingeschatte_bestaansduur_procesobject\") {",
 									"            pm.globals.set(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].url);",
 									"            pm.globals.set(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\", results[i].procesType);",
-									"        } if(results[i].procestermijn == \"vast_te_leggen_datum\" && !pm.globals.get(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\")) {",
+									"        // } if(results[i].procestermijn == \"vast_te_leggen_datum\" && !pm.globals.get(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\")) {",
+									"        } if(results[i].procestermijn == \"vast_te_leggen_datum\") {",
 									"            pm.globals.set(\"selectielijstklasse_procestermijn_vast_te_leggen_datum_url\", results[i].url);",
 									"            pm.globals.set(\"selectielijstklasse_url\", results[i].url);",
 									"            pm.globals.set(\"procestype_procestermijn_vast_te_leggen_datum_url\", results[i].procesType);",
@@ -255,46 +258,6 @@
 					"response": []
 				},
 				{
-					"name": "Create Besluittype",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "ac59321b-e1dc-4b95-bfef-64f93006c159",
-								"exec": [
-									"pm.globals.set(\"besluittype_url\", pm.response.json().url);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypes\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
-						},
-						"url": {
-							"raw": "{{ztc_url}}/besluittypen",
-							"host": [
-								"{{ztc_url}}"
-							],
-							"path": [
-								"besluittypen"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Create InformatieObjecttype",
 					"event": [
 						{
@@ -335,6 +298,46 @@
 					"response": []
 				},
 				{
+					"name": "Create Besluittype",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac59321b-e1dc-4b95-bfef-64f93006c159",
+								"exec": [
+									"pm.globals.set(\"besluittype_url\", pm.response.json().url);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [\"{{informatieobjecttype_url}}\"],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+						},
+						"url": {
+							"raw": "{{ztc_url}}/besluittypen",
+							"host": [
+								"{{ztc_url}}"
+							],
+							"path": [
+								"besluittypen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Zaaktype",
 					"event": [
 						{
@@ -366,7 +369,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
+							"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/zaaktypen",
@@ -603,6 +606,57 @@
 							],
 							"path": [
 								"roltypen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publish Besluittype",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{besluittype_url}}/publish",
+							"host": [
+								"{{besluittype_url}}"
+							],
+							"path": [
+								"publish"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publish Informatieobjecttype",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{informatieobjecttype_url}}/publish",
+							"host": [
+								"{{informatieobjecttype_url}}"
+							],
+							"path": [
+								"publish"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publish Zaaktype",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{zaaktype_url}}/publish",
+							"host": [
+								"{{zaaktype_url}}"
+							],
+							"path": [
+								"publish"
 							]
 						}
 					},
@@ -4127,6 +4181,1299 @@
 			"name": "ZTC",
 			"item": [
 				{
+					"name": "zaaktypen",
+					"item": [
+						{
+							"name": "Alle ZAAKTYPEn opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5c3c428b-dd18-4541-bdf9-b475df2e49c7",
+										"exec": [
+											"pm.test(\"Alle ZAAKTYPEn opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{ztc_url}}/zaaktypen?catalogus={{catalogus_url}}&identificatie=000000000&trefwoorden=trefwoord&status=concept&page=1",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"zaaktypen"
+									],
+									"query": [
+										{
+											"key": "catalogus",
+											"value": "{{catalogus_url}}"
+										},
+										{
+											"key": "identificatie",
+											"value": "000000000"
+										},
+										{
+											"key": "trefwoorden",
+											"value": "trefwoord"
+										},
+										{
+											"key": "status",
+											"value": "concept"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								},
+								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
+							},
+							"response": []
+						},
+						{
+							"name": "Maak een ZAAKTYPE aan.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1419332d-0ce8-43e8-86f3-1dcf0a1e5234",
+										"exec": [
+											"pm.test(\"Maak een ZAAKTYPE aan geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
+											"    pm.globals.set(\"zaaktype_body\", pm.request.body.raw);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/zaaktypen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"zaaktypen"
+									]
+								},
+								"description": "Maak een ZAAKTYPE aan.\n\nEr wordt gevalideerd op:\n- geldigheid `catalogus` URL, dit moet een catalogus binnen dezelfde API zijn\n- Uniciteit `catalogus` en `omschrijving`. Dezelfde omeschrijving mag enkel\n  opnieuw gebruikt worden als het zaaktype een andere geldigheidsperiode\n  kent dan bestaande zaaktypen."
+							},
+							"response": []
+						},
+						{
+							"name": "Een specifieke ZAAKTYPE opvragen.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8c39f2ec-5967-4b22-bc0a-0981e8ba2345",
+										"exec": [
+											"pm.test(\"Een specifiek ZAAKTYPE opvragen geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{created_zaaktype_url}}",
+									"host": [
+										"{{created_zaaktype_url}}"
+									]
+								},
+								"description": "Een specifieke ZAAKTYPE opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een ZAAKTYPE in zijn geheel bij.",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "a16e9772-a67f-4b22-8268-fe1064df2a2b",
+										"exec": [
+											"// Retrieve the body template and modify as needed",
+											"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+											"body.omschrijving = \"aangepast\"",
+											"",
+											"// Store the modified body, allowing it to be used in the main request",
+											"pm.globals.set(\"request_body\", JSON.stringify(body));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "a6f7b1ba-d66e-4586-8dea-82735469bb36",
+										"exec": [
+											"pm.test(\"Werk een ZAAKTYPE in zijn geheel bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Werk een ZAAKTYPE in zijn geheel bij past attributen aan\", function() {",
+											"    pm.expect(pm.response.json().omschrijving).to.be.equal(\"aangepast\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{request_body}}"
+								},
+								"url": {
+									"raw": "{{created_zaaktype_url}}",
+									"host": [
+										"{{created_zaaktype_url}}"
+									]
+								},
+								"description": "Werk een ZAAKTYPE in zijn geheel bij. Dit kan alleen als het een concept\nbetreft."
+							},
+							"response": [
+								{
+									"name": "Gone",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Gone",
+									"code": 410,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Forbidden",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"identificatie\": \"<integer>\",\n \"omschrijving\": \"<string>\",\n \"vertrouwelijkheidaanduiding\": \"<string>\",\n \"doel\": \"<string>\",\n \"aanleiding\": \"<string>\",\n \"indicatieInternOfExtern\": \"<string>\",\n \"handelingInitiator\": \"<string>\",\n \"onderwerp\": \"<string>\",\n \"handelingBehandelaar\": \"<string>\",\n \"doorlooptijd\": \"<duration>\",\n \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n \"verlengingMogelijk\": \"<boolean>\",\n \"publicatieIndicatie\": \"<boolean>\",\n \"productenOfDiensten\": [\n  \"<uri>\",\n  \"<uri>\"\n ],\n \"referentieproces\": {\n  \"naam\": \"<string>\",\n  \"link\": \"<uri>\"\n },\n \"catalogus\": \"<uri>\",\n \"besluittypen\": [\n  \"<uri>\"\n ],\n \"gerelateerdeZaaktypen\": [\n  {\n   \"zaaktype\": \"<uri>\",\n   \"aardRelatie\": \"<string>\",\n   \"toelichting\": \"<string>\"\n  },\n  {\n   \"zaaktype\": \"<uri>\",\n   \"aardRelatie\": \"<string>\",\n   \"toelichting\": \"<string>\"\n  }\n ],\n \"beginGeldigheid\": \"<date>\",\n \"versiedatum\": \"<date>\",\n \"url\": \"<uri>\",\n \"omschrijvingGeneriek\": \"<string>\",\n \"toelichting\": \"<string>\",\n \"servicenorm\": \"<duration>\",\n \"verlengingstermijn\": \"<duration>\",\n \"trefwoorden\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"publicatietekst\": \"<string>\",\n \"verantwoordingsrelatie\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"selectielijstProcestype\": \"<uri>\",\n \"statustypen\": [\n  \"<uri>\"\n ],\n \"resultaattypen\": [\n  \"<uri>\"\n ],\n \"eigenschappen\": [\n  \"<uri>\"\n ],\n \"informatieobjecttypes\": [\n  \"<uri>\"\n ],\n \"roltypen\": [\n  \"<uri>\"\n ],\n \"eindeGeldigheid\": \"<date>\",\n \"concept\": \"<boolean>\"\n}"
+								},
+								{
+									"name": "Not acceptable",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Not Acceptable",
+									"code": 406,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal server error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Not found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Bad request",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"invalidParams\": [\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  },\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  }\n ],\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Unsupported media type",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Unsupported Media Type",
+									"code": 415,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Conflict",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Too many requests",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Too Many Requests",
+									"code": 429,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Werk een ZAAKTYPE deels bij.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "905654a8-d3ec-4cac-8174-fe932868b611",
+										"exec": [
+											"pm.test(\"Werk een ZAAKTYPE deels bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Werk een ZAAKTYPE deels bij past attributen aan\", function() {",
+											"    pm.expect(pm.response.json().omschrijving).to.be.equal(\"aangepast2\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"omschrijving\": \"aangepast2\"\n}"
+								},
+								"url": {
+									"raw": "{{created_zaaktype_url}}",
+									"host": [
+										"{{created_zaaktype_url}}"
+									]
+								},
+								"description": "Werk een ZAAKTYPE deels bij. Dit kan alleen als het een concept betreft."
+							},
+							"response": [
+								{
+									"name": "Not acceptable",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Not Acceptable",
+									"code": 406,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"identificatie\": \"<integer>\",\n \"omschrijving\": \"<string>\",\n \"vertrouwelijkheidaanduiding\": \"<string>\",\n \"doel\": \"<string>\",\n \"aanleiding\": \"<string>\",\n \"indicatieInternOfExtern\": \"<string>\",\n \"handelingInitiator\": \"<string>\",\n \"onderwerp\": \"<string>\",\n \"handelingBehandelaar\": \"<string>\",\n \"doorlooptijd\": \"<duration>\",\n \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n \"verlengingMogelijk\": \"<boolean>\",\n \"publicatieIndicatie\": \"<boolean>\",\n \"productenOfDiensten\": [\n  \"<uri>\",\n  \"<uri>\"\n ],\n \"referentieproces\": {\n  \"naam\": \"<string>\",\n  \"link\": \"<uri>\"\n },\n \"catalogus\": \"<uri>\",\n \"besluittypen\": [\n  \"<uri>\"\n ],\n \"gerelateerdeZaaktypen\": [\n  {\n   \"zaaktype\": \"<uri>\",\n   \"aardRelatie\": \"<string>\",\n   \"toelichting\": \"<string>\"\n  },\n  {\n   \"zaaktype\": \"<uri>\",\n   \"aardRelatie\": \"<string>\",\n   \"toelichting\": \"<string>\"\n  }\n ],\n \"beginGeldigheid\": \"<date>\",\n \"versiedatum\": \"<date>\",\n \"url\": \"<uri>\",\n \"omschrijvingGeneriek\": \"<string>\",\n \"toelichting\": \"<string>\",\n \"servicenorm\": \"<duration>\",\n \"verlengingstermijn\": \"<duration>\",\n \"trefwoorden\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"publicatietekst\": \"<string>\",\n \"verantwoordingsrelatie\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"selectielijstProcestype\": \"<uri>\",\n \"statustypen\": [\n  \"<uri>\"\n ],\n \"resultaattypen\": [\n  \"<uri>\"\n ],\n \"eigenschappen\": [\n  \"<uri>\"\n ],\n \"informatieobjecttypes\": [\n  \"<uri>\"\n ],\n \"roltypen\": [\n  \"<uri>\"\n ],\n \"eindeGeldigheid\": \"<date>\",\n \"concept\": \"<boolean>\"\n}"
+								},
+								{
+									"name": "Unsupported media type",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Unsupported Media Type",
+									"code": 415,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Forbidden",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Internal server error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Gone",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Gone",
+									"code": 410,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Too many requests",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Too Many Requests",
+									"code": 429,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Not found",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Unauthorized",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Bad request",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"invalidParams\": [\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  },\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  }\n ],\n \"type\": \"<string>\"\n}"
+								},
+								{
+									"name": "Conflict",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"zaaktypen",
+												"<uuid>"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "API-version",
+											"value": "<string>",
+											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Opvragen en bewerken van ZAAKTYPEn nodig voor ZAKEN in de Zaken API.",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{created_zaaktype_url}}/publish",
+									"host": [
+										"{{created_zaaktype_url}}"
+									],
+									"path": [
+										"publish"
+									]
+								},
+								"description": "Een ZAAKTYPE beschrijft het geheel van karakteristieke eigenschappen van\nzaken van eenzelfde soort."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een ZAAKTYPE.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b7c82f18-cbea-4366-ac1c-fcadb5b033f5",
+										"exec": [
+											"pm.test(\"Verwijder een ZAAKTYPE geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{created_zaaktype_url}}",
+									"host": [
+										"{{created_zaaktype_url}}"
+									]
+								},
+								"description": "Verwijder een ZAAKTYPE. Dit kan alleen als het een concept betreft."
+							},
+							"response": []
+						},
+						{
+							"name": "Create concept Zaaktype",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1419332d-0ce8-43e8-86f3-1dcf0a1e5234",
+										"exec": [
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/zaaktypen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"zaaktypen"
+									]
+								},
+								"description": "Maak een ZAAKTYPE aan.\n\nEr wordt gevalideerd op:\n- geldigheid `catalogus` URL, dit moet een catalogus binnen dezelfde API zijn\n- Uniciteit `catalogus` en `omschrijving`. Dezelfde omeschrijving mag enkel\n  opnieuw gebruikt worden als het zaaktype een andere geldigheidsperiode\n  kent dan bestaande zaaktypen."
+							},
+							"response": []
+						}
+					],
+					"description": "Folder for zaaktypen",
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "besluittypen",
 					"item": [
 						{
@@ -4158,7 +5505,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{ztc_url}}/besluittypen?catalogus={{catalogus_url}}&zaaktypes={{zaaktype_url}}&informatieobjecttypes={{informatieobjecttype_url}}&status=concept&page=1",
+									"raw": "{{ztc_url}}/besluittypen?catalogus={{catalogus_url}}&zaaktypes={{zaaktype_url}}&informatieobjecttypen={{informatieobjecttype_url}}&status=concept&page=1",
 									"host": [
 										"{{ztc_url}}"
 									],
@@ -4175,7 +5522,7 @@
 											"value": "{{zaaktype_url}}"
 										},
 										{
-											"key": "informatieobjecttypes",
+											"key": "informatieobjecttypen",
 											"value": "{{informatieobjecttype_url}}"
 										},
 										{
@@ -4227,7 +5574,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"besluittype test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypes\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+									"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"besluittype test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/besluittypen",
@@ -5307,46 +6654,6 @@
 							]
 						},
 						{
-							"name": "Verwijder een BESLUITTYPE.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "5dcba5cc-ba44-48c4-8fd3-e84b53ed9136",
-										"exec": [
-											"pm.test(\"Verwijder een BESLUITTYPE geeft 204\", function() {",
-											"    pm.response.to.have.status(204);",
-											"});",
-											"",
-											"postman.setNextRequest(\"Alle CATALOGUSsen opvragen.\");"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{created_besluittype_url}}",
-									"host": [
-										"{{created_besluittype_url}}"
-									]
-								},
-								"description": "Verwijder een BESLUITTYPE. Dit kan alleen als het een concept betreft."
-							},
-							"response": []
-						},
-						{
 							"name": "Opvragen en bewerken van BESLUITTYPEn nodig voor BESLUITEN in de Besluiten\nAPI.",
 							"event": [
 								{
@@ -5384,6 +6691,44 @@
 									]
 								},
 								"description": "Alle BESLUITTYPEn van de besluiten die het resultaat kunnen zijn van het\nzaakgericht werken van de behandelende organisatie(s)."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een BESLUITTYPE.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5dcba5cc-ba44-48c4-8fd3-e84b53ed9136",
+										"exec": [
+											"pm.test(\"Verwijder een BESLUITTYPE geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{created_besluittype_url}}",
+									"host": [
+										"{{created_besluittype_url}}"
+									]
+								},
+								"description": "Verwijder een BESLUITTYPE. Dit kan alleen als het een concept betreft."
 							},
 							"response": []
 						}
@@ -5640,7 +6985,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"naam\": \"test eigenschap2\",\n\t\"definitie\": \"for test\",\n\t\"zaaktype\": \"{{zaaktype_url}}\"\n}"
+									"raw": "{\n\t\"naam\": \"test eigenschap2\",\n\t\"definitie\": \"for test\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/eigenschappen",
@@ -7932,46 +9277,6 @@
 							]
 						},
 						{
-							"name": "Verwijder een INFORMATIEOBJECTTYPE.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "ee186222-d8eb-4174-8a8d-74309f07a0ba",
-										"exec": [
-											"pm.test(\"Verwijder een INFORMATIEOBJECTTYPE geeft 204\", function() {",
-											"    pm.response.to.have.status(204);",
-											"});",
-											"",
-											"postman.setNextRequest(\"Alle RESULTAATTYPEn opvragen.\");"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{created_informatieobjecttype_url}}",
-									"host": [
-										"{{created_informatieobjecttype_url}}"
-									]
-								},
-								"description": "Verwijder een INFORMATIEOBJECTTYPE. Dit kan alleen als het een concept\nbetreft."
-							},
-							"response": []
-						},
-						{
 							"name": "Opvragen en bewerken van INFORMATIEOBJECTTYPEn nodig voor\nINFORMATIEOBJECTen in de Documenten API.",
 							"request": {
 								"method": "POST",
@@ -8007,6 +9312,89 @@
 									]
 								},
 								"description": "Een INFORMATIEOBJECTTYPE beschijft de karakteristieken van een document of\nander object dat informatie bevat."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een INFORMATIEOBJECTTYPE.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ee186222-d8eb-4174-8a8d-74309f07a0ba",
+										"exec": [
+											"pm.test(\"Verwijder een INFORMATIEOBJECTTYPE geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{created_informatieobjecttype_url}}",
+									"host": [
+										"{{created_informatieobjecttype_url}}"
+									]
+								},
+								"description": "Verwijder een INFORMATIEOBJECTTYPE. Dit kan alleen als het een concept\nbetreft."
+							},
+							"response": []
+						},
+						{
+							"name": "Create concept Informatieobjecttype",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "884a5bc2-35cb-4d0d-ac50-795c01e6354d",
+										"exec": [
+											"if(pm.response.code == 201) {",
+											"    pm.globals.set(\"created_informatieobjecttype_url\", pm.response.json().url);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+								},
+								"url": {
+									"raw": "{{ztc_url}}/informatieobjecttypen",
+									"host": [
+										"{{ztc_url}}"
+									],
+									"path": [
+										"informatieobjecttypen"
+									]
+								},
+								"description": "Maak een INFORMATIEOBJECTTYPE aan."
 							},
 							"response": []
 						}
@@ -8107,7 +9495,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"TEST2\",\n\t\"resultaattypeomschrijving\": \"{{resultaattypeomschrijving_url}}\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"gerelateerde_zaak\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+									"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"omschrijving\": \"TEST2\",\n\t\"resultaattypeomschrijving\": \"{{resultaattypeomschrijving_url}}\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"gerelateerde_zaak\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/resultaattypen",
@@ -9324,7 +10712,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"test2\",\n\t\"omschrijvingGeneriek\": \"adviseur\"\n}"
+									"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"omschrijving\": \"test2\",\n\t\"omschrijvingGeneriek\": \"adviseur\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/roltypen",
@@ -10537,7 +11925,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"omschrijving\": \"Eind2\",\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"volgnummer\": 3\n}"
+									"raw": "{\n\t\"omschrijving\": \"Eind2\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"volgnummer\": 3\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/statustypen",
@@ -11758,7 +13146,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"volgnummer\": 2,\n\t\"richting\": \"intern\"\n}"
+									"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"informatieobjecttype\": \"{{created_informatieobjecttype_url}}\",\n\t\"volgnummer\": 2,\n\t\"richting\": \"intern\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
@@ -12873,1203 +14261,16 @@
 								"description": "Verwijder een ZAAKTYPE-INFORMATIEOBJECTTYPE relatie. Dit kan alleen als\nhet bijbehorende ZAAKTYPE een concept betreft."
 							},
 							"response": []
-						}
-					],
-					"description": "Folder for zaaktype-informatieobjecttypen",
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "zaaktypen",
-					"item": [
-						{
-							"name": "Alle ZAAKTYPEn opvragen.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "5c3c428b-dd18-4541-bdf9-b475df2e49c7",
-										"exec": [
-											"pm.test(\"Alle ZAAKTYPEn opvragen geeft 200\", function() {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{ztc_url}}/zaaktypen?catalogus={{catalogus_url}}&identificatie=000000000&trefwoorden=trefwoord&status=concept&page=1",
-									"host": [
-										"{{ztc_url}}"
-									],
-									"path": [
-										"zaaktypen"
-									],
-									"query": [
-										{
-											"key": "catalogus",
-											"value": "{{catalogus_url}}"
-										},
-										{
-											"key": "identificatie",
-											"value": "000000000"
-										},
-										{
-											"key": "trefwoorden",
-											"value": "trefwoord"
-										},
-										{
-											"key": "status",
-											"value": "concept"
-										},
-										{
-											"key": "page",
-											"value": "1"
-										}
-									]
-								},
-								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
-							},
-							"response": []
 						},
 						{
-							"name": "Maak een ZAAKTYPE aan.",
+							"name": "Delete concept Zaaktype",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
-										"id": "1419332d-0ce8-43e8-86f3-1dcf0a1e5234",
+										"id": "5d61cf39-c879-4ef4-bc58-d2e40d398ae6",
 										"exec": [
-											"pm.test(\"Maak een ZAAKTYPE aan geeft 201\", function() {",
-											"    pm.response.to.have.status(201);",
-											"});",
-											"",
-											"if(pm.response.code == 201) {",
-											"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
-											"    pm.globals.set(\"zaaktype_body\", pm.request.body.raw);",
-											"}"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
-								},
-								"url": {
-									"raw": "{{ztc_url}}/zaaktypen",
-									"host": [
-										"{{ztc_url}}"
-									],
-									"path": [
-										"zaaktypen"
-									]
-								},
-								"description": "Maak een ZAAKTYPE aan.\n\nEr wordt gevalideerd op:\n- geldigheid `catalogus` URL, dit moet een catalogus binnen dezelfde API zijn\n- Uniciteit `catalogus` en `omschrijving`. Dezelfde omeschrijving mag enkel\n  opnieuw gebruikt worden als het zaaktype een andere geldigheidsperiode\n  kent dan bestaande zaaktypen."
-							},
-							"response": []
-						},
-						{
-							"name": "Een specifieke ZAAKTYPE opvragen.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "8c39f2ec-5967-4b22-bc0a-0981e8ba2345",
-										"exec": [
-											"pm.test(\"Een specifiek ZAAKTYPE opvragen geeft 200\", function() {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{created_zaaktype_url}}",
-									"host": [
-										"{{created_zaaktype_url}}"
-									]
-								},
-								"description": "Een specifieke ZAAKTYPE opvragen."
-							},
-							"response": []
-						},
-						{
-							"name": "Werk een ZAAKTYPE in zijn geheel bij.",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "a16e9772-a67f-4b22-8268-fe1064df2a2b",
-										"exec": [
-											"// Retrieve the body template and modify as needed",
-											"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
-											"body.omschrijving = \"aangepast\"",
-											"",
-											"// Store the modified body, allowing it to be used in the main request",
-											"pm.globals.set(\"request_body\", JSON.stringify(body));"
-										],
-										"type": "text/javascript"
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"id": "a6f7b1ba-d66e-4586-8dea-82735469bb36",
-										"exec": [
-											"pm.test(\"Werk een ZAAKTYPE in zijn geheel bij geeft 200\", function() {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Werk een ZAAKTYPE in zijn geheel bij past attributen aan\", function() {",
-											"    pm.expect(pm.response.json().omschrijving).to.be.equal(\"aangepast\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{{request_body}}"
-								},
-								"url": {
-									"raw": "{{created_zaaktype_url}}",
-									"host": [
-										"{{created_zaaktype_url}}"
-									]
-								},
-								"description": "Werk een ZAAKTYPE in zijn geheel bij. Dit kan alleen als het een concept\nbetreft."
-							},
-							"response": [
-								{
-									"name": "Gone",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Gone",
-									"code": 410,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Forbidden",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Forbidden",
-									"code": 403,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"identificatie\": \"<integer>\",\n \"omschrijving\": \"<string>\",\n \"vertrouwelijkheidaanduiding\": \"<string>\",\n \"doel\": \"<string>\",\n \"aanleiding\": \"<string>\",\n \"indicatieInternOfExtern\": \"<string>\",\n \"handelingInitiator\": \"<string>\",\n \"onderwerp\": \"<string>\",\n \"handelingBehandelaar\": \"<string>\",\n \"doorlooptijd\": \"<duration>\",\n \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n \"verlengingMogelijk\": \"<boolean>\",\n \"publicatieIndicatie\": \"<boolean>\",\n \"productenOfDiensten\": [\n  \"<uri>\",\n  \"<uri>\"\n ],\n \"referentieproces\": {\n  \"naam\": \"<string>\",\n  \"link\": \"<uri>\"\n },\n \"catalogus\": \"<uri>\",\n \"besluittypen\": [\n  \"<uri>\"\n ],\n \"gerelateerdeZaaktypen\": [\n  {\n   \"zaaktype\": \"<uri>\",\n   \"aardRelatie\": \"<string>\",\n   \"toelichting\": \"<string>\"\n  },\n  {\n   \"zaaktype\": \"<uri>\",\n   \"aardRelatie\": \"<string>\",\n   \"toelichting\": \"<string>\"\n  }\n ],\n \"beginGeldigheid\": \"<date>\",\n \"versiedatum\": \"<date>\",\n \"url\": \"<uri>\",\n \"omschrijvingGeneriek\": \"<string>\",\n \"toelichting\": \"<string>\",\n \"servicenorm\": \"<duration>\",\n \"verlengingstermijn\": \"<duration>\",\n \"trefwoorden\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"publicatietekst\": \"<string>\",\n \"verantwoordingsrelatie\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"selectielijstProcestype\": \"<uri>\",\n \"statustypen\": [\n  \"<uri>\"\n ],\n \"resultaattypen\": [\n  \"<uri>\"\n ],\n \"eigenschappen\": [\n  \"<uri>\"\n ],\n \"informatieobjecttypes\": [\n  \"<uri>\"\n ],\n \"roltypen\": [\n  \"<uri>\"\n ],\n \"eindeGeldigheid\": \"<date>\",\n \"concept\": \"<boolean>\"\n}"
-								},
-								{
-									"name": "Not acceptable",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Not Acceptable",
-									"code": 406,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Internal server error",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Internal Server Error",
-									"code": 500,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Unauthorized",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Unauthorized",
-									"code": 401,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Not found",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Not Found",
-									"code": 404,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Bad request",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"invalidParams\": [\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  },\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  }\n ],\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Unsupported media type",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Unsupported Media Type",
-									"code": 415,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Conflict",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Conflict",
-									"code": 409,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Too many requests",
-									"originalRequest": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Too Many Requests",
-									"code": 429,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								}
-							]
-						},
-						{
-							"name": "Werk een ZAAKTYPE deels bij.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "905654a8-d3ec-4cac-8174-fe932868b611",
-										"exec": [
-											"pm.test(\"Werk een ZAAKTYPE deels bij geeft 200\", function() {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Werk een ZAAKTYPE deels bij past attributen aan\", function() {",
-											"    pm.expect(pm.response.json().omschrijving).to.be.equal(\"aangepast2\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"omschrijving\": \"aangepast2\"\n}"
-								},
-								"url": {
-									"raw": "{{created_zaaktype_url}}",
-									"host": [
-										"{{created_zaaktype_url}}"
-									]
-								},
-								"description": "Werk een ZAAKTYPE deels bij. Dit kan alleen als het een concept betreft."
-							},
-							"response": [
-								{
-									"name": "Not acceptable",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Not Acceptable",
-									"code": 406,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "OK",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "OK",
-									"code": 200,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"identificatie\": \"<integer>\",\n \"omschrijving\": \"<string>\",\n \"vertrouwelijkheidaanduiding\": \"<string>\",\n \"doel\": \"<string>\",\n \"aanleiding\": \"<string>\",\n \"indicatieInternOfExtern\": \"<string>\",\n \"handelingInitiator\": \"<string>\",\n \"onderwerp\": \"<string>\",\n \"handelingBehandelaar\": \"<string>\",\n \"doorlooptijd\": \"<duration>\",\n \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n \"verlengingMogelijk\": \"<boolean>\",\n \"publicatieIndicatie\": \"<boolean>\",\n \"productenOfDiensten\": [\n  \"<uri>\",\n  \"<uri>\"\n ],\n \"referentieproces\": {\n  \"naam\": \"<string>\",\n  \"link\": \"<uri>\"\n },\n \"catalogus\": \"<uri>\",\n \"besluittypen\": [\n  \"<uri>\"\n ],\n \"gerelateerdeZaaktypen\": [\n  {\n   \"zaaktype\": \"<uri>\",\n   \"aardRelatie\": \"<string>\",\n   \"toelichting\": \"<string>\"\n  },\n  {\n   \"zaaktype\": \"<uri>\",\n   \"aardRelatie\": \"<string>\",\n   \"toelichting\": \"<string>\"\n  }\n ],\n \"beginGeldigheid\": \"<date>\",\n \"versiedatum\": \"<date>\",\n \"url\": \"<uri>\",\n \"omschrijvingGeneriek\": \"<string>\",\n \"toelichting\": \"<string>\",\n \"servicenorm\": \"<duration>\",\n \"verlengingstermijn\": \"<duration>\",\n \"trefwoorden\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"publicatietekst\": \"<string>\",\n \"verantwoordingsrelatie\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"selectielijstProcestype\": \"<uri>\",\n \"statustypen\": [\n  \"<uri>\"\n ],\n \"resultaattypen\": [\n  \"<uri>\"\n ],\n \"eigenschappen\": [\n  \"<uri>\"\n ],\n \"informatieobjecttypes\": [\n  \"<uri>\"\n ],\n \"roltypen\": [\n  \"<uri>\"\n ],\n \"eindeGeldigheid\": \"<date>\",\n \"concept\": \"<boolean>\"\n}"
-								},
-								{
-									"name": "Unsupported media type",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Unsupported Media Type",
-									"code": 415,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Forbidden",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Forbidden",
-									"code": 403,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Internal server error",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Internal Server Error",
-									"code": 500,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Gone",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Gone",
-									"code": 410,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Too many requests",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Too Many Requests",
-									"code": 429,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Not found",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Not Found",
-									"code": 404,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Unauthorized",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Unauthorized",
-									"code": 401,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Bad request",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Bad Request",
-									"code": 400,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"invalidParams\": [\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  },\n  {\n   \"name\": \"<string>\",\n   \"code\": \"<string>\",\n   \"reason\": \"<string>\"\n  }\n ],\n \"type\": \"<string>\"\n}"
-								},
-								{
-									"name": "Conflict",
-									"originalRequest": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"identificatie\": \"<integer>\",\n    \"omschrijving\": \"<string>\",\n    \"vertrouwelijkheidaanduiding\": \"<string>\",\n    \"doel\": \"<string>\",\n    \"aanleiding\": \"<string>\",\n    \"indicatieInternOfExtern\": \"<string>\",\n    \"handelingInitiator\": \"<string>\",\n    \"onderwerp\": \"<string>\",\n    \"handelingBehandelaar\": \"<string>\",\n    \"doorlooptijd\": \"<duration>\",\n    \"opschortingEnAanhoudingMogelijk\": \"<boolean>\",\n    \"verlengingMogelijk\": \"<boolean>\",\n    \"publicatieIndicatie\": \"<boolean>\",\n    \"productenOfDiensten\": [\n        \"<uri>\",\n        \"<uri>\"\n    ],\n    \"referentieproces\": {\n        \"naam\": \"<string>\",\n        \"link\": \"<uri>\"\n    },\n    \"catalogus\": \"<uri>\",\n    \"besluittypen\": [\n        \"<uri>\"\n    ],\n    \"gerelateerdeZaaktypen\": [\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        },\n        {\n            \"zaaktype\": \"<uri>\",\n            \"aardRelatie\": \"<string>\",\n            \"toelichting\": \"<string>\"\n        }\n    ],\n    \"beginGeldigheid\": \"<date>\",\n    \"versiedatum\": \"<date>\",\n    \"omschrijvingGeneriek\": \"<string>\",\n    \"toelichting\": \"<string>\",\n    \"servicenorm\": \"<duration>\",\n    \"verlengingstermijn\": \"<duration>\",\n    \"trefwoorden\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"publicatietekst\": \"<string>\",\n    \"verantwoordingsrelatie\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"selectielijstProcestype\": \"<uri>\",\n    \"eindeGeldigheid\": \"<date>\"\n}"
-										},
-										"url": {
-											"raw": "{{baseUrl}}/zaaktypen/<uuid>",
-											"host": [
-												"{{baseUrl}}"
-											],
-											"path": [
-												"zaaktypen",
-												"<uuid>"
-											]
-										}
-									},
-									"status": "Conflict",
-									"code": 409,
-									"_postman_previewlanguage": "json",
-									"header": [
-										{
-											"key": "API-version",
-											"value": "<string>",
-											"description": "Geeft een specifieke API-versie aan in de context van een specifieke aanroep. Voorbeeld: 1.2.1."
-										},
-										{
-											"key": "Content-Type",
-											"value": "application/json"
-										}
-									],
-									"cookie": [],
-									"body": "{\n \"code\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"type\": \"<string>\"\n}"
-								}
-							]
-						},
-						{
-							"name": "Verwijder een ZAAKTYPE.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "b7c82f18-cbea-4366-ac1c-fcadb5b033f5",
-										"exec": [
-											"pm.test(\"Verwijder een ZAAKTYPE geeft 204\", function() {",
-											"    pm.response.to.have.status(204);",
-											"});",
-											"",
-											"postman.setNextRequest(\"Alle BESLUITen opvragen.\");"
+											"pm.globals.unset(\"created_informatieobjecttype_url\");"
 										],
 										"type": "text/javascript"
 									}
@@ -14077,55 +14278,44 @@
 							],
 							"request": {
 								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
+								"header": [],
+								"url": {
+									"raw": "{{created_informatieobjecttype_url}}",
+									"host": [
+										"{{created_informatieobjecttype_url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete concept Informatieobjecttype",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5d61cf39-c879-4ef4-bc58-d2e40d398ae6",
+										"exec": [
+											"pm.globals.unset(\"created_zaaktype_url\");"
+										],
+										"type": "text/javascript"
 									}
-								],
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
 								"url": {
 									"raw": "{{created_zaaktype_url}}",
 									"host": [
 										"{{created_zaaktype_url}}"
 									]
-								},
-								"description": "Verwijder een ZAAKTYPE. Dit kan alleen als het een concept betreft."
-							},
-							"response": []
-						},
-						{
-							"name": "Opvragen en bewerken van ZAAKTYPEn nodig voor ZAKEN in de Zaken API.",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{created_zaaktype_url}}/publish",
-									"host": [
-										"{{created_zaaktype_url}}"
-									],
-									"path": [
-										"publish"
-									]
-								},
-								"description": "Een ZAAKTYPE beschrijft het geheel van karakteristieke eigenschappen van\nzaken van eenzelfde soort."
+								}
 							},
 							"response": []
 						}
 					],
-					"description": "Folder for zaaktypen",
+					"description": "Folder for zaaktype-informatieobjecttypen",
 					"_postman_isSubFolder": true
 				}
 			],
@@ -15937,6 +16127,89 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "common requests",
+			"item": [
+				{
+					"name": "(COMMON) Publish Zaaktype",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{created_zaaktype_url}}/publish",
+							"host": [
+								"{{created_zaaktype_url}}"
+							],
+							"path": [
+								"publish"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(COMMON) Publish Besluittype",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{created_besluittype_url}}/publish",
+							"host": [
+								"{{created_besluittype_url}}"
+							],
+							"path": [
+								"publish"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "(COMMON) Publish Informatieobjecttype",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{created_informatieobjecttype_url}}/publish",
+							"host": [
+								"{{created_informatieobjecttype_url}}"
+							],
+							"path": [
+								"publish"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ea89b8ac-5771-4b5a-85a9-33bcb5b8b5bf",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc01f167-bf70-4c81-b13c-e42cd36b4bae",
+						"type": "text/javascript",
+						"exec": [
+							"var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
+							"if(request_names) {",
+							"    postman.setNextRequest(request_names.shift());",
+							"    pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
+							"}"
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"auth": {

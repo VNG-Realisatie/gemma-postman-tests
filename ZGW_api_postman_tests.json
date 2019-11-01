@@ -258,7 +258,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypes\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/besluittypen",
@@ -1367,7 +1367,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypes\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/besluittypen",
@@ -1690,6 +1690,57 @@
 													],
 													"path": [
 														"roltypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Besluittype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{besluittype_url}}/publish",
+													"host": [
+														"{{besluittype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Informatieobjecttype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{informatieobjecttype_url}}/publish",
+													"host": [
+														"{{informatieobjecttype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Zaaktype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{zaaktype_url}}/publish",
+													"host": [
+														"{{zaaktype_url}}"
+													],
+													"path": [
+														"publish"
 													]
 												}
 											},
@@ -3823,6 +3874,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.besluittypen = [];",
 															"body.omschrijving = \"Zaaktype for auth tests\";",
 															"body.identificatie = 2;",
 															"",
@@ -3854,6 +3906,23 @@
 													],
 													"path": [
 														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish authorized Zaaktype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{zaaktype_for_auth_url}}/publish",
+													"host": [
+														"{{zaaktype_for_auth_url}}"
+													],
+													"path": [
+														"publish"
 													]
 												}
 											},
@@ -9466,7 +9535,7 @@
 															"    pm.response.to.have.status(200);",
 															"});",
 															"",
-															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Zaaktype procestermijn nihil\"]);",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create concept Besluittype\"]);",
 															"postman.setNextRequest(\"(COMMON) Delete Zaak\");"
 														],
 														"type": "text/javascript"
@@ -9536,6 +9605,51 @@
 									"name": "zrc-016 (WIP) (NI)",
 									"item": [
 										{
+											"name": "Create concept Besluittype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "d819f8f3-538e-4b70-96c7-490fc46b4640",
+														"exec": [
+															"pm.globals.set(\"concept_besluittype_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test archiving\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "Create Zaaktype procestermijn nihil",
 											"event": [
 												{
@@ -9556,6 +9670,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.besluittypen = [\"{{concept_besluittype_url}}\"];",
 															"body.omschrijving = \"Zaaktype for archiving tests nihil\";",
 															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_nihil_url\");",
 															"",
@@ -9633,6 +9748,46 @@
 											"response": []
 										},
 										{
+											"name": "Create eind Statustype procestermijn nihil",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "caad4edb-5746-42d9-81a8-d6724d0d3d54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"omschrijving\": \"Eind\",\n\t\"zaaktype\": \"{{zaaktype_procestermijn_nihil_url}}\",\n\t\"volgnummer\": 2\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/statustypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"statustypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "Create Zaaktype procestermijn ingeschatte_bestaansduur_procesobject",
 											"event": [
 												{
@@ -9653,6 +9808,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.besluittypen = [\"{{concept_besluittype_url}}\"];",
 															"body.omschrijving = \"Zaaktype for archiving tests ingeschatte_bestaansduur_procesobject\";",
 															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\");",
 															"",
@@ -9718,6 +9874,46 @@
 											"response": []
 										},
 										{
+											"name": "Create eind Statustype procestermijn ingeschatte_bestaansduur_procesobject",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "caad4edb-5746-42d9-81a8-d6724d0d3d54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"omschrijving\": \"Eind\",\n\t\"zaaktype\": \"{{zaaktype_procestermijn_ingeschatte_bestaansduur_object_url}}\",\n\t\"volgnummer\": 2\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/statustypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"statustypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "Create Zaaktype procestermijn vast_te_leggen_datum",
 											"event": [
 												{
@@ -9726,13 +9922,7 @@
 														"id": "564734b0-225b-4f07-ba59-001bcbb06f67",
 														"exec": [
 															"var res = pm.response.json();",
-															"pm.globals.set(\"zaaktype_procestermijn_vast_te_leggen_datum_url\", res.url);",
-															"",
-															"pm.globals.set(\"archiving_zaaktypen\", [",
-															"    pm.globals.get(\"zaaktype_procestermijn_nihil_url\"),",
-															"    pm.globals.get(\"zaaktype_procestermijn_ingeschatte_bestaansduur_object_url\"),",
-															"    pm.globals.get(\"zaaktype_procestermijn_vast_te_leggen_datum_url\")",
-															"])"
+															"pm.globals.set(\"zaaktype_procestermijn_vast_te_leggen_datum_url\", res.url);"
 														],
 														"type": "text/javascript"
 													}
@@ -9744,6 +9934,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.besluittypen = [\"{{concept_besluittype_url}}\"];",
 															"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
 															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
 															"",
@@ -9815,6 +10006,217 @@
 													],
 													"path": [
 														"resultaattypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create eind Statustype procestermijn vast_te_leggen_datum",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "caad4edb-5746-42d9-81a8-d6724d0d3d54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"omschrijving\": \"Eind\",\n\t\"zaaktype\": \"{{zaaktype_procestermijn_vast_te_leggen_datum_url}}\",\n\t\"volgnummer\": 2\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/statustypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"statustypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish concept Besluittype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{concept_besluittype_url}}/publish",
+													"host": [
+														"{{concept_besluittype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Zaaktype procestermijn nihil",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "564734b0-225b-4f07-ba59-001bcbb06f67",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "bd5e2d20-2d05-433e-b21d-e3502772c021",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{zaaktype_procestermijn_nihil_url}}/publish",
+													"host": [
+														"{{zaaktype_procestermijn_nihil_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Zaaktype ingeschatte_bestaansduur_object nihil",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "564734b0-225b-4f07-ba59-001bcbb06f67",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "bd5e2d20-2d05-433e-b21d-e3502772c021",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{zaaktype_procestermijn_ingeschatte_bestaansduur_object_url}}/publish",
+													"host": [
+														"{{zaaktype_procestermijn_ingeschatte_bestaansduur_object_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Zaaktype procestermijn vast_te_leggen_datum",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "564734b0-225b-4f07-ba59-001bcbb06f67",
+														"exec": [
+															"pm.globals.set(\"archiving_zaaktypen\", [",
+															"    pm.globals.get(\"zaaktype_procestermijn_nihil_url\"),",
+															"    pm.globals.get(\"zaaktype_procestermijn_ingeschatte_bestaansduur_object_url\"),",
+															"    pm.globals.get(\"zaaktype_procestermijn_vast_te_leggen_datum_url\")",
+															"]);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "bd5e2d20-2d05-433e-b21d-e3502772c021",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{zaaktype_procestermijn_vast_te_leggen_datum_url}}/publish",
+													"host": [
+														"{{zaaktype_procestermijn_vast_te_leggen_datum_url}}"
+													],
+													"path": [
+														"publish"
 													]
 												}
 											},
@@ -10115,7 +10517,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"verantwoordelijkeOrganisatie\": \"{{zaak_bronorganisatie}}\",\n\t\"besluittype\": \"{{besluittype_url}}\",\n\t\"zaak\": \"{{zaak_zonder_archiefnominatie_url}}\",\n\t\"datum\": \"2019-04-25\",\n\t\"ingangsdatum\": \"2019-04-26\",\n\t\"vervaldatum\": \"2019-04-28\"\n}"
+													"raw": "{\n\t\"verantwoordelijkeOrganisatie\": \"{{zaak_bronorganisatie}}\",\n\t\"besluittype\": \"{{concept_besluittype_url}}\",\n\t\"zaak\": \"{{zaak_zonder_archiefnominatie_url}}\",\n\t\"datum\": \"2019-04-25\",\n\t\"ingangsdatum\": \"2019-04-26\",\n\t\"vervaldatum\": \"2019-04-28\"\n}"
 												},
 												"url": {
 													"raw": "{{brc_url}}/besluiten",
@@ -10130,14 +10532,15 @@
 											"response": []
 										},
 										{
-											"name": "Retrieve Resultaattype for current Zaaktype",
+											"name": "Retrieve Resultaattype and Statustype for current Zaaktype",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "efc7477c-72f1-4f81-9c97-8be750824a6c",
 														"exec": [
-															"pm.globals.set(\"current_resultaattype\", pm.response.json().resultaattypen[0]);"
+															"pm.globals.set(\"current_resultaattype\", pm.response.json().resultaattypen[0]);",
+															"pm.globals.set(\"current_statustype\", pm.response.json().statustypen[0]);"
 														],
 														"type": "text/javascript"
 													}
@@ -10210,46 +10613,6 @@
 											"response": []
 										},
 										{
-											"name": "Create eind Statustype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "caad4edb-5746-42d9-81a8-d6724d0d3d54",
-														"exec": [
-															"pm.globals.set(\"current_eindstatustype\", pm.response.json().url);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"omschrijving\": \"Eind\",\n\t\"zaaktype\": \"{{current_zaaktype}}\",\n\t\"volgnummer\": 2\n}"
-												},
-												"url": {
-													"raw": "{{ztc_url}}/statustypen",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"statustypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "Add Eindstatus to Zaak without archiefnominatie",
 											"event": [
 												{
@@ -10285,7 +10648,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{zaak_zonder_archiefnominatie_url}}\",\n\t\"statustype\": \"{{current_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-26T13:37:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{zaak_zonder_archiefnominatie_url}}\",\n\t\"statustype\": \"{{current_statustype}}\",\n\t\"datumStatusGezet\": \"2018-04-26T13:37:00\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
@@ -13549,46 +13912,6 @@
 											"response": []
 										},
 										{
-											"name": "Create Besluittype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "ac59321b-e1dc-4b95-bfef-64f93006c159",
-														"exec": [
-															"pm.globals.set(\"besluittype_url\", pm.response.json().url);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"value": "application/json",
-														"type": "text"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypes\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
-												},
-												"url": {
-													"raw": "{{ztc_url}}/besluittypen",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"besluittypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "Create InformatieObjecttype",
 											"event": [
 												{
@@ -13623,6 +13946,46 @@
 													],
 													"path": [
 														"informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Besluittype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ac59321b-e1dc-4b95-bfef-64f93006c159",
+														"exec": [
+															"pm.globals.set(\"besluittype_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [\"{{informatieobjecttype_url}}\"],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
 													]
 												}
 											},
@@ -13697,6 +14060,57 @@
 													],
 													"path": [
 														"zaaktype-informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Besluittype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{besluittype_url}}/publish",
+													"host": [
+														"{{besluittype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Informatieobjecttype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{informatieobjecttype_url}}/publish",
+													"host": [
+														"{{informatieobjecttype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Zaaktype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{zaaktype_url}}/publish",
+													"host": [
+														"{{zaaktype_url}}"
+													],
+													"path": [
+														"publish"
 													]
 												}
 											},
@@ -15896,7 +16310,9 @@
 														"id": "b061f7db-dcb6-4769-baf7-97f122454b87",
 														"exec": [
 															"pm.test(\"EnkelvoudigInformatieObject verwijderen verwijdert ook alle gerelateerde Gebruiksrechten uit het DRC\", function() {",
-															"    pm.expect(pm.response.json()).to.be.equal([]);",
+															"    var res = pm.response.json();",
+															"    pm.expect(Array.isArray(res));",
+															"    pm.expect(res.length).to.be.equal(0);",
 															"});",
 															"",
 															"if(pm.response.code != 400) {",
@@ -17610,46 +18026,6 @@
 											"response": []
 										},
 										{
-											"name": "Create Besluittype",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "ac59321b-e1dc-4b95-bfef-64f93006c159",
-														"exec": [
-															"pm.globals.set(\"besluittype_url\", pm.response.json().url);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"value": "application/json",
-														"type": "text"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypes\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
-												},
-												"url": {
-													"raw": "{{ztc_url}}/besluittypen",
-													"host": [
-														"{{ztc_url}}"
-													],
-													"path": [
-														"besluittypen"
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "Create InformatieObjecttype",
 											"event": [
 												{
@@ -17684,6 +18060,46 @@
 													],
 													"path": [
 														"informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Besluittype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ac59321b-e1dc-4b95-bfef-64f93006c159",
+														"exec": [
+															"pm.globals.set(\"besluittype_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [\"{{informatieobjecttype_url}}\"],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
 													]
 												}
 											},
@@ -17730,6 +18146,57 @@
 													],
 													"path": [
 														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Besluittype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{besluittype_url}}/publish",
+													"host": [
+														"{{besluittype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Informatieobjecttype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{informatieobjecttype_url}}/publish",
+													"host": [
+														"{{informatieobjecttype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Zaaktype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{zaaktype_url}}/publish",
+													"host": [
+														"{{zaaktype_url}}"
+													],
+													"path": [
+														"publish"
 													]
 												}
 											},
@@ -19627,7 +20094,9 @@
 														"id": "b061f7db-dcb6-4769-baf7-97f122454b87",
 														"exec": [
 															"pm.test(\"Besluit verwijderen verwijdert ook alle gerelateerde BesluitInformatieObjecten uit het BRC\", function() {",
-															"    pm.expect(pm.response.json()).to.be.equal([]);",
+															"    var res = pm.response.json();",
+															"    pm.expect(Array.isArray(res));",
+															"    pm.expect(res.length).to.be.equal(0);",
 															"});",
 															"",
 															"if(pm.response.code != 400) {",
@@ -20276,7 +20745,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypes\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/besluittypen",
@@ -20332,7 +20801,7 @@
 											"response": []
 										},
 										{
-											"name": "Create Applicatie without scope ...",
+											"name": "Create Applicatie without scope geforceerd_verwijderen",
 											"event": [
 												{
 													"listen": "test",
@@ -26063,7 +26532,7 @@
 														"exec": [
 															"pm.test(\"Zaaktype met concept False deels bijwerken met eindeGeldigheid geeft 200\", function() {",
 															"    pm.response.to.have.status(200);",
-															"    pm.expect(pm.response.json().eindeGeldigheid).to.be.equal(\"2020-01-01\");",
+															"    pm.expect(pm.response.json().eindeGeldigheid).to.be.equal(\"2004-12-12\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -26213,7 +26682,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test publish\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypes\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test publish\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -26770,7 +27239,7 @@
 															"});",
 															"",
 															"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
-															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete Applicatie for concept tests\"]);"
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Informatieobjecttype to relate to Besluittype\"]);"
 														],
 														"type": "text/javascript"
 													}
@@ -26815,388 +27284,6 @@
 										{
 											"name": "besluittype",
 											"item": [
-												{
-													"name": "Create Zaaktype to Publish for Besluittype",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
-																"exec": [
-																	"if(pm.response.code == 201) {",
-																	"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
-																	"}"
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
-																"exec": [
-																	"// Retrieve the Zaak body template and modify as needed",
-																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
-																	"body.beginGeldigheid = \"2004-01-10\";",
-																	"body.eindeGeldigheid = \"2004-01-10\";",
-																	"",
-																	"// Store the modified Zaak body, allowing it to be used in the main request",
-																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "POST",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{{request_body}}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{ztc_url}}/zaaktypen",
-															"host": [
-																"{{ztc_url}}"
-															],
-															"path": [
-																"zaaktypen"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "Create Besluittype to relate to ZaakType",
-													"event": [
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "af8280d8-3f2b-4b79-8d8c-7c36c7c0a9f7",
-																"exec": [
-																	"// Retrieve the Zaak body template and modify as needed",
-																	"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
-																	"body.zaaktypes = [pm.globals.get(\"created_zaaktype_url\")];",
-																	"",
-																	"// Store the modified Zaak body, allowing it to be used in the main request",
-																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "test",
-															"script": {
-																"id": "53c6d9c5-d8d2-4dd0-8b62-7799838a18d1",
-																"exec": [
-																	"pm.globals.set(\"created_besluittype_url\", pm.response.json().url);",
-																	"",
-																	"postman.setNextRequest(\"(COMMON) Publish Zaaktype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-010a) Besluittype gerelateerd aan Zaaktype met concept False bijwerken is niet toegestaan\"]);"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "POST",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"value": "application/json",
-																"type": "text"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{{request_body}}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{ztc_url}}/besluittypen",
-															"host": [
-																"{{ztc_url}}"
-															],
-															"path": [
-																"besluittypen"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "(ztc-010a) Besluittype gerelateerd aan Zaaktype met concept False bijwerken is niet toegestaan",
-													"event": [
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
-																"exec": [
-																	"// Retrieve the Zaak body template and modify as needed",
-																	"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
-																	"body.toelichting = \"aangepast\";",
-																	"",
-																	"// Store the modified Zaak body, allowing it to be used in the main request",
-																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "test",
-															"script": {
-																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
-																"exec": [
-																	"pm.test(\"Besluittype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"auth": {
-															"type": "bearer",
-															"bearer": [
-																{
-																	"key": "token",
-																	"value": "{{jwt_token_without_claims}}",
-																	"type": "string"
-																}
-															]
-														},
-														"method": "PUT",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{{request_body}}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{created_besluittype_url}}",
-															"host": [
-																"{{created_besluittype_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "(ztc-010a) Besluittype gerelateerd aan Zaaktype met concept False deels bijwerken is niet toegestaan",
-													"event": [
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
-																"exec": [
-																	""
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "test",
-															"script": {
-																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
-																"exec": [
-																	"pm.test(\"Besluittype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"auth": {
-															"type": "bearer",
-															"bearer": [
-																{
-																	"key": "token",
-																	"value": "{{jwt_token_without_claims}}",
-																	"type": "string"
-																}
-															]
-														},
-														"method": "PATCH",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{\n\t\"omschrijving\": \"ja\"\n}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{created_besluittype_url}}",
-															"host": [
-																"{{created_besluittype_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "(ztc-010a) Besluittype gerelateerd aan Zaaktype met concept False deels bijwerken met eindeGeldigheid is toegestaan",
-													"event": [
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
-																"exec": [
-																	""
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "test",
-															"script": {
-																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
-																"exec": [
-																	"pm.test(\"Besluittype gerelateerd aan Zaaktype met concept False deels bijwerken met eindeGeldigheid geeft 200\", function() {",
-																	"    pm.response.to.have.status(200);",
-																	"    pm.expect(pm.response.json().eindeGeldigheid).to.be.equal(\"2020-01-01\");",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"auth": {
-															"type": "bearer",
-															"bearer": [
-																{
-																	"key": "token",
-																	"value": "{{jwt_token_without_claims}}",
-																	"type": "string"
-																}
-															]
-														},
-														"method": "PATCH",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{\n\t\"eindeGeldigheid\": \"2020-01-01\"\n}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{created_besluittype_url}}",
-															"host": [
-																"{{created_besluittype_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "(ztc-010a) Besluittype gerelateerd aan Zaaktype met concept False verwijderen is niet toegestaan",
-													"event": [
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
-																"exec": [
-																	""
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "test",
-															"script": {
-																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
-																"exec": [
-																	"pm.test(\"Besluittype gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"});",
-																	"",
-																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Besluittype\", \"Create Informatieobjecttype to Publish\"]);"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"auth": {
-															"type": "bearer",
-															"bearer": [
-																{
-																	"key": "token",
-																	"value": "{{jwt_token_without_claims}}",
-																	"type": "string"
-																}
-															]
-														},
-														"method": "DELETE",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"url": {
-															"raw": "{{created_besluittype_url}}",
-															"host": [
-																"{{created_besluittype_url}}"
-															]
-														}
-													},
-													"response": []
-												},
 												{
 													"name": "Create Informatieobjecttype to relate to Besluittype",
 													"event": [
@@ -27264,7 +27351,7 @@
 																"exec": [
 																	"// Retrieve the Zaak body template and modify as needed",
 																	"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
-																	"body.informatieobjecttypes = [pm.globals.get(\"created_informatieobjecttype_url\")];",
+																	"body.informatieobjecttypen = [pm.globals.get(\"created_informatieobjecttype_url\")];",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -27470,7 +27557,7 @@
 																"exec": [
 																	"pm.test(\"Besluittype gerelateerd aan Informatieobjecttype met concept False deels bijwerken met eindeGeldigheid geeft 200\", function() {",
 																	"    pm.response.to.have.status(200);",
-																	"    pm.expect(pm.response.json().eindeGeldigheid).to.be.equal(\"2020-01-01\");",
+																	"    pm.expect(pm.response.json().eindeGeldigheid).to.be.equal(\"2022-01-01\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -27499,7 +27586,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n\t\"eindeGeldigheid\": \"2020-01-01\"\n}",
+															"raw": "{\n\t\"eindeGeldigheid\": \"2022-01-01\"\n}",
 															"options": {
 																"raw": {
 																	"language": "json"
@@ -27858,7 +27945,7 @@
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Eigenschap\", \"Create Informatieobjecttype to relate to Zaaktype\"]);"
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Eigenschap\", \"Create Informatieobjecttype to relate to Besluittype2\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -27900,385 +27987,6 @@
 										{
 											"name": "informatieobjecttype",
 											"item": [
-												{
-													"name": "Create Informatieobjecttype to relate to Zaaktype",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
-																"exec": [
-																	"if(pm.response.code == 201) {",
-																	"    pm.globals.set(\"created_informatieobjecttype_url\", pm.response.json().url);",
-																	"}"
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
-																"exec": [
-																	""
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "POST",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{{informatieobjecttype_body}}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{ztc_url}}/informatieobjecttypen",
-															"host": [
-																"{{ztc_url}}"
-															],
-															"path": [
-																"informatieobjecttypen"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "Create Zaaktype to Publish for Informatieobjecttype",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
-																"exec": [
-																	"if(pm.response.code == 201) {",
-																	"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
-																	"}",
-																	"",
-																	"postman.setNextRequest(\"(COMMON) Create Zaaktype-Informatieobjecttype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Publish Zaaktype\", \"(ztc-010c) Informatieobjecttype gerelateerd aan Zaaktype met concept False bijwerken is niet toegestaan\"]);"
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
-																"exec": [
-																	"// Retrieve the Zaak body template and modify as needed",
-																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
-																	"body.beginGeldigheid = \"2004-01-10\";",
-																	"body.eindeGeldigheid = \"2004-01-10\";",
-																	"",
-																	"// Store the modified Zaak body, allowing it to be used in the main request",
-																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "POST",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{{request_body}}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{ztc_url}}/zaaktypen",
-															"host": [
-																"{{ztc_url}}"
-															],
-															"path": [
-																"zaaktypen"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "(ztc-010c) Informatieobjecttype gerelateerd aan Zaaktype met concept False bijwerken is niet toegestaan",
-													"event": [
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
-																"exec": [
-																	"// Retrieve the Zaak body template and modify as needed",
-																	"var body = JSON.parse(pm.globals.get(\"informatieobjecttype_body\"));",
-																	"body.omschrijving = \"aangepast\";",
-																	"",
-																	"// Store the modified Zaak body, allowing it to be used in the main request",
-																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "test",
-															"script": {
-																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
-																"exec": [
-																	"pm.test(\"Informatieobjecttype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"auth": {
-															"type": "bearer",
-															"bearer": [
-																{
-																	"key": "token",
-																	"value": "{{jwt_token_without_claims}}",
-																	"type": "string"
-																}
-															]
-														},
-														"method": "PUT",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{{request_body}}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{created_informatieobjecttype_url}}",
-															"host": [
-																"{{created_informatieobjecttype_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "(ztc-010c) Informatieobjecttype gerelateerd aan Zaaktype met concept False deels bijwerken is niet toegestaan",
-													"event": [
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
-																"exec": [
-																	""
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "test",
-															"script": {
-																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
-																"exec": [
-																	"pm.test(\"Informatieobjecttype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"auth": {
-															"type": "bearer",
-															"bearer": [
-																{
-																	"key": "token",
-																	"value": "{{jwt_token_without_claims}}",
-																	"type": "string"
-																}
-															]
-														},
-														"method": "PATCH",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{created_informatieobjecttype_url}}",
-															"host": [
-																"{{created_informatieobjecttype_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "(ztc-010c) Informatieobjecttype gerelateerd aan Zaaktype met concept False deels bijwerken met eindeGeldigheid is toegestaan",
-													"event": [
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
-																"exec": [
-																	""
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "test",
-															"script": {
-																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
-																"exec": [
-																	"pm.test(\"Informatieobjecttype gerelateerd aan Zaaktype met concept False deels bijwerken met eindeGeldigheid geeft 200\", function() {",
-																	"    pm.response.to.have.status(200);",
-																	"    pm.expect(pm.response.json().eindeGeldigheid).to.be.equal(\"2020-01-01\");",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"auth": {
-															"type": "bearer",
-															"bearer": [
-																{
-																	"key": "token",
-																	"value": "{{jwt_token_without_claims}}",
-																	"type": "string"
-																}
-															]
-														},
-														"method": "PATCH",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{\n\t\"eindeGeldigheid\": \"2020-01-01\"\n}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{created_informatieobjecttype_url}}",
-															"host": [
-																"{{created_informatieobjecttype_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "(ztc-010c) Informatieobjecttype gerelateerd aan Zaaktype met concept False verwijderen is niet toegestaan",
-													"event": [
-														{
-															"listen": "prerequest",
-															"script": {
-																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
-																"exec": [
-																	""
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "test",
-															"script": {
-																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
-																"exec": [
-																	"pm.test(\"Informatieobjecttype gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"});",
-																	"",
-																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Informatieobjecttype\", \"Create Informatieobjecttype to relate to Besluittype2\"]);"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"auth": {
-															"type": "bearer",
-															"bearer": [
-																{
-																	"key": "token",
-																	"value": "{{jwt_token_without_claims}}",
-																	"type": "string"
-																}
-															]
-														},
-														"method": "DELETE",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"url": {
-															"raw": "{{created_informatieobjecttype_url}}",
-															"host": [
-																"{{created_informatieobjecttype_url}}"
-															]
-														}
-													},
-													"response": []
-												},
 												{
 													"name": "Create Informatieobjecttype to relate to Besluittype2",
 													"event": [
@@ -28619,7 +28327,7 @@
 																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
-																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
+																	"postman.setNextRequest(\"(COMMON) Delete Besluittype\");",
 																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Informatieobjecttype\", \"Create Zaaktype to Publish for Resultaattype\"]);"
 																],
 																"type": "text/javascript"
@@ -28939,8 +28647,8 @@
 																	"    pm.response.to.have.status(400); ",
 																	"});",
 																	"",
-																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Resultaattype\", \"Create Informatieobjecttype to Publish for Roltype\"]);"
+																	"postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Zaaktype\", \"Create Zaaktype to Publish for Roltype\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -29260,7 +28968,7 @@
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Roltype\", \"Create Informatieobjecttype to Publish for Statustype\"]);"
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Roltype\", \"Create Zaaktype to Publish for Statustype\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -29750,7 +29458,7 @@
 													"response": []
 												},
 												{
-													"name": "Create Zaaktype to Publish for Roltype",
+													"name": "Create Zaaktype to relate to Besluittype",
 													"event": [
 														{
 															"listen": "test",
@@ -29970,7 +29678,7 @@
 																"exec": [
 																	"pm.test(\"Zaaktype gerelateerd aan Besluittype met concept False deels bijwerken met eindeGeldigheid geeft 200\", function() {",
 																	"    pm.response.to.have.status(200);",
-																	"    pm.expect(pm.response.json().eindeGeldigheid).to.be.equal(\"2019-02-01\");",
+																	"    pm.expect(pm.response.json().eindeGeldigheid).to.be.equal(\"2004-12-12\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -30038,7 +29746,7 @@
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Besluittype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Zaaktype\", \"(ZTC) Delete Zaaktype\"]);"
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Zaaktype\", \"Create Zaaktype for Besluittype relation creation\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -30547,7 +30255,7 @@
 																"exec": [
 																	"// Retrieve the Zaak body template and modify as needed",
 																	"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
-																	"body.informatieobjecttypes = [pm.globals.get(\"created_informatieobjecttype_url\")];",
+																	"body.informatieobjecttypen = [pm.globals.get(\"created_informatieobjecttype_url\")];",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -30657,7 +30365,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n\t\"informatieobjecttypes\": [\"{{created_informatieobjecttype_url}}\"]\n}",
+															"raw": "{\n\t\"informatieobjecttypen\": [\"{{created_informatieobjecttype_url}}\"]\n}",
 															"options": {
 																"raw": {
 																	"language": "json"
@@ -31163,6 +30871,7 @@
 																	"// Retrieve the Zaak body template and modify as needed",
 																	"var body = JSON.parse(pm.globals.get(\"resultaattype_body\"));",
 																	"body.zaaktype = pm.globals.get(\"zaaktype_url\");",
+																	"body.omschrijving = \"concept tests\";",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -31712,7 +31421,7 @@
 																	"}",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Publish Zaaktype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-011d) Roltype aanmaken met relatie naar Zaaktype met concept False is niet toegestaan\"]);"
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-011e) Statustype aanmaken met relatie naar Zaaktype met concept False is niet toegestaan\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -32332,7 +32041,7 @@
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Zaaktype\", \"(ZTC) Delete Zaaktype\"]);"
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Besluittype\", \"(ZTC) Delete Zaaktype\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -32379,6 +32088,324 @@
 											],
 											"protocolProfileBehavior": {},
 											"_postman_isSubFolder": true
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "ztc-012",
+									"item": [
+										{
+											"name": "Create Besluittype to relate to published Zaaktype",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "af8280d8-3f2b-4b79-8d8c-7c36c7c0a9f7",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "53c6d9c5-d8d2-4dd0-8b62-7799838a18d1",
+														"exec": [
+															"pm.globals.set(\"created_besluittype_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{besluittype_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype to relate to Besluittype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+														"exec": [
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.beginGeldigheid = \"2004-01-10\";",
+															"body.eindeGeldigheid = \"2004-01-10\";",
+															"body.besluittypen = [\"{{created_besluittype_url}}\"];",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-012a) Zaaktype met gerelateerd concept Besluittype publiceren geeft 400",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "e10b3ba7-47b1-4c79-9123-4342040f9eb4",
+														"exec": [
+															"pm.test(\"Zaaktype met gerelateerd concept Besluittype publiceren geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.code).to.be.equal(\"concept-relation\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{created_zaaktype_url}}/publish",
+													"host": [
+														"{{created_zaaktype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Informatieobjecttype to relate to published Zaaktype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+														"exec": [
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_informatieobjecttype_url\", pm.response.json().url);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{informatieobjecttype_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/informatieobjecttypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype to relate to Besluittype Copy",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+														"exec": [
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
+															"}",
+															"",
+															"postman.setNextRequest(\"(COMMON) Create Zaaktype-Informatieobjecttype\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-012b) Zaaktype met gerelateerd concept Informatieobjecttype publiceren geeft 400\"]);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.beginGeldigheid = \"2004-01-10\";",
+															"body.eindeGeldigheid = \"2004-01-10\";",
+															"body.besluittypen = [\"{{created_besluittype_url}}\"];",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-012b) Zaaktype met gerelateerd concept Informatieobjecttype publiceren geeft 400",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "e10b3ba7-47b1-4c79-9123-4342040f9eb4",
+														"exec": [
+															"pm.test(\"Zaaktype met gerelateerd concept Besluittype publiceren geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.code).to.be.equal(\"concept-relation\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{created_zaaktype_url}}/publish",
+													"host": [
+														"{{created_zaaktype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
 										}
 									],
 									"protocolProfileBehavior": {},
