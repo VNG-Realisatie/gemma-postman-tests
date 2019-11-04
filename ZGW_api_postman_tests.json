@@ -2330,7 +2330,86 @@
 											"response": []
 										},
 										{
-											"name": "Publish Zaaktype",
+											"name": "(zrc-001f) Zaak aanmaken met concept zaaktype is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "759de81f-fe06-48a8-9586-d495f3c77444",
+														"exec": [
+															"pm.test(\"Zaak aanmaken met concept zaaktype geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"zaaktype\");",
+															"    pm.expect(error.code).to.be.equal(\"not-published\");",
+															"});",
+															"",
+															"// If the test failed and the Zaak was created, delete it",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_zaak_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Zaak\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Publish temp Zaaktype\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "b79c193c-ee7a-46e6-979e-398d5edfa06c",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
+															"body.zaaktype = pm.globals.get(\"temp_zaaktype_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													},
+													{
+														"key": "Content-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/zaken",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"zaken"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish temp Zaaktype",
 											"request": {
 												"method": "POST",
 												"header": [],
@@ -2347,7 +2426,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-001f) Zaak met zaaktype bijwerken is onmogelijk",
+											"name": "(zrc-001g) Zaak met zaaktype bijwerken is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -2416,7 +2495,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-001g) Zaak met zaaktype deels bijwerken is onmogelijk",
+											"name": "(zrc-001h) Zaak met zaaktype deels bijwerken is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -2430,7 +2509,26 @@
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"zaaktype\");",
 															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
-															"});"
+															"});",
+															"",
+															"// If the type was modified, change it back",
+															"if(pm.response.code == 200) {",
+															"    pm.sendRequest({",
+															"        \"url\": pm.globals.get(\"zaak_url\"), ",
+															"        \"method\": \"PATCH\",",
+															"        \"header\": {",
+															"            \"Accept\": \"application/json\",",
+															"            \"Content-Type\": \"application/json\",",
+															"            \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
+															"        },",
+															"        \"body\": {",
+															"            mode: \"raw\",",
+															"            raw: JSON.stringify({\"zaaktype\": pm.globals.get(\"zaaktype_url\")})",
+															"        }",
+															"        }, function (err, response) {",
+															"            console.log(response.json());",
+															"    });",
+															"}"
 														],
 														"type": "text/javascript"
 													}
@@ -14438,7 +14536,99 @@
 											"response": []
 										},
 										{
+											"name": "(drc-001d) EnkelvoudigInformatieObject aanmaken met concept informatieobjecttype is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "759de81f-fe06-48a8-9586-d495f3c77444",
+														"exec": [
+															"pm.test(\"EnkelvoudigInformatieObject aanmaken met concept informatieobjecttype geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
+															"    pm.expect(error.code).to.be.equal(\"not-published\");",
+															"});",
+															"",
+															"// If the test failed and the Zaak was created, delete it",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Publish temp Informatieobjecttype\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "b79c193c-ee7a-46e6-979e-398d5edfa06c",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
+															"body.informatieobjecttype = pm.globals.get(\"temp_iotype_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													},
+													{
+														"key": "Content-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
+													"host": [
+														"{{drc_url}}"
+													],
+													"path": [
+														"enkelvoudiginformatieobjecten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "Publish temp Informatieobjecttype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "5a9390c0-3258-4b79-9d30-44cb592f411a",
+														"exec": [
+															"postman.setNextRequest(\"(COMMON) Lock EnkelvoudigInformatieObject\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-001e) EnkelvoudigInformatieObject informatieobjecttype bijwerken is niet toegestaan\"]);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
 											"request": {
 												"method": "POST",
 												"header": [],
@@ -14455,7 +14645,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-001d) EnkelvoudigInformatieObject informatieobjecttype bijwerken is niet toegestaan",
+											"name": "(drc-001e) EnkelvoudigInformatieObject informatieobjecttype bijwerken is niet toegestaan",
 											"event": [
 												{
 													"listen": "test",
@@ -14512,7 +14702,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-001e) EnkelvoudigInformatieObject informatieobjecttype bijwerken is niet toegestaan",
+											"name": "(drc-001f) EnkelvoudigInformatieObject informatieobjecttype bijwerken is niet toegestaan",
 											"event": [
 												{
 													"listen": "test",
@@ -14525,7 +14715,29 @@
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
 															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toelaten\");",
-															"});"
+															"});",
+															"",
+															"// If the type was modified, change it back",
+															"if(pm.response.code == 200) {",
+															"    pm.sendRequest({",
+															"        \"url\": pm.globals.get(\"informatieobject_url\"), ",
+															"        \"method\": \"PATCH\",",
+															"        \"header\": {",
+															"            \"Accept\": \"application/json\",",
+															"            \"Content-Type\": \"application/json\",",
+															"            \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
+															"        },",
+															"        \"body\": {",
+															"            mode: \"raw\",",
+															"            raw: JSON.stringify({\"informatieobjecttype\": pm.globals.get(\"informatieobjecttype_url\")})",
+															"        }",
+															"        }, function (err, response) {",
+															"            console.log(response.json());",
+															"    });",
+															"}",
+															"",
+															"postman.setNextRequest(\"(COMMON) Unlock EnkelvoudigInformatieObject\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete temp Informatieobjecttype\"]);"
 														],
 														"type": "text/javascript"
 													}
@@ -18655,7 +18867,86 @@
 											"response": []
 										},
 										{
-											"name": "Publish Besluittype",
+											"name": "(brc-001f) Besluit aanmaken met concept besluittype is onmogelijk",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "759de81f-fe06-48a8-9586-d495f3c77444",
+														"exec": [
+															"pm.test(\"Besluit aanmaken met concept besluittype geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    // Verify that the 400 is returned for the correct reason",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"besluittype\");",
+															"    pm.expect(error.code).to.be.equal(\"not-published\");",
+															"});",
+															"",
+															"// If the test failed and the Zaak was created, delete it",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_besluit_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Besluit\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Publish temp Besluittype\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "b79c193c-ee7a-46e6-979e-398d5edfa06c",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"besluit_body\"));",
+															"body.besluittype = pm.globals.get(\"temp_besluittype_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													},
+													{
+														"key": "Content-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{brc_url}}/besluiten",
+													"host": [
+														"{{brc_url}}"
+													],
+													"path": [
+														"besluiten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish temp Besluittype",
 											"request": {
 												"method": "POST",
 												"header": [],
@@ -18672,7 +18963,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-001f) Besluit besluittype bijwerken is onmogelijk",
+											"name": "(brc-001g) Besluit besluittype bijwerken is onmogelijk",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -18731,7 +19022,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-001g) Besluit besluittype deels bijwerken is onmogelijk",
+											"name": "(brc-001h) Besluit besluittype deels bijwerken is onmogelijk",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -18755,7 +19046,26 @@
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"besluittype\");",
 															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
-															"});"
+															"});",
+															"",
+															"// If the type was modified, change it back",
+															"if(pm.response.code == 200) {",
+															"    pm.sendRequest({",
+															"        \"url\": pm.globals.get(\"besluit_url\"), ",
+															"        \"method\": \"PATCH\",",
+															"        \"header\": {",
+															"            \"Accept\": \"application/json\",",
+															"            \"Content-Type\": \"application/json\",",
+															"            \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
+															"        },",
+															"        \"body\": {",
+															"            mode: \"raw\",",
+															"            raw: JSON.stringify({\"besluittype\": pm.globals.get(\"besluittype_url\")})",
+															"        }",
+															"        }, function (err, response) {",
+															"            console.log(response.json());",
+															"    });",
+															"}"
 														],
 														"type": "text/javascript"
 													}
@@ -26256,7 +26566,7 @@
 									"name": "ztc-009",
 									"item": [
 										{
-											"name": "Create Zaaktype to Publish",
+											"name": "Create concept Zaaktype to Publish",
 											"event": [
 												{
 													"listen": "test",
@@ -27249,6 +27559,72 @@
 													"raw": "{{created_informatieobjecttype_url}}",
 													"host": [
 														"{{created_informatieobjecttype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype to Publish Copy",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+														"exec": [
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
+															"}",
+															"",
+															"postman.setNextRequest(\"(COMMON) Publish Zaaktype\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-009a) Zaaktype met concept False bijwerken is niet toegestaan\"]);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.beginGeldigheid = \"2004-01-10\";",
+															"body.eindeGeldigheid = \"2004-01-10\";",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
 													]
 												}
 											},
