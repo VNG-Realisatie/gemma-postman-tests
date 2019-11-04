@@ -26403,7 +26403,11 @@
 														"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 														"exec": [
 															"pm.test(\"Zaaktype met concept False bijwerken geeft 400\", function() {",
-															"    pm.response.to.have.status(400); ",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"non-concept-object\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -26468,6 +26472,10 @@
 														"exec": [
 															"pm.test(\"Zaaktype met concept False deels bijwerken geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"non-concept-object\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -26597,6 +26605,10 @@
 														"exec": [
 															"pm.test(\"Zaaktype met concept False verwijderen geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"non-concept-object\");",
 															"});",
 															"",
 															"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -26726,6 +26738,10 @@
 														"exec": [
 															"pm.test(\"Besluittype met concept False bijwerken geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"non-concept-object\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -26790,6 +26806,10 @@
 														"exec": [
 															"pm.test(\"Besluittype met concept False deels bijwerken geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"non-concept-object\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -26919,6 +26939,10 @@
 														"exec": [
 															"pm.test(\"Besluittype met concept False verwijderen geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"non-concept-object\");",
 															"});",
 															"",
 															"postman.setNextRequest(\"(COMMON) Delete Besluittype\");",
@@ -27043,6 +27067,10 @@
 														"exec": [
 															"pm.test(\"Informatieobjecttype met concept False bijwerken geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"non-concept-object\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -27107,6 +27135,10 @@
 														"exec": [
 															"pm.test(\"Informatieobjecttype met concept False deels bijwerken geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"non-concept-object\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -27236,6 +27268,10 @@
 														"exec": [
 															"pm.test(\"Informatieobjecttype met concept False verwijderen geeft 400\", function() {",
 															"    pm.response.to.have.status(400); ",
+															"    ",
+															"    var error = pm.response.json()[\"invalidParams\"][0];",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"non-concept-object\");",
 															"});",
 															"",
 															"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
@@ -27429,6 +27465,10 @@
 																"exec": [
 																	"pm.test(\"Besluittype gerelateerd aan Informatieobjecttype met concept False bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -27493,6 +27533,10 @@
 																"exec": [
 																	"pm.test(\"Besluittype gerelateerd aan Informatieobjecttype met concept False deels bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -27622,6 +27666,10 @@
 																"exec": [
 																	"pm.test(\"Besluittype gerelateerd aan Informatieobjecttype met concept False verwijderen geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
@@ -27814,6 +27862,10 @@
 																"exec": [
 																	"pm.test(\"Eigenschap gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -27878,6 +27930,10 @@
 																"exec": [
 																	"pm.test(\"Eigenschap gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -27942,6 +27998,10 @@
 																"exec": [
 																	"pm.test(\"Eigenschap gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -28007,7 +28067,12 @@
 															"script": {
 																"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
 																"exec": [
-																	""
+																	"// Retrieve the Zaak body template and modify as needed",
+																	"var body = JSON.parse(pm.globals.get(\"informatieobjecttype_body\"));",
+																	"body.omschrijving = \"IOT publish test1\";",
+																	"",
+																	"// Store the modified Zaak body, allowing it to be used in the main request",
+																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
 																],
 																"type": "text/javascript"
 															}
@@ -28025,7 +28090,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{{informatieobjecttype_body}}",
+															"raw": "{{request_body}}",
 															"options": {
 																"raw": {
 																	"language": "json"
@@ -28054,7 +28119,7 @@
 																"exec": [
 																	"// Retrieve the Zaak body template and modify as needed",
 																	"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
-																	"body.informatieobjecttypes = [pm.globals.get(\"created_informatieobjecttype_url\")];",
+																	"body.informatieobjecttypen = [pm.globals.get(\"created_informatieobjecttype_url\")];",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -28069,7 +28134,7 @@
 																"exec": [
 																	"pm.globals.set(\"created_besluittype_url\", pm.response.json().url);",
 																	"",
-																	"postman.setNextRequest(\"(COMMON) Publish Informatieobjecttype\");",
+																	"postman.setNextRequest(\"(COMMON) Publish Besluittype\");",
 																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-010c) Informatieobjecttype gerelateerd aan Besluittype met concept False bijwerken is niet toegestaan\"]);"
 																],
 																"type": "text/javascript"
@@ -28132,6 +28197,10 @@
 																"exec": [
 																	"pm.test(\"Informatieobjecttype gerelateerd aan Besluittype met concept False bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28196,6 +28265,10 @@
 																"exec": [
 																	"pm.test(\"Informatieobjecttype gerelateerd aan Besluittype met concept False deels bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28325,6 +28398,10 @@
 																"exec": [
 																	"pm.test(\"Informatieobjecttype gerelateerd aan Besluittype met concept False verwijderen geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Besluittype\");",
@@ -28517,6 +28594,10 @@
 																"exec": [
 																	"pm.test(\"Resultaattype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28581,6 +28662,10 @@
 																"exec": [
 																	"pm.test(\"Resultaattype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28645,6 +28730,10 @@
 																"exec": [
 																	"pm.test(\"Resultaattype gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
@@ -28837,6 +28926,10 @@
 																"exec": [
 																	"pm.test(\"Roltype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28901,6 +28994,10 @@
 																"exec": [
 																	"pm.test(\"Roltype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -28965,6 +29062,10 @@
 																"exec": [
 																	"pm.test(\"Roltype gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -29179,6 +29280,10 @@
 																"exec": [
 																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29243,6 +29348,10 @@
 																"exec": [
 																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29307,6 +29416,10 @@
 																"exec": [
 																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False verwijderen geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -29460,7 +29573,12 @@
 															"script": {
 																"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
 																"exec": [
-																	""
+																	"// Retrieve the Zaak body template and modify as needed",
+																	"var body = JSON.parse(pm.globals.get(\"informatieobjecttype_body\"));",
+																	"body.omschrijving = \"ZIOT publish tests\";",
+																	"",
+																	"// Store the modified Zaak body, allowing it to be used in the main request",
+																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
 																],
 																"type": "text/javascript"
 															}
@@ -29478,7 +29596,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{{informatieobjecttype_body}}",
+															"raw": "{{request_body}}",
 															"options": {
 																"raw": {
 																	"language": "json"
@@ -29522,6 +29640,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29586,6 +29708,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False deels bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29650,6 +29776,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False verwijderen geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Publish Zaaktype\");",
@@ -29713,6 +29843,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype en Zaaktype met concept False bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29777,6 +29911,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype en Zaaktype met concept False deels bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29841,6 +29979,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype en Zaaktype met concept False verwijderen geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
@@ -30054,8 +30196,12 @@
 															"script": {
 																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
 																"exec": [
-																	"pm.test(\"Statustype gerelateerd aan Zaaktype met concept False bijwerken geeft 400\", function() {",
+																	"pm.test(\"Zaaktype gerelateerd aan Besluittype met concept False bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -30120,6 +30266,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype gerelateerd aan Besluittype met concept False deels bijwerken geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -30249,9 +30399,342 @@
 																"exec": [
 																	"pm.test(\"Zaaktype gerelateerd aan Besluittype met concept False verwijderen geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Besluittype\");",
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Informatieobjecttype to Publish for Zaaktype\"]);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "DELETE",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{created_zaaktype_url}}",
+															"host": [
+																"{{created_zaaktype_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "Create Informatieobjecttype to Publish for Zaaktype",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+																"exec": [
+																	"if(pm.response.code == 201) {",
+																	"    pm.globals.set(\"created_informatieobjecttype_url\", pm.response.json().url);",
+																	"}",
+																	"",
+																	"postman.setNextRequest(\"(COMMON) Create Zaaktype-Informatieobjecttype\");",
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Publish Informatieobjecttype\", \"(ztc-010h) Zaaktype gerelateerd aan Informatieobjecttype met concept False bijwerken is niet toegestaan\"]);"
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{{informatieobjecttype_body}}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{ztc_url}}/informatieobjecttypen",
+															"host": [
+																"{{ztc_url}}"
+															],
+															"path": [
+																"informatieobjecttypen"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-010h) Zaaktype gerelateerd aan Informatieobjecttype met concept False bijwerken is niet toegestaan",
+													"event": [
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+																"exec": [
+																	"// Retrieve the Zaak body template and modify as needed",
+																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+																	"body.eindeGeldigheid = \"2010-01-10\";",
+																	"body.omschrijving = \"aangepast\";",
+																	"",
+																	"// Store the modified Zaak body, allowing it to be used in the main request",
+																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "test",
+															"script": {
+																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+																"exec": [
+																	"pm.test(\"Zaaktype gerelateerd aan Informatieobjecttype met concept False bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "PUT",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{{request_body}}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{created_zaaktype_url}}",
+															"host": [
+																"{{created_zaaktype_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-010h) Zaaktype gerelateerd aan Informatieobjecttype met concept False deels bijwerken is niet toegestaan",
+													"event": [
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "test",
+															"script": {
+																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+																"exec": [
+																	"pm.test(\"Zaaktype gerelateerd aan Informatieobjecttype met concept False deels bijwerken geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "PATCH",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{created_zaaktype_url}}",
+															"host": [
+																"{{created_zaaktype_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-010h) Zaaktype gerelateerd aan Informatieobjecttype met concept False deels bijwerken met eindeGeldigheid is toegestaan",
+													"event": [
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "test",
+															"script": {
+																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+																"exec": [
+																	"pm.test(\"Zaaktype gerelateerd aan Informatieobjecttype met concept False deels bijwerken met eindeGeldigheid geeft 200\", function() {",
+																	"    pm.response.to.have.status(200);",
+																	"    pm.expect(pm.response.json().eindeGeldigheid).to.be.equal(\"2004-12-12\");",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "PATCH",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n\t\"eindeGeldigheid\": \"2004-12-12\"\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{created_zaaktype_url}}",
+															"host": [
+																"{{created_zaaktype_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-010h) Zaaktype gerelateerd aan Informatieobjecttype met concept False verwijderen is niet toegestaan",
+													"event": [
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "7553ce90-093b-408c-ab2c-0c8f8a46da0e",
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "test",
+															"script": {
+																"id": "18d85cb5-5738-45ed-8cfd-cb4734f797ad",
+																"exec": [
+																	"pm.test(\"Zaaktype gerelateerd aan Informatieobjecttype met concept False verwijderen geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
+																	"});",
+																	"",
+																	"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
 																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Zaaktype\", \"Create Zaaktype for Besluittype relation creation\"]);"
 																],
 																"type": "text/javascript"
@@ -30392,6 +30875,10 @@
 																"exec": [
 																	"pm.test(\"Besluittype aanmaken met relatie naar Zaaktype met concept False geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -30424,12 +30911,12 @@
 															}
 														},
 														"url": {
-															"raw": "{{ztc_url}}/eigenschappen",
+															"raw": "{{ztc_url}}/besluittypen",
 															"host": [
 																"{{ztc_url}}"
 															],
 															"path": [
-																"eigenschappen"
+																"besluittypen"
 															]
 														}
 													},
@@ -30520,6 +31007,10 @@
 																"exec": [
 																	"pm.test(\"Besluittype aanmaken met relatie naar Informatieobjecttype met concept False geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -30643,6 +31134,10 @@
 																"exec": [
 																	"pm.test(\"Besluittype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -30707,6 +31202,10 @@
 																"exec": [
 																	"pm.test(\"Besluittype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -30776,6 +31275,10 @@
 																"exec": [
 																	"pm.test(\"Besluittype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -30840,6 +31343,10 @@
 																"exec": [
 																	"pm.test(\"Besluittype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
@@ -30980,6 +31487,10 @@
 																"exec": [
 																	"pm.test(\"Eigenschap aanmaken met relatie naar Zaaktype met concept False geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -31098,6 +31609,10 @@
 																"exec": [
 																	"pm.test(\"Eigenschap bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -31162,6 +31677,10 @@
 																"exec": [
 																	"pm.test(\"Eigenschap deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -31322,13 +31841,18 @@
 															"script": {
 																"id": "53c6d9c5-d8d2-4dd0-8b62-7799838a18d1",
 																"exec": [
-																	"pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
-																	"pm.globals.set(\"resultaattype_body\", pm.request.body.raw);",
+																	"pm.test(\"Resultaattype aanmaken met relatie naar Zaaktype met concept False geeft 400\", function() {",
+																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
+																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
-																	"    pm.globals.set(\"created_eigenschap_url\", pm.response.json().url);",
-																	"    postman.setNextRequest(\"(COMMON) Delete Eigenschap\");",
-																	"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Eigenschap for concept relation tests\"]);",
+																	"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
+																	"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
+																	"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Resultaattype for concept relation tests\"]);",
 																	"}"
 																],
 																"type": "text/javascript"
@@ -31452,6 +31976,10 @@
 																"exec": [
 																	"pm.test(\"Resultaattype bijwerken relatie leggen met Zaaktype met concept False geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -31516,6 +32044,10 @@
 																"exec": [
 																	"pm.test(\"Resultaattype deels bijwerken relatie leggen met Zaaktype met concept False geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -31656,6 +32188,10 @@
 																"exec": [
 																	"pm.test(\"Roltype aanmaken met relatie naar Zaaktype met concept False geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -31774,6 +32310,10 @@
 																"exec": [
 																	"pm.test(\"Roltype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -31838,6 +32378,10 @@
 																"exec": [
 																	"pm.test(\"Roltype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -32000,6 +32544,10 @@
 																"exec": [
 																	"pm.test(\"Statustype aanmaken met relatie naar Zaaktype met concept False geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -32118,6 +32666,10 @@
 																"exec": [
 																	"pm.test(\"Statustype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -32182,6 +32734,10 @@
 																"exec": [
 																	"pm.test(\"Statustype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-zaaktype\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -32396,6 +32952,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype aanmaken met Zaaktype met concept False geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -32522,6 +33082,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype aanmaken met Informatieobjecttype met concept False geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
@@ -32647,6 +33211,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype aanmaken met Zaaktype en Informatieobjecttype met concept False geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
@@ -33028,6 +33596,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype bijwerken met Zaaktype met concept False is geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -33098,6 +33670,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype bijwerken met Informatieobjecttype met concept False is geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -33162,6 +33738,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype deels bijwerken met Zaaktype met concept False is geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -33226,6 +33806,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype-Informatieobjecttype deels bijwerken met Informatieobjecttype met concept False is geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -33417,6 +34001,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype aanmaken met relatie naar Besluittype met concept False geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"if(pm.response.code == 201) {",
@@ -33548,6 +34136,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype bijwerken relatie leggen met Informatieobjecttype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -33612,6 +34204,10 @@
 																"exec": [
 																	"pm.test(\"Zaaktype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan geeft 400\", function() {",
 																	"    pm.response.to.have.status(400); ",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
