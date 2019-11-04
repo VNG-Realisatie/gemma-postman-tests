@@ -35499,7 +35499,9 @@
 								"id": "6e24a148-f731-4cce-886c-e0ba6df75296",
 								"type": "text/javascript",
 								"exec": [
-									""
+									"if(pm.response.status >= 400) {",
+									"    console.log(pm.response.text());",
+									"}"
 								]
 							}
 						}
