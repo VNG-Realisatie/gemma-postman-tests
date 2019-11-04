@@ -2130,7 +2130,7 @@
 															"// If the test failed and the Zaak was created, delete it",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_zaak_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(zrc-001e) Zaak bijwerken met ongeldige zaaktype url is onmogelijk\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(zrc-001e) Zaak aanmaken met zaaktype url die niet wijst naar Zaaktype is onmogelijk\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete Zaak\");",
 															"}"
 														],
@@ -2190,140 +2190,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-001e) Zaak bijwerken met ongeldige zaaktype url is onmogelijk",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "759de81f-fe06-48a8-9586-d495f3c77444",
-														"exec": [
-															"pm.test(\"Zaak bijwerken met zaaktype url die niet resulteert in 200 geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    // Verify that the 400 is returned for the correct reason",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"zaaktype\");",
-															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "b79c193c-ee7a-46e6-979e-398d5edfa06c",
-														"exec": [
-															"// Retrieve the Zaak body template and modify as needed",
-															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.zaaktype = pm.environment.get(\"mock_url\") + \"/404\";",
-															"",
-															"// Store the modified Zaak body, allowing it to be used in the main request",
-															"pm.globals.set(\"request_body\", JSON.stringify(body));"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													},
-													{
-														"key": "Accept-Crs",
-														"type": "text",
-														"value": "EPSG:4326"
-													},
-													{
-														"key": "Content-Crs",
-														"type": "text",
-														"value": "EPSG:4326"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{{request_body}}"
-												},
-												"url": {
-													"raw": "{{zaak_url}}",
-													"host": [
-														"{{zaak_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(zrc-001f) Zaak deels bijwerken met ongeldige zaaktype url is onmogelijk",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "759de81f-fe06-48a8-9586-d495f3c77444",
-														"exec": [
-															"pm.test(\"Zaak deels bijwerken met zaaktype url die niet resulteert in 200 geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    // Verify that the 400 is returned for the correct reason",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"zaaktype\");",
-															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "b79c193c-ee7a-46e6-979e-398d5edfa06c",
-														"exec": [
-															""
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PATCH",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													},
-													{
-														"key": "Accept-Crs",
-														"type": "text",
-														"value": "EPSG:4326"
-													},
-													{
-														"key": "Content-Crs",
-														"type": "text",
-														"value": "EPSG:4326"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{mock_url}}/404\"\n}"
-												},
-												"url": {
-													"raw": "{{zaak_url}}",
-													"host": [
-														"{{zaak_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(zrc-001g) Zaak aanmaken met zaaktype url die niet wijst naar Zaaktype is onmogelijk",
+											"name": "(zrc-001e) Zaak aanmaken met zaaktype url die niet wijst naar Zaaktype is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -2342,7 +2209,7 @@
 															"// If the test failed and the Zaak was created, delete it",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_zaak_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(zrc-001h) Zaak bijwerken met zaaktype url die niet wijst naar Zaaktype is onmogelijk\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(zrc-001f) Zaak met zaaktype bijwerken is onmogelijk\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete Zaak\");",
 															"}"
 														],
@@ -2402,14 +2269,92 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-001h) Zaak bijwerken met zaaktype url die niet wijst naar Zaaktype is onmogelijk",
+											"name": "Create Zaaktype for Zaak updates",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "b2d873b4-f0df-4df7-b6db-e01435ecf98b",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.omschrijving = \"TEMP\"",
+															"body.besluittypen = [];",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "d12c4e2c-ec54-43b9-ad6d-e520337a0786",
+														"exec": [
+															"pm.globals.set(\"temp_zaaktype_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Zaaktype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{temp_zaaktype_url}}/publish",
+													"host": [
+														"{{temp_zaaktype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-001f) Zaak met zaaktype bijwerken is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "759de81f-fe06-48a8-9586-d495f3c77444",
 														"exec": [
-															"pm.test(\"Zaak bijwerken met zaaktype url die niet wijst naar Zaaktype-resource geeft 400\", function() {",
+															"pm.test(\"Zaak met zaaktype bijwerken geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -2428,7 +2373,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.zaaktype = pm.environment.get(\"mock_url\") + \"/200\";",
+															"body.zaaktype = \"{{temp_zaaktype_url}}\"",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -2471,14 +2416,14 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-001i) Zaak deels bijwerken met zaaktype url die niet wijst naar Zaaktype is onmogelijk",
+											"name": "(zrc-001g) Zaak met zaaktype deels bijwerken is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "759de81f-fe06-48a8-9586-d495f3c77444",
 														"exec": [
-															"pm.test(\"Zaak deels bijwerken met zaaktype url die niet wijst naar Zaaktype-resource geeft 400\", function() {",
+															"pm.test(\"Zaak met zaaktype deels bijwerken geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
@@ -2523,12 +2468,38 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{mock_url}}/200\"\n}"
+													"raw": "{\n\t\"zaaktype\": \"{{temp_zaaktype_url}}\"\n}"
 												},
 												"url": {
 													"raw": "{{zaak_url}}",
 													"host": [
 														"{{zaak_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete temp Zaaktype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5a4f3b1-92d1-4bd7-b613-682673649dd1",
+														"exec": [
+															"pm.globals.unset(\"temp_zaaktype_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{temp_zaaktype_url}}",
+													"host": [
+														"{{temp_zaaktype_url}}"
 													]
 												}
 											},
@@ -14299,7 +14270,7 @@
 															"",
 															"if (pm.response.code == 201) {",
 															"    pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-001c) EnkelvoudigInformatieObject bijwerken met ongeldige informatieobjecttype url is onmogelijk\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-001c) EnkelvoudigInformatieObject aanmaken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
 															"}"
 														],
@@ -14347,117 +14318,7 @@
 											"response": []
 										},
 										{
-											"name": "(drc-001c) EnkelvoudigInformatieObject bijwerken met ongeldige informatieobjecttype url is onmogelijk",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
-														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject bijwerken met informatieobjecttype url die niet resulteert in 200 geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
-															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
-														"exec": [
-															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.informatieobjecttype = pm.environment.get(\"mock_url\") + \"/404\";",
-															"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
-															"",
-															"pm.globals.set(\"request_body\", JSON.stringify(body));"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{{request_body}}"
-												},
-												"url": {
-													"raw": "{{informatieobject_url}}",
-													"host": [
-														"{{informatieobject_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(drc-001d) EnkelvoudigInformatieObject deels bijwerken met ongeldige informatieobjecttype url is onmogelijk",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
-														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken met informatieobjecttype url die niet resulteert in 200 geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
-															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
-														"exec": [
-															"pm.globals.set(\"aangepaste_auteur\", \"aangepaste auteur\");"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PATCH",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"informatieobjecttype\": \"{{mock_url}}/404\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
-												},
-												"url": {
-													"raw": "{{informatieobject_url}}",
-													"host": [
-														"{{informatieobject_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(drc-001e) EnkelvoudigInformatieObject aanmaken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk",
+											"name": "(drc-001c) EnkelvoudigInformatieObject aanmaken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -14474,7 +14335,7 @@
 															"",
 															"if (pm.response.code == 201) {",
 															"    pm.globals.set(\"created_informatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-001f) EnkelvoudigInformatieObject bijwerken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Informatieobjecttype for EIO updates\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
 															"}"
 														],
@@ -14522,19 +14383,91 @@
 											"response": []
 										},
 										{
-											"name": "(drc-001f) EnkelvoudigInformatieObject bijwerken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk",
+											"name": "Create Informatieobjecttype for EIO updates",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "b2d873b4-f0df-4df7-b6db-e01435ecf98b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "d12c4e2c-ec54-43b9-ad6d-e520337a0786",
+														"exec": [
+															"pm.globals.set(\"temp_iotype_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"TEMP\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/informatieobjecttypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish temp Informatieobjecttype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{temp_iotype_url}}/publish",
+													"host": [
+														"{{temp_iotype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(drc-001d) EnkelvoudigInformatieObject informatieobjecttype bijwerken is niet toegestaan",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
 														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject bijwerken met informatieobjecttype url die niet wijst naar Informatieobjecttype geeft 400\", function() {",
+															"pm.test(\"EnkelvoudigInformatieObject informatieobjecttype bijwerken geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
-															"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
+															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toelaten\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -14546,7 +14479,7 @@
 														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
 														"exec": [
 															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.informatieobjecttype = pm.environment.get(\"mock_url\") + \"/200\";",
+															"body.informatieobjecttype = \"{{temp_iotype_url}}\";",
 															"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
 															"",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -14579,19 +14512,19 @@
 											"response": []
 										},
 										{
-											"name": "(drc-001g) EnkelvoudigInformatieObject deels bijwerken met informatieobjecttype url die niet wijst naar informatieobjecttype is onmogelijk",
+											"name": "(drc-001e) EnkelvoudigInformatieObject informatieobjecttype bijwerken is niet toegestaan",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
 														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject deels bijwerken met informatieobjecttype url die niet wijst naar Informatieobjecttype geeft 400\", function() {",
+															"pm.test(\"EnkelvoudigInformatieObject informatieobjecttype deels bijwerken geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
-															"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
+															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toelaten\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -14602,7 +14535,7 @@
 													"script": {
 														"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
 														"exec": [
-															""
+															"pm.globals.set(\"aangepaste_auteur\", \"aangepaste auteur\");"
 														],
 														"type": "text/javascript"
 													}
@@ -14620,12 +14553,38 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"informatieobjecttype\": \"{{mock_url}}/200\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
+													"raw": "{\n\t\"informatieobjecttype\": \"{{temp_iotype_url}}\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
 												},
 												"url": {
 													"raw": "{{informatieobject_url}}",
 													"host": [
 														"{{informatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete temp Informatieobjecttype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5a4f3b1-92d1-4bd7-b613-682673649dd1",
+														"exec": [
+															"pm.globals.unset(\"temp_iotype_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{temp_iotype_url}}",
+													"host": [
+														"{{temp_iotype_url}}"
 													]
 												}
 											},
@@ -18537,7 +18496,7 @@
 															"// If the test failed and the Besluit was created, delete it",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_besluit_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-001e) Besluit bijwerken met ongeldige besluittype url is onmogelijk\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-001e) Besluit aanmaken met besluittype url die niet wijst naar Besluittype is onmogelijk\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete Besluit\");",
 															"}"
 														],
@@ -18572,120 +18531,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-001e) Besluit bijwerken met ongeldige besluittype url is onmogelijk",
-											"event": [
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "839e70ed-66c2-4232-b9ce-5530eeefbf0a",
-														"exec": [
-															"// Retrieve the Zaak body template and modify as needed",
-															"var body = JSON.parse(pm.globals.get(\"besluit_body\"));",
-															"body.besluittype = pm.environment.get(\"mock_url\") + \"/404\";",
-															"",
-															"// Store the modified Zaak body, allowing it to be used in the main request",
-															"pm.globals.set(\"request_body\", JSON.stringify(body));"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "test",
-													"script": {
-														"id": "433d0426-73d2-46c1-bd23-2abc0c89520a",
-														"exec": [
-															"pm.test(\"Besluit bijwerken met besluittype url die niet resulteert in 200 geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    // Verify that the 400 is returned for the correct reason",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"besluittype\");",
-															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{{request_body}}"
-												},
-												"url": {
-													"raw": "{{besluit_url}}",
-													"host": [
-														"{{besluit_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(brc-001f) Besluit deels bijwerken met ongeldige besluittype url is onmogelijk",
-											"event": [
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "839e70ed-66c2-4232-b9ce-5530eeefbf0a",
-														"exec": [
-															""
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "test",
-													"script": {
-														"id": "433d0426-73d2-46c1-bd23-2abc0c89520a",
-														"exec": [
-															"pm.test(\"Besluit deels bijwerken met besluittype url die niet resulteert in 200 geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    // Verify that the 400 is returned for the correct reason",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"besluittype\");",
-															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PATCH",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"besluittype\": \"{{mock_url}}/404\"\n}"
-												},
-												"url": {
-													"raw": "{{besluit_url}}",
-													"host": [
-														"{{besluit_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(brc-001g) Besluit aanmaken met besluittype url die niet wijst naar Besluittype is onmogelijk",
+											"name": "(brc-001e) Besluit aanmaken met besluittype url die niet wijst naar Besluittype is onmogelijk",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -18719,7 +18565,7 @@
 															"// If the test failed and the Besluit was created, delete it",
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_besluit_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-001h) Besluit bijwerken met besluittype url die niet wijst naar Besluittype is onmogelijk\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Besluittype for Besluit updates\"]);",
 															"    postman.setNextRequest(\"(COMMON) Delete Besluit\");",
 															"}"
 														],
@@ -18754,7 +18600,79 @@
 											"response": []
 										},
 										{
-											"name": "(brc-001h) Besluit bijwerken met besluittype url die niet wijst naar Besluittype is onmogelijk",
+											"name": "Create Besluittype for Besluit updates",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "b2d873b4-f0df-4df7-b6db-e01435ecf98b",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "d12c4e2c-ec54-43b9-ad6d-e520337a0786",
+														"exec": [
+															"pm.globals.set(\"temp_besluittype_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"TEMP\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Publish Besluittype",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{temp_besluittype_url}}/publish",
+													"host": [
+														"{{temp_besluittype_url}}"
+													],
+													"path": [
+														"publish"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(brc-001f) Besluit besluittype bijwerken is onmogelijk",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -18763,7 +18681,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"besluit_body\"));",
-															"body.besluittype = pm.environment.get(\"mock_url\") + \"/200\";",
+															"body.besluittype = pm.globals.get(\"temp_besluittype_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -18776,13 +18694,13 @@
 													"script": {
 														"id": "433d0426-73d2-46c1-bd23-2abc0c89520a",
 														"exec": [
-															"pm.test(\"Besluit bijwerken met besluittype url die niet wijst naar Besluittype-resource geeft 400\", function() {",
+															"pm.test(\"Besluit besluittype bijwerken geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"besluittype\");",
-															"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
+															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -18813,7 +18731,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-001i) Besluit deels bijwerken met besluittype url die niet wijst naar Besluittype is onmogelijk",
+											"name": "(brc-001g) Besluit besluittype deels bijwerken is onmogelijk",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -18830,13 +18748,13 @@
 													"script": {
 														"id": "433d0426-73d2-46c1-bd23-2abc0c89520a",
 														"exec": [
-															"pm.test(\"Besluit deels bijwerken met besluittype url die niet wijst naar Besluittype-resource geeft 400\", function() {",
+															"pm.test(\"Besluit besluittype deels bijwerken geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"besluittype\");",
-															"    pm.expect(error.code).to.be.equal(\"invalid-resource\");",
+															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -18855,12 +18773,38 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"besluittype\": \"{{mock_url}}/200\"\n}"
+													"raw": "{\n\t\"besluittype\": \"{{temp_besluittype_url}}\"\n}"
 												},
 												"url": {
 													"raw": "{{besluit_url}}",
 													"host": [
 														"{{besluit_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete temp Besluittype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5a4f3b1-92d1-4bd7-b613-682673649dd1",
+														"exec": [
+															"pm.globals.unset(\"temp_besluittype_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{temp_besluittype_url}}",
+													"host": [
+														"{{temp_besluittype_url}}"
 													]
 												}
 											},
