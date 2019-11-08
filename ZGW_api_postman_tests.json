@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c1d51674-5b08-4376-b41a-d8208da9fe62",
+		"_postman_id": "ee79eced-8fc0-492e-9cad-946dc7e78071",
 		"name": "ZGW api tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14657,7 +14657,7 @@
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
-															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toelaten\");",
+															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -14714,7 +14714,7 @@
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
-															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toelaten\");",
+															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
 															"});",
 															"",
 															"// If the type was modified, change it back",
@@ -18991,7 +18991,7 @@
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"besluittype\");",
-															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
+															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -19045,7 +19045,7 @@
 															"    // Verify that the 400 is returned for the correct reason",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
 															"    pm.expect(error.name).to.be.equal(\"besluittype\");",
-															"    pm.expect(error.code).to.be.equal(\"bad-url\");",
+															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
 															"});",
 															"",
 															"// If the type was modified, change it back",
