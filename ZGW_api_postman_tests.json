@@ -30077,7 +30077,7 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False verwijderen is niet toegestaan",
+													"name": "(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False verwijderen is toegestaan",
 													"event": [
 														{
 															"listen": "prerequest",
@@ -30094,16 +30094,12 @@
 															"script": {
 																"id": "90c0f399-9921-41f8-aa74-50b690815e2b",
 																"exec": [
-																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False verwijderen geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"    ",
-																	"    var error = pm.response.json()[\"invalidParams\"][0];",
-																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
+																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False verwijderen geeft 204\", function() {",
+																	"    pm.response.to.have.status(204); ",
 																	"});",
 																	"",
-																	"postman.setNextRequest(\"(COMMON) Publish Zaaktype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype en Zaaktype met concept False bijwerken is niet toegestaan\"]);"
+																	"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Informatieobjecttype to Publish for ZIOT2\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -30133,6 +30129,75 @@
 															"raw": "{{created_zaakinformatieobjecttype_url}}",
 															"host": [
 																"{{created_zaakinformatieobjecttype_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "Create Informatieobjecttype to Publish for ZIOT2",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+																"exec": [
+																	"if(pm.response.code == 201) {",
+																	"    pm.globals.set(\"created_informatieobjecttype_url\", pm.response.json().url);",
+																	"}",
+																	"",
+																	"postman.setNextRequest(\"(COMMON) Create Zaaktype-Informatieobjecttype\");",
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [",
+																	"    \"(COMMON) Publish Informatieobjecttype\",",
+																	"    \"(COMMON) Publish Zaaktype\",",
+																	"    \"(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype en Zaaktype met concept False bijwerken is niet toegestaan\"",
+																	"]);"
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+																"exec": [
+																	"// Retrieve the Zaak body template and modify as needed",
+																	"var body = JSON.parse(pm.globals.get(\"informatieobjecttype_body\"));",
+																	"body.omschrijving = \"ZIOT publish tests\";",
+																	"",
+																	"// Store the modified Zaak body, allowing it to be used in the main request",
+																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{{request_body}}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{ztc_url}}/informatieobjecttypen",
+															"host": [
+																"{{ztc_url}}"
+															],
+															"path": [
+																"informatieobjecttypen"
 															]
 														}
 													},
