@@ -29883,7 +29883,7 @@
 																	"}",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Create Zaaktype-Informatieobjecttype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Publish Informatieobjecttype\", \"(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False bijwerken is niet toegestaan\"]);"
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Publish Informatieobjecttype\", \"(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False bijwerken is mogelijk\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -29936,7 +29936,7 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False bijwerken is niet toegestaan",
+													"name": "(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False bijwerken is mogelijk",
 													"event": [
 														{
 															"listen": "prerequest",
@@ -29958,12 +29958,9 @@
 															"script": {
 																"id": "3bd30d2d-4337-4530-9db6-67107ed5afea",
 																"exec": [
-																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False bijwerken geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"    ",
-																	"    var error = pm.response.json()[\"invalidParams\"][0];",
-																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
+																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False bijwerken geeft 200\", function() {",
+																	"    pm.response.to.have.status(200);",
+																	"    pm.expect(pm.response.json().richting).to.be.equal(\"intern\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -29986,8 +29983,8 @@
 															{
 																"key": "Content-Type",
 																"name": "Content-Type",
-																"value": "application/json",
-																"type": "text"
+																"type": "text",
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -30009,7 +30006,7 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False deels bijwerken is niet toegestaan",
+													"name": "(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False deels bijwerken is mogelijk",
 													"event": [
 														{
 															"listen": "prerequest",
@@ -30026,12 +30023,9 @@
 															"script": {
 																"id": "c2d94102-eb19-4cb3-9d36-bbbb793b605e",
 																"exec": [
-																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False deels bijwerken geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"    ",
-																	"    var error = pm.response.json()[\"invalidParams\"][0];",
-																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
+																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype met concept False deels bijwerken geeft 200\", function() {",
+																	"    pm.response.to.have.status(200); ",
+																	"    pm.expect(pm.response.json().volgnummer).to.be.equal(2);",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -30146,11 +30140,10 @@
 																	"    pm.globals.set(\"created_informatieobjecttype_url\", pm.response.json().url);",
 																	"}",
 																	"",
-																	"postman.setNextRequest(\"(COMMON) Create Zaaktype-Informatieobjecttype\");",
+																	"postman.setNextRequest(\"(COMMON) Publish Zaaktype\");",
 																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [",
-																	"    \"(COMMON) Publish Informatieobjecttype\",",
-																	"    \"(COMMON) Publish Zaaktype\",",
-																	"    \"(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype en Zaaktype met concept False bijwerken is niet toegestaan\"",
+																	"    \"(COMMON) Create Zaaktype-Informatieobjecttype\",",
+																	"    \"(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Zaaktype met concept False bijwerken is mogelijk\"",
 																	"]);"
 																],
 																"type": "text/javascript"
@@ -30198,6 +30191,269 @@
 															],
 															"path": [
 																"informatieobjecttypen"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Zaaktype met concept False bijwerken is mogelijk",
+													"event": [
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "44f4def0-df08-40e2-86af-08ca95234e0f",
+																"exec": [
+																	"// Retrieve the Zaak body template and modify as needed",
+																	"var body = JSON.parse(pm.globals.get(\"ziot_body\"));",
+																	"body.richting = \"intern\";",
+																	"",
+																	"// Store the modified Zaak body, allowing it to be used in the main request",
+																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "test",
+															"script": {
+																"id": "3bd30d2d-4337-4530-9db6-67107ed5afea",
+																"exec": [
+																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Zaaktype met concept False bijwerken geeft 200\", function() {",
+																	"    pm.response.to.have.status(200);",
+																	"    pm.expect(pm.response.json().richting).to.be.equal(\"intern\");",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "PUT",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{{request_body}}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{created_zaakinformatieobjecttype_url}}",
+															"host": [
+																"{{created_zaakinformatieobjecttype_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Zaaktype met concept False deels bijwerken is mogelijk",
+													"event": [
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "44f4def0-df08-40e2-86af-08ca95234e0f",
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "test",
+															"script": {
+																"id": "c2d94102-eb19-4cb3-9d36-bbbb793b605e",
+																"exec": [
+																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Zaaktype met concept False deels bijwerken geeft 200\", function() {",
+																	"    pm.response.to.have.status(200); ",
+																	"    pm.expect(pm.response.json().volgnummer).to.be.equal(2);",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "PATCH",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n\t\"volgnummer\": 2\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{created_zaakinformatieobjecttype_url}}",
+															"host": [
+																"{{created_zaakinformatieobjecttype_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Zaaktype met concept False verwijderen is toegestaan",
+													"event": [
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "44f4def0-df08-40e2-86af-08ca95234e0f",
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "test",
+															"script": {
+																"id": "90c0f399-9921-41f8-aa74-50b690815e2b",
+																"exec": [
+																	"pm.test(\"Zaaktype-Informatieobjecttype gerelateerd aan Zaaktype met concept False verwijderen geeft 204\", function() {",
+																	"    pm.response.to.have.status(204); ",
+																	"});",
+																	"",
+																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Zaaktype to Publish for ZIOT2\"]);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "DELETE",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"url": {
+															"raw": "{{created_zaakinformatieobjecttype_url}}",
+															"host": [
+																"{{created_zaakinformatieobjecttype_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "Create Zaaktype to Publish for ZIOT2",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"id": "c5eb5e08-efbf-470d-b13a-e99b95c97615",
+																"exec": [
+																	"if(pm.response.code == 201) {",
+																	"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
+																	"}",
+																	"",
+																	"postman.setNextRequest(\"(COMMON) Create Zaaktype-Informatieobjecttype\");",
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [",
+																	"    \"(COMMON) Publish Informatieobjecttype\", ",
+																	"    \"(COMMON) Publish Zaaktype\", ",
+																	"    \"(ztc-010g) Zaaktype-Informatieobjecttype gerelateerd aan Informatieobjecttype en Zaaktype met concept False bijwerken is niet toegestaan\"",
+																	"]);"
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
+																"exec": [
+																	"// Retrieve the Zaak body template and modify as needed",
+																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+																	"body.beginGeldigheid = \"2004-01-10\";",
+																	"body.eindeGeldigheid = \"2004-01-10\";",
+																	"",
+																	"// Store the modified Zaak body, allowing it to be used in the main request",
+																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{{request_body}}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{ztc_url}}/zaaktypen",
+															"host": [
+																"{{ztc_url}}"
+															],
+															"path": [
+																"zaaktypen"
 															]
 														}
 													},
@@ -33328,19 +33584,15 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-011f) Zaaktype-Informatieobjecttype aanmaken met Zaaktype met concept False is niet toegestaan",
+													"name": "(ztc-011f) Zaaktype-Informatieobjecttype aanmaken met Zaaktype met concept False is mogelijk",
 													"event": [
 														{
 															"listen": "test",
 															"script": {
 																"id": "8b4dbfa4-7da2-4810-8eae-648f17c20cb1",
 																"exec": [
-																	"pm.test(\"Zaaktype-Informatieobjecttype aanmaken met Zaaktype met concept False geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"    ",
-																	"    var error = pm.response.json()[\"invalidParams\"][0];",
-																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
+																	"pm.test(\"Zaaktype-Informatieobjecttype aanmaken met Zaaktype met concept False geeft 201\", function() {",
+																	"    pm.response.to.have.status(201); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
@@ -33404,7 +33656,7 @@
 																	"}",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Publish Informatieobjecttype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-011f) Zaaktype-Informatieobjecttype aanmaken met Informatieobjecttype met concept False is niet toegestaan\"]);"
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-011f) Zaaktype-Informatieobjecttype aanmaken met Informatieobjecttype met concept False is mogelijk\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -33458,19 +33710,15 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-011f) Zaaktype-Informatieobjecttype aanmaken met Informatieobjecttype met concept False is niet toegestaan",
+													"name": "(ztc-011f) Zaaktype-Informatieobjecttype aanmaken met Informatieobjecttype met concept False is mogelijk",
 													"event": [
 														{
 															"listen": "test",
 															"script": {
 																"id": "8b4dbfa4-7da2-4810-8eae-648f17c20cb1",
 																"exec": [
-																	"pm.test(\"Zaaktype-Informatieobjecttype aanmaken met Informatieobjecttype met concept False geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"    ",
-																	"    var error = pm.response.json()[\"invalidParams\"][0];",
-																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
+																	"pm.test(\"Zaaktype-Informatieobjecttype aanmaken met Informatieobjecttype met concept False geeft 201\", function() {",
+																	"    pm.response.to.have.status(201); ",
 																	"});",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
@@ -33901,7 +34149,7 @@
 																	"}",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Publish Informatieobjecttype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-011f) Zaaktype-Informatieobjecttype bijwerken met Zaaktype met concept False is niet toegestaan\"]);"
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-011f) Zaaktype-Informatieobjecttype bijwerken met Zaaktype met concept False is mogelijk\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -33956,7 +34204,7 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-011f) Zaaktype-Informatieobjecttype bijwerken met Zaaktype met concept False is niet toegestaan",
+													"name": "(ztc-011f) Zaaktype-Informatieobjecttype bijwerken met Zaaktype met concept False is mogelijk",
 													"event": [
 														{
 															"listen": "prerequest",
@@ -33979,13 +34227,13 @@
 															"script": {
 																"id": "3bd30d2d-4337-4530-9db6-67107ed5afea",
 																"exec": [
-																	"pm.test(\"Zaaktype-Informatieobjecttype bijwerken met Zaaktype met concept False is geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"    ",
-																	"    var error = pm.response.json()[\"invalidParams\"][0];",
-																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
-																	"});"
+																	"pm.test(\"Zaaktype-Informatieobjecttype bijwerken met Zaaktype met concept False geeft 200\", function() {",
+																	"    pm.response.to.have.status(200);",
+																	"    pm.expect(pm.response.json().zaaktype).to.be.equal(pm.globals.get(\"created_zaaktype_url\"));",
+																	"});",
+																	"",
+																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype-Informatieobjecttype\");",
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Zaaktype-Informatieobjecttype to update2\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -34030,7 +34278,53 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-011f) Zaaktype-Informatieobjecttype bijwerken met Informatieobjecttype met concept False is niet toegestaan",
+													"name": "Create Zaaktype-Informatieobjecttype to update2",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"id": "8b4dbfa4-7da2-4810-8eae-648f17c20cb1",
+																"exec": [
+																	"pm.globals.set(\"created_ziot_url\", pm.response.json().url);",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n\t\"informatieobjecttype\": \"{{initial_informatieobjecttype_url}}\",\n\t\"zaaktype\": \"{{initial_zaaktype_url}}\",\n\t\"volgnummer\": 1,\n\t\"richting\": \"inkomend\"\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
+															"host": [
+																"{{ztc_url}}"
+															],
+															"path": [
+																"zaaktype-informatieobjecttypen"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-011f) Zaaktype-Informatieobjecttype bijwerken met Informatieobjecttype met concept False is mogelijk",
 													"event": [
 														{
 															"listen": "prerequest",
@@ -34053,13 +34347,13 @@
 															"script": {
 																"id": "3bd30d2d-4337-4530-9db6-67107ed5afea",
 																"exec": [
-																	"pm.test(\"Zaaktype-Informatieobjecttype bijwerken met Informatieobjecttype met concept False is geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"    ",
-																	"    var error = pm.response.json()[\"invalidParams\"][0];",
-																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
-																	"});"
+																	"pm.test(\"Zaaktype-Informatieobjecttype bijwerken met Informatieobjecttype met concept False geeft 200\", function() {",
+																	"    pm.response.to.have.status(200);",
+																	"    pm.expect(pm.response.json().informatieobjecttype).to.be.equal(pm.globals.get(\"created_informatieobjecttype_url\"));",
+																	"});",
+																	"",
+																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype-Informatieobjecttype\");",
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Zaaktype-Informatieobjecttype to update3\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -34104,7 +34398,53 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-011f) Zaaktype-Informatieobjecttype deels bijwerken met Zaaktype met concept False is niet toegestaan",
+													"name": "Create Zaaktype-Informatieobjecttype to update3",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"id": "8b4dbfa4-7da2-4810-8eae-648f17c20cb1",
+																"exec": [
+																	"pm.globals.set(\"created_ziot_url\", pm.response.json().url);",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n\t\"informatieobjecttype\": \"{{initial_informatieobjecttype_url}}\",\n\t\"zaaktype\": \"{{initial_zaaktype_url}}\",\n\t\"volgnummer\": 1,\n\t\"richting\": \"inkomend\"\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
+															"host": [
+																"{{ztc_url}}"
+															],
+															"path": [
+																"zaaktype-informatieobjecttypen"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-011f) Zaaktype-Informatieobjecttype deels bijwerken met Zaaktype met concept False is mogelijk",
 													"event": [
 														{
 															"listen": "prerequest",
@@ -34121,13 +34461,13 @@
 															"script": {
 																"id": "3bd30d2d-4337-4530-9db6-67107ed5afea",
 																"exec": [
-																	"pm.test(\"Zaaktype-Informatieobjecttype deels bijwerken met Zaaktype met concept False is geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"    ",
-																	"    var error = pm.response.json()[\"invalidParams\"][0];",
-																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
-																	"});"
+																	"pm.test(\"Zaaktype-Informatieobjecttype deels bijwerken met Zaaktype met concept False geeft 200\", function() {",
+																	"    pm.response.to.have.status(200);",
+																	"    pm.expect(pm.response.json().zaaktype).to.be.equal(pm.globals.get(\"created_zaaktype_url\"));",
+																	"});",
+																	"",
+																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype-Informatieobjecttype\");",
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Zaaktype-Informatieobjecttype to update4\"]);"
 																],
 																"type": "text/javascript"
 															}
@@ -34172,7 +34512,53 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-011f) Zaaktype-Informatieobjecttype bijwerken met Informatieobjecttype met concept False is niet toegestaan Copy",
+													"name": "Create Zaaktype-Informatieobjecttype to update4",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"id": "8b4dbfa4-7da2-4810-8eae-648f17c20cb1",
+																"exec": [
+																	"pm.globals.set(\"created_ziot_url\", pm.response.json().url);",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n\t\"informatieobjecttype\": \"{{initial_informatieobjecttype_url}}\",\n\t\"zaaktype\": \"{{initial_zaaktype_url}}\",\n\t\"volgnummer\": 1,\n\t\"richting\": \"inkomend\"\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
+															"host": [
+																"{{ztc_url}}"
+															],
+															"path": [
+																"zaaktype-informatieobjecttypen"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-011f) Zaaktype-Informatieobjecttype bijwerken met Informatieobjecttype met concept False is mogelijk",
 													"event": [
 														{
 															"listen": "prerequest",
@@ -34189,8 +34575,196 @@
 															"script": {
 																"id": "3bd30d2d-4337-4530-9db6-67107ed5afea",
 																"exec": [
-																	"pm.test(\"Zaaktype-Informatieobjecttype deels bijwerken met Informatieobjecttype met concept False is geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
+																	"pm.test(\"Zaaktype-Informatieobjecttype deels bijwerken met Informatieobjecttype met concept False geeft 200\", function() {",
+																	"    pm.response.to.have.status(200);",
+																	"    pm.expect(pm.response.json().informatieobjecttype).to.be.equal(pm.globals.get(\"created_informatieobjecttype_url\"));",
+																	"});",
+																	"",
+																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype-Informatieobjecttype\");",
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create Zaaktype-Informatieobjecttype to update5\"]);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "PATCH",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n\t\"informatieobjecttype\": \"{{created_informatieobjecttype_url}}\"\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{created_ziot_url}}",
+															"host": [
+																"{{created_ziot_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "Create Zaaktype-Informatieobjecttype to update5",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"id": "8b4dbfa4-7da2-4810-8eae-648f17c20cb1",
+																"exec": [
+																	"pm.globals.set(\"created_ziot_url\", pm.response.json().url);",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n\t\"informatieobjecttype\": \"{{initial_informatieobjecttype_url}}\",\n\t\"zaaktype\": \"{{initial_zaaktype_url}}\",\n\t\"volgnummer\": 1,\n\t\"richting\": \"inkomend\"\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
+															"host": [
+																"{{ztc_url}}"
+															],
+															"path": [
+																"zaaktype-informatieobjecttypen"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-011f) Zaaktype-Informatieobjecttype bijwerken met Zaaktype en Informatieobjecttype met concept False is niet mogelijk",
+													"event": [
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "44f4def0-df08-40e2-86af-08ca95234e0f",
+																"exec": [
+																	"// Retrieve the Zaak body template and modify as needed",
+																	"var body = JSON.parse(pm.globals.get(\"ziot_body\"));",
+																	"body.zaaktype = \"{{created_zaaktype_url}}\";",
+																	"body.informatieobjecttype = \"{{created_informatieobjecttype_url}}\";",
+																	"",
+																	"// Store the modified Zaak body, allowing it to be used in the main request",
+																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "test",
+															"script": {
+																"id": "3bd30d2d-4337-4530-9db6-67107ed5afea",
+																"exec": [
+																	"pm.test(\"Zaaktype-Informatieobjecttype bijwerken met Zaaktype en Informatieobjecttype met concept False geeft 400\", function() {",
+																	"    pm.response.to.have.status(400);",
+																	"    ",
+																	"    var error = pm.response.json()[\"invalidParams\"][0];",
+																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
+														"method": "PUT",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{{request_body}}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{created_ziot_url}}",
+															"host": [
+																"{{created_ziot_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "(ztc-011f) Zaaktype-Informatieobjecttype bijwerken met Zaaktype en Informatieobjecttype met concept False is niet mogelijk",
+													"event": [
+														{
+															"listen": "prerequest",
+															"script": {
+																"id": "44f4def0-df08-40e2-86af-08ca95234e0f",
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "test",
+															"script": {
+																"id": "3bd30d2d-4337-4530-9db6-67107ed5afea",
+																"exec": [
+																	"pm.test(\"Zaaktype-Informatieobjecttype deels bijwerken met Zaaktype en Informatieobjecttype met concept False geeft 400\", function() {",
+																	"    pm.response.to.have.status(400);",
 																	"    ",
 																	"    var error = pm.response.json()[\"invalidParams\"][0];",
 																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
@@ -34223,7 +34797,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n\t\"informatieobjecttype\": \"{{created_informatieobjecttype_url}}\"\n}",
+															"raw": "{\n\t\"informatieobjecttype\": \"{{created_informatieobjecttype_url}}\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\"\n}",
 															"options": {
 																"raw": {
 																	"language": "json"
@@ -35386,6 +35960,32 @@
 													"raw": "{{created_roltype_url}}",
 													"host": [
 														"{{created_roltype_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(COMMON) Delete Zaaktype-Informatieobjecttype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "d1789125-1f3c-491a-a655-7d9fb7197272",
+														"exec": [
+															"pm.globals.unset(\"created_ziot_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{created_ziot_url}}",
+													"host": [
+														"{{created_ziot_url}}"
 													]
 												}
 											},
