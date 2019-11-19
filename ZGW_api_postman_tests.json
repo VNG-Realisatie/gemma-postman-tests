@@ -258,7 +258,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/besluittypen",
@@ -1367,7 +1367,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/besluittypen",
@@ -9699,7 +9699,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test archiving\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test archiving\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -14046,7 +14046,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [\"{{informatieobjecttype_url}}\"],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [\"{{informatieobjecttype_url}}\"],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/besluittypen",
@@ -18262,7 +18262,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [\"{{informatieobjecttype_url}}\"],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [\"{{informatieobjecttype_url}}\"],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/besluittypen",
@@ -18847,7 +18847,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"TEMP\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"TEMP\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -20999,7 +20999,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/besluittypen",
@@ -21080,7 +21080,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"clientIds\": [\n        \"{{client_id_limited}}\"\n    ],\n    \"label\": \"Demo User for catalogi concept tests\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"ztc\",\n            \"componentWeergave\": \"Zaaktypecatalogus\",\n            \"scopes\": [\n            \t\"zaaktypes.lezen\",\n                \"zaaktypes.schrijven\"\n            ]\n        }\n    ]\n}",
+													"raw": "{\n    \"clientIds\": [\n        \"{{client_id_limited}}\"\n    ],\n    \"label\": \"Demo User for catalogi concept tests\",\n    \"heeftAlleAutorisaties\": false,\n    \"autorisaties\": [\n        {\n            \"component\": \"ztc\",\n            \"componentWeergave\": \"Zaaktypecatalogus\",\n            \"scopes\": [\n            \t\"catalogi.lezen\",\n                \"catalogi.schrijven\"\n            ]\n        }\n    ]\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -26948,7 +26948,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test publish\",\n    \"zaaktypes\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
+													"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test publish\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -31501,7 +31501,7 @@
 																"exec": [
 																	"// Retrieve the Zaak body template and modify as needed",
 																	"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
-																	"body.zaaktypes = [pm.globals.get(\"created_zaaktype_url\")];",
+																	"body.zaaktypen = [pm.globals.get(\"created_zaaktype_url\")];",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -31633,7 +31633,7 @@
 																"exec": [
 																	"// Retrieve the Zaak body template and modify as needed",
 																	"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
-																	"body.zaaktypes = [pm.globals.get(\"created_zaaktype_url\")];",
+																	"body.informatieobjecttypen = [pm.globals.get(\"created_informatieobjecttype_url\")];",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -31760,7 +31760,7 @@
 																"exec": [
 																	"// Retrieve the Zaak body template and modify as needed",
 																	"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
-																	"body.zaaktypes = [pm.globals.get(\"created_zaaktype_url\")];",
+																	"body.zaaktypen = [pm.globals.get(\"created_zaaktype_url\")];",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -31875,7 +31875,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n\t\"zaaktypes\": [\"{{created_zaaktype_url}}\"]\n}",
+															"raw": "{\n\t\"zaaktypen\": [\"{{created_zaaktype_url}}\"]\n}",
 															"options": {
 																"raw": {
 																	"language": "json"
