@@ -9671,10 +9671,10 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-016",
+									"name": "zrc-021",
 									"item": [
 										{
-											"name": "zrc-016a",
+											"name": "zrc-021a",
 											"item": [
 												{
 													"name": "Create Zaaktype procestermijn nihil",
@@ -10040,7 +10040,7 @@
 													"response": []
 												},
 												{
-													"name": "(zrc-016a) Afleidingswijze afgehandeld",
+													"name": "(zrc-021a) Afleidingswijze afgehandeld",
 													"event": [
 														{
 															"listen": "test",
@@ -10189,7 +10189,7 @@
 											"_postman_isSubFolder": true
 										},
 										{
-											"name": "zrc-016b",
+											"name": "zrc-021b",
 											"item": [
 												{
 													"name": "Create Zaaktype procestermijn vast_te_leggen_datum",
@@ -10758,7 +10758,7 @@
 													"response": []
 												},
 												{
-													"name": "(zrc-016b) Afleidingswijze hoofdzaak",
+													"name": "(zrc-021b) Afleidingswijze hoofdzaak",
 													"event": [
 														{
 															"listen": "test",
@@ -10939,7 +10939,7 @@
 											"_postman_isSubFolder": true
 										},
 										{
-											"name": "zrc-016c",
+											"name": "zrc-021c",
 											"item": [
 												{
 													"name": "Create Zaaktype procestermijn vast_te_leggen_datum",
@@ -11409,7 +11409,7 @@
 													"response": []
 												},
 												{
-													"name": "(zrc-016c) Afleidingswijze eigenschap",
+													"name": "(zrc-021c) Afleidingswijze eigenschap",
 													"event": [
 														{
 															"listen": "test",
@@ -11590,7 +11590,7 @@
 											"_postman_isSubFolder": true
 										},
 										{
-											"name": "zrc-016d",
+											"name": "zrc-021d",
 											"item": [
 												{
 													"name": "Create concept Besluittype",
@@ -12117,7 +12117,7 @@
 													"response": []
 												},
 												{
-													"name": "(zrc-016d) Afleidingswijze ingangsdatum_besluit",
+													"name": "(zrc-021d) Afleidingswijze ingangsdatum_besluit",
 													"event": [
 														{
 															"listen": "test",
@@ -12340,7 +12340,7 @@
 											"_postman_isSubFolder": true
 										},
 										{
-											"name": "zrc-016e",
+											"name": "zrc-021e",
 											"item": [
 												{
 													"name": "Create concept Besluittype",
@@ -12867,7 +12867,7 @@
 													"response": []
 												},
 												{
-													"name": "(zrc-016e) Afleidingswijze vervaldatum_besluit",
+													"name": "(zrc-021e) Afleidingswijze vervaldatum_besluit",
 													"event": [
 														{
 															"listen": "test",
@@ -13090,7 +13090,7 @@
 											"_postman_isSubFolder": true
 										},
 										{
-											"name": "zrc-016f",
+											"name": "zrc-021f",
 											"item": [
 												{
 													"name": "Create Zaaktype procestermijn ingeschatte_bestaansduur_procesobject",
@@ -13456,7 +13456,7 @@
 													"response": []
 												},
 												{
-													"name": "(zrc-016f) Afleidingswijze termijn",
+													"name": "(zrc-021f) Afleidingswijze termijn",
 													"event": [
 														{
 															"listen": "test",
@@ -13629,7 +13629,7 @@
 											"_postman_isSubFolder": true
 										},
 										{
-											"name": "zrc-016g",
+											"name": "zrc-021g",
 											"item": [
 												{
 													"name": "Create Zaaktype procestermijn vast_te_leggen_datum",
@@ -14009,7 +14009,7 @@
 													"response": []
 												},
 												{
-													"name": "(zrc-016g) Afleidingswijze ander_datumkenmerk",
+													"name": "(zrc-021g) Afleidingswijze ander_datumkenmerk",
 													"event": [
 														{
 															"listen": "test",
@@ -14239,7 +14239,7 @@
 											"_postman_isSubFolder": true
 										},
 										{
-											"name": "zrc-016h",
+											"name": "zrc-021h",
 											"item": [
 												{
 													"name": "external objects",
@@ -14859,7 +14859,7 @@
 															"response": []
 														},
 														{
-															"name": "(zrc-016h) Afleidingswijze zaakobject external",
+															"name": "(zrc-021h) Afleidingswijze zaakobject external",
 															"event": [
 																{
 																	"listen": "test",
@@ -15605,7 +15605,7 @@
 															"response": []
 														},
 														{
-															"name": "(zrc-016h) Afleidingswijze zaakobject local",
+															"name": "(zrc-021h) Afleidingswijze zaakobject local",
 															"event": [
 																{
 																	"listen": "test",
@@ -15822,7 +15822,7 @@
 											"_postman_isSubFolder": true
 										},
 										{
-											"name": "zrc-016i",
+											"name": "zrc-021i",
 											"item": [
 												{
 													"name": "Create Zaaktype procestermijn vast_te_leggen_datum for gerelateerde_zaak",
@@ -16695,7 +16695,7 @@
 													"response": []
 												},
 												{
-													"name": "(zrc-016i) Afleidingswijze gerelateerde_zaak",
+													"name": "(zrc-021i) Afleidingswijze gerelateerde_zaak",
 													"event": [
 														{
 															"listen": "test",
@@ -16945,10 +16945,10 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-017",
+									"name": "zrc-022",
 									"item": [
 										{
-											"name": "(zrc-017a) Zaak aanmaken geeft voor archiefstatus standaardwaarde nog_te_archiveren",
+											"name": "(zrc-022a) Zaak aanmaken geeft voor archiefstatus standaardwaarde nog_te_archiveren",
 											"event": [
 												{
 													"listen": "test",
@@ -17027,7 +17027,7 @@
 															"pm.globals.set(\"created_zaak_url\", pm.response.json().url);",
 															"",
 															"if(pm.response.code == 201) {",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(zrc-017b) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(zrc-022b) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd\"]);",
 															"    postman.setNextRequest(\"(COMMON) (ZRC) Create ZaakInformatieObject\");   ",
 															"} else {",
 															"    // TODO remove skip",
@@ -17075,7 +17075,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-017b) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd",
+											"name": "(zrc-022b) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd",
 											"event": [
 												{
 													"listen": "test",
@@ -17151,7 +17151,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-017c) Zaak deels bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd",
+											"name": "(zrc-022c) Zaak deels bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd",
 											"event": [
 												{
 													"listen": "test",
@@ -17232,7 +17232,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-017d) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefnominatie niet gezet",
+											"name": "(zrc-022d) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefnominatie niet gezet",
 											"event": [
 												{
 													"listen": "test",
@@ -17300,7 +17300,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-017e) Zaak deels bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefnominatie niet gezet",
+											"name": "(zrc-022e) Zaak deels bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefnominatie niet gezet",
 											"event": [
 												{
 													"listen": "test",
@@ -17363,7 +17363,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-017f) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefactiedatum niet gezet",
+											"name": "(zrc-022f) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefactiedatum niet gezet",
 											"event": [
 												{
 													"listen": "test",
@@ -17432,7 +17432,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-017g) Zaak deels bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefactiedatum niet gezet",
+											"name": "(zrc-022g) Zaak deels bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als archiefactiedatum niet gezet",
 											"event": [
 												{
 													"listen": "test",
@@ -17495,7 +17495,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-017h) Zaak bijwerken archiefstatus niet nog_te_archiveren is mogelijk",
+											"name": "(zrc-022h) Zaak bijwerken archiefstatus niet nog_te_archiveren is mogelijk",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -17647,7 +17647,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "zrc-018",
+									"name": "zrc-023",
 									"item": [
 										{
 											"name": "Create Zaak to delete",
@@ -18169,7 +18169,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-018a) Zaak verwijderen is mogelijk",
+											"name": "(zrc-023a) Zaak verwijderen is mogelijk",
 											"event": [
 												{
 													"listen": "test",
@@ -18207,7 +18207,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-018b) Zaak verdwijnt uit zrc na verwijdering",
+											"name": "(zrc-023b) Zaak verdwijnt uit zrc na verwijdering",
 											"event": [
 												{
 													"listen": "test",
@@ -18243,7 +18243,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-018c) Resultaat verdwijnt uit zrc na Zaak verwijdering",
+											"name": "(zrc-023c) Resultaat verdwijnt uit zrc na Zaak verwijdering",
 											"event": [
 												{
 													"listen": "test",
@@ -18277,7 +18277,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-018d) Status verdwijnt uit zrc na Zaak verwijdering",
+											"name": "(zrc-023d) Status verdwijnt uit zrc na Zaak verwijdering",
 											"event": [
 												{
 													"listen": "test",
@@ -18311,7 +18311,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-018e) Rol verdwijnt uit zrc na Zaak verwijdering",
+											"name": "(zrc-023e) Rol verdwijnt uit zrc na Zaak verwijdering",
 											"event": [
 												{
 													"listen": "test",
@@ -18345,7 +18345,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-018f) Zaakobject verdwijnt uit zrc na Zaak verwijdering",
+											"name": "(zrc-023f) Zaakobject verdwijnt uit zrc na Zaak verwijdering",
 											"event": [
 												{
 													"listen": "test",
@@ -18379,7 +18379,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-018g) Zaakeigenschap verdwijnt uit zrc na Zaak verwijdering",
+											"name": "(zrc-023g) Zaakeigenschap verdwijnt uit zrc na Zaak verwijdering",
 											"event": [
 												{
 													"listen": "test",
@@ -18413,7 +18413,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-018h) ObjectInformatieObject verdwijnt uit drc na Zaak verwijdering",
+											"name": "(zrc-023h) ObjectInformatieObject verdwijnt uit drc na Zaak verwijdering",
 											"event": [
 												{
 													"listen": "test",
@@ -18447,7 +18447,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-018i) ZaakInformatieObject verdwijnt uit zrc na Zaak verwijdering",
+											"name": "(zrc-023i) ZaakInformatieObject verdwijnt uit zrc na Zaak verwijdering",
 											"event": [
 												{
 													"listen": "test",
@@ -18481,7 +18481,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-018j) Klantcontact verdwijnt uit zrc na Zaak verwijdering",
+											"name": "(zrc-023j) Klantcontact verdwijnt uit zrc na Zaak verwijdering",
 											"event": [
 												{
 													"listen": "test",
@@ -18509,7 +18509,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-018k) Deelzaak verdwijnt na verwijdering Hoofdzaak",
+											"name": "(zrc-023k) Deelzaak verdwijnt na verwijdering Hoofdzaak",
 											"event": [
 												{
 													"listen": "test",
@@ -25550,7 +25550,7 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "brc-006",
+									"name": "brc-008",
 									"item": [
 										{
 											"name": "Create Besluit to be deleted",
@@ -25614,7 +25614,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-006a) Besluit verwijderen cascade door naar gerelateerde BesluitInformatieObjecten",
+											"name": "(brc-008a) Besluit verwijderen cascade door naar gerelateerde BesluitInformatieObjecten",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -25639,7 +25639,7 @@
 															"",
 															"if(pm.response.code != 400) {",
 															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-006b) Besluit verwijderen cascade door naar gerelateerde audit trail\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-008b) Besluit verwijderen cascade door naar gerelateerde audit trail\"]);",
 															"}"
 														],
 														"type": "text/javascript"
@@ -25668,7 +25668,7 @@
 											"response": []
 										},
 										{
-											"name": "(brc-006b) Besluit verwijderen cascade door naar gerelateerde audit trail",
+											"name": "(brc-008b) Besluit verwijderen cascade door naar gerelateerde audit trail",
 											"event": [
 												{
 													"listen": "test",
