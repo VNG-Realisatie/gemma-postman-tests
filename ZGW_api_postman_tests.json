@@ -2715,11 +2715,7 @@
 													"script": {
 														"id": "01e98b0e-0bea-40a1-8485-67695fb020b3",
 														"exec": [
-															"pm.globals.set(\"created_zaak_url\", pm.response.json().url);",
-															"",
-															"if(pm.response.code != 201) {",
-															"    postman.setNextRequest(\"Retrieve Zaken for bronorganisatie\");",
-															"}"
+															"pm.globals.set(\"created_zaak_url\", pm.response.json().url);"
 														],
 														"type": "text/javascript"
 													}
@@ -21522,7 +21518,7 @@
 															"        },",
 															"        \"body\": {",
 															"            mode: \"raw\",",
-															"            raw: JSON.stringify({\"informatieobjecttype\": pm.globals.get(\"informatieobjecttype_url\")})",
+															"            raw: JSON.stringify({\"informatieobjecttype\": pm.globals.get(\"informatieobjecttype_url\"), \"lock\": pm.globals.get(\"informatieobject_lock_id\")})",
 															"        }",
 															"        }, function (err, response) {",
 															"            console.log(response.json());",
