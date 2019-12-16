@@ -5361,6 +5361,24 @@
 						},
 						{
 							"name": "Opvragen en bewerken van ZAAKTYPEn nodig voor ZAKEN in de Zaken API.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2a126baf-46e6-4270-b54b-7c83a0819c02",
+										"exec": [
+											"pm.test(\"Publiceer een ZAAKTYPE aan geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Publiceer een ZAAKTYPE zet concept op False\", function() {",
+											"    pm.expect(pm.response.json().concept).to.be.equal(false);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [
@@ -6663,6 +6681,10 @@
 										"exec": [
 											"pm.test(\"Opvragen en bewerken van BESLUITTYPEn nodig voor BESLUITEN in de BesluitenAPI geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Publiceer een BESLUITTYPE zet concept op False\", function() {",
+											"    pm.expect(pm.response.json().concept).to.be.equal(false);",
 											"});"
 										],
 										"type": "text/javascript"
@@ -9278,6 +9300,24 @@
 						},
 						{
 							"name": "Opvragen en bewerken van INFORMATIEOBJECTTYPEn nodig voor\nINFORMATIEOBJECTen in de Documenten API.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "68968fdf-5634-4b7e-a1f5-4135dc08b979",
+										"exec": [
+											"pm.test(\"Publiceer een INFORMATIEOBJECTTYPE aan geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Publiceer een INFORMATIEOBJECTTYPE zet concept op False\", function() {",
+											"    pm.expect(pm.response.json().concept).to.be.equal(false);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [
@@ -9291,24 +9331,12 @@
 									}
 								],
 								"url": {
-									"raw": "https://catalogi-api.vng.cloud/api/v1/informatieobjecttypen/:uuid/publish",
-									"protocol": "https",
+									"raw": "{{created_informatieobjecttype_url}}/publish",
 									"host": [
-										"catalogi-api",
-										"vng",
-										"cloud"
+										"{{created_informatieobjecttype_url}}"
 									],
 									"path": [
-										"api",
-										"v1",
-										"informatieobjecttypen",
-										":uuid",
 										"publish"
-									],
-									"variable": [
-										{
-											"key": "uuid"
-										}
 									]
 								},
 								"description": "Een INFORMATIEOBJECTTYPE beschijft de karakteristieken van een document of\nander object dat informatie bevat."
