@@ -42475,7 +42475,7 @@
 																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
 																	"});",
 																	"",
-																	"postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
+																	"postman.setNextRequest(\"Create Besluittype to relate to published Zaaktype\");",
 																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Besluittype\", \"(ZTC) Delete Zaaktype\"]);"
 																],
 																"type": "text/javascript"
