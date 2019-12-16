@@ -42539,7 +42539,14 @@
 													"script": {
 														"id": "af8280d8-3f2b-4b79-8d8c-7c36c7c0a9f7",
 														"exec": [
-															""
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
+															"body.zaaktypen = [];",
+															"body.omschrijving = \"ztc-012 tests\"",
+															"body.catalogus = pm.globals.get(\"catalogus_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
 														"type": "text/javascript"
 													}
@@ -42567,7 +42574,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{{besluittype_body}}",
+													"raw": "{{request_body}}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -42610,6 +42617,7 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.beginGeldigheid = \"2004-01-10\";",
 															"body.eindeGeldigheid = \"2004-01-10\";",
+															"body.omschrijving = \"ztc-012\"",
 															"body.besluittypen = [\"{{created_besluittype_url}}\"];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -42663,7 +42671,10 @@
 															"    ",
 															"    var error = pm.response.json().invalidParams[0];",
 															"    pm.expect(error.code).to.be.equal(\"concept-relation\");",
-															"});"
+															"});",
+															"",
+															"postman.setNextRequest(\"(COMMON) Delete Besluittype\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Zaaktype\", \"Create Informatieobjecttype to relate to published Zaaktype\"]);"
 														],
 														"type": "text/javascript"
 													}
@@ -42704,7 +42715,13 @@
 													"script": {
 														"id": "f8941eff-a5da-43b3-9359-73f4c3df1fae",
 														"exec": [
-															""
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"informatieobjecttype_body\"));",
+															"body.omschrijving = \"ztc-012 tests\"",
+															"body.catalogus = pm.globals.get(\"catalogus_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
 														"type": "text/javascript"
 													}
@@ -42722,7 +42739,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{{informatieobjecttype_body}}",
+													"raw": "{{request_body}}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -42742,7 +42759,7 @@
 											"response": []
 										},
 										{
-											"name": "Create Zaaktype to relate to Besluittype Copy",
+											"name": "Create Zaaktype to relate to Informatieobjecttype",
 											"event": [
 												{
 													"listen": "test",
@@ -42768,7 +42785,7 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.beginGeldigheid = \"2004-01-10\";",
 															"body.eindeGeldigheid = \"2004-01-10\";",
-															"body.besluittypen = [\"{{created_besluittype_url}}\"];",
+															"body.omschrijving = \"ztc-012b\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -42821,7 +42838,10 @@
 															"    ",
 															"    var error = pm.response.json().invalidParams[0];",
 															"    pm.expect(error.code).to.be.equal(\"concept-relation\");",
-															"});"
+															"});",
+															"",
+															"postman.setNextRequest(\"(COMMON) Delete Informatieobjecttype\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete Zaaktype\", \"Retrieve different Catalogus\"]);"
 														],
 														"type": "text/javascript"
 													}
@@ -42837,6 +42857,1520 @@
 													],
 													"path": [
 														"publish"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "ztc-013",
+									"item": [
+										{
+											"name": "Retrieve different Catalogus",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "259fafde-fb9e-4e3d-b315-92dc606dbf4a",
+														"exec": [
+															"pm.globals.unset(\"besluittype2_url\");",
+															"pm.globals.unset(\"informatieobjecttype2_url\");",
+															"",
+															"if(pm.response.json().count) {",
+															"    var catalogus = pm.response.json().results[0];",
+															"    pm.globals.set(\"catalogus2_url\", catalogus.url);",
+															"    postman.setNextRequest(\"Create Zaaktype for catalogus 1\");",
+															"    ",
+															"    if(catalogus.besluittypen) {",
+															"        for(i=0; i<catalogus.besluittypen.length; i++) {",
+															"            pm.sendRequest({",
+															"                \"url\": catalogus.besluittypen[i],",
+															"                \"method\": \"DELETE\",",
+															"                \"header\": {",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
+															"                }",
+															"            });",
+															"        }",
+															"        // pm.globals.set(\"besluittype_url\", catalogus.besluittypen[0]);",
+															"    }",
+															"    if(catalogus.informatieobjecttypen) {",
+															"        for(i=0; i<catalogus.informatieobjecttypen.length; i++) {",
+															"            pm.sendRequest({",
+															"                \"url\": catalogus.informatieobjecttypen[i],",
+															"                \"method\": \"DELETE\",",
+															"                \"header\": {",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
+															"                }",
+															"            });",
+															"        }",
+															"        // pm.globals.set(\"informatieobjecttype_url\", catalogus.informatieobjecttypen[0]);",
+															"    }",
+															"    if(catalogus.zaaktypen) {",
+															"        for(i=0; i<catalogus.zaaktypen.length; i++) {",
+															"            pm.sendRequest({",
+															"                \"url\": catalogus.zaaktypen[i],",
+															"                \"method\": \"DELETE\",",
+															"                \"header\": {",
+															"                    \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
+															"                }",
+															"            });",
+															"        }",
+															"        // pm.globals.set(\"informatieobjecttype_url\", catalogus.informatieobjecttypen[0]);",
+															"    }",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{ztc_url}}/catalogussen?domein=ZGWTT",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"catalogussen"
+													],
+													"query": [
+														{
+															"key": "domein",
+															"value": "ZGWTT"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create different Catalogus",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "12576e2d-96da-4fe8-8cde-ac873b63b382",
+														"exec": [
+															"pm.globals.set(\"catalogus2_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"domein\": \"ZGWTT\",\n\t\"rsin\": \"000000000\",\n\t\"contactpersoonBeheerNaam\": \"Test Persoon\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/catalogussen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"catalogussen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype for catalogus 1",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.besluittypen = [];",
+															"body.omschrijving = \"ztc-013\"",
+															"body.catalogus = pm.globals.get(\"catalogus_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.globals.set(\"created_zaaktype1_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype for catalogus 2",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.besluittypen = [];",
+															"body.omschrijving = \"ztc-013\"",
+															"body.catalogus = pm.globals.get(\"catalogus2_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.globals.set(\"created_zaaktype2_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Besluittype for catalogus 1",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
+															"body.zaaktypen = [];",
+															"body.catalogus = pm.globals.get(\"catalogus_url\");",
+															"body.omschrijving = \"zrc-013a\";",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.globals.set(\"created_besluittype1_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Besluittype for catalogus 2",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
+															"body.zaaktypen = [];",
+															"body.catalogus = pm.globals.get(\"catalogus2_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.globals.set(\"created_besluittype2_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Informatieobjecttype for catalogus 1",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"informatieobjecttype_body\"));",
+															"body.catalogus = pm.globals.get(\"catalogus_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.globals.set(\"created_informatieobjecttype1_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/informatieobjecttypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Informatieobjecttype for catalogus 2",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"informatieobjecttype_body\"));",
+															"body.catalogus = pm.globals.get(\"catalogus2_url\");",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.globals.set(\"created_informatieobjecttype2_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/informatieobjecttypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013a) Besluittype aanmaken met relatie naar Zaaktype uit andere catalogus is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
+															"body.zaaktypen = [pm.globals.get(\"created_zaaktype2_url\")];",
+															"body.catalogus = pm.globals.get(\"catalogus_url\");",
+															"body.omschrijving = \"ztc-013a\"",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Besluittype aanmaken met relatie naar Zaaktype uit andere catalogus geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_besluittype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Besluittype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-013b) Besluittype bijwerken met relatie naar Zaaktype uit andere catalogus is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013b) Besluittype bijwerken met relatie naar Zaaktype uit andere catalogus is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
+															"body.zaaktypen = [pm.globals.get(\"created_zaaktype2_url\")];",
+															"body.catalogus = pm.globals.get(\"catalogus_url\");",
+															"body.omschrijving = \"ztc-013a\"",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Besluittype bijwerken met relatie naar Zaaktype uit andere catalogus geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_besluittype1_url}}",
+													"host": [
+														"{{created_besluittype1_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013c) Besluittype deels bijwerken met relatie naar Zaaktype uit andere catalogus is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Besluittype deels bijwerken met relatie naar Zaaktype uit andere catalogus geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktypen\": [\"{{created_zaaktype2_url}}\"]\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_besluittype1_url}}",
+													"host": [
+														"{{created_besluittype1_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013d) Besluittype aanmaken met relatie naar Informatieobjecttype uit andere catalogus is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
+															"body.zaaktypen = [];",
+															"body.informatieobjecttypen = [pm.globals.get(\"created_informatieobjecttype2_url\")];",
+															"body.catalogus = pm.globals.get(\"catalogus_url\");",
+															"body.omschrijving = \"ztc-013a\"",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Besluittype aanmaken met relatie naar Informatieobjecttype uit andere catalogus geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_besluittype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Besluittype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-013e) Besluittype bijwerken met relatie naar Informatieobjecttype uit andere catalogus is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/besluittypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"besluittypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013e) Besluittype bijwerken met relatie naar Informatieobjecttype uit andere catalogus is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
+															"body.zaaktypen = [];",
+															"body.informatieobjecttypen = [pm.globals.get(\"created_informatieobjecttype2_url\")];",
+															"body.catalogus = pm.globals.get(\"catalogus_url\");",
+															"body.omschrijving = \"ztc-013a\"",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Besluittype bijwerken met relatie naar Informatieobjecttype uit andere catalogus geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_besluittype1_url}}",
+													"host": [
+														"{{created_besluittype1_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013f) Besluittype deels bijwerken met relatie naar Informatieobjecttype uit andere catalogus is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Besluittype deels bijwerken met relatie naar Informatieobjecttype uit andere catalogus geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"informatieobjecttypen\": [\"{{created_informatieobjecttype2_url}}\"]\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_besluittype1_url}}",
+													"host": [
+														"{{created_besluittype1_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013g) Zaaktype aanmaken met relatie naar Besluittype uit andere catalogus is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.besluittypen = [pm.globals.get(\"created_besluittype2_url\")];",
+															"body.catalogus = pm.globals.get(\"catalogus_url\");",
+															"body.omschrijving = \"ztc-013g\"",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Zaaktype aanmaken met relatie naar Besluittype uit andere catalogus geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Zaaktype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-013h) Zaaktype bijwerken met relatie naar Besluittype uit andere catalogus is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013h) Zaaktype bijwerken met relatie naar Besluittype uit andere catalogus is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
+															"body.besluittypen = [pm.globals.get(\"created_besluittype2_url\")];",
+															"body.catalogus = pm.globals.get(\"catalogus_url\");",
+															"body.omschrijving = \"ztc-013g\"",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Zaaktype bijwerken met relatie naar Besluittype uit andere catalogus geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_zaaktype1_url}}",
+													"host": [
+														"{{created_zaaktype1_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013i) Zaaktype deels bijwerken met relatie naar Besluittype uit andere catalogus is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Zaaktype deels bijwerken met relatie naar Besluittype uit andere catalogus geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"besluittypen\": [\"{{created_besluittype2_url}}\"]\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_zaaktype1_url}}",
+													"host": [
+														"{{created_zaaktype1_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013j) Zaaktype-Informatieobjecttype aanmaken met Zaaktype en Informatieobjecttype uit verschillende catalogi is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Zaaktype-Informatieobjecttype aanmaken met Zaaktype en Informatieobjecttype uit verschillende catalogi geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});",
+															"",
+															"if(pm.response.code == 201) {",
+															"    pm.globals.set(\"created_ziot_url\", pm.response.json().url);",
+															"    postman.setNextRequest(\"(COMMON) Delete Zaaktype-Informatieobjecttype\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-013h) Zaaktype bijwerken met relatie naar Besluittype uit andere catalogus is onmogelijk\"]);",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype1_url}}\",\n\t\"informatieobjecttype\": \"{{created_informatieobjecttype2_url}}\",\n\t\"volgnummer\": 1,\n\t\"richting\": \"inkomend\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktype-informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaaktype-InformatieObjecttype",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c7a78285-f750-49c4-a015-1b74ac3ee9bd",
+														"exec": [
+															"pm.globals.set(\"created_ziot_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype1_url}}\",\n\t\"informatieobjecttype\": \"{{created_informatieobjecttype1_url}}\",\n\t\"volgnummer\": 1,\n\t\"richting\": \"inkomend\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
+													"host": [
+														"{{ztc_url}}"
+													],
+													"path": [
+														"zaaktype-informatieobjecttypen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013k) Zaaktype-Informatieobjecttype bijwerken met Zaaktype en Informatieobjecttype uit andere catalogus is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Zaaktype-Informatieobjecttype bijwerken met Zaaktype en Informatieobjecttype uit verschillende catalogi geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype1_url}}\",\n\t\"informatieobjecttype\": \"{{created_informatieobjecttype2_url}}\",\n\t\"volgnummer\": 1,\n\t\"richting\": \"inkomend\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_ziot_url}}",
+													"host": [
+														"{{created_ziot_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(ztc-013l) Zaaktype-Informatieobjecttype deels bijwerken met Zaaktype en Informatieobjecttype uit andere catalogus is onmogelijk",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d0bddb95-2485-4eef-b4e4-242a9a018aa6",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "7bb5119f-950d-4d8d-bec8-57bbd177bee7",
+														"exec": [
+															"pm.test(\"Zaaktype-Informatieobjecttype bijwerken met Zaaktype en Informatieobjecttype uit verschillende catalogi geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    ",
+															"    var error = pm.response.json().invalidParams[0];",
+															"    ",
+															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.code).to.be.equal(\"relations-incorrect-catalogus\");",
+															"});",
+															"",
+															"postman.setNextRequest(\"(COMMON) Delete Zaaktype-Informatieobjecttype\");",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete Zaaktype1\"]);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype1_url}}\",\n\t\"informatieobjecttype\": \"{{created_informatieobjecttype2_url}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_ziot_url}}",
+													"host": [
+														"{{created_ziot_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete Zaaktype1",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3cdda0cf-72a6-4ee7-864e-d4c28c74a84a",
+														"exec": [
+															"pm.globals.unset(\"created_zaaktype1_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_zaaktype1_url}}",
+													"host": [
+														"{{created_zaaktype1_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete Zaaktype2",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3cdda0cf-72a6-4ee7-864e-d4c28c74a84a",
+														"exec": [
+															"pm.globals.unset(\"created_zaaktype2_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_zaaktype2_url}}",
+													"host": [
+														"{{created_zaaktype2_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete Besluittype1",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3cdda0cf-72a6-4ee7-864e-d4c28c74a84a",
+														"exec": [
+															"pm.globals.unset(\"created_besluittype1_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_besluittype1_url}}",
+													"host": [
+														"{{created_besluittype1_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete Besluittype2",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3cdda0cf-72a6-4ee7-864e-d4c28c74a84a",
+														"exec": [
+															"pm.globals.unset(\"created_besluittype2_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_besluittype2_url}}",
+													"host": [
+														"{{created_besluittype2_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete Informatieobjecttype1",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3cdda0cf-72a6-4ee7-864e-d4c28c74a84a",
+														"exec": [
+															"pm.globals.unset(\"created_informatieobjecttype1_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_informatieobjecttype1_url}}",
+													"host": [
+														"{{created_informatieobjecttype1_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete Informatieobjecttype2",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3cdda0cf-72a6-4ee7-864e-d4c28c74a84a",
+														"exec": [
+															"pm.globals.unset(\"created_informatieobjecttype2_url\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{created_informatieobjecttype2_url}}",
+													"host": [
+														"{{created_informatieobjecttype2_url}}"
 													]
 												}
 											},
