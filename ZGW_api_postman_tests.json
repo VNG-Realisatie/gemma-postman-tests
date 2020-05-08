@@ -4830,7 +4830,8 @@
 													"script": {
 														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
 														"exec": [
-															"pm.globals.set(\"eindstatus_datumStatusGezet\", pm.response.json().datumStatusGezet);"
+															"pm.globals.set(\"eindstatus_datumStatusGezet\", pm.response.json().datumStatusGezet);",
+															"pm.globals.set(\"eindstatus_url\", pm.response.json().url);"
 														],
 														"type": "text/javascript"
 													}
@@ -4867,6 +4868,196 @@
 													],
 													"path": [
 														"statussen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Add Klantcontact to Zaak",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.globals.set(\"klantcontact_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"datumtijd\": \"2019-02-20T00:00:00\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/klantcontacten",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"klantcontacten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Add Rol to Zaak",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.globals.set(\"rol_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"betrokkene\": \"http://example.com/2d0815580af94ee0a15aa677aa646e1a\",\n\t\"betrokkeneType\": \"natuurlijk_persoon\",\n\t\"rolomschrijving\": \"behandelaar\",\n\t\"roltoelichting\": \"testrol\",\n\t\"roltype\": \"{{roltype_url}}\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/rollen",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"rollen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create Zaakobject",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "426a1b11-f44f-40ef-a9fa-6e05e461c2dc",
+														"exec": [
+															"pm.globals.set(\"zaakobject_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"objectType\": \"pand\",\n\t\"objectIdentificatie\": {\n\t\t\"identificatie\": \"test\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/zaakobjecten",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"zaakobjecten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Add Zaakeigenschap to Zaak",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.globals.set(\"zaakeigenschap_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"eigenschap\": \"{{zaaktype_eigenschap}}\",\n\t\"waarde\": \"test\"\n}"
+												},
+												"url": {
+													"raw": "{{created_zaak_url}}/zaakeigenschappen",
+													"host": [
+														"{{created_zaak_url}}"
+													],
+													"path": [
+														"zaakeigenschappen"
 													]
 												}
 											},
@@ -5085,7 +5276,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-007c) Afgesloten zaak bijwerken is niet toegestaan",
+											"name": "(zrc-007c) Afgesloten zaak bijwerken is niet toegestaan zonder scope zaken.geforceerd-bijwerken",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -5107,7 +5298,7 @@
 													"script": {
 														"id": "9e3dd206-12d7-43e7-ac77-8e9122340e37",
 														"exec": [
-															"pm.test(\"Afgesloten Zaak bijwerken geeft 403\", function() {",
+															"pm.test(\"Afgesloten Zaak bijwerken zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
 															"    pm.response.to.have.status(403);",
 															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
 															"});"
@@ -5160,7 +5351,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-007d) Afgesloten zaak deels bijwerken is niet toegestaan",
+											"name": "(zrc-007c) Afgesloten zaak deels bijwerken is niet toegestaan zonder scope zaken.geforceerd-bijwerken",
 											"event": [
 												{
 													"listen": "prerequest",
@@ -5177,13 +5368,13 @@
 													"script": {
 														"id": "9e3dd206-12d7-43e7-ac77-8e9122340e37",
 														"exec": [
-															"pm.test(\"Afgesloten Zaak bijwerken geeft 403\", function() {",
+															"pm.test(\"Afgesloten Zaak deels bijwerken zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
 															"    pm.response.to.have.status(403);",
 															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
 															"});",
 															"",
-															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create relation between Zaak and Informatieobject with gebruiksrecht null\"]);",
-															"postman.setNextRequest(\"(COMMON) Delete ZaakInformatieObject\");"
+															"// pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create relation between Zaak and Informatieobject with gebruiksrecht null\"]);",
+															"// postman.setNextRequest(\"(COMMON) Delete ZaakInformatieObject\");"
 														],
 														"type": "text/javascript"
 													}
@@ -5227,6 +5418,1692 @@
 													"raw": "{{created_zaak_url}}",
 													"host": [
 														"{{created_zaak_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007d) Klantcontact bij gesloten Zaak aanmaken niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Klantcontact aanmaken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"datumtijd\": \"2019-02-22T00:00:00\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/klantcontacten",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"klantcontacten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007e) Resultaat bij gesloten Zaak aanmaken niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Resultaat aanmaken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"    pm.expect(pm.response.json().invalidParams[0].code).to.be.equal(\"unique\");",
+															"    ",
+															"    // pm.response.to.have.status(403);",
+															"    // pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"resultaattype\": \"{{resultaattype_url}}\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/resultaten",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"resultaten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007e) Resultaat bij gesloten Zaak bijwerken niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Resultaat bijwerken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"resultaattype\": \"{{resultaattype_url}}\"\n}"
+												},
+												"url": {
+													"raw": "{{zaak_resultaat_url}}",
+													"host": [
+														"{{zaak_resultaat_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007e) Resultaat bij gesloten Zaak deels bijwerken niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Resultaat deels bijwerken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"resultaattype\": \"{{resultaattype_url}}\"\n}"
+												},
+												"url": {
+													"raw": "{{zaak_resultaat_url}}",
+													"host": [
+														"{{zaak_resultaat_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007e) Resultaat bij gesloten Zaak verwijderen niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Resultaat verwijderen bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{zaak_resultaat_url}}",
+													"host": [
+														"{{zaak_resultaat_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007f) Rol bij gesloten Zaak aanmaken niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Rol aanmaken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"betrokkene\": \"http://example.com/2d0815580af94ee0a15aa677aa646e1a\",\n\t\"betrokkeneType\": \"natuurlijk_persoon\",\n\t\"rolomschrijving\": \"behandelaar\",\n\t\"roltoelichting\": \"testrol\",\n\t\"roltype\": \"{{roltype_url}}\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/rollen",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"rollen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007f) Rol bij gesloten Zaak verwijderen niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Rol verwijderen bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{rol_url}}",
+													"host": [
+														"{{rol_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007g) Status toevoegen bij gesloten Zaak is niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Status aanmaken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statustype\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-22T13:37:00\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/statussen",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"statussen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007h) ZaakInformatieObject toevoegen bij gesloten Zaak is niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"ZaakInformatieObject aanmaken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"informatieobject\": \"{{informatieobject_gebruiksrecht_null_url}}\",\n    \"zaak\": \"{{created_zaak_url}}\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/zaakinformatieobjecten",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"zaakinformatieobjecten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007h) ZaakInformatieObject bijwerken bij gesloten Zaak is niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"ZaakInformatieObject bijwerken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"zaak\": \"{{created_zaak_url}}\",\n    \"titel\": \"bla\"\n}"
+												},
+												"url": {
+													"raw": "{{created_zaakinformatieobject_url}}",
+													"host": [
+														"{{created_zaakinformatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007h) ZaakInformatieObject deels bijwerken bij gesloten Zaak is niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"ZaakInformatieObject deels bijwerken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"zaak\": \"{{created_zaak_url}}\",\n    \"titel\": \"bla\"\n}"
+												},
+												"url": {
+													"raw": "{{created_zaakinformatieobject_url}}",
+													"host": [
+														"{{created_zaakinformatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007h) ZaakInformatieObject verwijderen bij gesloten Zaak is niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"ZaakInformatieObject verwijderen bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{created_zaakinformatieobject_url}}",
+													"host": [
+														"{{created_zaakinformatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007i) ZaakObject toevoegen bij gesloten Zaak is niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"ZaakObject aanmaken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"objectType\": \"pand\",\n\t\"objectIdentificatie\": {\n\t\t\"identificatie\": \"test\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/zaakobjecten",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"zaakobjecten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007k) ZaakEigenschap toevoegen bij gesloten Zaak is niet toegestaan zonder scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Zaakeigenschap aanmaken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 403\", function() {",
+															"    pm.response.to.have.status(403);",
+															"    pm.expect(pm.response.json().code).to.be.equal(\"permission_denied\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{jwt_token_without_claims}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"eigenschap\": \"{{zaaktype_eigenschap}}\",\n\t\"waarde\": \"test\"\n}"
+												},
+												"url": {
+													"raw": "{{created_zaak_url}}/zaakeigenschappen",
+													"host": [
+														"{{created_zaak_url}}"
+													],
+													"path": [
+														"zaakeigenschappen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007i) Afgesloten zaak bijwerken is toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "8dce713a-a7ea-40be-a751-6d56c1a91480",
+														"exec": [
+															"// Retrieve the Zaak body template and modify as needed",
+															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
+															"body.omschrijving = \"aanpassing\"",
+															"",
+															"// Store the modified Zaak body, allowing it to be used in the main request",
+															"pm.globals.set(\"request_body\", JSON.stringify(body));"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "9e3dd206-12d7-43e7-ac77-8e9122340e37",
+														"exec": [
+															"pm.test(\"Afgesloten Zaak bijwerken met scope zaken.geforceerd-bijwerken geeft 200\", function() {",
+															"    pm.response.to.have.status(200);",
+															"    pm.expect(pm.response.json().omschrijving).to.be.equal(\"aanpassing\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													},
+													{
+														"key": "Content-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{{request_body}}"
+												},
+												"url": {
+													"raw": "{{created_zaak_url}}",
+													"host": [
+														"{{created_zaak_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007i) Afgesloten zaak deels bijwerken is toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "8dce713a-a7ea-40be-a751-6d56c1a91480",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "9e3dd206-12d7-43e7-ac77-8e9122340e37",
+														"exec": [
+															"pm.test(\"Afgesloten Zaak deels bijwerken zonder scope zaken.geforceerd-bijwerken geeft 200\", function() {",
+															"    pm.response.to.have.status(200);",
+															"    pm.expect(pm.response.json().omschrijving).to.be.equal(\"aangepast\");",
+															"});",
+															"",
+															"// pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create relation between Zaak and Informatieobject with gebruiksrecht null\"]);",
+															"// postman.setNextRequest(\"(COMMON) Delete ZaakInformatieObject\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													},
+													{
+														"key": "Content-Crs",
+														"type": "text",
+														"value": "EPSG:4326"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"omschrijving\": \"aangepast\"\n}"
+												},
+												"url": {
+													"raw": "{{created_zaak_url}}",
+													"host": [
+														"{{created_zaak_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007j) Klantcontact bij gesloten Zaak aanmaken toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Klantcontact aanmaken bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 201\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"datumtijd\": \"2019-02-22T00:00:00\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/klantcontacten",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"klantcontacten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007k) Resultaat bij gesloten Zaak verwijderen toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Resultaat verwijderen bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 204\", function() {",
+															"    pm.response.to.have.status(204);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{zaak_resultaat_url}}",
+													"host": [
+														"{{zaak_resultaat_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007k) Resultaat bij gesloten Zaak aanmaken toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Resultaat aanmaken bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 201\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.globals.set(\"zaak_resultaat_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"resultaattype\": \"{{resultaattype_url}}\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/resultaten",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"resultaten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007k) Resultaat bij gesloten Zaak bijwerken toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Resultaat bijwerken bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 200\", function() {",
+															"    pm.response.to.have.status(200);",
+															"    pm.expect(pm.response.json().toelichting).to.be.equal(\"some stuff\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"resultaattype\": \"{{resultaattype_url}}\",\n\t\"toelichting\": \"some stuff\"\n}"
+												},
+												"url": {
+													"raw": "{{zaak_resultaat_url}}",
+													"host": [
+														"{{zaak_resultaat_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007k) Resultaat bij gesloten Zaak deels bijwerken toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Resultaat deels bijwerken bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 200\", function() {",
+															"    pm.response.to.have.status(200);",
+															"    pm.expect(pm.response.json().toelichting).to.be.equal(\"some more stuff\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"resultaattype\": \"{{resultaattype_url}}\",\n\t\"toelichting\": \"some more stuff\"\n}"
+												},
+												"url": {
+													"raw": "{{zaak_resultaat_url}}",
+													"host": [
+														"{{zaak_resultaat_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007l) Rol bij gesloten Zaak aanmaken toegestaan toegestaan scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Rol aanmaken bij gesloten Zaak zonder scope zaken.geforceerd-bijwerken geeft 201\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"betrokkene\": \"http://example.com/2d0815580af94ee0a15aa677aa646e1a\",\n\t\"betrokkeneType\": \"natuurlijk_persoon\",\n\t\"rolomschrijving\": \"behandelaar\",\n\t\"roltoelichting\": \"same\",\n\t\"roltype\": \"{{roltype_url}}\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/rollen",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"rollen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007l) Rol bij gesloten Zaak verwijderen niet toegestaan zonder scope zaken.geforceerd-bijwerken Copy",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Rol verwijderen bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 204\", function() {",
+															"    pm.response.to.have.status(204);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{rol_url}}",
+													"host": [
+														"{{rol_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007m) Status toevoegen bij gesloten Zaak is toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Status aanmaken bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 201\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statustype\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-22T13:37:00\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/statussen",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"statussen"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007n) ZaakInformatieObject verwijderen bij gesloten Zaak is toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"ZaakInformatieObject verwijderen bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 204\", function() {",
+															"    pm.response.to.have.status(204);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{created_zaakinformatieobject_url}}",
+													"host": [
+														"{{created_zaakinformatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007n) ZaakInformatieObject toevoegen bij gesloten Zaak is toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"ZaakInformatieObject aanmaken bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 201\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.globals.set(\"created_zaakinformatieobject_url\", pm.response.json().url);"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"zaak\": \"{{created_zaak_url}}\"\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/zaakinformatieobjecten",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"zaakinformatieobjecten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007n) ZaakInformatieObject bijwerken bij gesloten Zaak is toegestaan scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"ZaakInformatieObject bijwerken bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 200\", function() {",
+															"    pm.response.to.have.status(200);",
+															"    pm.expect(pm.response.json().titel).to.be.equal(\"aangepast\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"zaak\": \"{{created_zaak_url}}\",\n    \"titel\": \"aangepast\"\n}"
+												},
+												"url": {
+													"raw": "{{created_zaakinformatieobject_url}}",
+													"host": [
+														"{{created_zaakinformatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007n) ZaakInformatieObject deels bijwerken bij gesloten Zaak is toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"ZaakInformatieObject deels bijwerken bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 200\", function() {",
+															"    pm.response.to.have.status(200);",
+															"    pm.expect(pm.response.json().titel).to.be.equal(\"en nog een keer\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"informatieobject\": \"{{informatieobject_url}}\",\n    \"zaak\": \"{{created_zaak_url}}\",\n    \"titel\": \"en nog een keer\"\n}"
+												},
+												"url": {
+													"raw": "{{created_zaakinformatieobject_url}}",
+													"host": [
+														"{{created_zaakinformatieobject_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007o) ZaakObject toevoegen bij gesloten Zaak is toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"ZaakObject aanmaken bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 201\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"objectType\": \"pand\",\n\t\"objectIdentificatie\": {\n\t\t\"identificatie\": \"test\"\n\t}\n}"
+												},
+												"url": {
+													"raw": "{{zrc_url}}/zaakobjecten",
+													"host": [
+														"{{zrc_url}}"
+													],
+													"path": [
+														"zaakobjecten"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(zrc-007p) ZaakEigenschap toevoegen bij gesloten Zaak is toegestaan met scope zaken.geforceerd-bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7226fe56-bdcc-42d9-ad16-07852570b778",
+														"exec": [
+															"pm.test(\"Zaakeigenschap aanmaken bij gesloten Zaak met scope zaken.geforceerd-bijwerken geeft 201\", function() {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Create relation between Zaak and Informatieobject with gebruiksrecht null\"]);",
+															"postman.setNextRequest(\"(COMMON) Delete ZaakInformatieObject\");"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "820be47c-e617-4e5e-aa70-5e4ab1440b54",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"type": "text",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"eigenschap\": \"{{zaaktype_eigenschap}}\",\n\t\"waarde\": \"test\"\n}"
+												},
+												"url": {
+													"raw": "{{created_zaak_url}}/zaakeigenschappen",
+													"host": [
+														"{{created_zaak_url}}"
+													],
+													"path": [
+														"zaakeigenschappen"
 													]
 												}
 											},
@@ -5283,7 +7160,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-007e) Eindstatus toevoegen aan Zaak met Informatieobject.indicatieGebruiksrecht null",
+											"name": "(zrc-007q) Eindstatus toevoegen aan Zaak met Informatieobject.indicatieGebruiksrecht null",
 											"event": [
 												{
 													"listen": "test",
@@ -5397,7 +7274,7 @@
 											"response": []
 										},
 										{
-											"name": "(zrc-007f) Zaak.einddatum leeg als geen eindstatus gezet",
+											"name": "(zrc-007r) Zaak.einddatum leeg als geen eindstatus gezet",
 											"event": [
 												{
 													"listen": "test",
@@ -5454,6 +7331,18 @@
 										},
 										{
 											"name": "Delete Applicatie without geforceerd bijwerken",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "93070115-2755-4bf1-96ef-70945ed317fd",
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
 											"request": {
 												"method": "DELETE",
 												"header": [],
@@ -5860,7 +7749,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statustype\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-21T13:37:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statustype\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-21T17:37:00\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
@@ -6674,7 +8563,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.communicatiekanaal = \"{{referentielijst_url}}/communicatiekanalen/2b757868-45c2-42ca-b637-b63ddc87beb4\";",
+															"body.communicatiekanaal = \"https://referentielijsten-api.vng.cloud/api/v1/communicatiekanalen/2b757868-45c2-42ca-b637-b63ddc87beb4\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -6742,7 +8631,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.communicatiekanaal = \"{{referentielijst_url}}/communicatiekanalen/2b757868-45c2-42ca-b637-b63ddc87beb4\";",
+															"body.communicatiekanaal = \"https://referentielijsten-api.vng.cloud/api/v1/communicatiekanalen/2b757868-45c2-42ca-b637-b63ddc87beb4\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -6849,7 +8738,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"communicatiekanaal\": \"{{referentielijst_url}}/communicatiekanalen/2b757868-45c2-42ca-b637-b63ddc87beb4\"\n}"
+													"raw": "{\n\t\"communicatiekanaal\": \"https://referentielijsten-api.vng.cloud/api/v1/communicatiekanalen/2b757868-45c2-42ca-b637-b63ddc87beb4\"\n}"
 												},
 												"url": {
 													"raw": "{{created_zaak_url}}",
@@ -44986,7 +46875,7 @@
 							"_postman_isSubFolder": true
 						}
 					],
-					"description": "Deze folder bevat de Postman test suite voor de ZGW API's, elke folder bevat tests voor de business logic zoals die gespecificeerd is in https://github.com/VNG-Realisatie/gemma-zaken/tree/master/docs/_content/standaard.\n\nDe variabelen voor de urls naar de individuele componenten zijn standaard gezet op http://ref.tst.vng.cloud/, maar kunnen lokaal veranderd worden naar bijv. localhost voor test doeleinden.\n\nDe namen van de folders (bijv. **zrc/zrc-001**) verwijzen naar de specificaties in de link hierboven, zo zijn de tests te koppelen aan de specificaties.\n\nAlle requests met een prefix zoals **(zrc-xxx)** (of een andere ZGW api) bevatten tests, alle andere requests zijn ter ondersteuning van die requests en bevatten dus geen tests.\n\nOpmerkingen:\n- (WIP) houdt in dat de test nog niet correct geimplementeerd is.\n- (NI) houdt in dat de test faalt omdat de business logic nog niet geimplementeerd is in de desbetreffende API's.",
+					"description": "Deze folder bevat de Postman test suite voor de ZGW API's, elke folder bevat tests voor de business logic zoals die gespecificeerd is in https://github.com/VNG-Realisatie/gemma-zaken/tree/master/docs/_content/standaard.\n\nDe variabelen voor de urls naar de individuele componenten zijn standaard gezet op http://ref.tst.vng.cloud/, maar kunnen lokaal veranderd worden naar bijv. localhost voor test doeleinden.\n\nDe namen van de folders (bijv. **zrc/zrc-001**) verwijzen naar de specificaties in de link hierboven, zo zijn de tests te koppelen aan de specificaties.\n\nAlle requests met een prefix zoals **(zrc-xxx)** (of een andere ZGW api) bevatten tests, alle andere requests zijn ter ondersteuning van die requests en bevatten dus geen tests.\n\n**LET OP:** voor deze tests zijn de environment variabelen `client_id` en `secret` nodig, dit moeten credentials zijn die geregistreerd zijn binnen de Autorisaties API, en hiervoor moet dus ook een bestaande applicatie met superuser rechten aanwezig zijn in het systeem. Aan de hand van deze credentials wordt binnen de testsuite een JSON Web Token gegenereerd, die vervolgens gebruikt wordt in de Authorization headers van iedere API call\n\nOpmerkingen:\n- (WIP) houdt in dat de test nog niet correct geimplementeerd is.\n- (NI) houdt in dat de test faalt omdat de business logic nog niet geimplementeerd is in de desbetreffende API's.",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -45149,6 +47038,9 @@
 				"id": "157b223d-1b88-4113-bed1-2412eef72a61",
 				"type": "text/javascript",
 				"exec": [
+					"// Script to generate a JSON web token for the provided `client_id` and `secret`",
+					"// Source: https://www.jonathan-petitcolas.com/2014/11/27/creating-json-web-token-in-javascript.html",
+					"",
 					"function base64url(source) {",
 					"\t// Encode in classical base64",
 					"\tencodedSource = CryptoJS.enc.Base64.stringify(source);",
@@ -45164,7 +47056,7 @@
 					"}",
 					"",
 					"function addIAT(request) {",
-					"\tvar iat = Math.floor(Date.now() / 1000) + 257;",
+					"\tvar iat = Math.floor(Date.now() / 1000);",
 					"\tdata.iat = iat;",
 					"\treturn data;",
 					"}",
