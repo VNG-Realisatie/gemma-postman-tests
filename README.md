@@ -11,7 +11,10 @@ Inleiding
 
 De ZGW API standaard bestaat uit een OAS en documentatie met voornamelijk 
 gedragsregels van de provider implementatie. De provider implementatie van deze
-gedragsregels worden getest middels test scenario's, geschreven in [Postman].
+gedragsregels worden getest middels twee test scenario's, geschreven in [Postman]:
+
+1. ZGW OAS tests: een testsuite die verifieert of de ZGW API's voldoen aan haar eigen OpenAPI specificaties
+2. ZGW API tests: een uitgebreide testsuite die verifieert of de ZGW API's voldoen aan de gedragsregels uit de [standaard]
 
 Deze test scenario's worden onderhouden door de [API-teams] van de 
 respectievelijke API's en o.a. gebruikt voor het [API testplatform] en 
@@ -32,7 +35,8 @@ zich bevind in deze [Test scenario's] repository.
    ![import_collection](docs/assets/import_collection.png)
    
 3. Voer onderstaande URL in en klik op **Import**: 
-   `https://raw.githubusercontent.com/VNG-Realisatie/gemma-postman-tests/master/ZGW_api_postman_tests.json`
+   * Om de gedragsregels uit de standaard te testen: `https://raw.githubusercontent.com/VNG-Realisatie/gemma-postman-tests/master/ZGW_api_postman_tests.json`
+   * Om de OAS te testen: `https://raw.githubusercontent.com/VNG-Realisatie/gemma-postman-tests/master/ZGW_OAS_tests.json`
    
 4. Er verschijnt een nieuwe collectie: **ZGW api tests**.
 
@@ -70,3 +74,4 @@ Copyright © VNG Realisatie 2019
 [Postman]: https://www.getpostman.com/downloads/
 [API testplatform]: https://github.com/VNG-Realisatie/api-testvoorziening
 [API beheer]: https://github.com/VNG-Realisatie/api-beheer
+[standaard]: https://github.com/VNG-Realisatie/gemma-zaken/tree/master/docs/_content/standaard
