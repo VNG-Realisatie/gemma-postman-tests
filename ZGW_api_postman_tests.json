@@ -46875,7 +46875,7 @@
 							"_postman_isSubFolder": true
 						}
 					],
-					"description": "Deze folder bevat de Postman test suite voor de ZGW API's, elke folder bevat tests voor de business logic zoals die gespecificeerd is in https://github.com/VNG-Realisatie/gemma-zaken/tree/master/docs/_content/standaard.\n\nDe variabelen voor de urls naar de individuele componenten zijn standaard gezet op http://ref.tst.vng.cloud/, maar kunnen lokaal veranderd worden naar bijv. localhost voor test doeleinden.\n\nDe namen van de folders (bijv. **zrc/zrc-001**) verwijzen naar de specificaties in de link hierboven, zo zijn de tests te koppelen aan de specificaties.\n\nAlle requests met een prefix zoals **(zrc-xxx)** (of een andere ZGW api) bevatten tests, alle andere requests zijn ter ondersteuning van die requests en bevatten dus geen tests.\n\nOpmerkingen:\n- (WIP) houdt in dat de test nog niet correct geimplementeerd is.\n- (NI) houdt in dat de test faalt omdat de business logic nog niet geimplementeerd is in de desbetreffende API's.",
+					"description": "Deze folder bevat de Postman test suite voor de ZGW API's, elke folder bevat tests voor de business logic zoals die gespecificeerd is in https://github.com/VNG-Realisatie/gemma-zaken/tree/master/docs/_content/standaard.\n\nDe variabelen voor de urls naar de individuele componenten zijn standaard gezet op http://ref.tst.vng.cloud/, maar kunnen lokaal veranderd worden naar bijv. localhost voor test doeleinden.\n\nDe namen van de folders (bijv. **zrc/zrc-001**) verwijzen naar de specificaties in de link hierboven, zo zijn de tests te koppelen aan de specificaties.\n\nAlle requests met een prefix zoals **(zrc-xxx)** (of een andere ZGW api) bevatten tests, alle andere requests zijn ter ondersteuning van die requests en bevatten dus geen tests.\n\n**LET OP:** voor deze tests zijn de environment variabelen `client_id` en `secret` nodig, dit moeten credentials zijn die geregistreerd zijn binnen de Autorisaties API, en hiervoor moet dus ook een bestaande applicatie met superuser rechten aanwezig zijn in het systeem. Aan de hand van deze credentials wordt binnen de testsuite een JSON Web Token gegenereerd, die vervolgens gebruikt wordt in de Authorization headers van iedere API call\n\nOpmerkingen:\n- (WIP) houdt in dat de test nog niet correct geimplementeerd is.\n- (NI) houdt in dat de test faalt omdat de business logic nog niet geimplementeerd is in de desbetreffende API's.",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -47038,6 +47038,9 @@
 				"id": "157b223d-1b88-4113-bed1-2412eef72a61",
 				"type": "text/javascript",
 				"exec": [
+					"// Script to generate a JSON web token for the provided `client_id` and `secret`",
+					"// Source: https://www.jonathan-petitcolas.com/2014/11/27/creating-json-web-token-in-javascript.html",
+					"",
 					"function base64url(source) {",
 					"\t// Encode in classical base64",
 					"\tencodedSource = CryptoJS.enc.Base64.stringify(source);",
