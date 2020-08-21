@@ -1,0 +1,141 @@
+[
+    {
+        "model": "vng_api_common.jwtsecret",
+        "pk": 1,
+        "fields": {
+            "identifier": "zgw_api_tests",
+            "secret": "secret"
+        }
+    },
+    {
+        "model": "vng_api_common.jwtsecret",
+        "pk": 2,
+        "fields": {
+            "identifier": "zgw_api_tests_limited",
+            "secret": "secret_limited"
+        }
+    },
+    {
+        "model": "vng_api_common.jwtsecret",
+        "pk": 3,
+        "fields": {
+            "identifier": "gemmazaken",
+            "secret": "gemmazaken"
+        }
+    },
+    {
+        "model": "authorizations.applicatie",
+        "pk": 1,
+        "fields": {
+            "uuid": "4223b169-ebc7-4410-900f-0ea2bf75dd83",
+            "client_ids": "[\"zgw_api_tests\"]",
+            "label": "zgw api tests",
+            "heeft_alle_autorisaties": true
+        }
+    },
+    {
+        "model": "authorizations.applicatie",
+        "pk": 2,
+        "fields": {
+            "uuid": "e34da307-f289-461e-9e91-d8cef69f6b0e",
+            "client_ids": "[\"gemmazaken\"]",
+            "label": "gemmazaken",
+            "heeft_alle_autorisaties": true
+        }
+    },
+    {
+        "model": "vng_api_common.apicredential",
+        "pk": 1,
+        "fields": {
+            "api_root": "http://localhost:8004/api/v1/",
+            "label": "gemmazaken",
+            "client_id": "gemmazaken",
+            "secret": "gemmazaken",
+            "user_id": "gemmazaken",
+            "user_representation": "gemmazaken"
+        }
+    },
+    {
+        "model": "vng_api_common.apicredential",
+        "pk": 2,
+        "fields": {
+            "api_root": "http://localhost:8005/api/v1/",
+            "label": "gemmazaken",
+            "client_id": "gemmazaken",
+            "secret": "gemmazaken",
+            "user_id": "gemmazaken",
+            "user_representation": "gemmazaken"
+        }
+    },
+    {
+        "model": "vng_api_common.apicredential",
+        "pk": 3,
+        "fields": {
+            "api_root": "http://localhost:8002/api/v1/",
+            "label": "gemmazaken",
+            "client_id": "gemmazaken",
+            "secret": "gemmazaken",
+            "user_id": "gemmazaken",
+            "user_representation": "gemmazaken"
+        }
+    },
+    {
+        "model": "vng_api_common.apicredential",
+        "pk": 4,
+        "fields": {
+            "api_root": "http://localhost:8003/api/v1/",
+            "label": "gemmazaken",
+            "client_id": "gemmazaken",
+            "secret": "gemmazaken",
+            "user_id": "gemmazaken",
+            "user_representation": "gemmazaken"
+        }
+    },
+    {
+        "model": "vng_api_common.apicredential",
+        "pk": 5,
+        "fields": {
+            "api_root": "http://localhost:8000/api/v1/",
+            "label": "gemmazaken",
+            "client_id": "gemmazaken",
+            "secret": "gemmazaken",
+            "user_id": "gemmazaken",
+            "user_representation": "gemmazaken"
+        }
+    },
+    {
+        "model": "vng_api_common.apicredential",
+        "pk": 6,
+        "fields": {
+            "api_root": "http://localhost:8001/api/v1/",
+            "label": "gemmazaken",
+            "client_id": "gemmazaken",
+            "secret": "gemmazaken",
+            "user_id": "gemmazaken",
+            "user_representation": "gemmazaken"
+        }
+    },
+    {
+        "model": "notifications.notificationsconfig",
+        "pk": 1,
+        "fields": {
+            "api_root": "http://localhost:8004/api/v1/"
+        }
+    },
+    {
+        "model": "authorizations.authorizationsconfig",
+        "pk": 1,
+        "fields": {
+            "api_root": "http://localhost:8005/api/v1/",
+            "component": "ac"
+        }
+    },
+    {
+        "model": "sites.site",
+        "pk": 1,
+        "fields": {
+            "domain": "localhost:8005",
+            "name": "localhost:8005"
+        }
+    }
+]
