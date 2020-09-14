@@ -30860,6 +30860,7 @@
 															"body.selectielijstklasse = pm.globals.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\");",
 															"body.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
 															"body.brondatumArchiefprocedure.procestermijn = \"P5M\";",
+															"body.omschrijving = \"procestype-mismatch\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
