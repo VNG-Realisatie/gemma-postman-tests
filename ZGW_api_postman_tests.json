@@ -363,6 +363,53 @@
 												}
 											},
 											"response": []
+										},
+										{
+											"name": "Delete existing test Applicatie",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "f2e574f9-4685-4224-8a2e-c313566b87f2",
+														"exec": [
+															"var results = pm.response.json().results;",
+															"",
+															"for(i=0; i<results.length; i++) {",
+															"    if(results[i].clientIds.includes(\"test_id1\")) {",
+															"        pm.sendRequest({",
+															"            \"url\": results[i].url,",
+															"            \"method\": \"DELETE\",",
+															"            \"header\": {",
+															"                \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
+															"            }",
+															"        });   ",
+															"    }",
+															"}"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{ac_url}}/applicaties?clientIds=test_id1",
+													"host": [
+														"{{ac_url}}"
+													],
+													"path": [
+														"applicaties"
+													],
+													"query": [
+														{
+															"key": "clientIds",
+															"value": "test_id1"
+														}
+													]
+												}
+											},
+											"response": []
 										}
 									],
 									"protocolProfileBehavior": {},
@@ -30813,6 +30860,7 @@
 															"body.selectielijstklasse = pm.globals.get(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\");",
 															"body.brondatumArchiefprocedure.afleidingswijze = \"termijn\";",
 															"body.brondatumArchiefprocedure.procestermijn = \"P5M\";",
+															"body.omschrijving = \"procestype-mismatch\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
