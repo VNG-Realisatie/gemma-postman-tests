@@ -1,15 +1,15 @@
 {
 	"info": {
 		"_postman_id": "e787599c-6eea-46cd-9ce1-cee87fb50cd5",
-		"name": "Klanten API tests",
+		"name": "Klanten API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "kla",
+			"name": "OAS",
 			"item": [
 				{
-					"name": "OAS",
+					"name": "klanten",
 					"item": [
 						{
 							"name": "Alle KLANTen opvragen.",
@@ -5322,315 +5322,292 @@
 					],
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
-				},
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "standaard.md",
+			"item": [
 				{
-					"name": "standaard.md",
+					"name": "kla-001",
 					"item": [
 						{
-							"name": "kla-001",
-							"item": [
-								{
-									"name": "(kla-001a) Klant aanmaken met bronorganisatie en klantnummer uniek is mogelijk",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "4ede3e7a-7d0d-4e9e-8e4f-9650153a2045",
-												"exec": [
-													"pm.test(\"Klant aanmaken met valide gegevens geeft 201\", function() {",
-													"    pm.response.to.have.status(201);",
-													"});",
-													"",
-													"if(pm.response.code == 201) {",
-													"    var klant = pm.response.json();",
-													"    pm.globals.set(\"created_klant_url\", klant.url);",
-													"    pm.globals.set(\"klant_body\", pm.request.body);",
-													"}"
-												],
-												"type": "text/javascript"
-											}
-										},
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "ca7dfd07-e33c-43fb-a0be-e04f420eb93a",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											},
-											{
-												"key": "Accept-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											},
-											{
-												"key": "Content-Type",
-												"name": "Content-Type",
-												"type": "text",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"klantnummer\": \"123\",\n    \"bedrijfsnaam\": \"string\",\n    \"functie\": \"string\",\n    \"websiteUrl\": \"http://example.com\",\n    \"voornaam\": \"string\",\n    \"voorvoegselAchternaam\": \"string\",\n    \"achternaam\": \"string\",\n    \"telefoonnummer\": \"string\",\n    \"emailadres\": \"user@example.com\",\n    \"adres\": \n    {\n\n        \"straatnaam\": \"string\",\n        \"huisnummer\": 0,\n        \"huisletter\": \"s\",\n        \"huisnummertoevoeging\": \"stri\",\n        \"postcode\": \"string\",\n        \"woonplaatsnaam\": \"string\",\n        \"landcode\": \"stri\"\n\n    },\n    \"subject\": \"http://example.com\",\n    \"subjectType\": \"natuurlijk_persoon\"\n}"
-										},
-										"url": {
-											"raw": "{{kla_url}}/klanten",
-											"host": [
-												"{{kla_url}}"
-											],
-											"path": [
-												"klanten"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "(kla-001b) Klant aanmaken met bestaande combinatie bronorganisatie en klantnummer is onmogelijk",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "abb5abe9-1076-4934-91e1-0718bf28bd61",
-												"exec": [
-													"pm.test(\"Klant aanmaken met bestaande combinatie bronorganisatie en klantnummer geeft 400\", function() {",
-													"    pm.response.to.have.status(400);",
-													"});",
-													"",
-													"postman.setNextRequest(\"(COMMON) Delete Klant\");",
-													"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(kla-002a) Klant aanmaken met ongeldig subject is onmogelijk\"]);"
-												],
-												"type": "text/javascript"
-											}
-										},
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "4b34cd5b-6a25-49ef-893f-231ffd11d740",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											},
-											{
-												"key": "Accept-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											},
-											{
-												"key": "Content-Type",
-												"name": "Content-Type",
-												"type": "text",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{{klant_body}}"
-										},
-										"url": {
-											"raw": "{{kla_url}}/klanten",
-											"host": [
-												"{{kla_url}}"
-											],
-											"path": [
-												"klanten"
-											]
-										}
-									},
-									"response": []
-								}
-							],
-							"protocolProfileBehavior": {},
-							"_postman_isSubFolder": true
-						},
-						{
-							"name": "kla-002",
-							"item": [
-								{
-									"name": "(kla-002a) Klant aanmaken met ongeldig subject is onmogelijk",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "9bd436e2-6c2c-41fa-8012-4c1c5d4fde91",
-												"exec": [
-													"pm.test(\"Klant aanmaken met subject dat resulteert in 404 geeft 400\", function() {",
-													"    pm.response.to.have.status(400);",
-													"});",
-													"",
-													"if(pm.response.code == 201) {",
-													"    var klant = pm.response.json();",
-													"    pm.globals.set(\"created_klant_url\", klant.url);",
-													"    pm.globals.set(\"klant_body\", pm.request.body);",
-													"    postman.setNextRequest(\"(COMMON) Delete Klant\");",
-													"}"
-												],
-												"type": "text/javascript"
-											}
-										},
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "def4a01b-253e-4790-9e0c-a5ab9c8fe8a1",
-												"exec": [
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											},
-											{
-												"key": "Accept-Crs",
-												"type": "text",
-												"value": "EPSG:4326"
-											},
-											{
-												"key": "Content-Type",
-												"name": "Content-Type",
-												"type": "text",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"klantnummer\": \"123\",\n    \"bedrijfsnaam\": \"string\",\n    \"functie\": \"string\",\n    \"websiteUrl\": \"http://example.com\",\n    \"voornaam\": \"string\",\n    \"voorvoegselAchternaam\": \"string\",\n    \"achternaam\": \"string\",\n    \"telefoonnummer\": \"string\",\n    \"emailadres\": \"user@example.com\",\n    \"adres\": \n    {\n\n        \"straatnaam\": \"string\",\n        \"huisnummer\": 0,\n        \"huisletter\": \"s\",\n        \"huisnummertoevoeging\": \"stri\",\n        \"postcode\": \"string\",\n        \"woonplaatsnaam\": \"string\",\n        \"landcode\": \"stri\"\n\n    },\n    \"subject\": \"{{mock_url}}/404\",\n    \"subjectType\": \"natuurlijk_persoon\"\n}"
-										},
-										"url": {
-											"raw": "{{kla_url}}/klanten",
-											"host": [
-												"{{kla_url}}"
-											],
-											"path": [
-												"klanten"
-											]
-										}
-									},
-									"response": []
-								}
-							],
-							"protocolProfileBehavior": {},
-							"_postman_isSubFolder": true
-						},
-						{
-							"name": "common requests",
-							"item": [
-								{
-									"name": "(COMMON) Delete Klant",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "ec0fd941-73f6-4271-85e4-70256e24607b",
-												"exec": [
-													"pm.globals.unset(\"created_klant_url\");"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [],
-										"body": {
-											"mode": "raw",
-											"raw": "",
-											"options": {}
-										},
-										"url": {
-											"raw": "{{created_klant_url}}",
-											"host": [
-												"{{created_klant_url}}"
-											]
-										}
-									},
-									"response": []
-								}
-							],
+							"name": "(kla-001a) Klant aanmaken met bronorganisatie en klantnummer uniek is mogelijk",
 							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "80a843ef-ec59-406e-9b0f-ec49a7ccf7cb",
-										"type": "text/javascript",
-										"exec": [
-											""
-										]
-									}
-								},
 								{
 									"listen": "test",
 									"script": {
-										"id": "2f06a03c-44c7-4e27-bd4d-c6d7ee99ae70",
-										"type": "text/javascript",
+										"id": "4ede3e7a-7d0d-4e9e-8e4f-9650153a2045",
 										"exec": [
-											"var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
-											"if(request_names) {",
-											"    postman.setNextRequest(request_names.shift());",
-											"    pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
+											"pm.test(\"Klant aanmaken met valide gegevens geeft 201\", function() {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    var klant = pm.response.json();",
+											"    pm.globals.set(\"created_klant_url\", klant.url);",
+											"    pm.globals.set(\"klant_body\", pm.request.body);",
 											"}"
-										]
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "ca7dfd07-e33c-43fb-a0be-e04f420eb93a",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
 									}
 								}
 							],
-							"protocolProfileBehavior": {},
-							"_postman_isSubFolder": true
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Crs",
+										"type": "text",
+										"value": "EPSG:4326"
+									},
+									{
+										"key": "Accept-Crs",
+										"type": "text",
+										"value": "EPSG:4326"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"klantnummer\": \"123\",\n    \"bedrijfsnaam\": \"string\",\n    \"functie\": \"string\",\n    \"websiteUrl\": \"http://example.com\",\n    \"voornaam\": \"string\",\n    \"voorvoegselAchternaam\": \"string\",\n    \"achternaam\": \"string\",\n    \"telefoonnummer\": \"string\",\n    \"emailadres\": \"user@example.com\",\n    \"adres\": \n    {\n\n        \"straatnaam\": \"string\",\n        \"huisnummer\": 0,\n        \"huisletter\": \"s\",\n        \"huisnummertoevoeging\": \"stri\",\n        \"postcode\": \"string\",\n        \"woonplaatsnaam\": \"string\",\n        \"landcode\": \"stri\"\n\n    },\n    \"subject\": \"http://example.com\",\n    \"subjectType\": \"natuurlijk_persoon\"\n}"
+								},
+								"url": {
+									"raw": "{{kla_url}}/klanten",
+									"host": [
+										"{{kla_url}}"
+									],
+									"path": [
+										"klanten"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "(kla-001b) Klant aanmaken met bestaande combinatie bronorganisatie en klantnummer is onmogelijk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "abb5abe9-1076-4934-91e1-0718bf28bd61",
+										"exec": [
+											"pm.test(\"Klant aanmaken met bestaande combinatie bronorganisatie en klantnummer geeft 400\", function() {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"postman.setNextRequest(\"(COMMON) Delete Klant\");",
+											"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(kla-002a) Klant aanmaken met ongeldig subject is onmogelijk\"]);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4b34cd5b-6a25-49ef-893f-231ffd11d740",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Crs",
+										"type": "text",
+										"value": "EPSG:4326"
+									},
+									{
+										"key": "Accept-Crs",
+										"type": "text",
+										"value": "EPSG:4326"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{klant_body}}"
+								},
+								"url": {
+									"raw": "{{kla_url}}/klanten",
+									"host": [
+										"{{kla_url}}"
+									],
+									"path": [
+										"klanten"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "07183d21-bae4-4443-beba-84bc06558e9a",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
 				},
 				{
-					"listen": "test",
-					"script": {
-						"id": "636556d7-c2ac-4124-b6b2-3e076dc7eeaa",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
+					"name": "kla-002",
+					"item": [
+						{
+							"name": "(kla-002a) Klant aanmaken met ongeldig subject is onmogelijk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9bd436e2-6c2c-41fa-8012-4c1c5d4fde91",
+										"exec": [
+											"pm.test(\"Klant aanmaken met subject dat resulteert in 404 geeft 400\", function() {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"if(pm.response.code == 201) {",
+											"    var klant = pm.response.json();",
+											"    pm.globals.set(\"created_klant_url\", klant.url);",
+											"    pm.globals.set(\"klant_body\", pm.request.body);",
+											"    postman.setNextRequest(\"(COMMON) Delete Klant\");",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "def4a01b-253e-4790-9e0c-a5ab9c8fe8a1",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Crs",
+										"type": "text",
+										"value": "EPSG:4326"
+									},
+									{
+										"key": "Accept-Crs",
+										"type": "text",
+										"value": "EPSG:4326"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"klantnummer\": \"123\",\n    \"bedrijfsnaam\": \"string\",\n    \"functie\": \"string\",\n    \"websiteUrl\": \"http://example.com\",\n    \"voornaam\": \"string\",\n    \"voorvoegselAchternaam\": \"string\",\n    \"achternaam\": \"string\",\n    \"telefoonnummer\": \"string\",\n    \"emailadres\": \"user@example.com\",\n    \"adres\": \n    {\n\n        \"straatnaam\": \"string\",\n        \"huisnummer\": 0,\n        \"huisletter\": \"s\",\n        \"huisnummertoevoeging\": \"stri\",\n        \"postcode\": \"string\",\n        \"woonplaatsnaam\": \"string\",\n        \"landcode\": \"stri\"\n\n    },\n    \"subject\": \"{{mock_url}}/404\",\n    \"subjectType\": \"natuurlijk_persoon\"\n}"
+								},
+								"url": {
+									"raw": "{{kla_url}}/klanten",
+									"host": [
+										"{{kla_url}}"
+									],
+									"path": [
+										"klanten"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "common requests",
+					"item": [
+						{
+							"name": "(COMMON) Delete Klant",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ec0fd941-73f6-4271-85e4-70256e24607b",
+										"exec": [
+											"pm.globals.unset(\"created_klant_url\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {}
+								},
+								"url": {
+									"raw": "{{created_klant_url}}",
+									"host": [
+										"{{created_klant_url}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "80a843ef-ec59-406e-9b0f-ec49a7ccf7cb",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2f06a03c-44c7-4e27-bd4d-c6d7ee99ae70",
+								"type": "text/javascript",
+								"exec": [
+									"var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
+									"if(request_names) {",
+									"    postman.setNextRequest(request_names.shift());",
+									"    pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
+									"}"
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				}
 			],
 			"protocolProfileBehavior": {}
