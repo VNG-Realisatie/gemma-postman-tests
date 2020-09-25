@@ -13258,7 +13258,7 @@
 									"script": {
 										"id": "9037643b-ecdd-48c0-a7e2-9a4eee159d32",
 										"exec": [
-											"pm.test(\"ContactMoment aanmaken met geldig vorigContactmoment geeft 201\", function() {",
+											"pm.test(\"volgendContactmoment wordt automatisch gezet na zetten vorigContactmoment (CREATE)\", function() {",
 											"\tpm.response.to.have.status(200);",
 											"",
 											"    pm.expect(pm.response.json().volgendContactmoment).to.be.equal(pm.globals.get(\"created_contactmoment_url\"))",
@@ -14577,7 +14577,7 @@
 									"script": {
 										"id": "fa2162b4-03b9-4747-84a9-fd4c1616c936",
 										"exec": [
-											"pm.test(\"ContactMoment aanmaken met geldig vorigContactmoment geeft 201\", function() {",
+											"pm.test(\"volgendContactmoment wordt op null gezet na zetten veranderen vorigContactmoment (UPDATE)\", function() {",
 											"\tpm.response.to.have.status(200);",
 											"",
 											"    pm.expect(pm.response.json().volgendContactmoment).to.be.equal(null)",
@@ -14607,7 +14607,7 @@
 									"script": {
 										"id": "309fcfa6-68c3-47af-8b28-2aff6553c8fd",
 										"exec": [
-											"pm.test(\"ContactMoment aanmaken met geldig vorigContactmoment geeft 201\", function() {",
+											"pm.test(\"volgendContactmoment wordt automatisch gezet na zetten vorigContactmoment (CREATE)\", function() {",
 											"\tpm.response.to.have.status(200);",
 											"",
 											"    pm.expect(pm.response.json().volgendContactmoment).to.be.equal(pm.globals.get(\"created_contactmoment_url\"))",
@@ -22525,13 +22525,6 @@
 					""
 				]
 			}
-		}
-	],
-	"variable": [
-		{
-			"id": "617e91d8-1ef1-4a77-9b13-cd406e20ccdb",
-			"key": "baseUrl",
-			"value": "/api/v1"
 		}
 	],
 	"protocolProfileBehavior": {}
