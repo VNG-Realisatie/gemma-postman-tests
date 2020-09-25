@@ -3379,10 +3379,6 @@
 										"description": "Toelichting waarom een bepaald verzoek wordt gedaan",
 										"key": "X-Audit-Toelichting",
 										"value": "<string>"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
 									}
 								],
 								"body": {
