@@ -22243,8 +22243,7 @@
 										"id": "de5279c5-e724-46ae-b801-bd21f6218207",
 										"exec": [
 											"pm.globals.unset(\"klant_url\");",
-											"",
-											"postman.setNextRequest(null)"
+											""
 										],
 										"type": "text/javascript"
 									}
