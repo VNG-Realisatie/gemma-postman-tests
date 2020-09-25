@@ -1523,17 +1523,11 @@
 											"\tpm.response.to.have.status(200);",
 											"});",
 											"",
-											"var schema = {",
-											"    \"properties\": {",
-											"        \"count\": {\"type\": \"integer\"},",
-											"        \"next\": {\"type\": [\"string\", \"null\"]},",
-											"        \"previous\": {\"type\": [\"string\", \"null\"]},",
-											"        \"results\": {\"type\": \"array\"}",
-											"    }",
-											"};",
-											"",
-											"pm.test('Schema is valid', function () {",
-											"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"pm.test(\"Alle CONTACTMOMENTen opvragen. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"count\": {\"type\": \"integer\"}, \"results\": {\"items\": {\"properties\": {\"bronorganisatie\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}, \"vorigContactmoment\": {\"format\": \"uri\"}, \"volgendContactmoment\": {\"format\": \"uri\"}, \"klant\": {\"format\": \"uri\"}, \"kanaal\": {\"type\": \"string\"}, \"voorkeurskanaal\": {\"type\": \"string\"}, \"voorkeurstaal\": {\"type\": \"string\"}, \"tekst\": {\"type\": \"string\"}, \"onderwerpLinks\": {\"items\": {}}, \"initiatiefnemer\": {\"type\": \"string\"}, \"medewerker\": {\"format\": \"uri\"}, \"medewerkerIdentificatie\": {\"properties\": {\"identificatie\": {}, \"achternaam\": {}, \"voorletters\": {}, \"voorvoegselAchternaam\": {}}}}}}, \"next\": {\"format\": \"uri\"}, \"previous\": {\"format\": \"uri\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -2588,7 +2582,12 @@
 											"pm.test(\"Maak een CONTACTMOMENT aan. geeft 201\", function() {",
 											"\tpm.response.to.have.status(201);",
 											"});",
-											"",
+											"pm.test(\"Maak een CONTACTMOMENT aan. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"bronorganisatie\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}, \"vorigContactmoment\": {\"format\": \"uri\"}, \"volgendContactmoment\": {\"format\": \"uri\"}, \"klant\": {\"format\": \"uri\"}, \"kanaal\": {\"type\": \"string\"}, \"voorkeurskanaal\": {\"type\": \"string\"}, \"voorkeurstaal\": {\"type\": \"string\"}, \"tekst\": {\"type\": \"string\"}, \"onderwerpLinks\": {\"items\": {}}, \"initiatiefnemer\": {\"type\": \"string\"}, \"medewerker\": {\"format\": \"uri\"}, \"medewerkerIdentificatie\": {\"properties\": {\"identificatie\": {\"type\": \"string\"}, \"achternaam\": {\"type\": \"string\"}, \"voorletters\": {\"type\": \"string\"}, \"voorvoegselAchternaam\": {\"type\": \"string\"}}}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
+											"});",
 											"if(pm.response.code == 201) {",
 											"    pm.globals.set(\"created_contactmoment_url\", pm.response.json().url);",
 											"    pm.globals.set(\"contactmoment_body\", pm.request.body.raw);",
@@ -3183,7 +3182,12 @@
 											"pm.test(\"Een specifiek CONTACTMOMENT opvragen. geeft 200\", function() {",
 											"\tpm.response.to.have.status(200);",
 											"});",
-											""
+											"pm.test(\"Een specifiek CONTACTMOMENT opvragen. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"bronorganisatie\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}, \"vorigContactmoment\": {\"format\": \"uri\"}, \"volgendContactmoment\": {\"format\": \"uri\"}, \"klant\": {\"format\": \"uri\"}, \"kanaal\": {\"type\": \"string\"}, \"voorkeurskanaal\": {\"type\": \"string\"}, \"voorkeurstaal\": {\"type\": \"string\"}, \"tekst\": {\"type\": \"string\"}, \"onderwerpLinks\": {\"items\": {}}, \"initiatiefnemer\": {\"type\": \"string\"}, \"medewerker\": {\"format\": \"uri\"}, \"medewerkerIdentificatie\": {\"properties\": {\"identificatie\": {\"type\": \"string\"}, \"achternaam\": {\"type\": \"string\"}, \"voorletters\": {\"type\": \"string\"}, \"voorvoegselAchternaam\": {\"type\": \"string\"}}}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									},
@@ -3657,7 +3661,12 @@
 											"pm.test(\"Alle audit trail regels behorend bij de CONTACTMOMENT. geeft 200\", function() {",
 											"\tpm.response.to.have.status(200);",
 											"});",
-											"",
+											"pm.test(\"Alle audit trail regels behorend bij de CONTACTMOMENT. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
+											"});",
 											"if(pm.response.code == 200) {",
 											"    pm.globals.set(\"audittrail_uuid\", pm.response.json()[0].uuid);",
 											"}"
@@ -4045,6 +4054,12 @@
 										"exec": [
 											"pm.test(\"Een specifieke audit trail regel opvragen. geeft 200\", function() {",
 											"\tpm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Een specifieke audit trail regel opvragen. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"bron\": {\"type\": \"string\"}, \"actie\": {\"type\": \"string\"}, \"resultaat\": {\"type\": \"integer\"}, \"hoofdObject\": {\"format\": \"uri\"}, \"resource\": {\"type\": \"string\"}, \"resourceUrl\": {\"format\": \"uri\"}, \"resourceWeergave\": {\"type\": \"string\"}, \"wijzigingen\": {\"properties\": {\"oud\": {\"type\": [\"object\", \"null\"]}, \"nieuw\": {\"type\": [\"object\", \"null\"]}}}, \"uuid\": {\"format\": \"uuid\"}, \"requestId\": {\"type\": \"string\"}, \"applicatieId\": {\"type\": \"string\"}, \"applicatieWeergave\": {\"type\": \"string\"}, \"gebruikersId\": {\"type\": \"string\"}, \"gebruikersWeergave\": {\"type\": \"string\"}, \"actieWeergave\": {\"type\": \"string\"}, \"toelichting\": {\"type\": \"string\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -4572,6 +4587,12 @@
 										"exec": [
 											"pm.test(\"Werk een CONTACTMOMENT in zijn geheel bij. geeft 200\", function() {",
 											"\tpm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Werk een CONTACTMOMENT in zijn geheel bij. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"bronorganisatie\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}, \"vorigContactmoment\": {\"format\": \"uri\"}, \"volgendContactmoment\": {\"format\": \"uri\"}, \"klant\": {\"format\": \"uri\"}, \"kanaal\": {\"type\": \"string\"}, \"voorkeurskanaal\": {\"type\": \"string\"}, \"voorkeurstaal\": {\"type\": \"string\"}, \"tekst\": {\"type\": \"string\"}, \"onderwerpLinks\": {\"items\": {}}, \"initiatiefnemer\": {\"type\": \"string\"}, \"medewerker\": {\"format\": \"uri\"}, \"medewerkerIdentificatie\": {\"properties\": {\"identificatie\": {\"type\": \"string\"}, \"achternaam\": {\"type\": \"string\"}, \"voorletters\": {\"type\": \"string\"}, \"voorvoegselAchternaam\": {\"type\": \"string\"}}}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -5288,6 +5309,12 @@
 										"exec": [
 											"pm.test(\"Werk een CONTACTMOMENT deels bij. geeft 200\", function() {",
 											"\tpm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Werk een CONTACTMOMENT deels bij. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"bronorganisatie\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}, \"vorigContactmoment\": {\"format\": \"uri\"}, \"volgendContactmoment\": {\"format\": \"uri\"}, \"klant\": {\"format\": \"uri\"}, \"kanaal\": {\"type\": \"string\"}, \"voorkeurskanaal\": {\"type\": \"string\"}, \"voorkeurstaal\": {\"type\": \"string\"}, \"tekst\": {\"type\": \"string\"}, \"onderwerpLinks\": {\"items\": {}}, \"initiatiefnemer\": {\"type\": \"string\"}, \"medewerker\": {\"format\": \"uri\"}, \"medewerkerIdentificatie\": {\"properties\": {\"identificatie\": {\"type\": \"string\"}, \"achternaam\": {\"type\": \"string\"}, \"voorletters\": {\"type\": \"string\"}, \"voorvoegselAchternaam\": {\"type\": \"string\"}}}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -6573,6 +6600,12 @@
 										"exec": [
 											"pm.test(\"Alle KLANT-CONTACTMOMENT relaties opvragen. geeft 200\", function() {",
 											"\tpm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Alle KLANT-CONTACTMOMENT relaties opvragen. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"count\": {\"type\": \"integer\"}, \"results\": {\"items\": {\"properties\": {\"contactmoment\": {\"format\": \"uri\"}, \"klant\": {\"format\": \"uri\"}, \"rol\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}}}}, \"next\": {\"format\": \"uri\"}, \"previous\": {\"format\": \"uri\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -7130,7 +7163,12 @@
 											"pm.test(\"Maak een KLANT-CONTACTMOMENT relatie aan. geeft 201\", function() {",
 											"\tpm.response.to.have.status(201);",
 											"});",
-											"",
+											"pm.test(\"Maak een KLANT-CONTACTMOMENT relatie aan. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"contactmoment\": {\"format\": \"uri\"}, \"klant\": {\"format\": \"uri\"}, \"rol\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
+											"});",
 											"if(pm.response.code == 201) {",
 											"    pm.globals.set(\"kcm_url\", pm.response.json().url);",
 											"}"
@@ -7598,6 +7636,12 @@
 										"exec": [
 											"pm.test(\"Een specifieke KLANT-CONTACTMOMENT relatie opvragen. geeft 200\", function() {",
 											"\tpm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Een specifieke KLANT-CONTACTMOMENT relatie opvragen. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"contactmoment\": {\"format\": \"uri\"}, \"klant\": {\"format\": \"uri\"}, \"rol\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -8490,7 +8534,12 @@
 											"pm.test(\"Alle OBJECT-CONTACTMOMENT relaties opvragen. geeft 200\", function() {",
 											"\tpm.response.to.have.status(200);",
 											"});",
-											"",
+											"pm.test(\"Alle OBJECT-CONTACTMOMENT relaties opvragen. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"count\": {\"type\": \"integer\"}, \"results\": {\"items\": {\"properties\": {\"contactmoment\": {\"format\": \"uri\"}, \"object\": {\"format\": \"uri\"}, \"objectType\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}}}}, \"next\": {\"format\": \"uri\"}, \"previous\": {\"format\": \"uri\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
+											"});",
 											"postman.setNextRequest(\"(OAS) Delete Zaak\");"
 										],
 										"type": "text/javascript"
@@ -9048,7 +9097,12 @@
 											"pm.test(\"Maak een OBJECT-CONTACTMOMENT relatie aan. geeft 201\", function() {",
 											"\tpm.response.to.have.status(201);",
 											"});",
-											"",
+											"pm.test(\"Maak een OBJECT-CONTACTMOMENT relatie aan. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"contactmoment\": {\"format\": \"uri\"}, \"object\": {\"format\": \"uri\"}, \"objectType\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
+											"});",
 											"if(pm.response.code == 201) {",
 											"    pm.globals.set(\"ocm_url\", pm.response.json().url);",
 											"}"
@@ -9516,6 +9570,12 @@
 										"exec": [
 											"pm.test(\"Een specifiek OBJECT-CONTACTMOMENT relatie opvragen. geeft 200\", function() {",
 											"\tpm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Een specifiek OBJECT-CONTACTMOMENT relatie opvragen. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"contactmoment\": {\"format\": \"uri\"}, \"object\": {\"format\": \"uri\"}, \"objectType\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
