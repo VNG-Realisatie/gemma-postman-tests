@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "e787599c-6eea-46cd-9ce1-cee87fb50cd5",
 		"name": "Klanten API",
+		"description": "Een API om klanten te benaderen.\n\nEen API om zowel klanten te registreren als op te vragen. Een klant\nis een natuurlijk persoon, niet-natuurlijk persoon (bedrijf) of vestiging\nwaarbij het gaat om niet geverifieerde gegevens. De Klanten API kan\nzelfstandig of met andere API's samen werken om tot volledige functionaliteit\nte komen.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Autorisaties API\n* Notificaties API\n* Zaken API *(optioneel)*\n* Documenten API *(optioneel)*\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n** Notificaties\n\nDeze API publiceert notificaties op het kanaal `klanten`.\n\n**Main resource**\n\n`klant`\n\n\n\n**Kenmerken**\n\n* `subject_type`: Type van de `subject`.\n\n**Resources en acties**\n\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n\n\nContact Support:\n Email: standaarden.ondersteuning@vng.nl",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -21,6 +22,13 @@
 										"exec": [
 											"pm.test(\"Alle KLANTen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Alle KLANTen opvragen. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"count\": {\"type\": \"integer\"}, \"results\": {\"items\": {\"properties\": {\"bronorganisatie\": {\"type\": \"string\"}, \"klantnummer\": {\"type\": \"string\"}, \"websiteUrl\": {\"format\": \"uri\"}, \"url\": {\"format\": \"uri\"}, \"bedrijfsnaam\": {\"type\": \"string\"}, \"functie\": {\"type\": \"string\"}, \"voornaam\": {\"type\": \"string\"}, \"voorvoegselAchternaam\": {\"type\": \"string\"}, \"achternaam\": {\"type\": \"string\"}, \"telefoonnummer\": {\"type\": \"string\"}, \"emailadres\": {\"format\": \"email\"}, \"adres\": {\"properties\": {\"straatnaam\": {}, \"huisnummer\": {}, \"huisletter\": {}, \"huisnummertoevoeging\": {}, \"postcode\": {}, \"woonplaatsnaam\": {}, \"landcode\": {}}}, \"subject\": {\"format\": \"uri\"}, \"subjectType\": {\"type\": \"string\"}}}}, \"next\": {\"format\": \"uri\"}, \"previous\": {\"format\": \"uri\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -1293,7 +1301,12 @@
 											"pm.test(\"Maak een KLANT aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
 											"});",
-											"",
+											"pm.test(\"Maak een KLANT aan. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"bronorganisatie\": {\"type\": \"string\"}, \"klantnummer\": {\"type\": \"string\"}, \"websiteUrl\": {\"format\": \"uri\"}, \"url\": {\"format\": \"uri\"}, \"bedrijfsnaam\": {\"type\": \"string\"}, \"functie\": {\"type\": \"string\"}, \"voornaam\": {\"type\": \"string\"}, \"voorvoegselAchternaam\": {\"type\": \"string\"}, \"achternaam\": {\"type\": \"string\"}, \"telefoonnummer\": {\"type\": \"string\"}, \"emailadres\": {\"format\": \"email\"}, \"adres\": {\"properties\": {\"straatnaam\": {\"type\": \"string\"}, \"huisnummer\": {\"type\": \"integer\"}, \"huisletter\": {\"type\": \"string\"}, \"huisnummertoevoeging\": {\"type\": \"string\"}, \"postcode\": {\"type\": \"string\"}, \"woonplaatsnaam\": {\"type\": \"string\"}, \"landcode\": {\"type\": \"string\"}}}, \"subject\": {\"format\": \"uri\"}, \"subjectType\": {\"type\": \"string\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
+											"});",
 											"if(pm.response.code == 201) {",
 											"    pm.globals.set(\"klant_url\", pm.response.json().url);",
 											"    pm.globals.set(\"klant_body\", pm.request.body.raw);",
@@ -1325,10 +1338,6 @@
 										"description": "Toelichting waarom een bepaald verzoek wordt gedaan",
 										"key": "X-Audit-Toelichting",
 										"value": "<string>"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
 									}
 								],
 								"body": {
@@ -1899,6 +1908,12 @@
 										"exec": [
 											"pm.test(\"Een specifieke KLANT opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Een specifiek KLANT opvragen. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"bronorganisatie\": {\"type\": \"string\"}, \"klantnummer\": {\"type\": \"string\"}, \"websiteUrl\": {\"format\": \"uri\"}, \"url\": {\"format\": \"uri\"}, \"bedrijfsnaam\": {\"type\": \"string\"}, \"functie\": {\"type\": \"string\"}, \"voornaam\": {\"type\": \"string\"}, \"voorvoegselAchternaam\": {\"type\": \"string\"}, \"achternaam\": {\"type\": \"string\"}, \"telefoonnummer\": {\"type\": \"string\"}, \"emailadres\": {\"format\": \"email\"}, \"adres\": {\"properties\": {\"straatnaam\": {\"type\": \"string\"}, \"huisnummer\": {\"type\": \"integer\"}, \"huisletter\": {\"type\": \"string\"}, \"huisnummertoevoeging\": {\"type\": \"string\"}, \"postcode\": {\"type\": \"string\"}, \"woonplaatsnaam\": {\"type\": \"string\"}, \"landcode\": {\"type\": \"string\"}}}, \"subject\": {\"format\": \"uri\"}, \"subjectType\": {\"type\": \"string\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -2381,7 +2396,12 @@
 											"pm.test(\"Alle audit trail regels behorend bij de KLANT geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
 											"});",
-											"",
+											"pm.test(\"Alle audit trail regels behorend bij de KLANT. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
+											"});",
 											"if(pm.response.code == 200) {",
 											"    pm.globals.set(\"audittrail_uuid\", pm.response.json()[0].uuid);",
 											"}"
@@ -2768,6 +2788,12 @@
 										"exec": [
 											"pm.test(\"Een specifieke audit trail regel opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Een specifieke audit trail regel opvragen. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"bron\": {\"type\": \"string\"}, \"actie\": {\"type\": \"string\"}, \"resultaat\": {\"type\": \"integer\"}, \"hoofdObject\": {\"format\": \"uri\"}, \"resource\": {\"type\": \"string\"}, \"resourceUrl\": {\"format\": \"uri\"}, \"resourceWeergave\": {\"type\": \"string\"}, \"wijzigingen\": {\"properties\": {\"oud\": {\"type\": [\"object\", \"null\"]}, \"nieuw\": {\"type\": [\"object\", \"null\"]}}}, \"uuid\": {\"format\": \"uuid\"}, \"requestId\": {\"type\": \"string\"}, \"applicatieId\": {\"type\": \"string\"}, \"applicatieWeergave\": {\"type\": \"string\"}, \"gebruikersId\": {\"type\": \"string\"}, \"gebruikersWeergave\": {\"type\": \"string\"}, \"actieWeergave\": {\"type\": \"string\"}, \"toelichting\": {\"type\": \"string\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -3303,6 +3329,12 @@
 										"exec": [
 											"pm.test(\"Werk een KLANT in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Werk een KLANT in zijn geheel bij. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"bronorganisatie\": {\"type\": \"string\"}, \"klantnummer\": {\"type\": \"string\"}, \"websiteUrl\": {\"format\": \"uri\"}, \"url\": {\"format\": \"uri\"}, \"bedrijfsnaam\": {\"type\": \"string\"}, \"functie\": {\"type\": \"string\"}, \"voornaam\": {\"type\": \"string\"}, \"voorvoegselAchternaam\": {\"type\": \"string\"}, \"achternaam\": {\"type\": \"string\"}, \"telefoonnummer\": {\"type\": \"string\"}, \"emailadres\": {\"format\": \"email\"}, \"adres\": {\"properties\": {\"straatnaam\": {\"type\": \"string\"}, \"huisnummer\": {\"type\": \"integer\"}, \"huisletter\": {\"type\": \"string\"}, \"huisnummertoevoeging\": {\"type\": \"string\"}, \"postcode\": {\"type\": \"string\"}, \"woonplaatsnaam\": {\"type\": \"string\"}, \"landcode\": {\"type\": \"string\"}}}, \"subject\": {\"format\": \"uri\"}, \"subjectType\": {\"type\": \"string\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -4030,6 +4062,12 @@
 										"exec": [
 											"pm.test(\"Werk een KLANT deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"Werk een KLANT deels bij. heeft valide body\", function() {",
+											"\tconst Ajv = require('ajv');",
+											"\tvar ajv = new Ajv({logger: console});",
+											"\tvar schema = {\"properties\": {\"bronorganisatie\": {\"type\": \"string\"}, \"klantnummer\": {\"type\": \"string\"}, \"websiteUrl\": {\"format\": \"uri\"}, \"url\": {\"format\": \"uri\"}, \"bedrijfsnaam\": {\"type\": \"string\"}, \"functie\": {\"type\": \"string\"}, \"voornaam\": {\"type\": \"string\"}, \"voorvoegselAchternaam\": {\"type\": \"string\"}, \"achternaam\": {\"type\": \"string\"}, \"telefoonnummer\": {\"type\": \"string\"}, \"emailadres\": {\"format\": \"email\"}, \"adres\": {\"properties\": {\"straatnaam\": {\"type\": \"string\"}, \"huisnummer\": {\"type\": \"integer\"}, \"huisletter\": {\"type\": \"string\"}, \"huisnummertoevoeging\": {\"type\": \"string\"}, \"postcode\": {\"type\": \"string\"}, \"woonplaatsnaam\": {\"type\": \"string\"}, \"landcode\": {\"type\": \"string\"}}}, \"subject\": {\"format\": \"uri\"}, \"subjectType\": {\"type\": \"string\"}}};",
+											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -4058,10 +4096,6 @@
 										"description": "Toelichting waarom een bepaald verzoek wordt gedaan",
 										"key": "X-Audit-Toelichting",
 										"value": "<string>"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
 									}
 								],
 								"body": {
