@@ -21711,7 +21711,7 @@
 									"script": {
 										"id": "1760a21c-04d4-4483-a2e6-cb6456d1483e",
 										"exec": [
-											"pm.test(\"Objectcontactmoment aanmaken met contactmoment dat niet resulteert in 200 geeft 400\", function() {",
+											"pm.test(\"Objectcontactmoment aanmaken zonder bestaande relate in bron geeft 400\", function() {",
 											"\tpm.response.to.have.status(400);",
 											"",
 											"    // TODO",
