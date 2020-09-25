@@ -8539,8 +8539,7 @@
 											"\tvar ajv = new Ajv({logger: console});",
 											"\tvar schema = {\"properties\": {\"count\": {\"type\": \"integer\"}, \"results\": {\"items\": {\"properties\": {\"contactmoment\": {\"format\": \"uri\"}, \"object\": {\"format\": \"uri\"}, \"objectType\": {\"type\": \"string\"}, \"url\": {\"format\": \"uri\"}}}}, \"next\": {\"format\": \"uri\"}, \"previous\": {\"format\": \"uri\"}}};",
 											"\tpm.expect(ajv.validate(schema, pm.response.json())).to.be.true;",
-											"});",
-											"postman.setNextRequest(\"(OAS) Delete Zaak\");"
+											"});"
 										],
 										"type": "text/javascript"
 									},
@@ -9087,7 +9086,7 @@
 							]
 						},
 						{
-							"name": "Maak een OBJECT-CONTACTMOMENT relatie aan.",
+							"name": "(WIP) Maak een OBJECT-CONTACTMOMENT relatie aan.",
 							"event": [
 								{
 									"listen": "test",
