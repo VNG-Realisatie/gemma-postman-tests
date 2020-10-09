@@ -1646,7 +1646,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{vrc_url}}/verzoeken?identificatie=<string>&bronorganisatie=000000000&externeIdentificatie=<string>&registratiedatum=<string>&registratiedatum__gt=<string>&registratiedatum__gte=<string>&registratiedatum__lt=<string>&registratiedatum__lte=<string>&voorkeurskanaal=<string>&tekst=<string>&status=<string>&inTeTrekkenVerzoek=https://example.com&intrekkendeVerzoek=https://example.com&aangevuldeVerzoek=https://example.com&aanvullendeVerzoek=https://example.com&page=1",
+									"raw": "{{vrc_url}}/verzoeken?identificatie=<string>&bronorganisatie=000000000&externeIdentificatie=<string>&registratiedatum=2020-01-01T12:00:00&registratiedatum__gt=2020-01-01T12:00:00&registratiedatum__gte=2020-01-01T12:00:00&registratiedatum__lt=2020-01-01T12:00:00&registratiedatum__lte=2020-01-01T12:00:00&voorkeurskanaal=<string>&tekst=<string>&status=ontvangen&inTeTrekkenVerzoek=https://example.com&intrekkendeVerzoek=https://example.com&aangevuldeVerzoek=https://example.com&aanvullendeVerzoek=https://example.com&page=1",
 									"host": [
 										"{{vrc_url}}"
 									],
@@ -1671,27 +1671,27 @@
 										},
 										{
 											"key": "registratiedatum",
-											"value": "<string>",
+											"value": "2020-01-01T12:00:00",
 											"description": "De datum en het tijdstip waarop het VERZOEK is geregistreerd."
 										},
 										{
 											"key": "registratiedatum__gt",
-											"value": "<string>",
+											"value": "2020-01-01T12:00:00",
 											"description": "De datum en het tijdstip waarop het VERZOEK is geregistreerd."
 										},
 										{
 											"key": "registratiedatum__gte",
-											"value": "<string>",
+											"value": "2020-01-01T12:00:00",
 											"description": "De datum en het tijdstip waarop het VERZOEK is geregistreerd."
 										},
 										{
 											"key": "registratiedatum__lt",
-											"value": "<string>",
+											"value": "2020-01-01T12:00:00",
 											"description": "De datum en het tijdstip waarop het VERZOEK is geregistreerd."
 										},
 										{
 											"key": "registratiedatum__lte",
-											"value": "<string>",
+											"value": "2020-01-01T12:00:00",
 											"description": "De datum en het tijdstip waarop het VERZOEK is geregistreerd."
 										},
 										{
@@ -1706,7 +1706,7 @@
 										},
 										{
 											"key": "status",
-											"value": "<string>",
+											"value": "ontvangen",
 											"description": "De waarden van de typering van de voortgang van afhandeling van een VERZOEK."
 										},
 										{
