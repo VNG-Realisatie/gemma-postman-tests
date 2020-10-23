@@ -32854,14 +32854,14 @@
 											"response": []
 										},
 										{
-											"name": "(ztc-003s) Resultaattype met afleidingswijze afgehandeld en selectielijstklasse.procestermijn vast_te_leggen_datum is mogelijk",
+											"name": "(ztc-003s) Resultaattype met afleidingswijze afgehandeld en selectielijstklasse.procestermijn leeg is mogelijk",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "954f30c0-1cd5-48dd-a018-0a790a7e711a",
 														"exec": [
-															"pm.test(\"Resultaattype aanmaken met brondatumArchiefprocedure.afleidingswijze afgehandeld en selectielijstklasse.procestermijn vast_te_leggen_datum geeft 201\", function() {",
+															"pm.test(\"Resultaattype aanmaken met brondatumArchiefprocedure.afleidingswijze afgehandeld en selectielijstklasse.procestermijn leeg geeft 201\", function() {",
 															"    pm.response.to.have.status(201);",
 															"});",
 															"",
@@ -32913,14 +32913,14 @@
 											"response": []
 										},
 										{
-											"name": "(ztc-003t) Resultaattype met afleidingswijze termijn en selectielijstklasse.procestermijn vast_te_leggen_datum is mogelijk",
+											"name": "(ztc-003t) Resultaattype met afleidingswijze termijn en selectielijstklasse.procestermijn leeg is mogelijk",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"id": "f2327418-a739-4f3a-b014-7df3722c28ed",
 														"exec": [
-															"pm.test(\"Resultaattype aanmaken met brondatumArchiefprocedure.afleidingswijze termijn en selectielijstklasse.procestermijn vast_te_leggen_datum geeft 201\", function() {",
+															"pm.test(\"Resultaattype aanmaken met brondatumArchiefprocedure.afleidingswijze termijn en selectielijstklasse.procestermijn leeg geeft 201\", function() {",
 															"    pm.response.to.have.status(201);",
 															"});",
 															"",
@@ -32956,7 +32956,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_leeg_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"{{referentielijst_url}}/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_leeg_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}",
+													"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_leeg_url}}\",\n\t\"omschrijving\": \"TEST\",\n\t\"resultaattypeomschrijving\": \"{{referentielijst_url}}/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_leeg_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"termijn\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}",
 													"options": {}
 												},
 												"url": {
