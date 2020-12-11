@@ -84,16 +84,15 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"test_scenario\": \"Demo API Test\",\n\t\"environment\": {\n\t\t\"name\": \"productie\",\n\t\t\"endpoints\": [\n\t\t\t{\"demo_url\": \"https://demo.api-test.nl/api/v2\"}\n\t\t]\n\t}\n}"
+							"raw": "{\n\t\"test_scenario\": \"Demo API Test\",\n\t\"software_version\": \"123456789\",\n\t\"environment\": {\n\t\t\"name\": \"productie\",\n\t\t\"endpoints\": [\n\t\t\t{\"demo_url\": \"https://demo.api-test.nl/api/v2\"}\n\t\t]\n\t}\n}"
 						},
 						"url": {
-							"raw": "{{api_url}}/provider-run/",
+							"raw": "{{api_url}}/provider-run",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
-								"provider-run",
-								""
+								"provider-run"
 							]
 						}
 					},
@@ -404,13 +403,12 @@
 							"raw": "{\n\t\"session_type\": \"Demo API\"\n}"
 						},
 						"url": {
-							"raw": "{{api_url}}/testsessions/",
+							"raw": "{{api_url}}/testsessions",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
-								"testsessions",
-								""
+								"testsessions"
 							]
 						}
 					},
@@ -3139,15 +3137,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{api_url}}/testsessions/{{testsession_uuid}}/result/",
+							"raw": "{{api_url}}/testsessions/{{testsession_uuid}}/result",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
 								"testsessions",
 								"{{testsession_uuid}}",
-								"result",
-								""
+								"result"
 							]
 						}
 					},

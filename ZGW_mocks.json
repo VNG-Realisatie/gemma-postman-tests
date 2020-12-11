@@ -301,14 +301,14 @@
 			},
 			"response": [
 				{
-					"name": "mock callbackUrl",
+					"name": "mock callbackUrl auth",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/callback",
+							"raw": "{{mock_url}}/callback",
 							"host": [
-								"{{url}}"
+								"{{mock_url}}"
 							],
 							"path": [
 								"callback"
@@ -324,16 +324,12 @@
 							"value": "*"
 						},
 						{
-							"key": "Content-Encoding",
-							"value": "gzip"
-						},
-						{
 							"key": "Content-Type",
 							"value": "application/json; charset=utf-8"
 						},
 						{
 							"key": "Date",
-							"value": "Mon, 02 Sep 2019 11:25:36 GMT"
+							"value": "Tue, 01 Oct 2019 08:28:41 GMT"
 						},
 						{
 							"key": "ETag",
@@ -357,7 +353,7 @@
 						},
 						{
 							"key": "Content-Length",
-							"value": "157"
+							"value": "0"
 						},
 						{
 							"key": "Connection",
@@ -365,7 +361,231 @@
 						}
 					],
 					"cookie": [],
-					"body": ""
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "mock Zaakobject min datum",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mock_url}}/zaakobject_min",
+					"host": [
+						"{{mock_url}}"
+					],
+					"path": [
+						"zaakobject_min"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "mock Zaakobject",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{mock_url}}/zaakobject_min",
+							"host": [
+								"{{mock_url}}"
+							],
+							"path": [
+								"zaakobject_min"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 26 Nov 2019 08:41:51 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b1-ExCxkAA9RlqzHIJBnKwwiLWNMM8\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=26c9ba215593a563"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=89003bc0243dfad6"
+						},
+						{
+							"key": "Content-Length",
+							"value": "159"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"datum\": \"2021-01-01\"\n}"
+				}
+			]
+		},
+		{
+			"name": "mock Zaakobject max datum",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mock_url}}/zaakobject_max",
+					"host": [
+						"{{mock_url}}"
+					],
+					"path": [
+						"zaakobject_max"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "mock Zaakobject",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{mock_url}}/zaakobject_max",
+							"host": [
+								"{{mock_url}}"
+							],
+							"path": [
+								"zaakobject_max"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 26 Nov 2019 08:41:51 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"b1-ExCxkAA9RlqzHIJBnKwwiLWNMM8\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=26c9ba215593a563"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=89003bc0243dfad6"
+						},
+						{
+							"key": "Content-Length",
+							"value": "159"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"datum\": \"2027-01-01\"\n}"
+				}
+			]
+		},
+		{
+			"name": "mock Schema",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mock_url}}/schema/openapi.yaml?v=3",
+					"host": [
+						"{{mock_url}}"
+					],
+					"path": [
+						"schema",
+						"openapi.yaml"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "mock Schema",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{mock_url}}/schema/openapi.yaml?v=3",
+							"host": [
+								"{{mock_url}}"
+							],
+							"path": [
+								"schema",
+								"openapi.yaml"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "openapi: 3.0.0\ninfo:\n\ttitle: bla\npaths:\n\t/besluiten"
 				}
 			]
 		}
