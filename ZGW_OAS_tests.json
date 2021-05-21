@@ -15,7 +15,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4ebd8630-96d0-4ce5-b012-a514f9a60fd6",
 								"exec": [
 									"var results = pm.response.json().results;",
 									"if(results.length > 0) {",
@@ -64,7 +63,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0825d296-16c6-4483-b880-517cd9d855ee",
 								"exec": [
 									"pm.globals.unset(\"besluittype_url\");",
 									"pm.globals.unset(\"informatieobjecttype_url\");",
@@ -120,7 +118,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{ztc_url}}/catalogussen?domein=ZGWT",
+							"raw": "{{ztc_url}}/catalogussen?domein=ZGWT&rsin=000000000",
 							"host": [
 								"{{ztc_url}}"
 							],
@@ -131,6 +129,10 @@
 								{
 									"key": "domein",
 									"value": "ZGWT"
+								},
+								{
+									"key": "rsin",
+									"value": "000000000"
 								}
 							]
 						}
@@ -143,7 +145,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b30ebe0b-0168-465a-86f6-7268b1dabeee",
 								"exec": [
 									"pm.globals.set(\"catalogus_url\", pm.response.json().url);"
 								],
@@ -163,8 +164,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"domein\": \"ZGWT\",\n\t\"rsin\": \"000000000\",\n\t\"contactpersoonBeheerNaam\": \"Test Persoon\"\n}",
-							"options": {}
+							"raw": "{\n\t\"domein\": \"ZGWT\",\n\t\"rsin\": \"000000000\",\n\t\"contactpersoonBeheerNaam\": \"Test Persoon\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/catalogussen",
@@ -184,7 +184,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "61f743b9-d5bc-4f84-9de8-5d8c2fa57dbe",
 								"exec": [
 									"pm.globals.unset(\"selectielijstklasse_procestermijn_nihil_url\");",
 									"pm.globals.unset(\"selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url\");",
@@ -236,7 +235,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2bbc2f34-a4ee-4033-b024-df027a36f682",
 								"exec": [
 									"pm.globals.set(\"resultaattypeomschrijving_url\", pm.response.json()[0].url);"
 								],
@@ -265,7 +263,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "66f2c324-d3e3-4fd6-b414-62c37088e56c",
 								"exec": [
 									"pm.globals.set(\"informatieobjecttype_url\", pm.response.json().url);"
 								],
@@ -285,8 +282,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
-							"options": {}
+							"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/informatieobjecttypen",
@@ -306,7 +302,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ac59321b-e1dc-4b95-bfef-64f93006c159",
 								"exec": [
 									"pm.globals.set(\"besluittype_url\", pm.response.json().url);"
 								],
@@ -326,8 +321,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [\"{{informatieobjecttype_url}}\"],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
-							"options": {}
+							"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [\"{{informatieobjecttype_url}}\"],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/besluittypen",
@@ -347,7 +341,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "564734b0-225b-4f07-ba59-001bcbb06f67",
 								"exec": [
 									"var res = pm.response.json();",
 									"pm.globals.set(\"zaaktype_url\", res.url);",
@@ -373,8 +366,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}",
-							"options": {}
+							"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/zaaktypen",
@@ -402,8 +394,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"volgnummer\": 1,\n\t\"richting\": \"inkomend\"\n}",
-							"options": {}
+							"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"volgnummer\": 1,\n\t\"richting\": \"inkomend\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
@@ -423,7 +414,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "57ead126-56ea-4d9d-8577-2b0d28fbc0aa",
 								"exec": [
 									"pm.globals.set(\"zaaktype_eigenschap\", pm.response.json().url);"
 								],
@@ -443,8 +433,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"naam\": \"test eigenschap\",\n\t\"definitie\": \"for test\",\n\t\"zaaktype\": \"{{zaaktype_url}}\"\n}",
-							"options": {}
+							"raw": "{\n\t\"naam\": \"test eigenschap\",\n\t\"definitie\": \"for test\",\n\t\"zaaktype\": \"{{zaaktype_url}}\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/eigenschappen",
@@ -464,7 +453,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "48f1897e-1ae2-42ad-98ca-54caa0825ab3",
 								"exec": [
 									"pm.globals.set(\"resultaattype_url\", pm.response.json().url);"
 								],
@@ -484,8 +472,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"{{resultaattypeomschrijving_url}}\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"gerelateerde_zaak\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}",
-							"options": {}
+							"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"{{resultaattypeomschrijving_url}}\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"gerelateerde_zaak\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/resultaattypen",
@@ -505,7 +492,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "27690b9a-d451-4eb2-a18b-3a23b35328fb",
 								"exec": [
 									"pm.globals.set(\"non_eindstatustype\", pm.response.json().url);"
 								],
@@ -525,8 +511,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"omschrijving\": \"Begin\",\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"volgnummer\": 1\n}",
-							"options": {}
+							"raw": "{\n\t\"omschrijving\": \"Begin\",\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"volgnummer\": 1\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/statustypen",
@@ -546,7 +531,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "caad4edb-5746-42d9-81a8-d6724d0d3d54",
 								"exec": [
 									"pm.globals.set(\"eindstatustype\", pm.response.json().url);"
 								],
@@ -566,8 +550,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"omschrijving\": \"Eind\",\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"volgnummer\": 2\n}",
-							"options": {}
+							"raw": "{\n\t\"omschrijving\": \"Eind\",\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"volgnummer\": 2\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/statustypen",
@@ -587,7 +570,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1e55d917-ef5a-4652-8311-d2b64b03c845",
 								"exec": [
 									"pm.globals.set(\"roltype_url\", pm.response.json().url);"
 								],
@@ -607,8 +589,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"test\",\n\t\"omschrijvingGeneriek\": \"adviseur\"\n}",
-							"options": {}
+							"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"omschrijving\": \"test\",\n\t\"omschrijvingGeneriek\": \"adviseur\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/roltypen",
@@ -679,7 +660,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
 								"exec": [
 									"pm.globals.set(\"informatieobject_url\", pm.response.json().url);"
 								],
@@ -689,7 +669,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
 								"exec": [
 									"pm.globals.set(\"object_inhoud\", btoa(\"string\"))"
 								],
@@ -737,8 +716,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"startdatum\": \"2019-01-01T12:00:00\",\n\t\"omschrijvingVoorwaarden\": \"test\"\n}",
-							"options": {}
+							"raw": "{\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"startdatum\": \"2019-01-01T12:00:00\",\n\t\"omschrijvingVoorwaarden\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "{{drc_url}}/gebruiksrechten",
@@ -758,7 +736,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9c297a8c-30f1-428b-88ec-a6d6dc8800c1",
 								"exec": [
 									"pm.globals.set(\"informatieobject_gebruiksrecht_null_url\", pm.response.json().url);"
 								],
@@ -768,7 +745,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "d5457b08-8cbf-4f6b-aa5f-db290fffd7fd",
 								"exec": [
 									"pm.globals.set(\"object_inhoud\", btoa(\"string\"))"
 								],
@@ -788,8 +764,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"indicatieGebruiksrecht\": null,\n\t\"bestandsomvang\": 6\n}",
-							"options": {}
+							"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"indicatieGebruiksrecht\": null,\n\t\"bestandsomvang\": 6\n}"
 						},
 						"url": {
 							"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
@@ -809,7 +784,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3093d650-a1a9-439b-91e9-f5e8fa900f8f",
 								"exec": [
 									"if(pm.response.code == 201) {",
 									"    pm.globals.set(\"global_zaak_url\", pm.response.json().url);",
@@ -858,8 +832,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"zaaktype\": \"{{zaaktype_url}}\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatumGepland\": \"2019-04-20\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"betalingsindicatie\": \"geheel\",\n    \"laatsteBetaalDatum\": \"2019-01-01\",\n    \"zaakgeometrie\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            53,\n            5\n        ]\n    },\n    \"opschorting\": {\n        \"indicatie\": true,\n        \"reden\": \"string\"\n    },\n    \"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n    \"archiefstatus\": \"nog_te_archiveren\"\n}",
-							"options": {}
+							"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"zaaktype\": \"{{zaaktype_url}}\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatumGepland\": \"2019-04-20\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"betalingsindicatie\": \"geheel\",\n    \"laatsteBetaalDatum\": \"2019-01-01\",\n    \"zaakgeometrie\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            53,\n            5\n        ]\n    },\n    \"opschorting\": {\n        \"indicatie\": true,\n        \"reden\": \"string\"\n    },\n    \"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n    \"archiefstatus\": \"nog_te_archiveren\"\n}"
 						},
 						"url": {
 							"raw": "{{zrc_url}}/zaken",
@@ -880,7 +853,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1678d3fd-3566-4342-b5b5-ca502fa73bd2",
 								"exec": [
 									"if(pm.response.code == 201) {",
 									"    pm.globals.set(\"besluit_url\", pm.response.json().url);",
@@ -921,7 +893,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "6299f822-4bd7-4175-bcb8-f448b7e89d97",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -931,7 +902,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c8fa9155-de46-4d2b-9523-02e0f1c5b349",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -952,7 +922,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "342ca07f-a6f2-476d-ad5d-22311119b7de",
 										"exec": [
 											"pm.test(\"Alle ZAAKen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1071,7 +1040,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "3093d650-a1a9-439b-91e9-f5e8fa900f8f",
 										"exec": [
 											"pm.test(\"Maak een ZAAK aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -1124,8 +1092,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"zaaktype\": \"{{zaaktype_url}}\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatumGepland\": \"2019-04-20\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"betalingsindicatie\": \"geheel\",\n    \"laatsteBetaalDatum\": \"2019-01-01\",\n    \"zaakgeometrie\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            53,\n            5\n        ]\n    },\n    \"opschorting\": {\n        \"indicatie\": true,\n        \"reden\": \"string\"\n    },\n    \"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n    \"archiefstatus\": \"nog_te_archiveren\"\n}",
-									"options": {}
+									"raw": "{\n    \"bronorganisatie\": \"000000000\",\n    \"omschrijving\": \"string\",\n    \"toelichting\": \"string\",\n    \"registratiedatum\": \"2019-04-09\",\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"zaaktype\": \"{{zaaktype_url}}\",\n    \"startdatum\": \"2019-04-09\",\n    \"einddatumGepland\": \"2019-04-20\",\n    \"uiterlijkeEinddatumAfdoening\": \"2019-04-09\",\n    \"publicatiedatum\": \"2019-04-09\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"betalingsindicatie\": \"geheel\",\n    \"laatsteBetaalDatum\": \"2019-01-01\",\n    \"zaakgeometrie\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            53,\n            5\n        ]\n    },\n    \"opschorting\": {\n        \"indicatie\": true,\n        \"reden\": \"string\"\n    },\n    \"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n    \"archiefstatus\": \"nog_te_archiveren\"\n}"
 								},
 								"url": {
 									"raw": "{{zrc_url}}/zaken",
@@ -1146,7 +1113,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "4c413c1c-c03a-4b23-9865-337417c9e4e5",
 										"exec": [
 											"pm.test(\"Voer een (geo)-zoekopdracht uit op ZAAKen geeft 201\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1180,8 +1146,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"zaakgeometrie\": {\n\t\t\"within\": {\n\t\t\t\"type\": \"Point\",\n\t\t\t\"coordinates\": [\n\t            53,\n\t            5\n\t        ]\n\t\t}\n\t}\n}",
-									"options": {}
+									"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"zaakgeometrie\": {\n\t\t\"within\": {\n\t\t\t\"type\": \"Point\",\n\t\t\t\"coordinates\": [\n\t            53,\n\t            5\n\t        ]\n\t\t}\n\t}\n}"
 								},
 								"url": {
 									"raw": "{{zrc_url}}/zaken/_zoek?page=1",
@@ -1209,7 +1174,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "9464e02f-e7fe-419a-a53d-555c7810f0d8",
 										"exec": [
 											"pm.test(\"Een specifieke ZAAK opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1255,7 +1219,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "4a430fc1-c59f-4370-b846-aeb7e47ea914",
 										"exec": [
 											"pm.test(\"Werk een ZAAK in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1267,7 +1230,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "b0b0bae0-359f-42dd-b62a-681be00adec3",
 										"exec": [
 											"// Retrieve the Zaak body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
@@ -1317,8 +1279,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{zaak_url}}",
@@ -1336,7 +1297,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "7cbd9991-df9f-4f2d-a902-06239a7c6c13",
 										"exec": [
 											"pm.test(\"Werk een ZAAK deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1382,8 +1342,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"omschrijving\": \"aangepast\"\n}",
-									"options": {}
+									"raw": "{\n\t\"omschrijving\": \"aangepast\"\n}"
 								},
 								"url": {
 									"raw": "{{zaak_url}}",
@@ -1401,7 +1360,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "a8b53290-f367-4184-a85b-793443a644bd",
 										"exec": [
 											"pm.test(\"Alle audit trail regels behorend bij de ZAAK geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1446,7 +1404,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "47ef6068-8b7a-4a8f-b016-37740c9f18a2",
 										"exec": [
 											"pm.test(\"Een specifieke audit trail regel opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1488,7 +1445,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "24556597-1661-4bf5-a605-992812d7e4da",
 										"exec": [
 											"pm.test(\"Alle ZAAKBESLUITen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1531,7 +1487,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "83ab90d4-c9ae-4fce-92e1-d854b22d4b71",
 										"exec": [
 											"pm.test(\"Alle ZAAKEIGENSCHAPpen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1572,7 +1527,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "62bc00fa-bd58-4715-bd82-5b008889f8d7",
 										"exec": [
 											"pm.test(\"Maak een ZAAKEIGENSCHAP aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -1612,8 +1566,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaak\": \"{{zaak_url}}\",\n\t\"eigenschap\": \"{{zaaktype_eigenschap}}\",\n\t\"waarde\": \"test\"\n}",
-									"options": {}
+									"raw": "{\n\t\"zaak\": \"{{zaak_url}}\",\n\t\"eigenschap\": \"{{zaaktype_eigenschap}}\",\n\t\"waarde\": \"test\"\n}"
 								},
 								"url": {
 									"raw": "{{zaak_url}}/zaakeigenschappen",
@@ -1634,7 +1587,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "f93f5c8b-6d9f-45e9-a8ce-f4e3bc40ce3c",
 										"exec": [
 											"pm.test(\"Een specifieke ZAAKEIGENSCHAP opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1672,7 +1624,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "0d3ff83f-0d0a-4e25-9ea0-01af90e5b9f7",
 										"exec": [
 											"pm.test(\"Verwijder een ZAAK geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -1708,8 +1659,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "",
-									"options": {}
+									"raw": ""
 								},
 								"url": {
 									"raw": "{{zaak_url}}",
@@ -1722,8 +1672,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for zaken",
-					"_postman_isSubFolder": true
+					"description": "Folder for zaken"
 				},
 				{
 					"name": "klantcontacten",
@@ -1734,7 +1683,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "01a8bf75-59cb-4b40-8648-1bbb995ccede",
 										"exec": [
 											"pm.test(\"Alle KLANTCONTACTen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1781,7 +1729,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "c0a5503f-062f-4306-88ab-71fd21cfb3ce",
 										"exec": [
 											"pm.test(\"Maak een KLANTCONTACT bij een ZAAK aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -1821,8 +1768,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"zaak\": \"{{global_zaak_url}}\",\n    \"datumtijd\": \"2019-08-29T14:14:21Z\",\n    \"kanaal\": \"string\"\n}",
-									"options": {}
+									"raw": "{\n    \"zaak\": \"{{global_zaak_url}}\",\n    \"datumtijd\": \"2019-08-29T14:14:21Z\",\n    \"kanaal\": \"string\"\n}"
 								},
 								"url": {
 									"raw": "{{zrc_url}}/klantcontacten",
@@ -1843,7 +1789,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "58ef3419-2e3b-4777-ac51-a958881ef768",
 										"exec": [
 											"pm.test(\"Een specifiek KLANTCONTACT bij een ZAAK opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1876,8 +1821,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for klantcontacten",
-					"_postman_isSubFolder": true
+					"description": "Folder for klantcontacten"
 				},
 				{
 					"name": "resultaten",
@@ -1888,7 +1832,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "6a6f551d-7cad-49dc-be94-5357c22d9029",
 										"exec": [
 											"pm.test(\"Alle RESULTAATen van ZAAKen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -1943,7 +1886,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "912e9d59-e779-4a41-9911-d3d7a00fc8a5",
 										"exec": [
 											"pm.test(\"Maak een RESULTAAT bij een ZAAK aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -1984,8 +1926,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\n    \"zaak\": \"{{global_zaak_url}}\",\n    \"resultaattype\": \"{{resultaattype_url}}\",\n    \"toelichting\": \"string\"\n\n}",
-									"options": {}
+									"raw": "{\n\n    \"zaak\": \"{{global_zaak_url}}\",\n    \"resultaattype\": \"{{resultaattype_url}}\",\n    \"toelichting\": \"string\"\n\n}"
 								},
 								"url": {
 									"raw": "{{zrc_url}}/resultaten",
@@ -2006,7 +1947,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "2469e981-761c-4309-8624-6f3624c616c1",
 										"exec": [
 											"pm.test(\"Een specifiek RESULTAAT opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -2044,7 +1984,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "224c3ce9-bf77-45ca-8006-567e079cd8ff",
 										"exec": [
 											"// Retrieve the Resultaat body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"resultaat_body\"));",
@@ -2060,7 +1999,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "193160d7-da4f-4973-be34-ab71251255b6",
 										"exec": [
 											"pm.test(\"Werk een RESULTAAT in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -2096,8 +2034,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{resultaat_url}}",
@@ -2115,7 +2052,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "f56877a4-dab5-4a51-9065-d616208ab988",
 										"exec": [
 											"pm.test(\"Werk een RESULTAAT in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -2151,8 +2087,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"toelichting\": \"aangepast2\"\n}",
-									"options": {}
+									"raw": "{\n\t\"toelichting\": \"aangepast2\"\n}"
 								},
 								"url": {
 									"raw": "{{resultaat_url}}",
@@ -2170,7 +2105,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "3ceee213-8f9b-47b8-acc8-5e2e2686a3a7",
 										"exec": [
 											"pm.test(\"Verwijder een RESULTAAT van een ZAAK geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -2206,8 +2140,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "",
-									"options": {}
+									"raw": ""
 								},
 								"url": {
 									"raw": "{{resultaat_url}}",
@@ -2220,8 +2153,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for resultaten",
-					"_postman_isSubFolder": true
+					"description": "Folder for resultaten"
 				},
 				{
 					"name": "rollen",
@@ -2232,7 +2164,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "4f8c506d-0fb4-444f-9645-166e2fa7d538",
 										"exec": [
 											"pm.test(\"Alle ROLlen bij ZAAKen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -2335,7 +2266,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "bd515899-7948-4d83-ac67-530245657e9a",
 										"exec": [
 											"pm.test(\"Maak een ROL bij een ZAAK aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -2376,8 +2306,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaak\": \"{{global_zaak_url}}\",\n\t\"betrokkene\": \"http://example.com/2d0815580af94ee0a15aa677aa646e1a\",\n\t\"betrokkeneType\": \"natuurlijk_persoon\",\n\t\"rolomschrijving\": \"behandelaar\",\n\t\"roltoelichting\": \"testrol\",\n\t\"roltype\": \"{{roltype_url}}\"\n}",
-									"options": {}
+									"raw": "{\n\t\"zaak\": \"{{global_zaak_url}}\",\n\t\"betrokkene\": \"http://example.com/2d0815580af94ee0a15aa677aa646e1a\",\n\t\"betrokkeneType\": \"natuurlijk_persoon\",\n\t\"rolomschrijving\": \"behandelaar\",\n\t\"roltoelichting\": \"testrol\",\n\t\"roltype\": \"{{roltype_url}}\"\n}"
 								},
 								"url": {
 									"raw": "{{zrc_url}}/rollen",
@@ -2422,7 +2351,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ca9236f5-af4e-4784-8b18-74f98712ccd9",
 										"exec": [
 											"pm.test(\"Verwijder een ROL van een ZAAK geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -2446,8 +2374,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "",
-									"options": {}
+									"raw": ""
 								},
 								"url": {
 									"raw": "{{rol_url}}",
@@ -2460,8 +2387,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for rollen",
-					"_postman_isSubFolder": true
+					"description": "Folder for rollen"
 				},
 				{
 					"name": "statussen",
@@ -2472,7 +2398,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "6111033d-5f8f-4a1c-86bc-682bf0bb6b8f",
 										"exec": [
 											"pm.test(\"Alle STATUSsen van ZAAKen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -2527,7 +2452,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "8986e480-4e60-4e38-92b6-d2bf04ebc0ee",
 										"exec": [
 											"pm.test(\"Maak een STATUS aan voor een ZAAK geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -2567,8 +2491,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaak\": \"{{global_zaak_url}}\",\n\t\"statustype\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2019-01-01T12:00:00\"\n}",
-									"options": {}
+									"raw": "{\n\t\"zaak\": \"{{global_zaak_url}}\",\n\t\"statustype\": \"{{non_eindstatustype}}\",\n\t\"datumStatusGezet\": \"2019-01-01T12:00:00\"\n}"
 								},
 								"url": {
 									"raw": "{{zrc_url}}/statussen",
@@ -2608,8 +2531,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for statussen",
-					"_postman_isSubFolder": true
+					"description": "Folder for statussen"
 				},
 				{
 					"name": "zaakinformatieobjecten",
@@ -2620,7 +2542,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "602f6462-27d0-45b3-bb41-30003fdeb96f",
 										"exec": [
 											"pm.test(\"Alle ZAAK-INFORMATIEOBJECT relaties opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -2671,7 +2592,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "e02a0026-c600-49af-baa1-fcdedc404241",
 										"exec": [
 											"pm.test(\"Maak een ZAAK-INFORMATIEOBJECT relatie aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -2714,8 +2634,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaak\": \"{{global_zaak_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\"\n}",
-									"options": {}
+									"raw": "{\n\t\"zaak\": \"{{global_zaak_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\"\n}"
 								},
 								"url": {
 									"raw": "{{zrc_url}}/zaakinformatieobjecten",
@@ -2736,7 +2655,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "cb5cb6a0-bc7e-499a-bf57-90c007b6ceb7",
 										"exec": [
 											"pm.test(\"Een specifieke ZAAK-INFORMATIEOBJECT relatie opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -2774,7 +2692,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "33d46fef-e0ce-4fae-b7a5-d2b75f26c7a2",
 										"exec": [
 											"// Retrieve the Zaakinformatieobject body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"zio_body\"));",
@@ -2790,7 +2707,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "7c928c6e-b1a4-41eb-aa38-e865683ac58e",
 										"exec": [
 											"pm.test(\"Werk een ZAAK-INFORMATIEOBJECT relatie in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -2826,8 +2742,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{zio_url}}",
@@ -2845,7 +2760,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "e2f10050-77f5-4a8f-944e-6776e818c3bc",
 										"exec": [
 											"pm.test(\"Werk een ZAAK-INFORMATIEOBJECT relatie deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -2881,8 +2795,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"titel\": \"aangepast2\"\n}",
-									"options": {}
+									"raw": "{\n\t\"titel\": \"aangepast2\"\n}"
 								},
 								"url": {
 									"raw": "{{zio_url}}",
@@ -2900,7 +2813,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "c0cf8191-9503-4999-92ad-695b272655c2",
 										"exec": [
 											"pm.test(\"Verwijder een ZAAK-INFORMATIEOBJECT relatie geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -2936,8 +2848,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "",
-									"options": {}
+									"raw": ""
 								},
 								"url": {
 									"raw": "{{zio_url}}",
@@ -2950,8 +2861,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for zaakinformatieobjecten",
-					"_postman_isSubFolder": true
+					"description": "Folder for zaakinformatieobjecten"
 				},
 				{
 					"name": "zaakobjecten",
@@ -2962,7 +2872,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "c56bb8df-24ef-4c59-85d3-9e08847e7876",
 										"exec": [
 											"pm.test(\"Alle ZAAKOBJECTen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3021,7 +2930,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "3baf1c00-b9fa-40ec-bbd3-383e68aa00ad",
 										"exec": [
 											"pm.test(\"Maak een ZAAK-INFORMATIEOBJECT relatie aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -3061,8 +2969,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaak\": \"{{global_zaak_url}}\",\n\t\"objectType\": \"pand\",\n\t\"objectIdentificatie\": {\n\t\t\"identificatie\": \"test\"\n\t}\n}",
-									"options": {}
+									"raw": "{\n\t\"zaak\": \"{{global_zaak_url}}\",\n\t\"objectType\": \"pand\",\n\t\"objectIdentificatie\": {\n\t\t\"identificatie\": \"test\"\n\t}\n}"
 								},
 								"url": {
 									"raw": "{{zrc_url}}/zaakobjecten",
@@ -3083,7 +2990,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "74c9c823-4d11-4e73-8456-863114a98c7e",
 										"exec": [
 											"pm.test(\"Een specifieke ZAAK-INFORMATIEOBJECT relatie opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3116,8 +3022,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for zaakobjecten",
-					"_postman_isSubFolder": true
+					"description": "Folder for zaakobjecten"
 				}
 			],
 			"description": "Een API om een zaakregistratiecomponent (ZRC) te benaderen.\n\nDe ZAAK is het kernobject in deze API, waaraan verschillende andere\nresources gerelateerd zijn. De Zaken API werkt samen met andere API's voor\nZaakgericht werken om tot volledige functionaliteit te komen.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Catalogi API\n* Notificaties API\n* Documenten API *(optioneel)*\n* Besluiten API *(optioneel)*\n* Autorisaties API *(optioneel)*\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n**Notificaties**\n\nDeze API publiceert notificaties op het kanaal `zaken`.\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
@@ -3125,7 +3030,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "9f24ac2a-9600-46d7-93ed-c1934a03488d",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -3135,7 +3039,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "cf02c731-0e26-4cae-870b-b074a5b1329a",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -3156,7 +3059,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "513576bd-7894-41b3-8f65-7aef04d2c594",
 										"exec": [
 											"pm.test(\"Alle (ENKELVOUDIGe) INFORMATIEOBJECTen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3211,7 +3113,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "cbdbbf58-55eb-4594-a1ff-0b82713b951c",
 										"exec": [
 											"pm.test(\"Maak een (ENKELVOUDIG) INFORMATIEOBJECT aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -3252,8 +3153,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"bestandsomvang\": 6\n}",
-									"options": {}
+									"raw": "{\n\t\"bronorganisatie\": \"000000000\",\n\t\"creatiedatum\": \"2019-01-01\",\n\t\"titel\": \"testobject\",\n\t\"auteur\": \"testauteur\",\n\t\"taal\": \"eng\",\n\t\"inhoud\": \"{{object_inhoud}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"bestandsomvang\": 6\n}"
 								},
 								"url": {
 									"raw": "{{drc_url}}/enkelvoudiginformatieobjecten",
@@ -3274,7 +3174,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "76413e39-37d2-426e-8ae3-b61da75deeb9",
 										"exec": [
 											"pm.test(\"Alle audit trail regels behorend bij het INFORMATIEOBJECT geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3319,7 +3218,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "132c43ee-77a2-4d6c-bb67-142a775af99d",
 										"exec": [
 											"pm.test(\"Een specifieke audit trail regel opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3361,7 +3259,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "7105245b-d6d0-48ec-ae2e-eed45f161681",
 										"exec": [
 											"pm.test(\"Een specifiek (ENKELVOUDIG) INFORMATIEOBJECT opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3375,7 +3272,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "1c6dd581-142a-4809-838a-ffefefa00f4c",
 										"exec": [
 											"pm.globals.set('current_timestamp', new Date().toISOString());"
 										],
@@ -3421,7 +3317,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "88023d60-5a98-4419-9834-1896a073f266",
 										"exec": [
 											"pm.test(\"Een specifiek (ENKELVOUDIG) INFORMATIEOBJECT opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3449,8 +3344,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "",
-									"options": {}
+									"raw": ""
 								},
 								"url": {
 									"raw": "{{created_informatieobject_url}}/lock",
@@ -3471,7 +3365,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "b8fb5548-d258-4a10-a33b-65968490b54d",
 										"exec": [
 											"// Retrieve the Informatieobject body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
@@ -3488,7 +3381,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "2402541b-5e97-4e1a-a0dc-bed0d23437cd",
 										"exec": [
 											"pm.test(\"Werk een (ENKELVOUDIG) INFORMATIEOBJECT in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3524,8 +3416,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{created_informatieobject_url}}",
@@ -3543,7 +3434,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "5ae4b3eb-96d9-4b0a-9ee7-88594fb06299",
 										"exec": [
 											"// Retrieve the Zaak body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
@@ -3560,7 +3450,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "bc716e31-cb64-48b6-bff2-71fbcffa0a20",
 										"exec": [
 											"pm.test(\"Werk een (ENKELVOUDIG) INFORMATIEOBJECT deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3596,8 +3485,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"titel\": \"titel2\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}",
-									"options": {}
+									"raw": "{\n\t\"titel\": \"titel2\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
 								},
 								"url": {
 									"raw": "{{created_informatieobject_url}}",
@@ -3615,7 +3503,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "67153d83-fd33-48ff-9832-43cd680b4c9d",
 										"exec": [
 											"pm.test(\"Ontgrendel een (ENKELVOUDIG) INFORMATIEOBJECT geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -3639,8 +3526,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "",
-									"options": {}
+									"raw": ""
 								},
 								"url": {
 									"raw": "{{created_informatieobject_url}}/unlock",
@@ -3661,7 +3547,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ce667ea1-7874-417a-9668-34ae7e064d38",
 										"exec": [
 											"pm.test(\"Download de binaire data van het (ENKELVOUDIG) INFORMATIEOBJECT geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3675,7 +3560,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "f306b8ed-5d59-4289-b06c-2c4a00a01098",
 										"exec": [
 											"pm.globals.set('current_timestamp', new Date().toISOString());"
 										],
@@ -3724,7 +3608,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "00be8be5-72e1-4d54-a31a-e46dfee75787",
 										"exec": [
 											"pm.test(\"Verwijder een (ENKELVOUDIG) INFORMATIEOBJECT geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -3769,8 +3652,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for enkelvoudiginformatieobjecten",
-					"_postman_isSubFolder": true
+					"description": "Folder for enkelvoudiginformatieobjecten"
 				},
 				{
 					"name": "gebruiksrechten",
@@ -3781,7 +3663,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ec5d9670-ba2f-4514-9958-730370ac3365",
 										"exec": [
 											"pm.test(\"Alle GEBRUIKSRECHTen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3860,7 +3741,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ffbbdf4b-f7d1-44e1-85a7-f3f9b6d98769",
 										"exec": [
 											"pm.test(\"Maak een GEBRUIKSRECHT aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -3901,8 +3781,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"startdatum\": \"2019-01-01T12:00:00\",\n\t\"omschrijvingVoorwaarden\": \"test\"\n}",
-									"options": {}
+									"raw": "{\n\t\"informatieobject\": \"{{informatieobject_url}}\",\n\t\"startdatum\": \"2019-01-01T12:00:00\",\n\t\"omschrijvingVoorwaarden\": \"test\"\n}"
 								},
 								"url": {
 									"raw": "{{drc_url}}/gebruiksrechten",
@@ -3923,7 +3802,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "7cc88b35-ca87-4c6f-8afc-58bfeeb49468",
 										"exec": [
 											"pm.test(\"Een specifiek GEBRUIKSRECHT opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -3961,7 +3839,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "3dc2f45f-e6bc-40a2-b950-2ecd3bff714e",
 										"exec": [
 											"// Retrieve the Gebruiksrecht body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"gebruiksrecht_body\"));",
@@ -3977,7 +3854,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "dd3b4943-ae7f-437e-8733-2e3d41dcec75",
 										"exec": [
 											"pm.test(\"Werk een GEBRUIKSRECHT in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -4013,8 +3889,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{gebruiksrecht_url}}",
@@ -4032,7 +3907,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "bfb72cea-47bb-4b50-b291-9a0b4fa5ef13",
 										"exec": [
 											"pm.test(\"Werk een GEBRUIKSRECHT in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -4068,8 +3942,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"omschrijvingVoorwaarden\": \"aangepast2\"\n}",
-									"options": {}
+									"raw": "{\n\t\"omschrijvingVoorwaarden\": \"aangepast2\"\n}"
 								},
 								"url": {
 									"raw": "{{gebruiksrecht_url}}",
@@ -4087,7 +3960,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "7f0bdf07-923a-467b-9628-9ef38ba3b6f6",
 										"exec": [
 											"pm.test(\"Verwijder een GEBRUIKSRECHT geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -4132,8 +4004,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for gebruiksrechten",
-					"_postman_isSubFolder": true
+					"description": "Folder for gebruiksrechten"
 				},
 				{
 					"name": "objectinformatieobjecten",
@@ -4144,7 +4015,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "d4c407b9-0ba4-42ed-b434-f7206bdad75c",
 										"exec": [
 											"pm.test(\"Alle OBJECT-INFORMATIEOBJECT relaties opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -4190,8 +4060,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for objectinformatieobjecten",
-					"_postman_isSubFolder": true
+					"description": "Folder for objectinformatieobjecten"
 				}
 			],
 			"description": "Een API om een documentregistratiecomponent (DRC) te benaderen.\n\nIn een documentregistratiecomponent worden INFORMATIEOBJECTen opgeslagen. Een \nINFORMATIEOBJECT is een digitaal document voorzien van meta-gegevens. \nINFORMATIEOBJECTen kunnen aan andere objecten zoals zaken en besluiten worden \ngerelateerd (maar dat hoeft niet) en kunnen gebruiksrechten hebben. \n\nGEBRUIKSRECHTEN leggen voorwaarden op aan het gebruik van het INFORMATIEOBJECT\n(buiten raadpleging). Deze GEBRUIKSRECHTEN worden niet door de API gevalideerd\nof gehandhaafd.\n\nDe typering van INFORMATIEOBJECTen is in de Catalogi API (ZTC) ondergebracht in\nde vorm van INFORMATIEOBJECTTYPEn.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Catalogi API\n* Notificaties API\n* Autorisaties API *(optioneel)*\n* Zaken API *(optioneel)*\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n**Notificaties**\n\nDeze API publiceert notificaties op het kanaal `documenten`.\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
@@ -4199,7 +4068,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "fe6ef02c-0b28-4111-a231-e9fffec4fcf2",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -4209,7 +4077,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "65e66b30-d0e0-42c9-856f-865a5b961a16",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -4230,7 +4097,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "5c3c428b-dd18-4541-bdf9-b475df2e49c7",
 										"exec": [
 											"pm.test(\"Alle ZAAKTYPEn opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -4293,7 +4159,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "1419332d-0ce8-43e8-86f3-1dcf0a1e5234",
 										"exec": [
 											"pm.test(\"Maak een ZAAKTYPE aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -4322,8 +4187,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}",
-									"options": {}
+									"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/zaaktypen",
@@ -4344,7 +4208,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "8c39f2ec-5967-4b22-bc0a-0981e8ba2345",
 										"exec": [
 											"pm.test(\"Een specifiek ZAAKTYPE opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -4382,7 +4245,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "a16e9772-a67f-4b22-8268-fe1064df2a2b",
 										"exec": [
 											"// Retrieve the body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
@@ -4397,7 +4259,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "a6f7b1ba-d66e-4586-8dea-82735469bb36",
 										"exec": [
 											"pm.test(\"Werk een ZAAKTYPE in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -4421,8 +4282,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{created_zaaktype_url}}",
@@ -4903,7 +4763,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "905654a8-d3ec-4cac-8174-fe932868b611",
 										"exec": [
 											"pm.test(\"Werk een ZAAKTYPE deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -4927,8 +4786,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"omschrijving\": \"aangepast2\"\n}",
-									"options": {}
+									"raw": "{\n    \"omschrijving\": \"aangepast2\"\n}"
 								},
 								"url": {
 									"raw": "{{created_zaaktype_url}}",
@@ -5409,7 +5267,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "2a126baf-46e6-4270-b54b-7c83a0819c02",
 										"exec": [
 											"pm.test(\"Publiceer een ZAAKTYPE aan geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -5454,7 +5311,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "b7c82f18-cbea-4366-ac1c-fcadb5b033f5",
 										"exec": [
 											"pm.test(\"Verwijder een ZAAKTYPE geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -5492,7 +5348,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "1419332d-0ce8-43e8-86f3-1dcf0a1e5234",
 										"exec": [
 											"if(pm.response.code == 201) {",
 											"    pm.globals.set(\"created_zaaktype_url\", pm.response.json().url);",
@@ -5516,8 +5371,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}",
-									"options": {}
+									"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/zaaktypen",
@@ -5533,8 +5387,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for zaaktypen",
-					"_postman_isSubFolder": true
+					"description": "Folder for zaaktypen"
 				},
 				{
 					"name": "besluittypen",
@@ -5545,7 +5398,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "35884dd6-bb65-465d-8657-8ca647d1aa99",
 										"exec": [
 											"pm.test(\"Alle BESLUITTYPEn opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -5608,7 +5460,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "d93c2aa8-1b0b-46d3-b097-c0c38e714e8c",
 										"exec": [
 											"pm.test(\"Maak een BESLUITTYPE aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -5637,8 +5488,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"besluittype test\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
-									"options": {}
+									"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"besluittype test\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/besluittypen",
@@ -5659,7 +5509,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "17844939-b0ab-4ad6-ae4d-744080a795ee",
 										"exec": [
 											"pm.test(\"Een specifiek BESLUITTYPE opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -5697,7 +5546,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "8e3e03be-2f70-431c-beec-847ef94050ae",
 										"exec": [
 											"// Retrieve the body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"besluittype_body\"));",
@@ -5713,7 +5561,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "d5fbf3bd-bc50-4d55-90a4-bbb1a2306a55",
 										"exec": [
 											"pm.test(\"Werk een BESLUITTYPE in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -5737,8 +5584,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{created_besluittype_url}}",
@@ -6219,7 +6065,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "bccf767a-0afb-46d1-b785-904fa389ae01",
 										"exec": [
 											"pm.test(\"Werk een BESLUITTYPE deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -6243,8 +6088,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}",
-									"options": {}
+									"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}"
 								},
 								"url": {
 									"raw": "{{created_besluittype_url}}",
@@ -6725,7 +6569,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "dd938319-7b70-45ac-b4ef-ffa1abefb04d",
 										"exec": [
 											"pm.test(\"Opvragen en bewerken van BESLUITTYPEn nodig voor BESLUITEN in de BesluitenAPI geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -6770,7 +6613,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "5dcba5cc-ba44-48c4-8fd3-e84b53ed9136",
 										"exec": [
 											"pm.test(\"Verwijder een BESLUITTYPE geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -6803,8 +6645,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for besluittypen",
-					"_postman_isSubFolder": true
+					"description": "Folder for besluittypen"
 				},
 				{
 					"name": "catalogussen",
@@ -6815,7 +6656,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "f05aeb6f-7837-467c-b8c3-757b3002e7be",
 										"exec": [
 											"pm.test(\"Alle CATALOGUSsen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -6885,7 +6725,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ce6c3ab5-baeb-42ed-a432-4d0110636539",
 										"exec": [
 											"pm.globals.set(\"catalogus_url\", pm.response.json().url);"
 										],
@@ -6907,8 +6746,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"domein\": \"ZGWT\",\n\t\"rsin\": \"000000000\",\n\t\"contactpersoonBeheerNaam\": \"Test Persoon\"\n}",
-									"options": {}
+									"raw": "{\n\t\"domein\": \"ZGWT\",\n\t\"rsin\": \"000000000\",\n\t\"contactpersoonBeheerNaam\": \"Test Persoon\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/catalogussen",
@@ -6929,7 +6767,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "02c635f0-2aff-4516-afd4-3f0c89733a56",
 										"exec": [
 											"pm.test(\"Een specifieke CATALOGUS opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -6962,8 +6799,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for catalogussen",
-					"_postman_isSubFolder": true
+					"description": "Folder for catalogussen"
 				},
 				{
 					"name": "eigenschappen",
@@ -6974,7 +6810,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "2b56b134-6194-483c-bd6a-4a7a39233351",
 										"exec": [
 											"pm.test(\"Alle EIGENSCHAPpen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -7029,7 +6864,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "4b59c752-0aa2-4947-80a2-6418f0b1da64",
 										"exec": [
 											"pm.test(\"Maak een EIGENSCHAP aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -7056,8 +6890,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"naam\": \"test eigenschap2\",\n\t\"definitie\": \"for test\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\"\n}",
-									"options": {}
+									"raw": "{\n\t\"naam\": \"test eigenschap2\",\n\t\"definitie\": \"for test\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/eigenschappen",
@@ -7078,7 +6911,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "276d1af1-d023-46b8-aa55-e07e48c34cb2",
 										"exec": [
 											"pm.test(\"Een specifieke EIGENSCHAP opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -7116,7 +6948,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "c40e3ece-5132-4af2-ae85-17bae777e22e",
 										"exec": [
 											"// Retrieve the body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"eigenschap_body\"));",
@@ -7131,7 +6962,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "80c6cfc8-66d3-4453-bf1c-606f398410de",
 										"exec": [
 											"pm.test(\"Werk een EIGENSCHAP in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -7155,8 +6985,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{eigenschap_url}}",
@@ -7637,7 +7466,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "70e76b52-9735-4eb3-9168-e6c7a9cb5f63",
 										"exec": [
 											"pm.test(\"Werk een EIGENSCHAP deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -7661,8 +7489,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"toelichting\": \"aangepast2\"\n}",
-									"options": {}
+									"raw": "{\n\t\"toelichting\": \"aangepast2\"\n}"
 								},
 								"url": {
 									"raw": "{{eigenschap_url}}",
@@ -8143,7 +7970,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "9dca389b-5111-4275-9fed-7bfd360a80b6",
 										"exec": [
 											"pm.test(\"Verwijder een EIGENSCHAP geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -8176,8 +8002,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for eigenschappen",
-					"_postman_isSubFolder": true
+					"description": "Folder for eigenschappen"
 				},
 				{
 					"name": "informatieobjecttypen",
@@ -8188,7 +8013,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "35b0f571-bbb7-48d6-ab81-f97ba4a4d2c8",
 										"exec": [
 											"pm.test(\"Alle INFORMATIEOBJECTTYPEn opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -8243,7 +8067,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "884a5bc2-35cb-4d0d-ac50-795c01e6354d",
 										"exec": [
 											"pm.test(\"Maak een INFORMATIEOBJECTTYPE aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -8272,8 +8095,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
-									"options": {}
+									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/informatieobjecttypen",
@@ -8294,7 +8116,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "bcfa03ce-2e3d-473f-a4f2-5b006f742290",
 										"exec": [
 											"pm.test(\"Een specifiek INFORMATIEOBJECTTYPE opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -8332,7 +8153,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "c6504b7b-49f7-470e-9cca-5d3c47e0546e",
 										"exec": [
 											"// Retrieve the body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"informatieobjecttype_body\"));",
@@ -8347,7 +8167,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "45b3b806-796c-4438-a42d-2a792161b867",
 										"exec": [
 											"pm.test(\"Werk een INFORMATIEOBJECTTYPE in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -8371,8 +8190,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{created_informatieobjecttype_url}}",
@@ -8853,7 +8671,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "835b9103-408f-4210-b81b-f09b7463fcb6",
 										"exec": [
 											"pm.test(\"Werk een INFORMATIEOBJECTTYPE deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -8877,8 +8694,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}",
-									"options": {}
+									"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}"
 								},
 								"url": {
 									"raw": "{{created_informatieobjecttype_url}}",
@@ -9359,7 +9175,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "68968fdf-5634-4b7e-a1f5-4135dc08b979",
 										"exec": [
 											"pm.test(\"Publiceer een INFORMATIEOBJECTTYPE aan geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -9404,7 +9219,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ee186222-d8eb-4174-8a8d-74309f07a0ba",
 										"exec": [
 											"pm.test(\"Verwijder een INFORMATIEOBJECTTYPE geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -9442,7 +9256,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "884a5bc2-35cb-4d0d-ac50-795c01e6354d",
 										"exec": [
 											"if(pm.response.code == 201) {",
 											"    pm.globals.set(\"created_informatieobjecttype_url\", pm.response.json().url);",
@@ -9466,8 +9279,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}",
-									"options": {}
+									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/informatieobjecttypen",
@@ -9483,8 +9295,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for informatieobjecttypen",
-					"_postman_isSubFolder": true
+					"description": "Folder for informatieobjecttypen"
 				},
 				{
 					"name": "resultaattypen",
@@ -9495,7 +9306,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "dcd1c452-05f4-4141-9c00-af192d1af95a",
 										"exec": [
 											"pm.test(\"Alle RESULTAATTYPEn opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -9550,7 +9360,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "fa5002f5-8ca8-4d31-9c04-976092849568",
 										"exec": [
 											"pm.test(\"Maak een RESULTAATTYPE aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -9579,8 +9388,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"omschrijving\": \"TEST2\",\n\t\"resultaattypeomschrijving\": \"{{resultaattypeomschrijving_url}}\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"gerelateerde_zaak\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}",
-									"options": {}
+									"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"omschrijving\": \"TEST2\",\n\t\"resultaattypeomschrijving\": \"{{resultaattypeomschrijving_url}}\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"gerelateerde_zaak\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/resultaattypen",
@@ -9601,7 +9409,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "1cb5ac01-e85e-46ca-bc69-dc38d55122b9",
 										"exec": [
 											"pm.test(\"Een specifiek RESULTAATTYPE opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -9639,7 +9446,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "e6c2392b-e4ff-4093-b4e1-505d1da45fa8",
 										"exec": [
 											"pm.test(\"Werk een RESULTAATTYPE in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -9655,7 +9461,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "71800627-e231-43da-8420-fe12230a58ab",
 										"exec": [
 											"// Retrieve the body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"resultaattype_body\"));",
@@ -9678,8 +9483,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{created_resultaattype_url}}",
@@ -10160,7 +9964,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "4565b500-2c22-482c-95e7-84f039b5420c",
 										"exec": [
 											"pm.test(\"Werk een RESULTAATTYPE deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -10184,8 +9987,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}",
-									"options": {}
+									"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}"
 								},
 								"url": {
 									"raw": "{{created_resultaattype_url}}",
@@ -10666,7 +10468,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "cd1b56c9-3ba4-4a96-bd39-714fd47b562c",
 										"exec": [
 											"pm.test(\"Verwijder een RESULTAATTYPE opvragen geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -10699,8 +10500,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for resultaattypen",
-					"_postman_isSubFolder": true
+					"description": "Folder for resultaattypen"
 				},
 				{
 					"name": "roltypen",
@@ -10711,7 +10511,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "6f82cda0-4c9f-4608-ac9c-1e62fe368873",
 										"exec": [
 											"pm.test(\"Alle ROLTYPEn opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -10770,7 +10569,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "a60da288-81b4-4fda-967c-27f500b40c61",
 										"exec": [
 											"pm.test(\"Maak een ROLTYPE aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -10799,8 +10597,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"omschrijving\": \"test2\",\n\t\"omschrijvingGeneriek\": \"adviseur\"\n}",
-									"options": {}
+									"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"omschrijving\": \"test2\",\n\t\"omschrijvingGeneriek\": \"adviseur\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/roltypen",
@@ -10821,7 +10618,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "7651c622-9e2b-46ab-8463-2f08e5d36e1a",
 										"exec": [
 											"pm.test(\"Een specifiek ROLTYPE opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -10859,7 +10655,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "e227cf5e-b0a9-4049-a830-2d340231adf2",
 										"exec": [
 											"// Retrieve the body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"roltype_body\"));",
@@ -10874,7 +10669,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "f0cbe469-9842-4c48-b254-a4e69352be72",
 										"exec": [
 											"pm.test(\"Werk een ROLTYPE in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -10898,8 +10692,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{created_roltype_url}}",
@@ -11380,7 +11173,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "d8787151-3ca5-4f85-8ada-8e8416a11c64",
 										"exec": [
 											"pm.test(\"Werk een ROLTYPE deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -11404,8 +11196,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}",
-									"options": {}
+									"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}"
 								},
 								"url": {
 									"raw": "{{created_roltype_url}}",
@@ -11886,7 +11677,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "f426a7ba-ea59-451a-bb99-bd1dc84d6fe8",
 										"exec": [
 											"pm.test(\"Verwijder een ROLTYPE opvragen geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -11919,8 +11709,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for roltypen",
-					"_postman_isSubFolder": true
+					"description": "Folder for roltypen"
 				},
 				{
 					"name": "statustypen",
@@ -11931,7 +11720,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "a40f9065-f69c-4fb8-a597-722ed49c9c62",
 										"exec": [
 											"pm.test(\"Alle STATUSTYPEn opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -11986,7 +11774,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "60ec4a00-fcc1-4e93-8a9a-fdcd9d79858e",
 										"exec": [
 											"pm.test(\"Maak een STATUSTYPE aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -12015,8 +11802,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"omschrijving\": \"Eind2\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"volgnummer\": 3\n}",
-									"options": {}
+									"raw": "{\n\t\"omschrijving\": \"Eind2\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"volgnummer\": 3\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/statustypen",
@@ -12037,7 +11823,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "cce8425a-9683-432d-961f-9b4059f1fe51",
 										"exec": [
 											"pm.test(\"Een specifiek STATUSTYPE opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -12075,7 +11860,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "0f66cd29-64c0-4bef-b576-74db43b492ff",
 										"exec": [
 											"// Retrieve the body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"statustype_body\"));",
@@ -12090,7 +11874,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "87731988-466c-4029-b99a-ad5ff8cc773a",
 										"exec": [
 											"pm.test(\"Werk een STATUSTYPE in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -12114,8 +11897,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{created_statustype_url}}",
@@ -12596,7 +12378,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "29af62a1-1a9d-4cbb-9301-2b0263c8e5ba",
 										"exec": [
 											"pm.test(\"Werk een STATUSTYPE deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -12620,8 +12401,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}",
-									"options": {}
+									"raw": "{\n\t\"omschrijving\": \"aangepast2\"\n}"
 								},
 								"url": {
 									"raw": "{{created_statustype_url}}",
@@ -13102,7 +12882,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "5c518f22-ba60-4dba-955e-a83eec13b168",
 										"exec": [
 											"pm.test(\"Verwijder een STATUSTYPE opvragen geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -13135,8 +12914,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for statustypen",
-					"_postman_isSubFolder": true
+					"description": "Folder for statustypen"
 				},
 				{
 					"name": "zaaktype-informatieobjecttypen",
@@ -13147,7 +12925,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "98cf6b1f-f8d5-4994-bcfb-7a7abf0ac5e5",
 										"exec": [
 											"pm.test(\"Alle ZAAKTYPE-INFORMATIEOBJECTTYPE relaties opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -13210,7 +12987,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "fcb0087f-0c5e-47ac-ba38-1af1e3d7bbc6",
 										"exec": [
 											"pm.test(\"Maak een ZAAKTYPE-INFORMATIEOBJECTTYPE relatie aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -13239,8 +13015,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"informatieobjecttype\": \"{{created_informatieobjecttype_url}}\",\n\t\"volgnummer\": 2,\n\t\"richting\": \"intern\"\n}",
-									"options": {}
+									"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"informatieobjecttype\": \"{{created_informatieobjecttype_url}}\",\n\t\"volgnummer\": 2,\n\t\"richting\": \"intern\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
@@ -13261,7 +13036,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "a71a9314-8b8c-4edc-9c9d-023577d176ed",
 										"exec": [
 											"pm.test(\"Een specifieke ZAAKTYPE-INFORMATIEOBJECTTYPE relatie opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -13299,7 +13073,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "93769729-13da-46c4-a18c-231252939d72",
 										"exec": [
 											"// Retrieve the body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"relatie_body\"));",
@@ -13314,7 +13087,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "49151161-80dc-465c-9485-c608db0ac55e",
 										"exec": [
 											"pm.test(\"Werk een ZAAKTYPE-INFORMATIEOBJECTTYPE in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -13338,8 +13110,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{created_relatie_url}}",
@@ -13820,7 +13591,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "fd110851-cc2b-49da-92eb-468e558a331e",
 										"exec": [
 											"pm.test(\"Werk een ZAAKTYPE-INFORMATIEOBJECTTYPE deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -13844,8 +13614,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"volgnummer\": 5\n}",
-									"options": {}
+									"raw": "{\n    \"volgnummer\": 5\n}"
 								},
 								"url": {
 									"raw": "{{created_relatie_url}}",
@@ -14326,7 +14095,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "b8faab3a-f712-40eb-ae6a-5717ef132759",
 										"exec": [
 											"pm.test(\"Verwijder een ZAAKTYPE-INFORMATIEOBJECTTYPE relatie geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -14364,7 +14132,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "5d61cf39-c879-4ef4-bc58-d2e40d398ae6",
 										"exec": [
 											"pm.globals.unset(\"created_informatieobjecttype_url\");"
 										],
@@ -14390,7 +14157,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "5d61cf39-c879-4ef4-bc58-d2e40d398ae6",
 										"exec": [
 											"pm.globals.unset(\"created_zaaktype_url\");"
 										],
@@ -14411,8 +14177,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for zaaktype-informatieobjecttypen",
-					"_postman_isSubFolder": true
+					"description": "Folder for zaaktype-informatieobjecttypen"
 				}
 			],
 			"description": "Een API om een zaaktypecatalogus (ZTC) te benaderen.\n\nDe zaaktypecatalogus helpt gemeenten om het proces vanuit de 'vraag van een\nklant' (productaanvraag, melding, aangifte, informatieverzoek e.d.) tot en met\nhet leveren van een passend antwoord daarop in te richten, inclusief de\nbijbehorende informatievoorziening.\n\nEen CATALOGUS bestaat uit ZAAKTYPEn, INFORMATIEOBJECTTYPEn en BESLUITTYPEn en\nwordt typisch gebruikt om een ZAAK (in de Zaken API), INFORMATIEOBJECT (in de\nDocumenten API) en BESLUIT (in de Besluiten API) te voorzien van type,\nstandaardwaarden en processtructuur.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Gemeentelijke Selectielijst API\n* Autorisaties API *(optioneel)*\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n### Notificaties\n\nDeze API publiceert notificaties op het kanaal `zaaktypen`.\n\n**Main resource**\n\n`zaaktype`\n\n\n\n**Kenmerken**\n\n* `catalogus`: URL-referentie naar de CATALOGUS waartoe dit ZAAKTYPE behoort.\n\n**Resources en acties**\n- `zaaktype`: create, destroy\n\n\nDeze API publiceert notificaties op het kanaal `besluittypen`.\n\n**Main resource**\n\n`besluittype`\n\n\n\n**Kenmerken**\n\n* `catalogus`: URL-referentie naar de CATALOGUS waartoe dit BESLUITTYPE behoort.\n\n**Resources en acties**\n- `besluittype`: create, destroy\n\n\nDeze API publiceert notificaties op het kanaal `informatieobjecttypen`.\n\n**Main resource**\n\n`informatieobjecttype`\n\n\n\n**Kenmerken**\n\n* `catalogus`: URL-referentie naar de CATALOGUS waartoe dit INFORMATIEOBJECTTYPE behoort.\n\n**Resources en acties**\n- `informatieobjecttype`: create, destroy\n\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
@@ -14420,7 +14185,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "922a3cd9-0d9a-48cb-81df-9c899f794c0b",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -14430,7 +14194,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "57729294-71c7-4802-ad43-09ede90d182e",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -14451,7 +14214,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "0d7f9c58-b932-452d-bdda-609df64fdcb2",
 										"exec": [
 											"pm.test(\"Alle BESLUITen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -14514,7 +14276,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "f3c60a0e-e293-4abd-bafc-cf6e41d0b8d2",
 										"exec": [
 											"pm.test(\"Maak een BESLUIT aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -14555,8 +14316,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"besluittype\": \"{{besluittype_url}}\",\n    \"datum\": \"2019-01-01\",\n    \"ingangsdatum\": \"2018-01-01\"\n}",
-									"options": {}
+									"raw": "{\n    \"verantwoordelijkeOrganisatie\": \"000000000\",\n    \"besluittype\": \"{{besluittype_url}}\",\n    \"datum\": \"2019-01-01\",\n    \"ingangsdatum\": \"2018-01-01\"\n}"
 								},
 								"url": {
 									"raw": "{{brc_url}}/besluiten",
@@ -14577,7 +14337,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "22eb1e47-590d-4d46-8156-2d14b112b761",
 										"exec": [
 											"pm.test(\"Alle audit trail regels behorend bij het BESLUIT geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -14622,7 +14381,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "25ef9d18-fc1d-4aa8-ba44-6cfd9a7558ba",
 										"exec": [
 											"pm.test(\"Een specifieke audit trail regel opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -14664,7 +14422,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "e758b514-1bbd-42c9-894d-a5d7fc8c1127",
 										"exec": [
 											"pm.test(\"Een specifiek BESLUIT opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -14702,7 +14459,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "8fb6b266-cd95-4adb-a6c8-4d68d1c62064",
 										"exec": [
 											"// Retrieve the Besluit body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"besluit_body\"));",
@@ -14718,7 +14474,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "fa4e9ead-4c31-44cc-be8c-15cb781c6c40",
 										"exec": [
 											"pm.test(\"Werk een BESLUIT in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -14755,8 +14510,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{created_besluit_url}}",
@@ -14774,7 +14528,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ba4c4595-2d5d-4823-82f2-81e424fd418a",
 										"exec": [
 											"pm.test(\"Werk een BESLUIT in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -14811,8 +14564,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"toelichting\": \"aangepast2\"\n}",
-									"options": {}
+									"raw": "{\n\t\"toelichting\": \"aangepast2\"\n}"
 								},
 								"url": {
 									"raw": "{{created_besluit_url}}",
@@ -14830,7 +14582,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "1a82dee9-457e-4ae7-8108-1f629edea096",
 										"exec": [
 											"pm.test(\"Verwijder een BESLUIT geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -14875,8 +14626,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for besluiten",
-					"_postman_isSubFolder": true
+					"description": "Folder for besluiten"
 				},
 				{
 					"name": "besluitinformatieobjecten",
@@ -14887,7 +14637,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "90cc4865-c518-4ef0-b818-f43c77da8ccd",
 										"exec": [
 											"pm.test(\"Alle BESLUIT-INFORMATIEOBJECT relaties opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -14938,7 +14687,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "2e5a9c62-a8af-4ea7-82c9-9c6e4dea468e",
 										"exec": [
 											"pm.test(\"Maak een BESLUIT-INFORMATIEOBJECT relatie aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -14979,8 +14727,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"besluit\": \"{{besluit_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\"\n}",
-									"options": {}
+									"raw": "{\n\t\"besluit\": \"{{besluit_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\"\n}"
 								},
 								"url": {
 									"raw": "{{brc_url}}/besluitinformatieobjecten",
@@ -15001,7 +14748,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "eee94029-4d09-44ed-8303-5126b945ab4a",
 										"exec": [
 											"pm.test(\"Alle BESLUIT-INFORMATIEOBJECT relaties opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15039,7 +14785,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "bcdc5461-72bb-42d0-a264-73025f007aa0",
 										"exec": [
 											"pm.test(\"Verwijder een BESLUIT-INFORMATIEOBJECT relatie geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -15084,8 +14829,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for besluitinformatieobjecten",
-					"_postman_isSubFolder": true
+					"description": "Folder for besluitinformatieobjecten"
 				}
 			],
 			"description": "Een API om een besluitregistratiecomponent (BRC) te benaderen.\n\nEen BESLUIT wordt veelal schriftelijk vastgelegd maar dit is niet\nnoodzakelijk. Omgekeerd kan het voorkomen dat in een INFORMATIEOBJECT meerdere\nbesluiten vastgelegd zijn. Vandaar de N:M-relatie naar INFORMATIEOBJECT. Een\nbesluit komt voort uit een zaak van de zaakbehandelende organisatie dan wel is\neen besluit van een andere organisatie dat het onderwerp (object) is van een\nzaak van de zaakbehandelende organisatie. BESLUIT heeft dan ook een optionele\nrelatie met de ZAAK waarvan het een uitkomst is.\n\nDe typering van BESLUITen is in de Catalogi API (ZTC) ondergebracht in de vorm \nvan BESLUITTYPEn.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Catalogi API\n* Notificaties API\n* Documenten API *(optioneel)*\n* Zaken API *(optioneel)*\n* Autorisaties API *(optioneel)*\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n**Notificaties**\n\nDeze API publiceert notificaties op het kanaal `besluiten`.\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
@@ -15093,7 +14837,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "011bfcc2-20cc-4aaa-8883-57aa2caeb2bb",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -15103,7 +14846,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "eafbdb0f-a2d7-4d3e-a3d8-c5640be0285a",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -15124,7 +14866,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "22806701-9da0-468e-8af8-c58883a14833",
 										"exec": [
 											"pm.test(\"Alle ABONNEMENTen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15167,7 +14908,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ae4b02e1-203c-4946-903c-f008b8d9ed26",
 										"exec": [
 											"pm.test(\"Maak een ABONNEMENT aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -15196,8 +14936,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"callbackUrl\": \"{{mock_url}}/callback\",\n    \"auth\": \"Bearer token\",\n    \"kanalen\": [\n\t\t{\n\t    \"filters\": \n            {},\n            \"naam\": \"zaken\"\n        }\n    ]\n\n}\n",
-									"options": {}
+									"raw": "{\n    \"callbackUrl\": \"{{mock_url}}/callback\",\n    \"auth\": \"Bearer token\",\n    \"kanalen\": [\n\t\t{\n\t    \"filters\": \n            {},\n            \"naam\": \"zaken\"\n        }\n    ]\n\n}\n"
 								},
 								"url": {
 									"raw": "{{nrc_url}}/abonnement",
@@ -15218,7 +14957,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "a15f4c03-7927-4d7f-9b9a-afdb5d94cf43",
 										"exec": [
 											"pm.test(\"Een specifiek ABONNEMENT opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15256,7 +14994,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "047e3f71-f4c5-42b8-9daa-15790f7c3788",
 										"exec": [
 											"// Retrieve the Abonnement body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"abonnement_body\"));",
@@ -15272,7 +15009,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "a9866cfe-73aa-480a-81e9-9ba07f1a4a40",
 										"exec": [
 											"pm.test(\"Werk een ABONNEMENT in zijn geheel bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15297,8 +15033,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{created_abonnement_url}}",
@@ -15316,7 +15051,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "9ab3022b-beca-42d4-bf45-206c36c40fa4",
 										"exec": [
 											"pm.test(\"Werk een ABONNEMENT deels bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15341,8 +15075,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"kanalen\": [\n\t\t{\n\t\t\t\"naam\": \"zaken\",\n\t\t\t\"filters\": {}\n\t\t}\t\n\t]\n}",
-									"options": {}
+									"raw": "{\n\t\"kanalen\": [\n\t\t{\n\t\t\t\"naam\": \"zaken\",\n\t\t\t\"filters\": {}\n\t\t}\t\n\t]\n}"
 								},
 								"url": {
 									"raw": "{{created_abonnement_url}}",
@@ -15360,7 +15093,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "d7644839-a3b7-4607-ad5d-fe563fa03d7d",
 										"exec": [
 											"pm.test(\"Verwijder een ABONNEMENT geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -15394,8 +15126,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for abonnement",
-					"_postman_isSubFolder": true
+					"description": "Folder for abonnement"
 				},
 				{
 					"name": "kanaal",
@@ -15406,7 +15137,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "2e9118b2-1af0-44c8-aef8-34c0e598afe6",
 										"exec": [
 											"pm.test(\"Alle KANAALen opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15460,7 +15190,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "07bb8d0d-0c94-445c-8a1b-44a89622f2df",
 										"exec": [
 											"pm.test(\"Maak een ABONNEMENT aan geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -15488,8 +15217,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"naam\": \"testkanaal\",\n\t\"documentatieLink\": \"https://example.com\",\n\t\"filters\": []\n}",
-									"options": {}
+									"raw": "{\n\t\"naam\": \"testkanaal\",\n\t\"documentatieLink\": \"https://example.com\",\n\t\"filters\": []\n}"
 								},
 								"url": {
 									"raw": "{{nrc_url}}/kanaal",
@@ -15510,7 +15238,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "dc38e32c-df48-4141-abfb-496109bf9b85",
 										"exec": [
 											"pm.test(\"Een specifiek KANAAL opvragen geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15543,8 +15270,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for kanaal",
-					"_postman_isSubFolder": true
+					"description": "Folder for kanaal"
 				},
 				{
 					"name": "notificaties",
@@ -15555,7 +15281,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "80f6bfc7-fecb-453c-8989-1da1f5206c60",
 										"exec": [
 											"pm.test(\"Publiceer een NOTIFICATIE geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -15579,8 +15304,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"kanaal\": \"testkanaal\",\n\t\"hoofdObject\": \"https://example.com\",\n\t\"resource\": \"test\",\n\t\"resourceUrl\": \"https://example.com\",\n\t\"actie\": \"CREATE\",\n\t\"aanmaakdatum\": \"2019-01-01T12:00:00Z\",\n\t\"kenmerken\": {}\n}",
-									"options": {}
+									"raw": "{\n\t\"kanaal\": \"testkanaal\",\n\t\"hoofdObject\": \"https://example.com\",\n\t\"resource\": \"test\",\n\t\"resourceUrl\": \"https://example.com\",\n\t\"actie\": \"CREATE\",\n\t\"aanmaakdatum\": \"2019-01-01T12:00:00Z\",\n\t\"kenmerken\": {}\n}"
 								},
 								"url": {
 									"raw": "{{nrc_url}}/notificaties",
@@ -15596,8 +15320,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for notificaties",
-					"_postman_isSubFolder": true
+					"description": "Folder for notificaties"
 				}
 			],
 			"description": "Een API om een notificatierouteringscomponent te benaderen.\n\nDeze API voorziet in drie functionaliteiten voor notificaties:\n\n* registreren van kanalen (=exchanges)\n* abonneren van consumers op kanalen\n* ontvangen en routeren van berichten\n\n**Registreren van kanalen**\n\nEen component dekt een bepaald domein af, en heeft het recht om hiervoor een\nkanaal te registeren waarop eigen notificaties verstuurd worden. Een kanaal\nis uniek in naam. Een component dient dus te controleren of een kanaal al\nbestaat voor het registreren. Bij het registeren van kanalen wordt een\ndocumentatielink verwacht die beschrijft welke events en kenmerken van\ntoepassing zijn op het kanaal.\n\n**Abonneren**\n\nConsumers kunnen een abonnement aanmaken voor een of meerdere kanalen. Per\nkanaal kan op de kenmerken van het kanaal gefilterd worden. Consumers dienen\nzelf een endpoint te bouwen waarop berichten afgeleverd (kunnen) worden.\n\n**Routeren van berichten**\n\nBronnen sturen berichten naar deze API, die vervolgens de berichten onveranderd\nrouteert naar alle abonnees.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Autorisaties API\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
@@ -15605,7 +15328,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "6453e362-1196-47b7-ae6a-a5543db33dca",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -15615,7 +15337,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "77b6abef-9a07-48e5-ab74-2d1613b5962e",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -15636,7 +15357,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "66428d5a-a7aa-45bb-aba2-75494a493576",
 										"exec": [
 											"pm.test(\"Geef een collectie van applicaties, met ingesloten autorisaties geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15687,7 +15407,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "e08fe562-70d3-40f0-851c-8137750df9bf",
 										"exec": [
 											"pm.test(\"Registreer een applicatie met een bepaalde set van autorisaties geeft 201\", function() {",
 											"    pm.response.to.have.status(201);",
@@ -15717,8 +15436,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id_oas_tests\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}",
-									"options": {}
+									"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id_oas_tests\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
 								},
 								"url": {
 									"raw": "{{ac_url}}/applicaties",
@@ -15739,7 +15457,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ae9c061f-9ee6-40aa-ad69-5348cb46be6e",
 										"exec": [
 											"pm.test(\"Vraag een applicatie op, op basis van clientId geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15787,7 +15504,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "1d76543b-82a6-4b7f-9943-63115cd69946",
 										"exec": [
 											"pm.test(\"Vraag een applicatie op, met ingesloten autorisaties geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15825,7 +15541,6 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "16cd4eab-b4a0-4c62-bb9c-a4de6a726dc4",
 										"exec": [
 											"// Retrieve the Zaak body template and modify as needed",
 											"var body = JSON.parse(pm.globals.get(\"applicatie_body\"));",
@@ -15841,7 +15556,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "bc0ac274-87a9-407f-8f4b-a686f7417573",
 										"exec": [
 											"pm.test(\"Werk de applicatie bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15866,8 +15580,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{{request_body}}",
-									"options": {}
+									"raw": "{{request_body}}"
 								},
 								"url": {
 									"raw": "{{created_applicatie_url}}",
@@ -15885,7 +15598,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "27d567c1-85fc-472d-aabb-692080ed587b",
 										"exec": [
 											"pm.test(\"Werk (een deel van) de applicatie bij geeft 200\", function() {",
 											"    pm.response.to.have.status(200);",
@@ -15910,8 +15622,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"autorisaties\": [\n\t\t{\n\t\t\t\"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"vertrouwelijk\"\n\t\t}\t\n\t]\n}",
-									"options": {}
+									"raw": "{\n\t\"autorisaties\": [\n\t\t{\n\t\t\t\"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\",\n                \"zaken.aanmaken\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"vertrouwelijk\"\n\t\t}\t\n\t]\n}"
 								},
 								"url": {
 									"raw": "{{created_applicatie_url}}",
@@ -15929,7 +15640,6 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ebb1ffb0-b7a5-443a-9761-f5b3a86fca5c",
 										"exec": [
 											"pm.test(\"Verwijder een applicatie met de bijhorende autorisaties geeft 204\", function() {",
 											"    pm.response.to.have.status(204);",
@@ -15962,8 +15672,7 @@
 							"response": []
 						}
 					],
-					"description": "Folder for applicaties",
-					"_postman_isSubFolder": true
+					"description": "Folder for applicaties"
 				}
 			],
 			"description": "Een API om een autorisatiecomponent te benaderen.\n\nDe `AUTORISATIE` is het kernobject in deze API. Autorisaties worden toegekend\naan applicaties. Een applicatie is een representatie van een (web) app die\ncommuniceert met de API van (andere) componenten, zoals het ZRC, DRC, ZTC en\nBRC.\n\nDeze API laat toe om autorisaties van een (taak)applicatie te beheren en uit\nte lezen.\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://ref.tst.vng.cloud/tokens/) gebruiken om JWT-tokens te\ngenereren.\n\n**Notificaties**\n\nDeze component publiceert notificaties op het kanaal `TODO`.\n\n**Handige links**\n\n* [Aan de slag](https://ref.tst.vng.cloud/ontwikkelaars/)\n* [\"Papieren\" standaard](https://ref.tst.vng.cloud/standaard/)\n",
@@ -15971,7 +15680,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "0bf14bc5-9a8c-45a9-b734-c3e90789ff5f",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -15981,7 +15689,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3e3bb850-e892-4f02-afb2-f3e684c059c2",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -15999,7 +15706,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d119b2b8-8897-4495-8802-ab28c4f43d05",
 								"exec": [
 									"pm.globals.unset(\"global_zaak_url\");"
 								],
@@ -16018,8 +15724,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {}
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{global_zaak_url}}",
@@ -16036,7 +15741,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "131d583a-193b-40be-90dc-2fe0b0e4bcf1",
 								"exec": [
 									"pm.globals.unset(\"informatieobject_url\");"
 								],
@@ -16049,8 +15753,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {}
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{informatieobject_url}}",
@@ -16067,7 +15770,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9d6cec16-5d15-491b-8928-009b5f61f3e4",
 								"exec": [
 									"pm.globals.unset(\"informatieobject_gebruiksrecht_null_url\");"
 								],
@@ -16080,8 +15782,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {}
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{informatieobject_gebruiksrecht_null_url}}",
@@ -16098,7 +15799,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fe25005e-9a5b-4f7e-a896-7a714bbef214",
 								"exec": [
 									"pm.globals.unset(\"resultaattype_url\");"
 								],
@@ -16111,8 +15811,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {}
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{resultaattype_url}}",
@@ -16129,7 +15828,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "934a4f59-be6e-4741-b279-796bccd01f3c",
 								"exec": [
 									"pm.globals.unset(\"zaaktype_url\");"
 								],
@@ -16142,8 +15840,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {}
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{zaaktype_url}}",
@@ -16160,7 +15857,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c4086c7e-2ff4-4175-89a0-ff7a101a3acd",
 								"exec": [
 									"pm.globals.unset(\"besluittype_url\");"
 								],
@@ -16173,8 +15869,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {}
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{besluittype_url}}",
@@ -16191,7 +15886,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d77d5959-161f-4e0b-a104-5d04761990bf",
 								"exec": [
 									"pm.globals.unset(\"informatieobjecttype_url\");",
 									"",
@@ -16207,8 +15901,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {}
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{informatieobjecttype_url}}",
@@ -16224,7 +15917,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "ec0d885c-e0bb-4267-bd44-d2e2e5cdf549",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -16234,7 +15926,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "349ad68a-a9be-4caf-8e29-c8cd91108f1c",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -16302,7 +15993,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "ea89b8ac-5771-4b5a-85a9-33bcb5b8b5bf",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -16312,7 +16002,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "bc01f167-bf70-4c81-b13c-e42cd36b4bae",
 						"type": "text/javascript",
 						"exec": [
 							"var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
@@ -16323,8 +16012,7 @@
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"auth": {
@@ -16341,7 +16029,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "1600acd1-dc72-44fd-90f5-30cc30567de6",
 				"type": "text/javascript",
 				"exec": [
 					"function base64url(source) {",
@@ -16404,7 +16091,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "6ca635ac-53c8-44e8-bf4d-3437d0b4cb6d",
 				"type": "text/javascript",
 				"exec": [
 					""
