@@ -7024,7 +7024,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statustype\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-22T13:37:00\"\n}"
+													"raw": "{\n\t\"zaak\": \"{{created_zaak_url}}\",\n\t\"statustype\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-22T13:37:01\"\n}"
 												},
 												"url": {
 													"raw": "{{zrc_url}}/statussen",
