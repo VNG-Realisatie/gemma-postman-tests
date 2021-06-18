@@ -4016,7 +4016,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.zaaktype = pm.globals.get(\"autorisaties_zaaktype\");",
+															"body.zaaktype = pm.globals.get(\"zaaktype_for_auth_url\");",
 															"body.vertrouwelijkheidaanduiding = pm.globals.get(\"autorisaties_maxVertrouwelijkheidaanduiding\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -10210,6 +10210,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
 															"body.hoofdzaak = pm.globals.get(\"zaak_url\");",
+															"body.zaaktype = pm.globals.get(\"deelzaaktype_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -10275,6 +10276,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
 															"body.hoofdzaak = pm.globals.get(\"zaak_url\");",
+															"body.zaaktype = pm.globals.get(\"deelzaaktype_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -10340,6 +10342,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
 															"body.hoofdzaak = pm.globals.get(\"zaak_url\");",
+															"body.zaaktype = pm.globals.get(\"deelzaaktype_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -12635,7 +12638,7 @@
 													"listen": "test",
 													"script": {
 														"exec": [
-															"pm.test(\"(zrc-018a) Resultaat toevoegen aan Zaak met resultaattype die niet hoort bij Zaak.zaaktype geeft 400\", function() {",
+															"pm.test(\"(zrc-020a) Resultaat toevoegen aan Zaak met resultaattype die niet hoort bij Zaak.zaaktype geeft 400\", function() {",
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
@@ -13288,6 +13291,47 @@
 													"response": []
 												},
 												{
+													"name": "Create Hoofdzaaktype",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"var res = pm.response.json();",
+																	"pm.globals.set(\"hoofdzaaktype_url\", res.url);",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_1 hoofdzaak\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"deelzaaktypen\": [\n        \"{{zaaktype_procestermijn_vast_te_leggen_datum_url}}\"\n    ],\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
+														},
+														"url": {
+															"raw": "{{ztc_url}}/zaaktypen",
+															"host": [
+																"{{ztc_url}}"
+															],
+															"path": [
+																"zaaktypen"
+															]
+														}
+													},
+													"response": []
+												},
+												{
 													"name": "Create Resultaattype afleidingswijze hoofdzaak",
 													"event": [
 														{
@@ -13380,6 +13424,84 @@
 													"response": []
 												},
 												{
+													"name": "Create Resultaattype afleidingswijze afgehandeld for hoofdzaaktype",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.globals.set(\"resultaattype_for_hoofdzaaktype_url\", pm.response.json().url);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n\t\"zaaktype\": \"{{hoofdzaaktype_url}}\",\n\t\"omschrijving\": \"Klaar\",\n\t\"resultaattypeomschrijving\": \"{{referentielijst_url}}/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_nihil_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"afgehandeld\",\n\t\t\"procestermijn\": null,\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
+														},
+														"url": {
+															"raw": "{{ztc_url}}/resultaattypen",
+															"host": [
+																"{{ztc_url}}"
+															],
+															"path": [
+																"resultaattypen"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "Create eind Statustype for hoofdzaaktype",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.globals.set(\"eindstatustype_for_hoofdzaaktype_url\", pm.response.json().url);"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n\t\"omschrijving\": \"Eind\",\n\t\"zaaktype\": \"{{hoofdzaaktype_url}}\",\n\t\"volgnummer\": 2\n}"
+														},
+														"url": {
+															"raw": "{{ztc_url}}/statustypen",
+															"host": [
+																"{{ztc_url}}"
+															],
+															"path": [
+																"statustypen"
+															]
+														}
+													},
+													"response": []
+												},
+												{
 													"name": "Publish Zaaktype procestermijn vast_te_leggen_datum",
 													"event": [
 														{
@@ -13432,6 +13554,54 @@
 													"response": []
 												},
 												{
+													"name": "Publish Hoofdzaaktype",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "prerequest",
+															"script": {
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"name": "Content-Type",
+																"type": "text",
+																"value": "application/json"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": ""
+														},
+														"url": {
+															"raw": "{{hoofdzaaktype_url}}/publish",
+															"host": [
+																"{{hoofdzaaktype_url}}"
+															],
+															"path": [
+																"publish"
+															]
+														}
+													},
+													"response": []
+												},
+												{
 													"name": "Create Hoofdzaak",
 													"event": [
 														{
@@ -13439,6 +13609,20 @@
 															"script": {
 																"exec": [
 																	"pm.globals.set(\"hoofdzaak_url\", pm.response.json().url);"
+																],
+																"type": "text/javascript"
+															}
+														},
+														{
+															"listen": "prerequest",
+															"script": {
+																"exec": [
+																	"// Retrieve the Zaak body template and modify as needed",
+																	"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
+																	"body.zaaktype = pm.globals.get(\"hoofdzaaktype_url\");",
+																	"",
+																	"// Store the modified Zaak body, allowing it to be used in the main request",
+																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
 																],
 																"type": "text/javascript"
 															}
@@ -13466,7 +13650,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{{zaak_body}}"
+															"raw": "{{request_body}}"
 														},
 														"url": {
 															"raw": "{{zrc_url}}/zaken",
@@ -13487,7 +13671,7 @@
 															"listen": "prerequest",
 															"script": {
 																"exec": [
-																	"pm.globals.set(\"resultaattype\", pm.globals.get(\"resultaattype_url\"));"
+																	"pm.globals.set(\"resultaattype\", pm.globals.get(\"resultaattype_for_hoofdzaaktype_url\"));"
 																],
 																"type": "text/javascript"
 															}
@@ -13562,7 +13746,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n\t\"zaak\": \"{{hoofdzaak_url}}\",\n\t\"statustype\": \"{{eindstatustype}}\",\n\t\"datumStatusGezet\": \"2018-04-18T13:37:00\"\n}"
+															"raw": "{\n\t\"zaak\": \"{{hoofdzaak_url}}\",\n\t\"statustype\": \"{{eindstatustype_for_hoofdzaaktype_url}}\",\n\t\"datumStatusGezet\": \"2018-04-18T13:37:00\"\n}"
 														},
 														"url": {
 															"raw": "{{zrc_url}}/statussen",
@@ -13900,6 +14084,41 @@
 													"response": []
 												},
 												{
+													"name": "Delete Hoofdzaak",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [
+															{
+																"key": "Accept-Crs",
+																"value": "EPSG:4326",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": ""
+														},
+														"url": {
+															"raw": "{{hoofdzaak_url}}",
+															"host": [
+																"{{hoofdzaak_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
 													"name": "Delete Zaaktype vast_te_leggen_datum",
 													"event": [
 														{
@@ -13923,6 +14142,93 @@
 															"raw": "{{zaaktype_procestermijn_vast_te_leggen_datum_url}}",
 															"host": [
 																"{{zaaktype_procestermijn_vast_te_leggen_datum_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "Delete Resultaattype for hoofdzaaktype",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": ""
+														},
+														"url": {
+															"raw": "{{resultaattype_for_hoofdzaaktype_url}}",
+															"host": [
+																"{{resultaattype_for_hoofdzaaktype_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "Delete Eindstatustype for hoofdzaaktype",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": ""
+														},
+														"url": {
+															"raw": "{{eindstatustype_for_hoofdzaaktype_url}}",
+															"host": [
+																"{{eindstatustype_for_hoofdzaaktype_url}}"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "Delete Hoofdzaaktype",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [],
+														"body": {
+															"mode": "raw",
+															"raw": ""
+														},
+														"url": {
+															"raw": "{{hoofdzaaktype_url}}",
+															"host": [
+																"{{hoofdzaaktype_url}}"
 															]
 														}
 													},
@@ -20418,6 +20724,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
 															"body.hoofdzaak = pm.globals.get(\"created_zaak_url\");",
+															"body.zaaktype = pm.globals.get(\"deelzaaktype_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
