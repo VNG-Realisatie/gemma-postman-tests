@@ -36474,7 +36474,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n\t\"naam\": \"test eigenschap3\",\n\t\"definitie\": \"test\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\"\n}"
+															"raw": "{\n\t\"naam\": \"test eigenschap3\",\n\t\"definitie\": \"test\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n    \"specificatie\": {\n        \"formaat\": \"tekst\",\n        \"lengte\": \"5\",\n        \"kardinaliteit\": \"1\",\n        \"waardenverzameling\": [\"test\"]\n    }\n}"
 														},
 														"url": {
 															"raw": "{{ztc_url}}/eigenschappen",
@@ -40105,7 +40105,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n\t\"naam\": \"test eigenschap3\",\n\t\"definitie\": \"test\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\"\n}"
+															"raw": "{\n\t\"naam\": \"test eigenschap3\",\n\t\"definitie\": \"test\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n    \"specificatie\": {\n        \"formaat\": \"tekst\",\n        \"lengte\": \"5\",\n        \"kardinaliteit\": \"1\",\n        \"waardenverzameling\": [\"test\"]\n    }\n}"
 														},
 														"url": {
 															"raw": "{{ztc_url}}/eigenschappen",
@@ -40153,7 +40153,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n\t\"naam\": \"test eigenschap3\",\n\t\"definitie\": \"test\",\n\t\"zaaktype\": \"{{zaaktype_url}}\"\n}"
+															"raw": "{\n\t\"naam\": \"test eigenschap3\",\n\t\"definitie\": \"test\",\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n    \"specificatie\": {\n        \"formaat\": \"tekst\",\n        \"lengte\": \"5\",\n        \"kardinaliteit\": \"1\",\n        \"waardenverzameling\": [\"test\"]\n    }\n}"
 														},
 														"url": {
 															"raw": "{{ztc_url}}/eigenschappen",
@@ -40168,7 +40168,7 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-011b) Besluittype bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan",
+													"name": "(ztc-011b) Eigenschap bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan",
 													"event": [
 														{
 															"listen": "prerequest",
@@ -40217,7 +40217,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n\t\"naam\": \"test eigenschap3\",\n\t\"definitie\": \"test\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\"\n}"
+															"raw": "{\n\t\"naam\": \"test eigenschap3\",\n\t\"definitie\": \"test\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n    \"specificatie\": {\n        \"formaat\": \"tekst\",\n        \"lengte\": \"5\",\n        \"kardinaliteit\": \"1\",\n        \"waardenverzameling\": [\"test\"]\n    }\n}"
 														},
 														"url": {
 															"raw": "{{created_eigenschap_url}}",
@@ -40229,7 +40229,7 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-011b) Besluittype deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan",
+													"name": "(ztc-011b) Eigenschap deels bijwerken relatie leggen met Zaaktype met concept False is niet toegestaan",
 													"event": [
 														{
 															"listen": "prerequest",
