@@ -31635,7 +31635,7 @@
 															"if(pm.response.code == 201) {",
 															"    pm.globals.set(\"created_resultaattype_url\", pm.response.json().url);",
 															"    postman.setNextRequest(\"(COMMON) Delete Resultaattype\");",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-003t) Resultaattype met afleidingswijze termijn en selectielijstklasse.procestermijn vast_te_leggen_datum is mogelijk\"]);",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ztc-003t) Resultaattype met afleidingswijze termijn en selectielijstklasse.procestermijn leeg is onmogelijk\"]);",
 															"}"
 														],
 														"type": "text/javascript"
@@ -31678,14 +31678,18 @@
 											"response": []
 										},
 										{
-											"name": "(ztc-003t) Resultaattype met afleidingswijze termijn en selectielijstklasse.procestermijn leeg is mogelijk",
+											"name": "(ztc-003t) Resultaattype met afleidingswijze termijn en selectielijstklasse.procestermijn leeg is onmogelijk",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
 														"exec": [
-															"pm.test(\"Resultaattype aanmaken met brondatumArchiefprocedure.afleidingswijze termijn en selectielijstklasse.procestermijn leeg geeft 201\", function() {",
-															"    pm.response.to.have.status(201);",
+															"pm.test(\"Resultaattype aanmaken met brondatumArchiefprocedure.afleidingswijze termijn en selectielijstklasse.procestermijn leeg geeft 400\", function() {",
+															"    pm.response.to.have.status(400);",
+															"",
+															"    let error = pm.response.json().invalidParams[0];",
+															"    pm.expect(error.name).to.be.equal(\"brondatumArchiefprocedure.procestermijn\");",
+															"    pm.expect(error.code).to.be.equal(\"required\");",
 															"});",
 															"",
 															"if(pm.response.code == 201) {",
