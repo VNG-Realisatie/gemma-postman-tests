@@ -2933,7 +2933,9 @@
 											"",
 											"if(pm.response.code == 201) {",
 											"    pm.globals.set(\"zaakobject_url\", pm.response.json().url);",
-											"}"
+											"    pm.globals.set(\"zo_body\", pm.request.body.raw);",
+											"}",
+											""
 										],
 										"type": "text/javascript"
 									}
@@ -3014,6 +3016,205 @@
 									]
 								},
 								"description": "Een specifiek ZAAKOBJECT opvragen."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een ZAAKOBJECT in zijn geheel bij.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Werk een ZAAK-OBJECT relatie in zijn geheel bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Retrieve the Zaakobject body template and modify as needed",
+											"var body = JSON.parse(pm.globals.get(\"zo_body\"));",
+											"body.relatieomschrijving = \"postman tests\";",
+											"",
+											"// Store the modified Zaakinformatieobject body, allowing it to be used in the main request",
+											"pm.globals.set(\"request_body\", JSON.stringify(body));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}",
+										"type": "text"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{request_body}}"
+								},
+								"url": {
+									"raw": "{{zaakobject_url}}",
+									"host": [
+										"{{zaakobject_url}}"
+									]
+								},
+								"description": "Werk een ZAAKOBJECT in zijn geheel bij."
+							},
+							"response": []
+						},
+						{
+							"name": "Werk een ZAAKOBJECT deels bij.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Werk een ZAAK-OBJECT relatie deels bij geeft 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}",
+										"type": "text"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"relatieomschrijving\": \"zaakobject patch\"\n}"
+								},
+								"url": {
+									"raw": "{{zaakobject_url}}",
+									"host": [
+										"{{zaakobject_url}}"
+									]
+								},
+								"description": "Werk een ZAAKOBJECT deels bij."
+							},
+							"response": []
+						},
+						{
+							"name": "Verwijder een ZAAKOBJECT.",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verwijder een ZAAKOBJECT geeft 204\", function() {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-NLX-Request-Application-Id",
+										"value": "{{X-NLX-Request-Application-Id}}",
+										"type": "text"
+									},
+									{
+										"key": "X-NLX-Request-User-Id",
+										"value": "{{X-NLX-Request-User-Id}}",
+										"type": "text"
+									},
+									{
+										"key": "X-Audit-Toelichting",
+										"value": "{{X-Audit-Toelichting}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{zaakobject_url}}",
+									"host": [
+										"{{zaakobject_url}}"
+									]
+								},
+								"description": "Verwijder een ZAAKOBJECT."
 							},
 							"response": []
 						}
