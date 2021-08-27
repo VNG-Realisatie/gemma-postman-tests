@@ -1534,7 +1534,7 @@
 											"",
 											"if(pm.response.code == 201) {",
 											"    pm.globals.set(\"zaakeigenschap_url\", pm.response.json().url);",
-											"    pm.global.set(\"zaakeigenschap_body\", pm.request.body.raw);",
+											"    pm.globals.set(\"zaakeigenschap_body\", pm.request.body.raw);",
 											"}"
 										],
 										"type": "text/javascript"
