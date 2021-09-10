@@ -2376,7 +2376,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{zrc_url}}/rollen?zaak={{global_zaak_url}}&betrokkene=https://example.com/&betrokkeneType=natuurlijk_persoon&betrokkeneIdentificatie__natuurlijkPersoon__inpBsn={{betrokkeneIdentificatie__natuurlijkPersoon__inpBsn}}&betrokkeneIdentificatie__natuurlijkPersoon__anpIdentificatie={{betrokkeneIdentificatie__natuurlijkPersoon__anpIdentificatie}}&betrokkeneIdentificatie__natuurlijkPersoon__inpA_nummer={{betrokkeneIdentificatie__natuurlijkPersoon__inpA_nummer}}&betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId={{betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId}}&betrokkeneIdentificatie__nietNatuurlijkPersoon__annIdentificatie={{betrokkeneIdentificatie__nietNatuurlijkPersoon__annIdentificatie}}&betrokkeneIdentificatie__vestiging__vestigingsNummer={{betrokkeneIdentificatie__vestiging__vestigingsNummer}}&betrokkeneIdentificatie__medewerker__identificatie={{betrokkeneIdentificatie__medewerker__identificatie}}&roltype={{roltype_url}}&omschrijving={{omschrijving}}&omschrijvingGeneriek=adviseur&page=1",
+									"raw": "{{zrc_url}}/rollen?zaak={{global_zaak_url}}&betrokkene=https://example.com/&betrokkeneType=natuurlijk_persoon&betrokkeneIdentificatie__natuurlijkPersoon__inpBsn={{betrokkeneIdentificatie__natuurlijkPersoon__inpBsn}}&betrokkeneIdentificatie__natuurlijkPersoon__anpIdentificatie={{betrokkeneIdentificatie__natuurlijkPersoon__anpIdentificatie}}&betrokkeneIdentificatie__natuurlijkPersoon__inpA_nummer={{betrokkeneIdentificatie__natuurlijkPersoon__inpA_nummer}}&betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId={{betrokkeneIdentificatie__nietNatuurlijkPersoon__innNnpId}}&betrokkeneIdentificatie__nietNatuurlijkPersoon__annIdentificatie={{betrokkeneIdentificatie__nietNatuurlijkPersoon__annIdentificatie}}&betrokkeneIdentificatie__vestiging__vestigingsNummer={{betrokkeneIdentificatie__vestiging__vestigingsNummer}}&betrokkeneIdentificatie__organisatorischeEenheid__identificatie={{betrokkeneIdentificatie__organisatorischeEenheid__identificatie}}&betrokkeneIdentificatie__medewerker__identificatie={{betrokkeneIdentificatie__medewerker__identificatie}}&roltype={{roltype_url}}&omschrijving={{omschrijving}}&omschrijvingGeneriek=adviseur&page=1",
 									"host": [
 										"{{zrc_url}}"
 									],
@@ -2419,6 +2419,10 @@
 										{
 											"key": "betrokkeneIdentificatie__vestiging__vestigingsNummer",
 											"value": "{{betrokkeneIdentificatie__vestiging__vestigingsNummer}}"
+										},
+										{
+											"key": "betrokkeneIdentificatie__organisatorischeEenheid__identificatie",
+											"value": "{{betrokkeneIdentificatie__organisatorischeEenheid__identificatie}}"
 										},
 										{
 											"key": "betrokkeneIdentificatie__medewerker__identificatie",
