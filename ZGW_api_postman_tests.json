@@ -20127,7 +20127,7 @@
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.name).to.be.equal(\"archiefstatus\");",
 															"    pm.expect(error.code).to.be.equal(\"documents-not-archived\");",
 															"});"
 														],
@@ -20201,7 +20201,7 @@
 															"    pm.response.to.have.status(400);",
 															"    ",
 															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
+															"    pm.expect(error.name).to.be.equal(\"archiefstatus\");",
 															"    pm.expect(error.code).to.be.equal(\"documents-not-archived\");",
 															"});",
 															"",
