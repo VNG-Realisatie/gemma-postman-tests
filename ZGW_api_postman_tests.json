@@ -39197,7 +39197,7 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-010h) Zaaktype gerelateerd aan Informatieobjecttype met concept False bijwerken is niet toegestaan",
+													"name": "(ztc-010h) Zaaktype gerelateerd aan Informatieobjecttype met concept False bijwerken is toegestaan",
 													"event": [
 														{
 															"listen": "prerequest",
@@ -39218,12 +39218,9 @@
 															"listen": "test",
 															"script": {
 																"exec": [
-																	"pm.test(\"Zaaktype gerelateerd aan Informatieobjecttype met concept False bijwerken geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"    ",
-																	"    var error = pm.response.json()[\"invalidParams\"][0];",
-																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
+																	"pm.test(\"Zaaktype gerelateerd aan Informatieobjecttype met concept False bijwerken geeft 200\", function() {",
+																	"    pm.response.to.have.status(200); ",
+																	"    pm.expect(pm.response.json().omschrijving).to.be.equal(\"aangepast\");",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -39264,7 +39261,7 @@
 													"response": []
 												},
 												{
-													"name": "(ztc-010h) Zaaktype gerelateerd aan Informatieobjecttype met concept False deels bijwerken is niet toegestaan",
+													"name": "(ztc-010h) Zaaktype gerelateerd aan Informatieobjecttype met concept False deels bijwerken is toegestaan",
 													"event": [
 														{
 															"listen": "prerequest",
@@ -39279,12 +39276,9 @@
 															"listen": "test",
 															"script": {
 																"exec": [
-																	"pm.test(\"Zaaktype gerelateerd aan Informatieobjecttype met concept False deels bijwerken geeft 400\", function() {",
-																	"    pm.response.to.have.status(400); ",
-																	"    ",
-																	"    var error = pm.response.json()[\"invalidParams\"][0];",
-																	"    pm.expect(error.name).to.be.equal(\"nonFieldErrors\");",
-																	"    pm.expect(error.code).to.be.equal(\"non-concept-relation\");",
+																	"pm.test(\"Zaaktype gerelateerd aan Informatieobjecttype met concept False deels bijwerken geeft 200\", function() {",
+																	"    pm.response.to.have.status(200);     ",
+																	"    pm.expect(pm.response.json().omschrijving).to.be.equal(\"aangepast2\");",
 																	"});"
 																],
 																"type": "text/javascript"
