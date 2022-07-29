@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "47dae791-7292-4635-8fc7-25e21567a68f",
 		"name": "ZGW api tests",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7083537"
 	},
 	"item": [
 		{
@@ -39155,7 +39156,7 @@
 																	"}",
 																	"",
 																	"postman.setNextRequest(\"(COMMON) Create Zaaktype-Informatieobjecttype\");",
-																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Publish Informatieobjecttype\", \"(ztc-010h) Zaaktype gerelateerd aan Informatieobjecttype met concept False bijwerken is niet toegestaan\"]);"
+																	"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Publish Informatieobjecttype\", \"(ztc-010h) Zaaktype gerelateerd aan Informatieobjecttype met concept False bijwerken is toegestaan\"]);"
 																],
 																"type": "text/javascript"
 															}
