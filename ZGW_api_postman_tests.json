@@ -1419,7 +1419,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+													"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\",\n\t\"informatieobjectcategorie\": \"document\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/informatieobjecttypen",
