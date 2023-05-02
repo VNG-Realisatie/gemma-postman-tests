@@ -8439,7 +8439,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.communicatiekanaal = \"https://referentielijsten-api.vng.cloud/api/v1/communicatiekanalen/2b757868-45c2-42ca-b637-b63ddc87beb4\";",
+															"body.communicatiekanaal = pm.environment.get(\"mock_url\") + \"/communicatiekanaal\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -8505,7 +8505,7 @@
 														"exec": [
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.communicatiekanaal = \"https://referentielijsten-api.vng.cloud/api/v1/communicatiekanalen/2b757868-45c2-42ca-b637-b63ddc87beb4\";",
+															"body.communicatiekanaal = pm.environment.get(\"mock_url\") + \"/communicatiekanaal\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -8609,7 +8609,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"communicatiekanaal\": \"https://referentielijsten-api.vng.cloud/api/v1/communicatiekanalen/2b757868-45c2-42ca-b637-b63ddc87beb4\"\n}"
+													"raw": "{\n\t\"communicatiekanaal\": \"{{mock_url}}/communicatiekanaal\"\n}"
 												},
 												"url": {
 													"raw": "{{created_zaak_url}}",
