@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "220a71e4-0eff-44f6-b78a-20f164cf9090",
+		"_postman_id": "975c1c6a-434f-4a02-98b9-35cc613ea0e7",
 		"name": "ZGW OAS tests",
 		"description": "Dit is de Postman test suite voor de OAS specificaties van de ZGW API's, elke folder bevat tests die verifieren of de API's voldoen aan de OAS specificaties van die API's. Het gaat om de volgende OAS schema's:\n\n- Zaken API: https://zaken-api.vng.cloud/api/v1/schema/\n- Documenten API: https://documenten-api.vng.cloud/api/v1/schema/\n- Catalogi API: https://catalogi-api.vng.cloud/api/v1/schema/\n- Besluiten API: https://besluiten-api.vng.cloud/api/v1/schema/\n- Notificaties API: https://notificaties-api.vng.cloud/api/v1/schema/\n- Autorisaties API: https://autorisaties-api.vng.cloud/api/v1/schema/\n\n**LET OP:** voor deze tests zijn de environment variabelen `client_id` en `secret` nodig, dit moeten credentials zijn die geregistreerd zijn binnen de Autorisaties API, en hiervoor moet dus ook een bestaande applicatie met superuser rechten aanwezig zijn in het systeem. Aan de hand van deze credentials wordt binnen de testsuite een JSON Web Token gegenereerd, die vervolgens gebruikt wordt in de Authorization headers van iedere API call",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "7083537"
+		"_exporter_id": "27978063"
 	},
 	"item": [
 		{
@@ -312,7 +312,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\",\n\t\"informatieobjectcategorie\": \"document\"\n}"
+							"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject4\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\",\n\t\"informatieobjectcategorie\": \"document\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/informatieobjecttypen",
@@ -351,7 +351,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [\"{{informatieobjecttype_url}}\"],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+							"raw": "{\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"omschrijving\": \"test\",\n    \"zaaktypen\": [],\n\t\"publicatieIndicatie\": false,\n\t\"informatieobjecttypen\": [\"informatieobject4\"],\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/besluittypen",
@@ -382,6 +382,18 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');",
+									"var myUUID = uuid.v4(); ",
+									"pm.globals.set(\"random_identificatie\", myUUID);",
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -396,7 +408,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\",\"verantwoordelijke\": \"Behandelaar\"\n}"
+							"raw": "{\n\t\"identificatie\": \"{{random_identificatie}}\",\n    \"omschrijving\": \"zrc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"test\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\",\"verantwoordelijke\": \"Behandelaar\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/zaaktypen",
@@ -424,7 +436,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"informatieobjecttype\": \"{{informatieobjecttype_url}}\",\n\t\"volgnummer\": 1,\n\t\"richting\": \"inkomend\"\n}"
+							"raw": "{\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n\t\"informatieobjecttype\": \"informatieobject4\",\n\t\"volgnummer\": 1,\n\t\"richting\": \"inkomend\"\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
@@ -917,6 +929,52 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Een specifieke ZAAKTYPE opvragen. Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Een specifiek ZAAKTYPE opvragen geeft 200\", function() {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://catalogi-api.test.vng.cloud/api/v1/catalogussen",
+							"protocol": "https",
+							"host": [
+								"catalogi-api",
+								"test",
+								"vng",
+								"cloud"
+							],
+							"path": [
+								"api",
+								"v1",
+								"catalogussen"
+							]
+						},
+						"description": "Een specifieke ZAAKTYPE opvragen."
+					},
+					"response": []
 				}
 			],
 			"event": [
@@ -982,7 +1040,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{zrc_url}}/zaken?identificatie=zaak&bronorganisatie=000000000&zaaktype={{zaaktype_url}}&archiefnominatie=blijvend_bewaren&archiefnominatie__in=blijvend_bewaren&archiefactiedatum=2019-01-02&archiefactiedatum__lt=2019-01-03&archiefactiedatum__gt=2019-01-01&archiefstatus=nog_te_archiveren&archiefstatus__in=nog_te_archiveren&startdatum=2019-01-02&startdatum__gt=2019-01-01&startdatum__gte=2019-01-01&startdatum__lt=2019-01-03&startdatum__lte=2019-01-03&ordering=identificatie&page=1",
+									"raw": "{{zrc_url}}/zaken?identificatie=zaak&bronorganisatie=000000000&zaaktype={{zaaktype_url}}&archiefnominatie=blijvend_bewaren&archiefnominatie__in=blijvend_bewaren&archiefactiedatum=2019-01-02&archiefactiedatum__lt=2019-01-03&archiefactiedatum__gt=2019-01-01&archiefstatus=nog_te_archiveren&archiefstatus__in=nog_te_archiveren&startdatum=2019-01-02&startdatum__gt=2019-01-01&startdatum__gte=2019-01-01&startdatum__lt=2019-01-03&startdatum__lte=2019-01-03&page=1",
 									"host": [
 										"{{zrc_url}}"
 									],
@@ -1049,10 +1107,6 @@
 										{
 											"key": "startdatum__lte",
 											"value": "2019-01-03"
-										},
-										{
-											"key": "ordering",
-											"value": "identificatie"
 										},
 										{
 											"key": "page",
@@ -2754,336 +2808,6 @@
 					"description": "Folder for statussen"
 				},
 				{
-					"name": "zaakinformatieobjecten",
-					"item": [
-						{
-							"name": "Alle ZAAK-INFORMATIEOBJECT relaties opvragen.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Alle ZAAK-INFORMATIEOBJECT relaties opvragen geeft 200\", function() {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{zrc_url}}/zaakinformatieobjecten?zaak={{global_zaak_url}}&informatieobject={{informatieobject_url}}",
-									"host": [
-										"{{zrc_url}}"
-									],
-									"path": [
-										"zaakinformatieobjecten"
-									],
-									"query": [
-										{
-											"key": "zaak",
-											"value": "{{global_zaak_url}}"
-										},
-										{
-											"key": "informatieobject",
-											"value": "{{informatieobject_url}}"
-										}
-									]
-								},
-								"description": "Deze lijst kan gefilterd wordt met querystringparameters."
-							},
-							"response": []
-						},
-						{
-							"name": "Maak een ZAAK-INFORMATIEOBJECT relatie aan.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Maak een ZAAK-INFORMATIEOBJECT relatie aan geeft 201\", function() {",
-											"    pm.response.to.have.status(201);",
-											"});",
-											"",
-											"if(pm.response.code == 201) {",
-											"    pm.globals.set(\"zio_url\", pm.response.json().url);",
-											"    pm.globals.set(\"zio_body\", pm.request.body.raw);",
-											"}"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "X-NLX-Request-Application-Id",
-										"value": "{{X-NLX-Request-Application-Id}}"
-									},
-									{
-										"key": "X-NLX-Request-User-Id",
-										"value": "{{X-NLX-Request-User-Id}}"
-									},
-									{
-										"key": "X-Audit-Toelichting",
-										"value": "{{X-Audit-Toelichting}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"zaak\": \"{{global_zaak_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\"\n}"
-								},
-								"url": {
-									"raw": "{{zrc_url}}/zaakinformatieobjecten",
-									"host": [
-										"{{zrc_url}}"
-									],
-									"path": [
-										"zaakinformatieobjecten"
-									]
-								},
-								"description": "Er worden twee types van\nrelaties met andere objecten gerealiseerd:\n\n**Er wordt gevalideerd op**\n- geldigheid zaak URL\n- geldigheid informatieobject URL\n- de combinatie informatieobject en zaak moet uniek zijn\n\n**Opmerkingen**\n- De registratiedatum wordt door het systeem op 'NU' gezet. De `aardRelatie`\n  wordt ook door het systeem gezet.\n- Bij het aanmaken wordt ook in de Documenten API de gespiegelde relatie aangemaakt,\n  echter zonder de relatie-informatie.\n\nRegistreer welk(e) INFORMATIEOBJECT(en) een ZAAK kent.\n\n**Er wordt gevalideerd op**\n- geldigheid informatieobject URL\n- uniek zijn van relatie ZAAK-INFORMATIEOBJECT"
-							},
-							"response": []
-						},
-						{
-							"name": "Een specifieke ZAAK-INFORMATIEOBJECT relatie opvragen.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Een specifieke ZAAK-INFORMATIEOBJECT relatie opvragen geeft 200\", function() {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{zio_url}}",
-									"host": [
-										"{{zio_url}}"
-									]
-								},
-								"description": "Een specifieke ZAAK-INFORMATIEOBJECT relatie opvragen."
-							},
-							"response": []
-						},
-						{
-							"name": "Werk een ZAAK-INFORMATIEOBJECT relatie in zijn geheel bij.",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"// Retrieve the Zaakinformatieobject body template and modify as needed",
-											"var body = JSON.parse(pm.globals.get(\"zio_body\"));",
-											"pm.globals.set(\"titel\", \"aangepaste titel\");",
-											"body.toelichting = pm.globals.get(\"titel\");",
-											"",
-											"// Store the modified Zaakinformatieobject body, allowing it to be used in the main request",
-											"pm.globals.set(\"request_body\", JSON.stringify(body));"
-										],
-										"type": "text/javascript"
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Werk een ZAAK-INFORMATIEOBJECT relatie in zijn geheel bij geeft 200\", function() {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "X-NLX-Request-Application-Id",
-										"value": "{{X-NLX-Request-Application-Id}}"
-									},
-									{
-										"key": "X-NLX-Request-User-Id",
-										"value": "{{X-NLX-Request-User-Id}}"
-									},
-									{
-										"key": "X-Audit-Toelichting",
-										"value": "{{X-Audit-Toelichting}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{{request_body}}"
-								},
-								"url": {
-									"raw": "{{zio_url}}",
-									"host": [
-										"{{zio_url}}"
-									]
-								},
-								"description": "Je mag enkel de gegevens\nvan de relatie bewerken, en niet de relatie zelf aanpassen.\n\n**Er wordt gevalideerd op**\n- informatieobject URL en zaak URL mogen niet veranderen"
-							},
-							"response": []
-						},
-						{
-							"name": "Werk een ZAAK-INFORMATIEOBJECT relatie deels bij.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Werk een ZAAK-INFORMATIEOBJECT relatie deels bij geeft 200\", function() {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "X-NLX-Request-Application-Id",
-										"value": "{{X-NLX-Request-Application-Id}}"
-									},
-									{
-										"key": "X-NLX-Request-User-Id",
-										"value": "{{X-NLX-Request-User-Id}}"
-									},
-									{
-										"key": "X-Audit-Toelichting",
-										"value": "{{X-Audit-Toelichting}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"titel\": \"aangepast2\"\n}"
-								},
-								"url": {
-									"raw": "{{zio_url}}",
-									"host": [
-										"{{zio_url}}"
-									]
-								},
-								"description": "Je mag enkel de gegevens\nvan de relatie bewerken, en niet de relatie zelf aanpassen.\n\n**Er wordt gevalideerd op**\n- informatieobject URL en zaak URL mogen niet veranderen"
-							},
-							"response": []
-						},
-						{
-							"name": "Verwijder een ZAAK-INFORMATIEOBJECT relatie.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Verwijder een ZAAK-INFORMATIEOBJECT relatie geeft 204\", function() {",
-											"    pm.response.to.have.status(204);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "X-NLX-Request-Application-Id",
-										"value": "{{X-NLX-Request-Application-Id}}"
-									},
-									{
-										"key": "X-NLX-Request-User-Id",
-										"value": "{{X-NLX-Request-User-Id}}"
-									},
-									{
-										"key": "X-Audit-Toelichting",
-										"value": "{{X-Audit-Toelichting}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{zio_url}}",
-									"host": [
-										"{{zio_url}}"
-									]
-								},
-								"description": "De gespiegelde relatie in de Documenten API wordt door de Zaken API verwijderd. Consumers kunnen dit niet handmatig doen.."
-							},
-							"response": []
-						}
-					],
-					"description": "Folder for zaakinformatieobjecten"
-				},
-				{
 					"name": "zaakobjecten",
 					"item": [
 						{
@@ -4592,6 +4316,18 @@
 										],
 										"type": "text/javascript"
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var uuid = require('uuid');",
+											"var myUUID = uuid.v4(); ",
+											"pm.globals.set(\"random_identificatie_zaaktype_created\", myUUID);",
+											""
+										],
+										"type": "text/javascript"
+									}
 								}
 							],
 							"request": {
@@ -4608,7 +4344,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\",\"verantwoordelijke\": \"Behandelaar\"\n}"
+									"raw": "{\n\t\"identificatie\": \"{{random_identificatie_zaaktype_created}}\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2023-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\",\"verantwoordelijke\": \"Behandelaar\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/zaaktypen",
@@ -5776,6 +5512,18 @@
 										],
 										"type": "text/javascript"
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var uuid = require('uuid');",
+											"var myUUID = uuid.v4(); ",
+											"pm.globals.set(\"random_identificatie_zaaktype_created_concept\", myUUID);",
+											""
+										],
+										"type": "text/javascript"
+									}
 								}
 							],
 							"request": {
@@ -5792,7 +5540,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\"\n}"
+									"raw": "{\n\t\"identificatie\": \"{{random_identificatie_zaaktype_created_concept}}\",\n    \"omschrijving\": \"zrc_tests_2\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\",\n    \"verantwoordelijke\":\"Organisatie eenheid X\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/zaaktypen",
@@ -8516,7 +8264,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\",\n    \"informatieobjectcategorie\":\"informatieobject2\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/informatieobjecttypen",
@@ -9700,7 +9448,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\",\n    \"informatieobjectcategorie\":\"informatieobject2\"\n\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/informatieobjecttypen",
@@ -13436,7 +13184,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"informatieobjecttype\": \"{{created_informatieobjecttype_url}}\",\n\t\"volgnummer\": 2,\n\t\"richting\": \"intern\"\n}"
+									"raw": "{\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"informatieobjecttype\": \"informatieobject2\",\n\t\"volgnummer\": 2,\n\t\"richting\": \"intern\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/zaaktype-informatieobjecttypen",
@@ -15048,209 +14796,6 @@
 						}
 					],
 					"description": "Folder for besluiten"
-				},
-				{
-					"name": "besluitinformatieobjecten",
-					"item": [
-						{
-							"name": "Alle BESLUIT-INFORMATIEOBJECT relaties opvragen.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Alle BESLUIT-INFORMATIEOBJECT relaties opvragen geeft 200\", function() {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{brc_url}}/besluitinformatieobjecten?besluit={{besluit_url}}&informatieobject={{informatieobject_url}}",
-									"host": [
-										"{{brc_url}}"
-									],
-									"path": [
-										"besluitinformatieobjecten"
-									],
-									"query": [
-										{
-											"key": "besluit",
-											"value": "{{besluit_url}}"
-										},
-										{
-											"key": "informatieobject",
-											"value": "{{informatieobject_url}}"
-										}
-									]
-								},
-								"description": "Deze lijst kan gefilterd wordt met query-string parameters."
-							},
-							"response": []
-						},
-						{
-							"name": "Maak een BESLUIT-INFORMATIEOBJECT relatie aan.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Maak een BESLUIT-INFORMATIEOBJECT relatie aan geeft 201\", function() {",
-											"    pm.response.to.have.status(201);",
-											"});",
-											"",
-											"if(pm.response.code == 201) {",
-											"    pm.globals.set(\"bio_url\", pm.response.json().url);",
-											"    pm.globals.set(\"bio_body\", pm.request.body.raw);",
-											"}"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "X-NLX-Request-Application-Id",
-										"value": "{{X-NLX-Request-Application-Id}}"
-									},
-									{
-										"key": "X-NLX-Request-User-Id",
-										"value": "{{X-NLX-Request-User-Id}}"
-									},
-									{
-										"key": "X-Audit-Toelichting",
-										"value": "{{X-Audit-Toelichting}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"besluit\": \"{{besluit_url}}\",\n\t\"informatieobject\": \"{{informatieobject_url}}\"\n}"
-								},
-								"url": {
-									"raw": "{{brc_url}}/besluitinformatieobjecten",
-									"host": [
-										"{{brc_url}}"
-									],
-									"path": [
-										"besluitinformatieobjecten"
-									]
-								},
-								"description": "Registreer een INFORMATIEOBJECT bij een BESLUIT. Er worden twee types van\nrelaties met andere objecten gerealiseerd:\n\n**Er wordt gevalideerd op**\n- geldigheid `besluit` URL\n- geldigheid `informatieobject` URL\n- de combinatie `informatieobject` en `besluit` moet uniek zijn\n\n**Opmerkingen**\n- De `registratiedatum` wordt door het systeem op 'NU' gezet. De\n  `aardRelatie` wordt ook door het systeem gezet.\n- Bij het aanmaken wordt ook in de Documenten API de gespiegelde relatie\n  aangemaakt, echter zonder de relatie-informatie."
-							},
-							"response": []
-						},
-						{
-							"name": "Een specifieke BESLUIT-INFORMATIEOBJECT relatie opvragen.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Alle BESLUIT-INFORMATIEOBJECT relaties opvragen geeft 200\", function() {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{bio_url}}",
-									"host": [
-										"{{bio_url}}"
-									]
-								},
-								"description": "Een specifieke BESLUIT-INFORMATIEOBJECT relatie opvragen."
-							},
-							"response": []
-						},
-						{
-							"name": "Verwijder een BESLUIT-INFORMATIEOBJECT relatie.",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Verwijder een BESLUIT-INFORMATIEOBJECT relatie geeft 204\", function() {",
-											"    pm.response.to.have.status(204);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "X-NLX-Request-Application-Id",
-										"value": "{{X-NLX-Request-Application-Id}}"
-									},
-									{
-										"key": "X-NLX-Request-User-Id",
-										"value": "{{X-NLX-Request-User-Id}}"
-									},
-									{
-										"key": "X-Audit-Toelichting",
-										"value": "{{X-Audit-Toelichting}}"
-									}
-								],
-								"url": {
-									"raw": "{{bio_url}}",
-									"host": [
-										"{{bio_url}}"
-									]
-								},
-								"description": "Verwijder een BESLUIT-INFORMATIEOBJECT relatie."
-							},
-							"response": []
-						}
-					],
-					"description": "Folder for besluitinformatieobjecten"
 				}
 			],
 			"description": "Een API om een besluitregistratiecomponent (BRC) te benaderen.\n\nEen BESLUIT wordt veelal schriftelijk vastgelegd maar dit is niet\nnoodzakelijk. Omgekeerd kan het voorkomen dat in een INFORMATIEOBJECT meerdere\nbesluiten vastgelegd zijn. Vandaar de N:M-relatie naar INFORMATIEOBJECT. Een\nbesluit komt voort uit een zaak van de zaakbehandelende organisatie dan wel is\neen besluit van een andere organisatie dat het onderwerp (object) is van een\nzaak van de zaakbehandelende organisatie. BESLUIT heeft dan ook een optionele\nrelatie met de ZAAK waarvan het een uitkomst is.\n\nDe typering van BESLUITen is in de Catalogi API (ZTC) ondergebracht in de vorm \nvan BESLUITTYPEn.\n\n**Afhankelijkheden**\n\nDeze API is afhankelijk van:\n\n* Catalogi API\n* Notificaties API\n* Documenten API *(optioneel)*\n* Zaken API *(optioneel)*\n* Autorisaties API *(optioneel)*\n\n**Autorisatie**\n\nDeze API vereist autorisatie. Je kan de\n[token-tool](https://zaken-auth.vng.cloud/) gebruiken om JWT-tokens te\ngenereren.\n\n**Notificaties**\n\nDeze API publiceert notificaties op het kanaal `besluiten`.\n\n**Handige links**\n\n* [Documentatie](https://zaakgerichtwerken.vng.cloud/standaard)\n* [Zaakgericht werken](https://zaakgerichtwerken.vng.cloud)\n",
@@ -16148,9 +15693,9 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{global_zaak_url}}",
+							"raw": "{{zaak_url}}",
 							"host": [
-								"{{global_zaak_url}}"
+								"{{zaak_url}}"
 							]
 						}
 					},
@@ -16434,6 +15979,43 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Een specifieke ZAAKTYPE opvragen. Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Een specifiek ZAAKTYPE opvragen geeft 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{created_zaaktype_url}}",
+					"host": [
+						"{{created_zaaktype_url}}"
+					]
+				},
+				"description": "Een specifieke ZAAKTYPE opvragen."
+			},
+			"response": []
 		}
 	],
 	"auth": {
@@ -16452,60 +16034,100 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"function base64url(source) {",
-					"\t// Encode in classical base64",
-					"\tencodedSource = CryptoJS.enc.Base64.stringify(source);",
+					"// function base64url(source) {",
+					"// \t// Encode in classical base64",
+					"// \tencodedSource = CryptoJS.enc.Base64.stringify(source);",
 					"",
-					"\t// Remove padding equal characters",
-					"\tencodedSource = encodedSource.replace(/=+$/, '');",
+					"// \t// Remove padding equal characters",
+					"// \tencodedSource = encodedSource.replace(/=+$/, '');",
 					"",
-					"\t// Replace characters according to base64url specifications",
-					"\tencodedSource = encodedSource.replace(/\\+/g, '-');",
-					"\tencodedSource = encodedSource.replace(/\\//g, '_');",
+					"// \t// Replace characters according to base64url specifications",
+					"// \tencodedSource = encodedSource.replace(/\\+/g, '-');",
+					"// \tencodedSource = encodedSource.replace(/\\//g, '_');",
 					"",
-					"\treturn encodedSource;",
+					"// \treturn encodedSource;",
+					"// }",
+					"",
+					"// function addIAT(request) {",
+					"// \tvar iat = Math.floor(Date.now() / 1000) + 257;",
+					"// \tdata.iat = iat;",
+					"// \treturn data;",
+					"// }",
+					"",
+					"",
+					"// var header = {",
+					"// \t\"typ\": \"JWT\",",
+					"// \t\"alg\": \"HS256\"",
+					"// };",
+					"",
+					"// var data = {",
+					"//     \"iss\": pm.environment.get(\"client_id\"),",
+					"//     \"client_id\": pm.environment.get(\"client_id\"),",
+					"//     \"user_id\": \"123\",",
+					"//     \"user_representation\": \"Demo User\"",
+					"// };",
+					"",
+					"// data = addIAT(data);",
+					"",
+					"// var secret = pm.environment.get(\"secret\");",
+					"",
+					"// // encode header",
+					"// var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));",
+					"// var encodedHeader = base64url(stringifiedHeader);",
+					"",
+					"// // encode data",
+					"// var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));",
+					"// var encodedData = base64url(stringifiedData);",
+					"",
+					"// // build token",
+					"// var token = encodedHeader + \".\" + encodedData;",
+					"",
+					"// var signature = CryptoJS.HmacSHA256(token, secret);",
+					"// signature = base64url(signature);",
+					"",
+					"// var signedToken = token + \".\" + signature;",
+					"",
+					"// pm.globals.set(\"jwt_token\", signedToken);",
+					"",
+					"if (typeof pm.globals.get('jwt_token') === 'undefined') {",
+					"console.log(\"i only run once\")",
+					"",
+					"const requestBody = {",
+					"  \"clientIds\": [",
+					"    \"allthescopesarebelongtous222223132532\"",
+					"  ],",
+					"\t\"secret\": \"sosecret\",",
+					"  \"label\": \"user\",",
+					"  \"heeftAlleAutorisaties\": true,",
+					"  \"autorisaties\": [],",
 					"}",
 					"",
-					"function addIAT(request) {",
-					"\tvar iat = Math.floor(Date.now() / 1000) + 257;",
-					"\tdata.iat = iat;",
-					"\treturn data;",
+					"pm.sendRequest({",
+					"  url: pm.environment.get(\"token-issuer_url\"), // Replace with your API endpoint URL",
+					"  method: 'POST',",
+					"  header: {",
+					"    'Content-Type': 'application/json'",
+					"  },",
+					"  body: {",
+					"    mode: 'raw',",
+					"    raw: JSON.stringify(requestBody)",
+					"  }",
+					"}, (err, response) => {",
+					"  if (err) {",
+					"    console.error(err);",
+					"    return;",
+					"  }",
+					"",
+					"  const responseBody = JSON.parse(response.text());",
+					"  const extractedValue = responseBody.authorization; ",
+					"  var bearer_and_token = extractedValue.split(' ');",
+					"  var jwt_token = bearer_and_token[1]",
+					"",
+					"  pm.globals.set('jwt_token', jwt_token);",
+					"});} else {",
+					"    ",
 					"}",
-					"",
-					"",
-					"var header = {",
-					"\t\"typ\": \"JWT\",",
-					"\t\"alg\": \"HS256\"",
-					"};",
-					"",
-					"var data = {",
-					"    \"iss\": pm.environment.get(\"client_id\"),",
-					"    \"client_id\": pm.environment.get(\"client_id\"),",
-					"    \"user_id\": \"123\",",
-					"    \"user_representation\": \"Demo User\"",
-					"};",
-					"",
-					"data = addIAT(data);",
-					"",
-					"var secret = pm.environment.get(\"secret\");",
-					"",
-					"// encode header",
-					"var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));",
-					"var encodedHeader = base64url(stringifiedHeader);",
-					"",
-					"// encode data",
-					"var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));",
-					"var encodedData = base64url(stringifiedData);",
-					"",
-					"// build token",
-					"var token = encodedHeader + \".\" + encodedData;",
-					"",
-					"var signature = CryptoJS.HmacSHA256(token, secret);",
-					"signature = base64url(signature);",
-					"",
-					"var signedToken = token + \".\" + signature;",
-					"",
-					"pm.globals.set(\"jwt_token\", signedToken);"
+					""
 				]
 			}
 		},
