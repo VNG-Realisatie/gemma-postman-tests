@@ -22929,7 +22929,7 @@
 													"script": {
 														"exec": [
 															"postman.setNextRequest(\"(COMMON) Lock EnkelvoudigInformatieObject\");",
-															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-001e) EnkelvoudigInformatieObject informatieobjecttype bijwerken is niet toegestaan\"]);"
+															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete temp Informatieobjecttype\"]);"
 														],
 														"type": "text/javascript"
 													}
@@ -22945,134 +22945,6 @@
 													],
 													"path": [
 														"publish"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(drc-001e) EnkelvoudigInformatieObject informatieobjecttype bijwerken is niet toegestaan",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject informatieobjecttype bijwerken geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
-															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"exec": [
-															"var body = JSON.parse(pm.globals.get(\"informatieobject_body\"));",
-															"body.informatieobjecttype = \"{{temp_iotype_url}}\";",
-															"body.lock = pm.globals.get(\"informatieobject_lock_id\");",
-															"",
-															"pm.globals.set(\"request_body\", JSON.stringify(body));"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{{request_body}}"
-												},
-												"url": {
-													"raw": "{{informatieobject_url}}",
-													"host": [
-														"{{informatieobject_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(drc-001f) EnkelvoudigInformatieObject informatieobjecttype bijwerken is niet toegestaan",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject informatieobjecttype deels bijwerken geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
-															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
-															"});",
-															"",
-															"// If the type was modified, change it back",
-															"if(pm.response.code == 200) {",
-															"    pm.sendRequest({",
-															"        \"url\": pm.globals.get(\"informatieobject_url\"), ",
-															"        \"method\": \"PATCH\",",
-															"        \"header\": {",
-															"            \"Accept\": \"application/json\",",
-															"            \"Content-Type\": \"application/json\",",
-															"            \"Authorization\": \"Bearer \" + pm.globals.get(\"jwt_token\")",
-															"        },",
-															"        \"body\": {",
-															"            mode: \"raw\",",
-															"            raw: JSON.stringify({\"informatieobjecttype\": pm.globals.get(\"informatieobjecttype_url\"), \"lock\": pm.globals.get(\"informatieobject_lock_id\")})",
-															"        }",
-															"        }, function (err, response) {",
-															"            console.log(response.json());",
-															"    });",
-															"}",
-															"",
-															"postman.setNextRequest(\"(COMMON) Unlock EnkelvoudigInformatieObject\");",
-															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Delete temp Informatieobjecttype\"]);"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"exec": [
-															"pm.globals.set(\"aangepaste_auteur\", \"aangepaste auteur\");"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PATCH",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"informatieobjecttype\": \"{{temp_iotype_url}}\",\n\t\"lock\": \"{{informatieobject_lock_id}}\"\n}"
-												},
-												"url": {
-													"raw": "{{informatieobject_url}}",
-													"host": [
-														"{{informatieobject_url}}"
 													]
 												}
 											},
