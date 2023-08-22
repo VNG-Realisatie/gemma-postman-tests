@@ -25919,7 +25919,9 @@
 													"listen": "test",
 													"script": {
 														"exec": [
-															"pm.globals.set(\"informatieobject_lock_id\", pm.response.json().lock);"
+															"if(pm.response.code == 200) {",
+															"    pm.globals.set(\"informatieobject_lock_id\", pm.response.json().lock);",
+															"}"
 														],
 														"type": "text/javascript"
 													}
@@ -25951,7 +25953,9 @@
 													"listen": "test",
 													"script": {
 														"exec": [
-															"pm.globals.set(\"created_informatieobject_lock_id\", pm.response.json().lock);"
+															"if(pm.response.code == 200) {",
+															"    pm.globals.set(\"created_informatieobject_lock_id\", pm.response.json().lock);",
+															"}"
 														],
 														"type": "text/javascript"
 													}
