@@ -11,6 +11,52 @@
 			"name": "setUp",
 			"item": [
 				{
+					"name": "Generate JWT for collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"  const extractedValue = pm.response.json().authorization",
+									"  var bearer_and_token = extractedValue.split(' ');",
+									"  var jwt_token = bearer_and_token[1]",
+									"pm.globals.set(\"jwt_token\",jwt_token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientIds\": [\n    \"allthescopesarebelongtous222223132532\"\n  ],\n  \"secret\": \"sosecret\",\n  \"label\": \"user\",\n  \"heeftAlleAutorisaties\": true,\n  \"autorisaties\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{token-issuer_url}}",
+							"host": [
+								"{{token-issuer_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Delete Applicatie for AC tests",
 					"event": [
 						{
@@ -40,6 +86,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -18980,86 +19036,6 @@
 			]
 		},
 		{
-			"name": "common requests",
-			"item": [
-				{
-					"name": "(COMMON) Publish Zaaktype",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{created_zaaktype_url}}/publish",
-							"host": [
-								"{{created_zaaktype_url}}"
-							],
-							"path": [
-								"publish"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "(COMMON) Publish Besluittype",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{created_besluittype_url}}/publish",
-							"host": [
-								"{{created_besluittype_url}}"
-							],
-							"path": [
-								"publish"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "(COMMON) Publish Informatieobjecttype",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{created_informatieobjecttype_url}}/publish",
-							"host": [
-								"{{created_informatieobjecttype_url}}"
-							],
-							"path": [
-								"publish"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							"var request_names = pm.globals.get(\"NEXT_REQUEST_NAMES\");",
-							"if(request_names) {",
-							"    postman.setNextRequest(request_names.shift());",
-							"    pm.globals.set(\"NEXT_REQUEST_NAMES\", request_names);",
-							"}"
-						]
-					}
-				}
-			]
-		},
-		{
 			"name": "tearDown Copy",
 			"item": [
 				{
@@ -19314,42 +19290,42 @@
 				"type": "text/javascript",
 				"exec": [
 					"",
-					"if (typeof pm.globals.get('jwt_token') === 'undefined' || typeof pm.globals.get('jwt_token') === \"object\" ) {",
+					"// if (typeof pm.globals.get('jwt_token') === 'undefined' || typeof pm.globals.get('jwt_token') === \"object\" ) {",
 					"",
-					"const requestBody = {",
-					"  \"clientIds\": [",
-					"    \"allthescopesarebelongtous222223132532\"",
-					"  ],",
-					"\t\"secret\": \"sosecret\",",
-					"  \"label\": \"user\",",
-					"  \"heeftAlleAutorisaties\": true,",
-					"  \"autorisaties\": [],",
-					"}",
+					"// const requestBody = {",
+					"//   \"clientIds\": [",
+					"//     \"allthescopesarebelongtous222223132532\"",
+					"//   ],",
+					"// \t\"secret\": \"sosecret\",",
+					"//   \"label\": \"user\",",
+					"//   \"heeftAlleAutorisaties\": true,",
+					"//   \"autorisaties\": [],",
+					"// }",
 					"",
-					"pm.sendRequest({",
-					"  url: pm.environment.get(\"token-issuer_url\"), // Replace with your API endpoint URL",
-					"  method: 'POST',",
-					"  header: {",
-					"    'Content-Type': 'application/json'",
-					"  },",
-					"  body: {",
-					"    mode: 'raw',",
-					"    raw: JSON.stringify(requestBody)",
-					"  }",
-					"}, (err, response) => {",
-					"  if (err) {",
-					"    console.error(err);",
-					"    return;",
-					"  }",
+					"// pm.sendRequest({",
+					"//   url: pm.environment.get(\"token-issuer_url\"), // Replace with your API endpoint URL",
+					"//   method: 'POST',",
+					"//   header: {",
+					"//     'Content-Type': 'application/json'",
+					"//   },",
+					"//   body: {",
+					"//     mode: 'raw',",
+					"//     raw: JSON.stringify(requestBody)",
+					"//   }",
+					"// }, (err, response) => {",
+					"//   if (err) {",
+					"//     console.error(err);",
+					"//     return;",
+					"//   }",
 					"",
-					"  const responseBody = JSON.parse(response.text());",
-					"  const extractedValue = responseBody.authorization; ",
-					"  var bearer_and_token = extractedValue.split(' ');",
-					"  var jwt_token = bearer_and_token[1]",
+					"//   const responseBody = JSON.parse(response.text());",
+					"//   const extractedValue = responseBody.authorization; ",
+					"//   var bearer_and_token = extractedValue.split(' ');",
+					"//   var jwt_token = bearer_and_token[1]",
 					"",
-					"  pm.globals.set('jwt_token', jwt_token);",
-					"});} else {",
-					"}",
+					"//   pm.globals.set('jwt_token', jwt_token);",
+					"// });} else {",
+					"// }",
 					""
 				]
 			}
@@ -19359,9 +19335,9 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"if (pm.response.code === 403) {",
-					"    pm.globals.set(\"jwt_token\", undefined);",
-					"}"
+					"// if (pm.response.code === 403) {",
+					"//     pm.globals.set(\"jwt_token\", undefined);",
+					"// }"
 				]
 			}
 		}
