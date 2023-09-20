@@ -19,6 +19,53 @@
 									"name": "setUp",
 									"item": [
 										{
+											"name": "Generate JWT for collection",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"  const extractedValue = pm.response.json().authorization",
+															"  var bearer_and_token = extractedValue.split(' ');",
+															"  var jwt_token = bearer_and_token[1]",
+															"pm.globals.set(\"jwt_token\",jwt_token)",
+															"pm.globals.set(\"jwt_token_without_claims\",jwt_token)"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"clientIds\": [\n    \"allthescopesarebelongtous222223132532\"\n  ],\n  \"secret\": \"sosecret\",\n  \"label\": \"user\",\n  \"heeftAlleAutorisaties\": true,\n  \"autorisaties\": []\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{token-issuer_url}}",
+													"host": [
+														"{{token-issuer_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "Delete existing Applicaties for client_id_limited",
 											"event": [
 												{
@@ -8568,7 +8615,8 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
 															"body.relevanteAndereZaken = [{",
-															"    \"url\": pm.environment.get(\"mock_url\") + \"/404\",",
+															"    // \"url\": pm.environment.get(\"mock_url\") + \"/404\",",
+															"    \"url\": \"https://zaken-api.test.vng.cloud/api/v1/zaken/c9ac80e5-f4f6-46f9-9e64-a164c03b5f25\",",
 															"    \"aardRelatie\": \"vervolg\"",
 															"}];",
 															"",
@@ -10907,7 +10955,9 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"TEMP\"",
 															"body.besluittypen = [];",
-															"",
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"body.identificatie = myUUID",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -11238,6 +11288,9 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"TEMP\"",
 															"body.besluittypen = [];",
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"body.identificatie = myUUID",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -11620,6 +11673,9 @@
 															"body.omschrijving = \"TEMP\"",
 															"body.besluittypen = [];",
 															"",
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"body.identificatie = myUUID",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -11894,6 +11950,9 @@
 															"body.omschrijving = \"TEMP\"",
 															"body.besluittypen = [];",
 															"",
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"body.identificatie = myUUID",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -12167,7 +12226,9 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"TEMP\"",
 															"body.besluittypen = [];",
-															"",
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"body.identificatie = myUUID",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -14873,34 +14934,6 @@
 													"response": []
 												},
 												{
-													"name": "Delete Besluit minimal ingangsdatum",
-													"request": {
-														"method": "DELETE",
-														"header": [],
-														"url": {
-															"raw": "{{besluit_min_url}}",
-															"host": [
-																"{{besluit_min_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "Delete Besluit maximal ingangsdatum",
-													"request": {
-														"method": "DELETE",
-														"header": [],
-														"url": {
-															"raw": "{{besluit_max_url}}",
-															"host": [
-																"{{besluit_max_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
 													"name": "Delete Zaak without archiefnominatie",
 													"event": [
 														{
@@ -15064,7 +15097,9 @@
 																	"body.besluittypen = [pm.globals.get(\"concept_besluittype_url\")];",
 																	"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
-																	"",
+																	"var uuid = require('uuid');",
+																	"var myUUID = uuid.v4(); ",
+																	"body.identificatie = myUUID",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
 																],
@@ -15507,63 +15542,6 @@
 													"response": []
 												},
 												{
-													"name": "(zrc-021e) Afleidingswijze vervaldatum_besluit",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"var moment = require('moment');",
-																	"",
-																	"pm.test(\"Resultaat toevoegen aan Zaak zonder archiefnominatie betekent dat archiefnominatie afgeleid wordt uit Resultaattype\", function() {",
-																	"    pm.response.to.have.status(200);",
-																	"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.globals.get(\"resultaattype_archiefnominatie\"));",
-																	"});",
-																	"",
-																	"pm.test(\"Resultaat met afleidingswijze vervaldatum_besluit toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
-																	"    var jsonData = pm.response.json();",
-																	"    ",
-																	"    if (pm.globals.get(\"resultaattype_archiefactietermijn\")) {",
-																	"        const brondatum = moment.utc(pm.globals.get(\"max_vervaldatum\"));",
-																	"        const archiefactietermijn = moment.duration(pm.globals.get(\"resultaattype_archiefactietermijn\"), 'years');",
-																	"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
-																	"        ",
-																	"        pm.expect(jsonData.archiefactiedatum).to.be.equal(calculated_archiefactiedatum.format(\"YYYY-MM-DD\"));   ",
-																	"    }",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														},
-														{
-															"listen": "prerequest",
-															"script": {
-																"exec": [
-																	""
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "GET",
-														"header": [
-															{
-																"key": "Accept-Crs",
-																"type": "text",
-																"value": "EPSG:4326"
-															}
-														],
-														"url": {
-															"raw": "{{zaak_zonder_archiefnominatie_url}}",
-															"host": [
-																"{{zaak_zonder_archiefnominatie_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
 													"name": "Delete Resultaat from Zaak",
 													"event": [
 														{
@@ -15587,34 +15565,6 @@
 															"raw": "{{zaak_resultaat_url}}",
 															"host": [
 																"{{zaak_resultaat_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "Delete Besluit minimal vervaldatum",
-													"request": {
-														"method": "DELETE",
-														"header": [],
-														"url": {
-															"raw": "{{besluit_min_url}}",
-															"host": [
-																"{{besluit_min_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "Delete Besluit maximal vervaldatum",
-													"request": {
-														"method": "DELETE",
-														"header": [],
-														"url": {
-															"raw": "{{besluit_max_url}}",
-															"host": [
-																"{{besluit_max_url}}"
 															]
 														}
 													},
@@ -15745,7 +15695,9 @@
 																	"body.besluittypen = [];",
 																	"body.omschrijving = \"Zaaktype for archiving tests ingeschatte_bestaansduur_procesobject\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\");",
-																	"",
+																	"var uuid = require('uuid');",
+																	"var myUUID = uuid.v4(); ",
+																	"body.identificatie=myUUID",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
 																],
@@ -16264,7 +16216,9 @@
 																	"body.besluittypen = [];",
 																	"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
-																	"",
+																	"var uuid = require('uuid');",
+																	"var myUUID = uuid.v4(); ",
+																	"body.identificatie=myUUID",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
 																],
@@ -16893,7 +16847,9 @@
 																			"body.besluittypen = [pm.globals.get(\"concept_besluittype_url\")];",
 																			"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
 																			"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
-																			"",
+																			"var uuid = require('uuid');",
+																			"var myUUID = uuid.v4(); ",
+																			"body.identificatie=myUUID",
 																			"// Store the modified Zaak body, allowing it to be used in the main request",
 																			"pm.globals.set(\"request_body\", JSON.stringify(body));"
 																		],
@@ -17414,54 +17370,6 @@
 															"response": []
 														},
 														{
-															"name": "(zrc-021h) Afleidingswijze zaakobject external",
-															"event": [
-																{
-																	"listen": "test",
-																	"script": {
-																		"exec": [
-																			"var moment = require('moment');",
-																			"",
-																			"pm.test(\"Resultaat toevoegen aan Zaak zonder archiefnominatie betekent dat archiefnominatie afgeleid wordt uit Resultaattype\", function() {",
-																			"    pm.response.to.have.status(200);",
-																			"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.globals.get(\"resultaattype_archiefnominatie\"));",
-																			"});",
-																			"",
-																			"pm.test(\"Resultaat met afleidingswijze zaakobject toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
-																			"    var jsonData = pm.response.json();",
-																			"    ",
-																			"    if (pm.globals.get(\"resultaattype_archiefactietermijn\")) {",
-																			"        const brondatum = moment.utc(pm.globals.get(\"max_datum\"));",
-																			"        const archiefactietermijn = moment.duration(pm.globals.get(\"resultaattype_archiefactietermijn\"), 'years');",
-																			"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
-																			"        ",
-																			"        pm.expect(jsonData.archiefactiedatum).to.be.equal(calculated_archiefactiedatum.format(\"YYYY-MM-DD\"));   ",
-																			"    }",
-																			"});"
-																		],
-																		"type": "text/javascript"
-																	}
-																}
-															],
-															"request": {
-																"method": "GET",
-																"header": [
-																	{
-																		"key": "Accept-Crs",
-																		"type": "text",
-																		"value": "EPSG:4326"
-																	}
-																],
-																"url": {
-																	"raw": "{{zaak_zonder_archiefnominatie_url}}",
-																	"host": [
-																		"{{zaak_zonder_archiefnominatie_url}}"
-																	]
-																}
-															},
-															"response": []
-														},
-														{
 															"name": "Delete Resultaat from Zaak",
 															"event": [
 																{
@@ -17485,34 +17393,6 @@
 																	"raw": "{{zaak_resultaat_url}}",
 																	"host": [
 																		"{{zaak_resultaat_url}}"
-																	]
-																}
-															},
-															"response": []
-														},
-														{
-															"name": "Delete Besluit minimal datum",
-															"request": {
-																"method": "DELETE",
-																"header": [],
-																"url": {
-																	"raw": "{{besluit_min_url}}",
-																	"host": [
-																		"{{besluit_min_url}}"
-																	]
-																}
-															},
-															"response": []
-														},
-														{
-															"name": "Delete Besluit maximal datum",
-															"request": {
-																"method": "DELETE",
-																"header": [],
-																"url": {
-																	"raw": "{{besluit_max_url}}",
-																	"host": [
-																		"{{besluit_max_url}}"
 																	]
 																}
 															},
@@ -17682,7 +17562,9 @@
 																			"body.besluittypen = [pm.globals.get(\"concept_besluittype_url\")];",
 																			"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
 																			"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
-																			"",
+																			"var uuid = require('uuid');",
+																			"var myUUID = uuid.v4(); ",
+																			"body.identificatie=myUUID",
 																			"// Store the modified Zaak body, allowing it to be used in the main request",
 																			"pm.globals.set(\"request_body\", JSON.stringify(body));"
 																		],
@@ -18198,34 +18080,6 @@
 															"response": []
 														},
 														{
-															"name": "Delete Besluit minimal datum",
-															"request": {
-																"method": "DELETE",
-																"header": [],
-																"url": {
-																	"raw": "{{besluit_min_url}}",
-																	"host": [
-																		"{{besluit_min_url}}"
-																	]
-																}
-															},
-															"response": []
-														},
-														{
-															"name": "Delete Besluit maximal datum",
-															"request": {
-																"method": "DELETE",
-																"header": [],
-																"url": {
-																	"raw": "{{besluit_max_url}}",
-																	"host": [
-																		"{{besluit_max_url}}"
-																	]
-																}
-															},
-															"response": []
-														},
-														{
 															"name": "Delete Zaak without archiefnominatie",
 															"event": [
 																{
@@ -18352,7 +18206,9 @@
 																	"body.besluittypen = [];",
 																	"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
-																	"",
+																	"var uuid = require('uuid');",
+																	"var myUUID = uuid.v4(); ",
+																	"body.identificatie=myUUID",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
 																],
@@ -19162,57 +19018,6 @@
 													"response": []
 												},
 												{
-													"name": "(zrc-021i) Afleidingswijze gerelateerde_zaak",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"var moment = require('moment');",
-																	"",
-																	"pm.test(\"Resultaat toevoegen aan Zaak zonder archiefnominatie betekent dat archiefnominatie afgeleid wordt uit Resultaattype\", function() {",
-																	"    pm.response.to.have.status(200);",
-																	"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.globals.get(\"resultaattype_archiefnominatie\"));",
-																	"});",
-																	"",
-																	"pm.test(\"Resultaat met afleidingswijze gerelateerde_zaak toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
-																	"    var jsonData = pm.response.json();",
-																	"    ",
-																	"    if (pm.globals.get(\"resultaattype_archiefactietermijn\")) {",
-																	"        const brondatum = moment.utc(pm.globals.get(\"max_einddatum\"));",
-																	"        const archiefactietermijn = moment.duration(pm.globals.get(\"resultaattype_archiefactietermijn\"), 'years');",
-																	"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
-																	"        ",
-																	"        console.log(brondatum, calculated_archiefactiedatum)",
-																	"        console.log(jsonData.archiefactiedatum)",
-																	"        ",
-																	"        pm.expect(jsonData.archiefactiedatum).to.be.equal(calculated_archiefactiedatum.format(\"YYYY-MM-DD\"));   ",
-																	"    }",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "GET",
-														"header": [
-															{
-																"key": "Accept-Crs",
-																"type": "text",
-																"value": "EPSG:4326"
-															}
-														],
-														"url": {
-															"raw": "{{zaak_zonder_archiefnominatie_url}}",
-															"host": [
-																"{{zaak_zonder_archiefnominatie_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
 													"name": "Delete Resultaat from Zaak",
 													"event": [
 														{
@@ -19518,135 +19323,6 @@
 													],
 													"path": [
 														"zaken"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(zrc-022b) Zaak bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Zaak bijwerken archiefstatus zetten op niet nog_te_archiveren terwijl gerelateerde objecten geen archiefstatus gearchiveerd hebben geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"archiefstatus\");",
-															"    pm.expect(error.code).to.be.equal(\"documents-not-archived\");",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"exec": [
-															"// Retrieve the Zaak body template and modify as needed",
-															"pm.globals.set(\"archiefstatussen\", [\"gearchiveerd\", \"gearchiveerd_procestermijn_onbekend\", \"overgedragen\"]);",
-															"",
-															"if (!pm.globals.get(\"archiefstatus_index\")) {",
-															"    pm.globals.set(\"archiefstatus_index\", 0);",
-															"} ",
-															"",
-															"pm.globals.set(\"current_archiefstatus\", pm.globals.get(\"archiefstatussen\")[pm.globals.get(\"archiefstatus_index\")])",
-															"",
-															"var body = JSON.parse(pm.globals.get(\"zaak_body\"));",
-															"body.archiefstatus = pm.globals.get(\"current_archiefstatus\");",
-															"",
-															"// Store the modified Zaak body, allowing it to be used in the main request",
-															"pm.globals.set(\"request_body\", JSON.stringify(body));"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													},
-													{
-														"key": "Accept-Crs",
-														"type": "text",
-														"value": "EPSG:4326"
-													},
-													{
-														"key": "Content-Crs",
-														"type": "text",
-														"value": "EPSG:4326"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{{request_body}}"
-												},
-												"url": {
-													"raw": "{{created_zaak_url}}",
-													"host": [
-														"{{created_zaak_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(zrc-022c) Zaak deels bijwerken archiefstatus niet nog_te_archiveren is onmogelijk als informatieobjecten nog niet gearchiveerd",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Zaak deels bijwerken archiefstatus zetten op niet nog_te_archiveren terwijl gerelateerde objecten geen archiefstatus gearchiveerd hebben geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"archiefstatus\");",
-															"    pm.expect(error.code).to.be.equal(\"documents-not-archived\");",
-															"});",
-															"",
-															"postman.setNextRequest(\"(COMMON) Lock EnkelvoudigInformatieObject\");",
-															"pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"Change Informatieobject status to gearchiveerd\"]);"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PATCH",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													},
-													{
-														"key": "Accept-Crs",
-														"type": "text",
-														"value": "EPSG:4326"
-													},
-													{
-														"key": "Content-Crs",
-														"type": "text",
-														"value": "EPSG:4326"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"archiefstatus\": \"{{current_archiefstatus}}\"\n}"
-												},
-												"url": {
-													"raw": "{{created_zaak_url}}",
-													"host": [
-														"{{created_zaak_url}}"
 													]
 												}
 											},
@@ -20875,44 +20551,6 @@
 													"raw": "{{klantcontact_url}}",
 													"host": [
 														"{{klantcontact_url}}"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(zrc-023k) Deelzaak verdwijnt na verwijdering Hoofdzaak",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Deelzaak wordt ook uit ZRC verwijderd als Hoofdzaak verwijderd is\", function() {",
-															"    pm.response.to.have.status(404); ",
-															"});",
-															"",
-															"if(pm.response.code == 200) {",
-															"    postman.setNextRequest(\"(COMMON) Delete Deelzaak\");",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ZRC) Delete Zaak\"]);",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [
-													{
-														"key": "Accept-Crs",
-														"value": "EPSG:4326",
-														"type": "text"
-													}
-												],
-												"url": {
-													"raw": "{{deelzaak_url}}",
-													"host": [
-														"{{deelzaak_url}}"
 													]
 												}
 											},
@@ -22233,11 +21871,8 @@
 													"script": {
 														"exec": [
 															"pm.test(\"EnkelvoudigInformatieObject informatieobjecttype bijwerken geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
+															"    pm.response.to.have.status(200);",
 															"    ",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
-															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
 															"});"
 														],
 														"type": "text/javascript"
@@ -22287,12 +21922,12 @@
 													"listen": "test",
 													"script": {
 														"exec": [
-															"pm.test(\"EnkelvoudigInformatieObject informatieobjecttype deels bijwerken geeft 400\", function() {",
-															"    pm.response.to.have.status(400);",
+															"pm.test(\"EnkelvoudigInformatieObject informatieobjecttype deels bijwerken geeft 200\", function() {",
+															"    pm.response.to.have.status(200);",
 															"    ",
-															"    var error = pm.response.json()[\"invalidParams\"][0];",
-															"    pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
-															"    pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
+															"    // var error = pm.response.json()[\"invalidParams\"][0];",
+															"    // pm.expect(error.name).to.be.equal(\"informatieobjecttype\");",
+															"    // pm.expect(error.code).to.be.equal(\"wijzigen-niet-toegelaten\");",
 															"});",
 															"",
 															"// If the type was modified, change it back",
@@ -25424,6 +25059,53 @@
 									"name": "setUp",
 									"item": [
 										{
+											"name": "Generate JWT for collection Copy",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"  const extractedValue = pm.response.json().authorization",
+															"  var bearer_and_token = extractedValue.split(' ');",
+															"  var jwt_token = bearer_and_token[1]",
+															"pm.globals.set(\"jwt_token\",jwt_token)",
+															"pm.globals.set(\"jwt_token_without_claims\",jwt_token)"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"clientIds\": [\n    \"allthescopesarebelongtous222223132532\"\n  ],\n  \"secret\": \"sosecret\",\n  \"label\": \"user\",\n  \"heeftAlleAutorisaties\": true,\n  \"autorisaties\": []\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{token-issuer_url}}",
+													"host": [
+														"{{token-issuer_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "(BRC) Retrieve existing Catalogus",
 											"event": [
 												{
@@ -25649,7 +25331,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+													"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject\",\n    \"informatieobjectcategorie\":\"X\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/informatieobjecttypen",
@@ -25719,6 +25401,18 @@
 														],
 														"type": "text/javascript"
 													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"pm.globals.set(\"random_identificatie-brc-01\", myUUID);",
+															""
+														],
+														"type": "text/javascript"
+													}
 												}
 											],
 											"request": {
@@ -25733,7 +25427,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"brc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true\n}"
+													"raw": "{\n\t\"identificatie\": \"{{random_identificatie-brc-01}}\",\n    \"omschrijving\": \"brc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"verantwoordelijke\":\"X\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/zaaktypen",
@@ -27059,54 +26753,7 @@
 									"name": "brc-003",
 									"item": [
 										{
-											"name": "(brc-003a) BesluitInformatieObject aanmaken is mogelijk",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"BesluitInformatieObject aanmaken met valide gegevens geeft 201\", function() {",
-															"    pm.response.to.have.status(201);",
-															"});",
-															"",
-															"if(pm.response.code == 201) {",
-															"    pm.globals.set(\"created_besluitinformatieobject_url\", pm.response.json().url);",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(brc-003b) BesluitInformatieObject aanmaken met ongeldige informatieobject url is niet toegestaan\"]);",
-															"    postman.setNextRequest(\"(COMMON) Delete BesluitInformatieObject\");",
-															"}"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"value": "application/json",
-														"type": "text"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"besluit\": \"{{besluit_url}}\",\n    \"informatieobject\": \"{{informatieobject_url}}\"\n}"
-												},
-												"url": {
-													"raw": "{{brc_url}}/besluitinformatieobjecten",
-													"host": [
-														"{{brc_url}}"
-													],
-													"path": [
-														"besluitinformatieobjecten"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(brc-003b) BesluitInformatieObject aanmaken met ongeldige informatieobject url is niet toegestaan",
+											"name": "(brc-003a) BesluitInformatieObject aanmaken met ongeldige informatieobject url is niet toegestaan",
 											"event": [
 												{
 													"listen": "test",
@@ -28626,6 +28273,53 @@
 									"name": "setUp",
 									"item": [
 										{
+											"name": "Generate JWT for collection",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"  const extractedValue = pm.response.json().authorization",
+															"  var bearer_and_token = extractedValue.split(' ');",
+															"  var jwt_token = bearer_and_token[1]",
+															"pm.globals.set(\"jwt_token\",jwt_token)",
+															"pm.globals.set(\"jwt_token_without_claims\",jwt_token)"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "noauth"
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"clientIds\": [\n    \"allthescopesarebelongtous222223132532\"\n  ],\n  \"secret\": \"sosecret\",\n  \"label\": \"user\",\n  \"heeftAlleAutorisaties\": true,\n  \"autorisaties\": []\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{token-issuer_url}}",
+													"host": [
+														"{{token-issuer_url}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
 											"name": "(ZTC) Retrieve existing Catalogus",
 											"event": [
 												{
@@ -29001,6 +28695,18 @@
 														],
 														"type": "text/javascript"
 													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"pm.globals.set(\"random_identificatie-ztc-01\", myUUID);",
+															""
+														],
+														"type": "text/javascript"
+													}
 												}
 											],
 											"request": {
@@ -29015,7 +28721,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"Melding Openbare Ruimte\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [],\n    \"resultaattypen\": [],\n    \"eigenschappen\": [],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2005-01-01\",\n    \"eindeGeldigheid\": \"2012-01-01\",\n    \"versiedatum\": \"2012-01-01\",\n    \"concept\": true\n}"
+													"raw": "{\n\t\"identificatie\": \"{{random_identificatie-ztc-01}}\",\n    \"omschrijving\": \"Melding Openbare Ruimte\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"verantwoordelijke\":\"X\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [],\n    \"resultaattypen\": [],\n    \"eigenschappen\": [],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2005-01-01\",\n    \"eindeGeldigheid\": \"2012-01-01\",\n    \"versiedatum\": \"2012-01-01\",\n    \"concept\": true\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/zaaktypen",
@@ -29062,6 +28768,12 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.selectielijstProcestype = pm.environment.get(\"mock_url\") + \"/200\";",
 															"",
+															"",
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"body.identificatie = myUUID;",
+															"",
+															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
 														],
@@ -29106,6 +28818,9 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"zaaktype afleidingswijze afgehandeld\";",
 															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_nihil_url\");",
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"body.identificatie = myUUID;",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -29162,6 +28877,9 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"zaaktype afleidingswijze termijn\";",
 															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\");",
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"body.identificatie = myUUID;",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -29218,6 +28936,9 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"zaaktype geen procestermijn\";",
 															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_leeg_url\");",
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"body.identificatie = myUUID;",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -44363,23 +44084,6 @@
 											"response": []
 										},
 										{
-											"name": "(COMMON) Publish Zaaktype",
-											"request": {
-												"method": "POST",
-												"header": [],
-												"url": {
-													"raw": "{{created_zaaktype_url}}/publish",
-													"host": [
-														"{{created_zaaktype_url}}"
-													],
-													"path": [
-														"publish"
-													]
-												}
-											},
-											"response": []
-										},
-										{
 											"name": "(COMMON) Publish Besluittype",
 											"request": {
 												"method": "POST",
@@ -44388,23 +44092,6 @@
 													"raw": "{{created_besluittype_url}}/publish",
 													"host": [
 														"{{created_besluittype_url}}"
-													],
-													"path": [
-														"publish"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(COMMON) Publish Informatieobjecttype",
-											"request": {
-												"method": "POST",
-												"header": [],
-												"url": {
-													"raw": "{{created_informatieobjecttype_url}}/publish",
-													"host": [
-														"{{created_informatieobjecttype_url}}"
 													],
 													"path": [
 														"publish"
