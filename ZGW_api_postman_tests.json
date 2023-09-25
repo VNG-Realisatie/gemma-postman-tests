@@ -593,7 +593,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"clientIds\": [\"test_id1\"],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": []\n}"
+													"raw": "{\n\t\"clientIds\": [\"{{pm.globals.get('random_client_id')}}\"],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": []\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -653,6 +653,18 @@
 														],
 														"type": "text/javascript"
 													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"pm.globals.set(\"random_client_id\", myUUID);",
+															""
+														],
+														"type": "text/javascript"
+													}
 												}
 											],
 											"request": {
@@ -667,7 +679,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"{{random_client_id}}\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"heeftAlleAutorisaties\": true,\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"zaken.lezen\"\n            ],\n            \"zaaktype\": \"{{zaaktype_url}}\",\n            \"maxVertrouwelijkheidaanduiding\": \"openbaar\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -812,6 +824,18 @@
 														],
 														"type": "text/javascript"
 													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"pm.globals.set(\"random_client_id\", myUUID);",
+															""
+														],
+														"type": "text/javascript"
+													}
 												}
 											],
 											"request": {
@@ -826,7 +850,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"notificaties.publiceren\"\n            ],\n            \"zaaktype\": \"\",\n            \"maxVertrouwelijkheidaanduiding\": \"\"\n        }\n    ]\n}"
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"{{random_client_id}}\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"zrc\",\n            \"componentWeergave\": \"Zaakregistratiecomponent\",\n            \"scopes\": [\n                \"notificaties.publiceren\"\n            ],\n            \"zaaktype\": \"\",\n            \"maxVertrouwelijkheidaanduiding\": \"\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -915,55 +939,15 @@
 														],
 														"type": "text/javascript"
 													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"name": "Content-Type",
-														"type": "text",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"drc\",\n            \"componentWeergave\": \"Documentregistratiecomponent\",\n            \"scopes\": [\n                \"notificaties.publiceren\"\n            ],\n            \"informatieobjecttype\": \"\",\n            \"maxVertrouwelijkheidaanduiding\": \"\"\n        }\n    ]\n}"
 												},
-												"url": {
-													"raw": "{{ac_url}}/applicaties",
-													"host": [
-														"{{ac_url}}"
-													],
-													"path": [
-														"applicaties"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "(ac-003e) Autorisatie met component brc scope m.b.t. besluiten en zonder besluittype is onmogelijk",
-											"event": [
 												{
-													"listen": "test",
+													"listen": "prerequest",
 													"script": {
 														"exec": [
-															"pm.test(\"Applicatie aanmaken met Autorisatie met component brc en scope m.b.t. besluiten zonder besluittype is onmogelijk\", function() {",
-															"    pm.response.to.have.status(400);",
-															"    ",
-															"    var errors = pm.response.json().invalidParams;",
-															"    ",
-															"    pm.expect(errors[0].name).to.be.equal(\"autorisaties.0.besluittype\");",
-															"    pm.expect(errors[0].code).to.be.equal(\"required\");",
-															"});",
-															"",
-															"if(pm.response.code == 201) {",
-															"    pm.globals.set(\"created_applicatie_url\", pm.response.json().url)",
-															"    postman.setNextRequest(\"(COMMON) Delete Applicatie\");",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(ac-003f) Autorisatie met component brc zonder scope m.b.t. besluiten en zonder besluittype is mogelijk\"]);",
-															"}"
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"pm.globals.set(\"random_client_id\", myUUID);",
+															""
 														],
 														"type": "text/javascript"
 													}
@@ -981,7 +965,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"brc\",\n            \"componentWeergave\": \"Besluitregistratiecomponent\",\n            \"scopes\": [\n                \"besluiten.lezen\"\n            ],\n            \"besluittype\": \"\"\n        }\n    ]\n}"
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"{{random_client_id}}\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"drc\",\n            \"componentWeergave\": \"Documentregistratiecomponent\",\n            \"scopes\": [\n                \"notificaties.publiceren\"\n            ],\n            \"informatieobjecttype\": \"\",\n            \"maxVertrouwelijkheidaanduiding\": \"\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -1014,6 +998,18 @@
 														],
 														"type": "text/javascript"
 													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															"var uuid = require('uuid');",
+															"var myUUID = uuid.v4(); ",
+															"pm.globals.set(\"random_client_id\", myUUID);",
+															""
+														],
+														"type": "text/javascript"
+													}
 												}
 											],
 											"request": {
@@ -1028,7 +1024,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"clientIds\": [\n\t\t\"test_id3\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"brc\",\n            \"componentWeergave\": \"Besluitregistratiecomponent\",\n            \"scopes\": [\n                \"notificaties.publiceren\"\n            ],\n            \"besluittype\": \"\"\n        }\n    ]\n}"
+													"raw": "{\n\t\"clientIds\": [\n\t\t\"{{random_client_id}}\"\n\t],\n\t\"label\": \"Test applicatie\",\n\t\"autorisaties\": [\n        {\n            \"component\": \"brc\",\n            \"componentWeergave\": \"Besluitregistratiecomponent\",\n            \"scopes\": [\n                \"notificaties.publiceren\"\n            ],\n            \"besluittype\": \"\"\n        }\n    ]\n}"
 												},
 												"url": {
 													"raw": "{{ac_url}}/applicaties",
@@ -15732,50 +15728,6 @@
 													"response": []
 												},
 												{
-													"name": "Create Resultaattype procestermijn ingeschatte_bestaansduur_procesobject",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"var jsonData = pm.response.json();",
-																	"",
-																	"pm.globals.set(\"current_resultaattype\", jsonData.url);",
-																	"pm.globals.set(\"resultaattype_archiefnominatie\", jsonData.archiefnominatie);",
-																	"pm.globals.set(\"resultaattype_archiefactietermijn\", jsonData.archiefactietermijn);",
-																	"pm.globals.set(\"resultaattype_brondatumArchiefprocedure\", jsonData.brondatumArchiefprocedure);"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "POST",
-														"header": [
-															{
-																"key": "Content-Type",
-																"name": "Content-Type",
-																"type": "text",
-																"value": "application/json"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{\n\t\"zaaktype\": \"{{zaaktype_procestermijn_ingeschatte_bestaansduur_object_url}}\",\n\t\"omschrijving\": \"Afgewezen\",\n\t\"resultaattypeomschrijving\": \"{{referentielijst_url}}/resultaattypeomschrijvingen/e6a0c939-3404-45b0-88e3-76c94fb80ea7\",\n\t\"selectielijstklasse\": \"{{selectielijstklasse_procestermijn_ingeschatte_bestaansduur_object_url}}\",\n\t\"brondatumArchiefprocedure\": {\n\t\t\"afleidingswijze\": \"termijn\",\n\t\t\"procestermijn\": \"P5M\",\n\t\t\"datumkenmerk\": \"\",\n\t\t\"einddatumBekend\": false,\n\t\t\"objecttype\": \"\",\n\t\t\"registratie\": \"\"\n\t}\n}"
-														},
-														"url": {
-															"raw": "{{ztc_url}}/resultaattypen",
-															"host": [
-																"{{ztc_url}}"
-															],
-															"path": [
-																"resultaattypen"
-															]
-														}
-													},
-													"response": []
-												},
-												{
 													"name": "Create eind Statustype procestermijn ingeschatte_bestaansduur_procesobject",
 													"event": [
 														{
@@ -16021,85 +15973,6 @@
 															],
 															"path": [
 																"statussen"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "(zrc-021f) Afleidingswijze termijn",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"var moment = require('moment');",
-																	"",
-																	"pm.test(\"Resultaat toevoegen aan Zaak zonder archiefnominatie betekent dat archiefnominatie afgeleid wordt uit Resultaattype\", function() {",
-																	"    pm.response.to.have.status(200);",
-																	"    pm.expect(pm.response.json().archiefnominatie).to.be.equal(pm.globals.get(\"resultaattype_archiefnominatie\"));",
-																	"});",
-																	"",
-																	"pm.test(\"Resultaat met afleidingswijze termijn toevoegen aan Zaak zet correcte Zaak.archiefdatum\", function() {",
-																	"    var jsonData = pm.response.json();",
-																	"    ",
-																	"    if (pm.globals.get(\"resultaattype_archiefactietermijn\")) {",
-																	"        var procestermijn = moment.duration(pm.globals.get(\"resultaattype_brondatumArchiefprocedure\").procestermijn);",
-																	"        const brondatum = moment.utc(jsonData.einddatum).add(procestermijn);",
-																	"        ",
-																	"        const archiefactietermijn = moment.duration(pm.globals.get(\"resultaattype_archiefactietermijn\"), 'years');",
-																	"        var calculated_archiefactiedatum = brondatum.add(archiefactietermijn);",
-																	"        ",
-																	"        pm.expect(jsonData.archiefactiedatum).to.be.equal(calculated_archiefactiedatum.format(\"YYYY-MM-DD\"));   ",
-																	"    }",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "GET",
-														"header": [
-															{
-																"key": "Accept-Crs",
-																"type": "text",
-																"value": "EPSG:4326"
-															}
-														],
-														"url": {
-															"raw": "{{zaak_zonder_archiefnominatie_url}}",
-															"host": [
-																"{{zaak_zonder_archiefnominatie_url}}"
-															]
-														}
-													},
-													"response": []
-												},
-												{
-													"name": "Delete Resultaat from Zaak",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	""
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"request": {
-														"method": "DELETE",
-														"header": [],
-														"body": {
-															"mode": "raw",
-															"raw": ""
-														},
-														"url": {
-															"raw": "{{zaak_resultaat_url}}",
-															"host": [
-																"{{zaak_resultaat_url}}"
 															]
 														}
 													},
