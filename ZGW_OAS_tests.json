@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "220a71e4-0eff-44f6-b78a-20f164cf9090",
+		"_postman_id": "c36c2d23-3b67-4e54-a6d0-fbd9aca8528d",
 		"name": "ZGW OAS tests",
 		"description": "Dit is de Postman test suite voor de OAS specificaties van de ZGW API's, elke folder bevat tests die verifieren of de API's voldoen aan de OAS specificaties van die API's. Het gaat om de volgende OAS schema's:\n\n- Zaken API: https://zaken-api.vng.cloud/api/v1/schema/\n- Documenten API: https://documenten-api.vng.cloud/api/v1/schema/\n- Catalogi API: https://catalogi-api.vng.cloud/api/v1/schema/\n- Besluiten API: https://besluiten-api.vng.cloud/api/v1/schema/\n- Notificaties API: https://notificaties-api.vng.cloud/api/v1/schema/\n- Autorisaties API: https://autorisaties-api.vng.cloud/api/v1/schema/\n\n**LET OP:** voor deze tests zijn de environment variabelen `client_id` en `secret` nodig, dit moeten credentials zijn die geregistreerd zijn binnen de Autorisaties API, en hiervoor moet dus ook een bestaande applicatie met superuser rechten aanwezig zijn in het systeem. Aan de hand van deze credentials wordt binnen de testsuite een JSON Web Token gegenereerd, die vervolgens gebruikt wordt in de Authorization headers van iedere API call",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "7083537"
+		"_exporter_id": "30084350"
 	},
 	"item": [
 		{
@@ -8516,7 +8516,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\",\n    \"informatieobjectcategorie\": \"testcategorie\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/informatieobjecttypen",
@@ -9700,7 +9700,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\"\n}"
+									"raw": "{\n\t\"catalogus\": \"{{catalogus_url}}\",\n\t\"omschrijving\": \"informatieobject2\",\n\t\"vertrouwelijkheidaanduiding\": \"openbaar\",\n\t\"beginGeldigheid\": \"2019-01-01\",\n    \"informatieobjectcategorie\": \"testcategorie\"\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/informatieobjecttypen",
