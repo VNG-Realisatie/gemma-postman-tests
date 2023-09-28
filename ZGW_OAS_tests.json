@@ -13560,7 +13560,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"omschrijving\": \"Eind2\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"volgnummer\": 3\n}"
+									"raw": "{\n\t\"omschrijving\": \"Afgehandeld\",  \n    \"omschrijvingGeneriek\": \"\",  \n    \"statustekst\": \"\",\n\t\"zaaktype\": \"{{created_zaaktype_url}}\",\n\t\"volgnummer\": 3,\n    \"informeren\": false\n}"
 								},
 								"url": {
 									"raw": "{{ztc_url}}/statustypen",
