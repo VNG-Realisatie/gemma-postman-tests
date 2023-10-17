@@ -1557,7 +1557,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"deelzaaktypen\": [\n        \"{{deelzaaktype_url}}\"\n    ],\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\",\n    \"verantwoordelijke\": \"Behandelaar\"\n}"
+													"raw": "{\n\t\"identificatie\": \"7\",\n    \"omschrijving\": \"zrc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"deelzaaktypen\": [\n        \"{{deelzaaktype_url}}\"\n    ],\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\",\n    \"verantwoordelijke\": \"Behandelaar\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/zaaktypen",
@@ -2374,6 +2374,7 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"TEMP\"",
 															"body.besluittypen = [];",
+                                                            "body.identificatie = \"14\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -3959,7 +3960,7 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.besluittypen = [];",
 															"body.omschrijving = \"Zaaktype for auth tests\";",
-															"body.identificatie = 2;",
+															"body.identificatie = 20;",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -11264,6 +11265,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"TEMP\"",
+                                                            "body.identificatie = \"15\";",
 															"body.besluittypen = [];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -11595,6 +11597,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"TEMP\"",
+                                                            "body.identificatie = \"16\";",
 															"body.besluittypen = [];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -11976,6 +11979,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"TEMP\"",
+                                                            "body.identificatie = \"17\";",
 															"body.besluittypen = [];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -12250,6 +12254,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"TEMP\"",
+                                                            "body.identificatie = \"18\";",
 															"body.besluittypen = [];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -12524,6 +12529,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"TEMP\"",
+                                                            "body.identificatie = \"19\";",
 															"body.besluittypen = [];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -12812,6 +12818,7 @@
 																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																	"body.besluittypen = [];",
 																	"body.omschrijving = \"Zaaktype for archiving tests nihil\";",
+                                                                    "body.identificatie = \"21\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_nihil_url\");",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -13309,6 +13316,7 @@
 																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																	"body.besluittypen = [];",
 																	"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
+                                                                    "body.identificatie = \"22\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -13371,7 +13379,7 @@
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"zrc_tests_1 hoofdzaak\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"deelzaaktypen\": [\n        \"{{zaaktype_procestermijn_vast_te_leggen_datum_url}}\"\n    ],\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\",\n    \"verantwoordelijke\": \"Behandelaar\"\n}"
+															"raw": "{\n\t\"identificatie\": \"3\",\n    \"omschrijving\": \"zrc_tests_1 hoofdzaak\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": true,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_procestermijn_nihil_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"deelzaaktypen\": [\n        \"{{zaaktype_procestermijn_vast_te_leggen_datum_url}}\"\n    ],\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verlengingstermijn\": \"P5D\",\n    \"verantwoordelijke\": \"Behandelaar\"\n}"
 														},
 														"url": {
 															"raw": "{{ztc_url}}/zaaktypen",
@@ -14334,6 +14342,7 @@
 																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																	"body.besluittypen = [];",
 																	"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
+                                                                    "body.identificatie = \"23\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -14990,6 +14999,7 @@
 																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																	"body.besluittypen = [pm.globals.get(\"concept_besluittype_url\")];",
 																	"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
+                                                                    "body.identificatie = \"24\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -15710,6 +15720,7 @@
 																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																	"body.besluittypen = [pm.globals.get(\"concept_besluittype_url\")];",
 																	"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
+                                                                    "body.identificatie = \"25\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -16391,6 +16402,7 @@
 																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																	"body.besluittypen = [];",
 																	"body.omschrijving = \"Zaaktype for archiving tests ingeschatte_bestaansduur_procesobject\";",
+                                                                    "body.identificatie = \"26\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\");",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -16910,6 +16922,7 @@
 																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																	"body.besluittypen = [];",
 																	"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
+                                                                    "body.identificatie = \"27\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -17539,6 +17552,7 @@
 																			"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																			"body.besluittypen = [pm.globals.get(\"concept_besluittype_url\")];",
 																			"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
+                                                                            "body.identificatie = \"28\";",
 																			"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
 																			"",
 																			"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -18328,6 +18342,7 @@
 																			"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																			"body.besluittypen = [pm.globals.get(\"concept_besluittype_url\")];",
 																			"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
+                                                                            "body.identificatie = \"29\";",
 																			"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
 																			"",
 																			"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -18998,6 +19013,7 @@
 																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																	"body.besluittypen = [];",
 																	"body.omschrijving = \"Zaaktype for archiving tests vast_te_leggen_datum\";",
+                                                                    "body.identificatie = \"30\";",
 																	"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_vast_te_leggen_datum_url\");",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -22424,7 +22440,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"drc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verantwoordelijke\": \"Behandelaar\"\n}"
+													"raw": "{\n\t\"identificatie\": \"4\",\n    \"omschrijving\": \"drc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verantwoordelijke\": \"Behandelaar\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/zaaktypen",
@@ -26411,7 +26427,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"brc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verantwoordelijke\": \"Behandelaar\"\n}"
+													"raw": "{\n\t\"identificatie\": \"5\",\n    \"omschrijving\": \"brc_tests_1\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [\n        \"http://localhost:8002/api/v1/statustypen/ecb7fc03-5c11-46be-917f-e70e16c77554\",\n        \"http://localhost:8002/api/v1/statustypen/14734ec8-04f8-4c18-a009-e190ff448ca9\"\n    ],\n    \"resultaattypen\": [\n        \"http://localhost:8002/api/v1/resultaattypen/eead9dcd-9544-4862-8a03-b55643f95228\"\n    ],\n    \"eigenschappen\": [\n        \"http://localhost:8002/api/v1/eigenschappen/d417bd46-a2a8-46d7-bb8c-4c8dc214301b\"\n    ],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [\n        \"{{besluittype_url}}\"\n    ],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2019-01-01\",\n    \"versiedatum\": \"2019-01-01\",\n    \"concept\": true,\n    \"verantwoordelijke\": \"Behandelaar\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/zaaktypen",
@@ -29693,7 +29709,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n\t\"identificatie\": \"1\",\n    \"omschrijving\": \"Melding Openbare Ruimte\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [],\n    \"resultaattypen\": [],\n    \"eigenschappen\": [],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2005-01-01\",\n    \"eindeGeldigheid\": \"2012-01-01\",\n    \"versiedatum\": \"2012-01-01\",\n    \"concept\": true,\n    \"verantwoordelijke\": \"Behandelaar\"\n}"
+													"raw": "{\n\t\"identificatie\": \"6\",\n    \"omschrijving\": \"Melding Openbare Ruimte\",\n    \"vertrouwelijkheidaanduiding\": \"openbaar\",\n    \"doel\": \"test doel\",\n    \"aanleiding\": \"test aanleiding\",\n    \"indicatieInternOfExtern\": \"extern\",\n    \"handelingInitiator\": \"indienen\",\n    \"onderwerp\": \"openbare ruimte\",\n    \"handelingBehandelaar\": \"behandelen\",\n    \"doorlooptijd\": \"P10D\",\n    \"opschortingEnAanhoudingMogelijk\": false,\n    \"verlengingMogelijk\": false,\n    \"publicatieIndicatie\": false,\n    \"productenOfDiensten\": [\n        \"https://ref.tst.vng.cloud/standaard/\"\n    ],\n    \"selectielijstProcestype\": \"{{procestype_url}}\",\n    \"referentieproces\": {\n        \"naam\": \"test\",\n        \"link\": \"\"\n    },\n    \"catalogus\": \"{{catalogus_url}}\",\n    \"statustypen\": [],\n    \"resultaattypen\": [],\n    \"eigenschappen\": [],\n    \"informatieobjecttypen\": [],\n    \"besluittypen\": [],\n    \"gerelateerdeZaaktypen\": [],\n    \"beginGeldigheid\": \"2005-01-01\",\n    \"eindeGeldigheid\": \"2012-01-01\",\n    \"versiedatum\": \"2012-01-01\",\n    \"concept\": true,\n    \"verantwoordelijke\": \"Behandelaar\"\n}"
 												},
 												"url": {
 													"raw": "{{ztc_url}}/zaaktypen",
@@ -29783,6 +29799,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"zaaktype afleidingswijze afgehandeld\";",
+                                                            "body.identificatie = \"31\";",
 															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_nihil_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -29839,6 +29856,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"zaaktype afleidingswijze termijn\";",
+                                                            "body.identificatie = \"32\";",
 															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_ingeschatte_bestaansduur_object_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -29895,6 +29913,7 @@
 															"// Retrieve the Zaak body template and modify as needed",
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.omschrijving = \"zaaktype geen procestermijn\";",
+                                                            "body.identificatie = \"33\";",
 															"body.selectielijstProcestype = pm.globals.get(\"procestype_procestermijn_leeg_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -38967,6 +38986,7 @@
 																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																	"body.eindeGeldigheid = \"2010-01-10\";",
 																	"body.omschrijving = \"aangepast\";",
+                                                                    "body.identificatie = \"34\";",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -39266,6 +39286,7 @@
 																	"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 																	"body.eindeGeldigheid = \"2010-01-10\";",
 																	"body.omschrijving = \"aangepast\";",
+                                                                    "body.identificatie = \"35\";",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -41950,6 +41971,7 @@
 																	"body.beginGeldigheid = \"2004-01-10\";",
 																	"body.eindeGeldigheid = \"2004-01-10\";",
 																	"body.omschrijving = \"ZIOT publish test4\";",
+                                                                    "body.identificatie = \"36\";",
 																	"",
 																	"// Store the modified Zaak body, allowing it to be used in the main request",
 																	"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -43045,6 +43067,7 @@
 															"body.beginGeldigheid = \"2004-01-10\";",
 															"body.eindeGeldigheid = \"2004-01-10\";",
 															"body.omschrijving = \"ztc-012\"",
+                                                            "body.identificatie = \"37\";",
 															"body.besluittypen = [\"{{created_besluittype_url}}\"];",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -43198,6 +43221,7 @@
 															"body.beginGeldigheid = \"2004-01-10\";",
 															"body.eindeGeldigheid = \"2004-01-10\";",
 															"body.omschrijving = \"ztc-012b\";",
+                                                            "body.identificatie = \"38\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -43401,6 +43425,7 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.besluittypen = [];",
 															"body.omschrijving = \"ztc-013\"",
+                                                            "body.identificatie = \"39\";",
 															"body.catalogus = pm.globals.get(\"catalogus_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -43456,6 +43481,7 @@
 															"var body = JSON.parse(pm.globals.get(\"zaaktype_body\"));",
 															"body.besluittypen = [];",
 															"body.omschrijving = \"ztc-013\"",
+                                                            "body.identificatie = \"40\";",
 															"body.catalogus = pm.globals.get(\"catalogus2_url\");",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
@@ -44095,6 +44121,7 @@
 															"body.besluittypen = [pm.globals.get(\"created_besluittype2_url\")];",
 															"body.catalogus = pm.globals.get(\"catalogus_url\");",
 															"body.omschrijving = \"ztc-013g\"",
+                                                            "body.identificatie = \"41\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
@@ -44163,6 +44190,7 @@
 															"body.besluittypen = [pm.globals.get(\"created_besluittype2_url\")];",
 															"body.catalogus = pm.globals.get(\"catalogus_url\");",
 															"body.omschrijving = \"ztc-013g\"",
+                                                            "body.identificatie = \"42\";",
 															"",
 															"// Store the modified Zaak body, allowing it to be used in the main request",
 															"pm.globals.set(\"request_body\", JSON.stringify(body));"
