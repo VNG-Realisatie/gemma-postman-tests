@@ -463,7 +463,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"naam\": \"test eigenschap\",\n\t\"definitie\": \"for test\",\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n    \"specificatie\": {\n        \"formaat\": \"tekst\",\n        \"lengte\": \"5\",\n        \"kardinaliteit\": \"1\",\n        \"waardenverzameling\": [\"test\"]\n    }\n}"
+							"raw": "{\n\t\"naam\": \"test eigenschap\",\n\t\"definitie\": \"for test\",\n\t\"zaaktype\": \"{{zaaktype_url}}\",\n    \"specificatie\": {\n        \"formaat\": \"tekst\",\n        \"lengte\": \"5\",\n        \"kardinaliteit\": \"1\",\n        \"waardenverzameling\": []\n    }\n}"
 						},
 						"url": {
 							"raw": "{{ztc_url}}/eigenschappen",
