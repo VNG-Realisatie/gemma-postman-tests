@@ -38556,6 +38556,16 @@
 														}
 													],
 													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
 														"method": "POST",
 														"header": [
 															{
@@ -38674,6 +38684,16 @@
 														}
 													],
 													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
 														"method": "POST",
 														"header": [
 															{
@@ -39103,6 +39123,16 @@
 														}
 													],
 													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
 														"method": "POST",
 														"header": [
 															{
@@ -39420,6 +39450,16 @@
 														}
 													],
 													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
 														"method": "POST",
 														"header": [
 															{
@@ -39728,6 +39768,16 @@
 														}
 													],
 													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
 														"method": "POST",
 														"header": [
 															{
@@ -40045,6 +40095,16 @@
 														}
 													],
 													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
 														"method": "POST",
 														"header": [
 															{
@@ -41631,6 +41691,16 @@
 														}
 													],
 													"request": {
+														"auth": {
+															"type": "bearer",
+															"bearer": [
+																{
+																	"key": "token",
+																	"value": "{{jwt_token_without_claims}}",
+																	"type": "string"
+																}
+															]
+														},
 														"method": "POST",
 														"header": [
 															{
