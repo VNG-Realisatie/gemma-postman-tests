@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "17060def-158b-44d1-9c70-36404cba8682",
+		"_postman_id": "4ca8be91-cc94-46b7-a1c6-9344867f5096",
 		"name": "ZGW api tests",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27978063"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -22561,8 +22560,8 @@
 															"});",
 															"",
 															"if(pm.globals.get(\"created_informatieobject_url\")) {",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-005d) EnkelvoudigInformatieobject aanmaken met ontvangstdatum en status ter vaststelling is onmogelijk\"]);",
-															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete EnkelvoudigInformatieObject\",\"(drc-005d) EnkelvoudigInformatieobject aanmaken met ontvangstdatum en status ter vaststelling is onmogelijk\"]);",
+															"    postman.setNextRequest(\"(COMMON) Unlock created EnkelvoudigInformatieObject\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -22790,8 +22789,8 @@
 															"});",
 															"",
 															"if(pm.globals.get(\"created_informatieobject_url\")) {",
-															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(drc-006a) Valideren default indicatie gebruiksrecht bij aanmaken EnkelvoudigInformatieObject\"]);",
-															"    postman.setNextRequest(\"(COMMON) Delete EnkelvoudigInformatieObject\");",
+															"    pm.globals.set(\"NEXT_REQUEST_NAMES\", [\"(COMMON) Delete EnkelvoudigInformatieObject\", \"(drc-006a) Valideren default indicatie gebruiksrecht bij aanmaken EnkelvoudigInformatieObject\"]);",
+															"    postman.setNextRequest(\"(COMMON) Unlock created EnkelvoudigInformatieObject\");",
 															"}"
 														],
 														"type": "text/javascript"
@@ -24868,6 +24867,43 @@
 													"raw": "{{informatieobject_url}}/unlock",
 													"host": [
 														"{{informatieobject_url}}"
+													],
+													"path": [
+														"unlock"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "(COMMON) Unlock created EnkelvoudigInformatieObject",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.globals.unset(\"created_informatieobject_lock_id\");"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\"lock\": \"{{created_informatieobject_lock_id}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{created_informatieobject_url}}/unlock",
+													"host": [
+														"{{created_informatieobject_url}}"
 													],
 													"path": [
 														"unlock"
