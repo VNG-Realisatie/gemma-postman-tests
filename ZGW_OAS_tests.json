@@ -1124,7 +1124,8 @@
 									}
 								],
 								"url": {
-									"raw": "{{zrc_url}}/zaken?identificatie=zaak&bronorganisatie=000000000&zaaktype={{zaaktype_url}}&archiefnominatie=blijvend_bewaren&archiefnominatie__in=blijvend_bewaren&archiefactiedatum=2019-01-02&archiefactiedatum__lt=2019-01-03&archiefactiedatum__gt=2019-01-01&archiefstatus=nog_te_archiveren&archiefstatus__in=nog_te_archiveren&startdatum=2019-01-02&startdatum__gt=2019-01-01&startdatum__gte=2019-01-01&startdatum__lt=2019-01-03&startdatum__lte=2019-01-03&page=1",
+
+									"raw": "{{zrc_url}}/zaken?identificatie=zaak&bronorganisatie=000000000&zaaktype={{zaaktype_url}}&archiefnominatie=blijvend_bewaren&archiefnominatie__in=blijvend_bewaren&archiefactiedatum=2019-01-02&archiefactiedatum__lt=2019-01-03&archiefactiedatum__gt=2019-01-01&archiefstatus=nog_te_archiveren&archiefstatus__in=nog_te_archiveren&startdatum=2019-01-02&startdatum__gt=2019-01-01&startdatum__gte=2019-01-01&startdatum__lt=2019-01-03&startdatum__lte=2019-01-03&ordering=startdatum&page=1",
 									"host": [
 										"{{zrc_url}}"
 									],
@@ -1191,6 +1192,10 @@
 										{
 											"key": "startdatum__lte",
 											"value": "2019-01-03"
+										},
+										{
+											"key": "ordering",
+											"value": "startdatum"
 										},
 										{
 											"key": "page",
