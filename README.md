@@ -1,3 +1,8 @@
+| Eigenaar | Ingevuld door |
+| --- | --- |
+| Kennis centrum Architectuur | Henri Korver |
+<hr/>
+
 ZGW API Test scenario's
 =======================
 
